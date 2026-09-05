@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Begrüßen und verabschieden · Kapitel 1</title>
+<style>
+:root{
+  --ink:#16212b;
+  --ink-soft:#5a6875;
+  --bg:#f4f6f7;
+  --card:#ffffff;
+  --edge:#dde3e7;
+  --slate:#22333f;
+  --slate-2:#2e4553;
+  --signal:#e8a317;
+  --signal-dk:#c8890c;
+  --go:#2f7d5a;
+  --go-bg:#e6f3ec;
+  --stop:#b34a33;
+  --stop-bg:#fbeae6;
+  --act:#2d6089;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  font-size:17px;
+  line-height:1.45;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:760px;margin:0 auto;padding:14px 14px 70px;}
+.hidden{display:none !important;}
+button{font-family:inherit;cursor:pointer;}
+
+/* ---------- shared header ---------- */
+.bar{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:var(--slate);color:#fff;
+  padding:13px 16px;border-radius:12px;margin-bottom:16px;
+}
+.bar .t{font-weight:700;font-size:1.02rem;line-height:1.2;}
+.bar .s{font-size:.78rem;opacity:.72;margin-top:1px;}
+.bar .langbtn{
+  flex:0 0 auto;background:rgba(255,255,255,.14);border:none;color:#fff;
+  padding:8px 13px;border-radius:9px;font-weight:700;font-size:.85rem;
+}
+
+/* ---------- language start screen ---------- */
+.start-head{text-align:center;margin:26px 0 22px;}
+.start-head h1{font-size:1.5rem;margin:0 0 6px;font-weight:700;}
+.start-head p{margin:0;color:var(--ink-soft);font-size:.95rem;}
+.lang-grid{display:flex;flex-direction:column;gap:10px;}
+.lang-grid button{
+  display:flex;align-items:center;gap:14px;
+  background:var(--card);border:2px solid var(--edge);
+  padding:16px 18px;border-radius:13px;text-align:left;width:100%;
+  font-size:1.15rem;font-weight:600;color:var(--ink);
+}
+.lang-grid button:active{border-color:var(--act);}
+.lang-grid .native{font-size:1.25rem;}
+.lang-grid .de{margin-left:auto;font-size:.85rem;color:var(--ink-soft);font-weight:500;}
+
+/* ---------- exercise menu ---------- */
+.menu-intro{margin:0 0 16px;color:var(--ink-soft);font-size:.92rem;}
+.ex-list{display:flex;flex-direction:column;gap:11px;}
+.ex-item{
+  display:flex;align-items:center;gap:14px;
+  background:var(--card);border:1.5px solid var(--edge);
+  border-left:5px solid var(--act);
+  border-radius:12px;padding:15px 16px;width:100%;text-align:left;
+}
+.ex-item .num{
+  flex:0 0 auto;width:34px;height:34px;border-radius:9px;
+  background:var(--slate);color:#fff;font-weight:700;
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+}
+.ex-item .body{flex:1;min-width:0;}
+.ex-item .name{font-weight:700;font-size:1.05rem;}
+.ex-item .meta{font-size:.82rem;color:var(--ink-soft);margin-top:2px;}
+.ex-item .badge{
+  flex:0 0 auto;font-size:.8rem;font-weight:700;
+  padding:5px 10px;border-radius:20px;background:#eef1f3;color:var(--ink-soft);
+}
+.ex-item .badge.done{background:var(--go-bg);color:var(--go);}
+
+/* ---------- exercise view ---------- */
+.ex-top{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.back{
+  background:none;border:none;color:var(--act);font-weight:700;
+  font-size:.92rem;padding:6px 2px;
+}
+.progress-track{height:5px;background:var(--edge);border-radius:3px;margin:10px 0 18px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--act);width:0;transition:width .25s ease;}
+
+.task{
+  background:var(--card);border:1.5px solid var(--edge);
+  border-radius:13px;padding:16px 17px;margin-bottom:14px;
+}
+.task h2{margin:0 0 4px;font-size:1.12rem;font-weight:700;}
+.task .hint{font-size:.88rem;color:var(--ink-soft);margin:0;}
+.help-btn{
+  margin-top:12px;display:inline-flex;align-items:center;gap:7px;
+  background:#fdf3dd;border:1.5px solid var(--signal);color:#7a5405;
+  padding:9px 15px;border-radius:9px;font-weight:700;font-size:.92rem;
+}
+.help-box{
+  margin-top:12px;background:#fdf3dd;border-radius:10px;padding:13px 15px;
+  font-size:1.05rem;font-weight:600;color:#5e4104;line-height:1.5;
+}
+.help-box[dir="rtl"]{direction:rtl;text-align:right;}
+.help-box .lbl{
+  display:block;font-size:.72rem;font-weight:700;color:#9a7412;
+  margin-bottom:5px;letter-spacing:.02em;
+}
+
+.qcard{
+  background:var(--card);border:1.5px solid var(--edge);
+  border-radius:13px;padding:18px 17px;margin-bottom:14px;
+}
+.qnum{font-size:.8rem;font-weight:700;color:var(--ink-soft);margin-bottom:8px;}
+.situation{font-size:1.22rem;font-weight:600;line-height:1.4;margin-bottom:6px;}
+.situation-help{
+  font-size:1rem;color:#7a5405;background:#fdf3dd;
+  padding:9px 12px;border-radius:8px;margin:8px 0 0;
+}
+.situation-help[dir="rtl"]{direction:rtl;text-align:right;}
+
+.opts{display:flex;flex-direction:column;gap:9px;margin-top:14px;}
+.opt{
+  background:#fff;border:2px solid var(--edge);border-radius:11px;
+  padding:14px 16px;font-size:1.15rem;font-weight:600;color:var(--ink);
+  text-align:left;width:100%;transition:border-color .15s,background .15s;
+}
+.opt:active{border-color:var(--act);}
+.opt.correct{background:var(--go-bg);border-color:var(--go);color:var(--go);}
+.opt.wrong{background:var(--stop-bg);border-color:var(--stop);color:var(--stop);}
+.opt.locked{pointer-events:none;}
+.opt.dim{opacity:.45;}
+
+/* two-bucket sorting */
+.sort-item{
+  background:#fff;border:2px solid var(--edge);border-radius:11px;
+  padding:15px 16px;margin-bottom:11px;
+}
+.sort-phrase{font-size:1.3rem;font-weight:700;margin-bottom:11px;}
+.sort-btns{display:flex;gap:9px;}
+.sort-btns button{
+  flex:1;padding:12px 8px;border-radius:10px;border:2px solid var(--edge);
+  background:#fff;font-weight:700;font-size:.98rem;color:var(--ink);
+}
+.sort-btns button.correct{background:var(--go-bg);border-color:var(--go);color:var(--go);}
+.sort-btns button.wrong{background:var(--stop-bg);border-color:var(--stop);color:var(--stop);}
+.sort-btns.locked button{pointer-events:none;}
+
+/* dialogue gap fill */
+.dialog-line{
+  display:flex;gap:10px;margin-bottom:13px;align-items:baseline;
+  font-size:1.18rem;line-height:1.6;
+}
+.dialog-line .who{
+  flex:0 0 auto;font-weight:700;color:var(--act);width:22px;
+}
+.gap{
+  display:inline-block;min-width:120px;border-bottom:2.5px solid var(--act);
+  text-align:center;font-weight:700;color:var(--act);padding:0 6px;
+}
+.gap.filled{border-bottom-color:var(--go);color:var(--go);}
+.gap.active{background:#eaf2f8;}
+.wordbank{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px;}
+.wordbank button{
+  background:#fff;border:2px solid var(--edge);border-radius:10px;
+  padding:11px 15px;font-size:1.08rem;font-weight:600;color:var(--ink);
+}
+.wordbank button.used{opacity:.35;pointer-events:none;}
+
+.feedback{
+  margin-top:13px;padding:12px 14px;border-radius:10px;
+  font-weight:600;font-size:1rem;display:none;
+}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--go-bg);color:var(--go);}
+.feedback.no{background:var(--stop-bg);color:var(--stop);}
+
+.nav-row{display:flex;gap:10px;margin-top:6px;}
+.btn-primary{
+  flex:1;background:var(--act);color:#fff;border:none;
+  padding:15px;border-radius:11px;font-weight:700;font-size:1.05rem;
+}
+.btn-primary:disabled{opacity:.4;}
+.btn-ghost{
+  background:#fff;border:1.5px solid var(--edge);color:var(--ink);
+  padding:15px 18px;border-radius:11px;font-weight:700;font-size:1.05rem;
+}
+
+/* result */
+.result{
+  background:var(--card);border:1.5px solid var(--edge);border-radius:14px;
+  padding:30px 20px;text-align:center;
+}
+.result .score{font-size:3rem;font-weight:800;color:var(--act);line-height:1;}
+.result .of{color:var(--ink-soft);font-size:1rem;margin-top:6px;}
+.result h2{margin:16px 0 6px;font-size:1.3rem;}
+.result p{color:var(--ink-soft);margin:0 0 20px;}
+
+/* ---------- beamer ---------- */
+.stage{
+  background:var(--slate);border-radius:16px;padding:46px 30px;
+  min-height:380px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;color:#fff;
+}
+.stage .dots{display:flex;gap:7px;margin-bottom:30px;}
+.stage .dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.25);}
+.stage .dots i.on{background:var(--signal);}
+.stage .big{
+  font-size:clamp(2.2rem,6.5vw,4rem);font-weight:800;margin-bottom:12px;
+  letter-spacing:-.015em;
+}
+.stage .ctx{color:var(--signal);font-size:1.05rem;font-weight:600;margin-bottom:26px;}
+.stage .reveal{
+  background:var(--signal);color:var(--slate);border:none;
+  padding:13px 26px;border-radius:30px;font-weight:800;font-size:1rem;
+}
+.tchips{display:none;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:24px;max-width:700px;}
+.tchips.on{display:flex;}
+.tchips .c{
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.2);
+  padding:9px 14px;border-radius:10px;display:flex;gap:8px;align-items:baseline;font-size:1rem;
+}
+.tchips .c .k{font-size:.68rem;font-weight:800;color:var(--signal);}
+.tchips .c[dir="rtl"]{direction:rtl;}
+.bnav{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:10px;}
+.bnav button{
+  background:#fff;border:1.5px solid var(--edge);color:var(--ink);
+  padding:11px 20px;border-radius:10px;font-weight:700;
+}
+.bnav button:disabled{opacity:.35;}
+.bnav .cnt{font-size:.9rem;color:var(--ink-soft);}
+
+.qr-panel{
+  background:var(--card);border:1.5px solid var(--edge);border-radius:14px;
+  padding:20px;margin-top:20px;
+}
+.qr-panel h3{margin:0 0 4px;font-size:1.05rem;}
+.qr-panel p{margin:0 0 14px;font-size:.88rem;color:var(--ink-soft);}
+.qr-panel input{
+  width:100%;padding:12px 14px;border:1.5px solid var(--edge);
+  border-radius:10px;font-size:.95rem;font-family:inherit;margin-bottom:11px;
+}
+.qr-out{display:none;text-align:center;padding-top:6px;}
+.qr-out.on{display:block;}
+.qr-out canvas{
+  width:min(300px,72vw);height:auto;image-rendering:pixelated;
+  border:12px solid #fff;border-radius:6px;
+}
+.qr-url{
+  margin-top:10px;font-size:.9rem;color:var(--ink-soft);
+  word-break:break-all;font-weight:600;
+}
+.modeswitch{
+  text-align:center;margin-top:26px;font-size:.85rem;color:var(--ink-soft);
+}
+.modeswitch a{color:var(--act);font-weight:700;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ START: SPRACHE WÄHLEN ============ -->
+  <section id="scStart">
+    <div class="start-head">
+      <h1>Begrüßen und verabschieden</h1>
+      <p>Kapitel 1 · Einheit 1</p>
+    </div>
+    <div class="start-head" style="margin:0 0 14px;">
+      <p style="font-weight:600;color:var(--ink);">Wähle deine Sprache · Choose your language</p>
+    </div>
+    <div class="lang-grid" id="langGrid"></div>
+  </section>
+
+  <!-- ============ MENÜ ============ -->
+  <section id="scMenu" class="hidden">
+    <div class="bar">
+      <div>
+        <div class="t">Begrüßen und verabschieden</div>
+        <div class="s">Kapitel 1 · Einheit 1</div>
+      </div>
+      <button class="langbtn" id="changeLang">RU</button>
+    </div>
+    <p class="menu-intro">Wähle eine Aufgabe. Du kannst jede Aufgabe wiederholen.</p>
+    <div class="ex-list" id="exList"></div>
+    <div class="modeswitch">
+      Für die Lehrkraft: <a href="?m=beamer">Beamer-Modus öffnen</a>
+    </div>
+  </section>
+
+  <!-- ============ ÜBUNG ============ -->
+  <section id="scEx" class="hidden">
+    <div class="ex-top">
+      <button class="back" id="backBtn">← Aufgaben</button>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
+
+    <div class="task">
+      <h2 id="taskTitle"></h2>
+      <p class="hint" id="taskHint"></p>
+      <button class="help-btn" id="helpBtn">Hilfe · Übersetzung</button>
+      <div class="help-box hidden" id="helpBox"></div>
+    </div>
+
+    <div id="qArea"></div>
+
+    <div class="nav-row">
+      <button class="btn-primary" id="nextBtn" disabled>Weiter</button>
+    </div>
+  </section>
+
+  <!-- ============ ERGEBNIS ============ -->
+  <section id="scResult" class="hidden">
+    <div class="result">
+      <div class="score" id="resScore">0</div>
+      <div class="of" id="resOf"></div>
+      <h2 id="resTitle"></h2>
+      <p id="resText"></p>
+      <div class="nav-row">
+        <button class="btn-ghost" id="againBtn">Noch einmal</button>
+        <button class="btn-primary" id="menuBtn">Zu den Aufgaben</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BEAMER ============ -->
+  <section id="scBeamer" class="hidden">
+    <div class="bar">
+      <div>
+        <div class="t">Begrüßen und verabschieden</div>
+        <div class="s">Kapitel 1 · Einheit 1 · Beamer</div>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="dots" id="bDots"></div>
+      <div class="big" id="bPhrase"></div>
+      <div class="ctx" id="bCtx"></div>
+      <button class="reveal" id="bReveal">Übersetzung zeigen</button>
+      <div class="tchips" id="bChips"></div>
+    </div>
+    <div class="bnav">
+      <button id="bPrev">← Zurück</button>
+      <div class="cnt" id="bCnt"></div>
+      <button id="bNext">Weiter →</button>
+    </div>
+
+    <div class="qr-panel">
+      <h3>QR-Code für die Klasse</h3>
+      <p>Trage die Adresse ein, unter der diese Datei online liegt. Der Code wird sofort erzeugt und kann am Beamer gezeigt werden.</p>
+      <input type="url" id="qrInput" placeholder="https://..." autocomplete="off" spellcheck="false">
+      <button class="btn-primary" id="qrGo" style="width:100%;">QR-Code erzeugen</button>
+      <div class="qr-out" id="qrOut">
+        <canvas id="qrCanvas"></canvas>
+        <div class="qr-url" id="qrUrl"></div>
+      </div>
+    </div>
+
+    <div class="modeswitch">
+      <a href="?">Zur Schüleransicht wechseln</a>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ==========================================================
+   INHALT — Kapitel 1, Einheit 1
+   ========================================================== */
+
+const LANGS = [
+  { code:'ru', label:'RU', native:'Русский',   de:'Russisch' },
+  { code:'uk', label:'UA', native:'Українська',de:'Ukrainisch' },
+  { code:'ar', label:'AR', native:'العربية',    de:'Arabisch', rtl:true },
+  { code:'pt', label:'PT', native:'Português',  de:'Portugiesisch' },
+  { code:'bg', label:'BG', native:'Български',  de:'Bulgarisch' },
+];
+
+/* Phrasen für den Beamer-Teil */
+const PHRASES = [
+  { de:'Guten Morgen!', ctx:'morgens, bis etwa 10 Uhr',
+    t:{ru:'Доброе утро!',uk:'Доброго ранку!',ar:'صباح الخير!',pt:'Bom dia!',bg:'Добро утро!'} },
+  { de:'Guten Tag!', ctx:'tagsüber, formell',
+    t:{ru:'Добрый день!',uk:'Добрий день!',ar:'نهارك سعيد!',pt:'Boa tarde!',bg:'Добър ден!'} },
+  { de:'Hallo!', ctx:'informell, jederzeit',
+    t:{ru:'Привет!',uk:'Привіт!',ar:'مرحبا!',pt:'Oi!',bg:'Здравей!'} },
+  { de:'Guten Abend!', ctx:'abends',
+    t:{ru:'Добрый вечер!',uk:'Добрий вечір!',ar:'مساء الخير!',pt:'Boa noite!',bg:'Добър вечер!'} },
+  { de:'Gute Nacht!', ctx:'vor dem Schlafen',
+    t:{ru:'Спокойной ночи!',uk:'На добраніч!',ar:'تصبح على خير!',pt:'Boa noite! (ao dormir)',bg:'Лека нощ!'} },
+  { de:'Auf Wiedersehen!', ctx:'formeller Abschied',
+    t:{ru:'До свидания!',uk:'До побачення!',ar:'إلى اللقاء!',pt:'Até logo!',bg:'Довиждане!'} },
+  { de:'Tschüss!', ctx:'informeller Abschied',
+    t:{ru:'Пока!',uk:'Бувай!',ar:'باي!',pt:'Tchau!',bg:'Чао!'} },
+  { de:'Bitte. – Danke.', ctx:'Höflichkeit',
+    t:{ru:'Пожалуйста. – Спасибо.',uk:'Будь ласка. – Дякую.',ar:'من فضلك. – شكراً.',pt:'Por favor. – Obrigado/a.',bg:'Моля. – Благодаря.'} },
+  { de:'Guten Appetit!', ctx:'vor dem Essen',
+    t:{ru:'Приятного аппетита!',uk:'Смачного!',ar:'بالهناء والشفاء!',pt:'Bom apetite!',bg:'Добър апетит!'} },
+];
+
+/* Übungen */
+const EXERCISES = [
+  /* ---------- 1: Situation → Begrüßung ---------- */
+  {
+    id:'a1', type:'choice',
+    title:'Welche Begrüßung passt?',
+    hint:'Lies die Situation. Wähle die richtige Antwort.',
+    help:{
+      ru:'Прочитай ситуацию. Выбери правильное приветствие.',
+      uk:'Прочитай ситуацію. Обери правильне привітання.',
+      ar:'اقرأ الموقف. اختر التحية الصحيحة.',
+      pt:'Leia a situação. Escolha a saudação correta.',
+      bg:'Прочети ситуацията. Избери правилния поздрав.'
+    },
+    items:[
+      { q:'Es ist 8 Uhr. Sie kommen in den Betrieb.',
+        qt:{ru:'8 часов утра. Вы приходите на предприятие.',uk:'8 година ранку. Ви приходите на підприємство.',ar:'الساعة الثامنة صباحاً. أنت تصل إلى الشركة.',pt:'São 8 horas. Você chega à empresa.',bg:'8 часа сутринта. Идвате в предприятието.'},
+        opts:['Guten Morgen!','Gute Nacht!','Auf Wiedersehen!'], a:0 },
+      { q:'Es ist 20 Uhr. Sie kommen zu einem Fest.',
+        qt:{ru:'20 часов. Вы приходите на праздник.',uk:'20 година. Ви приходите на свято.',ar:'الساعة الثامنة مساءً. أنت تصل إلى حفلة.',pt:'São 20 horas. Você chega a uma festa.',bg:'20 часа. Идвате на празник.'},
+        opts:['Guten Morgen!','Guten Abend!','Guten Appetit!'], a:1 },
+      { q:'Es ist 22 Uhr. Sie gehen ins Bett.',
+        qt:{ru:'22 часа. Вы идёте спать.',uk:'22 година. Ви йдете спати.',ar:'الساعة العاشرة مساءً. أنت ذاهب للنوم.',pt:'São 22 horas. Você vai dormir.',bg:'22 часа. Отивате да спите.'},
+        opts:['Gute Nacht!','Guten Tag!','Hallo!'], a:0 },
+      { q:'Es ist 14 Uhr. Sie treffen Ihren Chef.',
+        qt:{ru:'14 часов. Вы встречаете своего начальника.',uk:'14 година. Ви зустрічаєте свого начальника.',ar:'الساعة الثانية ظهراً. أنت تقابل مديرك.',pt:'São 14 horas. Você encontra o seu chefe.',bg:'14 часа. Срещате вашия шеф.'},
+        opts:['Tschüss!','Guten Tag!','Gute Nacht!'], a:1 },
+      { q:'Ihr Kollege gibt Ihnen einen Kaffee.',
+        qt:{ru:'Ваш коллега даёт вам кофе.',uk:'Ваш колега дає вам каву.',ar:'زميلك يعطيك قهوة.',pt:'O seu colega lhe dá um café.',bg:'Вашият колега ви дава кафе.'},
+        opts:['Danke!','Woher?','Gute Nacht!'], a:0 },
+      { q:'Die Arbeit ist zu Ende. Sie gehen nach Hause.',
+        qt:{ru:'Работа закончена. Вы идёте домой.',uk:'Робота закінчена. Ви йдете додому.',ar:'انتهى العمل. أنت ذاهب إلى البيت.',pt:'O trabalho terminou. Você vai para casa.',bg:'Работата свърши. Отивате си вкъщи.'},
+        opts:['Guten Morgen!','Guten Appetit!','Tschüss!'], a:2 },
+    ]
+  },
+
+  /* ---------- 2: formell / informell ---------- */
+  {
+    id:'a2', type:'sort',
+    title:'Formell oder informell?',
+    hint:'Formell = Sie. Informell = du. Ordne jede Wendung zu.',
+    help:{
+      ru:'Формально = «Sie» (вежливо). Неформально = «du» (на ты). Распредели выражения.',
+      uk:'Формально = «Sie» (ввічливо). Неформально = «du» (на ти). Розподіли вирази.',
+      ar:'رسمي = «Sie» (صيغة الاحترام). غير رسمي = «du» (صيغة التقريب). صنّف كل عبارة.',
+      pt:'Formal = «Sie» (tratamento respeitoso). Informal = «du» (tratamento próximo). Classifique cada expressão.',
+      bg:'Формално = «Sie» (учтиво). Неформално = «du» (на ти). Разпредели изразите.'
+    },
+    buckets:['Formell (Sie)','Informell (du)'],
+    items:[
+      { p:'Guten Tag!', a:0 },
+      { p:'Hallo!', a:1 },
+      { p:'Auf Wiedersehen!', a:0 },
+      { p:'Tschüss!', a:1 },
+      { p:'Guten Abend!', a:0 },
+      { p:'Hi!', a:1 },
+    ]
+  },
+
+  /* ---------- 3: Dialog ergänzen ---------- */
+  {
+    id:'a3', type:'gap',
+    title:'Der erste Tag im Betrieb',
+    hint:'Ergänze den Dialog. Tippe zuerst auf die Lücke, dann auf das Wort.',
+    help:{
+      ru:'Дополни диалог. Сначала нажми на пропуск, потом на нужное слово.',
+      uk:'Доповни діалог. Спершу натисни на пропуск, потім на потрібне слово.',
+      ar:'أكمل الحوار. اضغط أولاً على الفراغ، ثم على الكلمة المناسبة.',
+      pt:'Complete o diálogo. Toque primeiro na lacuna, depois na palavra.',
+      bg:'Допълни диалога. Първо натисни празното място, после думата.'
+    },
+    lines:[
+      { who:'A', parts:['', ' ! Ich heiße Marek Nowak.'], gaps:['Guten Tag'] },
+      { who:'B', parts:['Guten Tag, Herr Nowak. Wie geht es ', '?'], gaps:['Ihnen'] },
+      { who:'A', parts:['', ', gut. Und Ihnen?'], gaps:['Danke'] },
+      { who:'B', parts:['Auch gut. Bis morgen! Auf ', ' !'], gaps:['Wiedersehen'] },
+    ],
+    bank:['Guten Tag','Ihnen','Danke','Wiedersehen','Tschüss','Morgen']
+  },
+];
+
+/* ==========================================================
+   QR-CODE (eigenständig, ohne externe Dienste)
+   ========================================================== */
+const QR=(function(){
+  const EXP=new Array(512),LOG=new Array(256);
+  (function(){let x=1;for(let i=0;i<255;i++){EXP[i]=x;LOG[x]=i;x<<=1;if(x&0x100)x^=0x11D;}
+   for(let i=255;i<512;i++)EXP[i]=EXP[i-255];})();
+  const mul=(a,b)=>(a===0||b===0)?0:EXP[LOG[a]+LOG[b]];
+  function gen(d){let p=[1];for(let i=0;i<d;i++){const n=new Array(p.length+1).fill(0);
+    for(let j=0;j<p.length;j++){n[j]^=p[j];n[j+1]^=mul(p[j],EXP[i]);}p=n;}return p;}
+  function rs(data,ecLen){const g=gen(ecLen),r=new Array(ecLen).fill(0);
+    for(const b of data){const f=b^r[0];r.shift();r.push(0);
+      for(let i=0;i<ecLen;i++)r[i]^=mul(g[i+1],f);}return r;}
+
+  const T={1:{ec:7,g1:1,d1:19,g2:0,d2:0},2:{ec:10,g1:1,d1:34,g2:0,d2:0},
+    3:{ec:15,g1:1,d1:55,g2:0,d2:0},4:{ec:20,g1:1,d1:80,g2:0,d2:0},
+    5:{ec:26,g1:1,d1:108,g2:0,d2:0},6:{ec:18,g1:2,d1:68,g2:0,d2:0},
+    7:{ec:20,g1:2,d1:78,g2:0,d2:0},8:{ec:24,g1:2,d1:97,g2:0,d2:0},
+    9:{ec:30,g1:2,d1:116,g2:0,d2:0},10:{ec:18,g1:2,d1:68,g2:2,d2:69}};
+  const AL={1:[],2:[6,18],3:[6,22],4:[6,26],5:[6,30],6:[6,34],
+    7:[6,22,38],8:[6,24,42],9:[6,26,46],10:[6,28,50]};
+  const cap=v=>T[v].g1*T[v].d1+T[v].g2*T[v].d2;
+
+  const MASKS=[(r,c)=>(r+c)%2===0,(r,c)=>r%2===0,(r,c)=>c%3===0,(r,c)=>(r+c)%3===0,
+    (r,c)=>(Math.floor(r/2)+Math.floor(c/3))%2===0,(r,c)=>((r*c)%2+(r*c)%3)===0,
+    (r,c)=>(((r*c)%2+(r*c)%3)%2)===0,(r,c)=>(((r+c)%2+(r*c)%3)%2)===0];
+
+  function matrix(v){
+    const size=v*4+17;
+    const m=Array.from({length:size},()=>new Array(size).fill(null));
+    const res=Array.from({length:size},()=>new Array(size).fill(false));
+    const S=(r,c,val)=>{if(r>=0&&r<size&&c>=0&&c<size){m[r][c]=val;res[r][c]=true;}};
+    const fin=(R,C)=>{for(let r=-1;r<=7;r++)for(let c=-1;c<=7;c++){
+      const ring=(r>=0&&r<=6&&(c===0||c===6))||(c>=0&&c<=6&&(r===0||r===6));
+      const core=(r>=2&&r<=4&&c>=2&&c<=4);
+      S(R+r,C+c,(ring||core)?1:0);}};
+    fin(0,0);fin(0,size-7);fin(size-7,0);
+    for(let i=8;i<size-8;i++){S(6,i,i%2===0?1:0);S(i,6,i%2===0?1:0);}
+    for(const r of AL[v])for(const c of AL[v]){
+      if((r<=8&&c<=8)||(r<=8&&c>=size-9)||(r>=size-9&&c<=8))continue;
+      for(let dr=-2;dr<=2;dr++)for(let dc=-2;dc<=2;dc++){
+        const ring=Math.max(Math.abs(dr),Math.abs(dc));S(r+dr,c+dc,ring===1?0:1);}}
+    S(size-8,8,1);
+    for(let i=0;i<9;i++){if(m[8][i]===null){m[8][i]=0;res[8][i]=true;}
+      if(m[i][8]===null){m[i][8]=0;res[i][8]=true;}}
+    for(let i=0;i<8;i++){if(m[8][size-1-i]===null){m[8][size-1-i]=0;res[8][size-1-i]=true;}
+      if(m[size-1-i][8]===null){m[size-1-i][8]=0;res[size-1-i][8]=true;}}
+    return {m,res,size};
+  }
+
+  function fmt(mask){
+    const d=(0b01<<3)|mask; let rem=d<<10; const g=0b10100110111;
+    for(let i=14;i>=10;i--) if((rem>>i)&1) rem^=g<<(i-10);
+    return ((d<<10)|rem)^0b101010000010010;
+  }
+
+  function pen(m,size){
+    let p=0;
+    const run=l=>{let s=0,r=1;for(let i=1;i<l.length;i++){
+      if(l[i]===l[i-1])r++;else{if(r>=5)s+=3+(r-5);r=1;}}
+      if(r>=5)s+=3+(r-5);return s;};
+    for(let r=0;r<size;r++)p+=run(m[r]);
+    for(let c=0;c<size;c++)p+=run(m.map(x=>x[c]));
+    for(let r=0;r<size-1;r++)for(let c=0;c<size-1;c++){
+      const v=m[r][c];if(v===m[r][c+1]&&v===m[r+1][c]&&v===m[r+1][c+1])p+=3;}
+    const p1=[1,0,1,1,1,0,1,0,0,0,0],p2=[0,0,0,0,1,0,1,1,1,0,1];
+    const sc=l=>{let s=0;for(let i=0;i+11<=l.length;i++){const g=l.slice(i,i+11);
+      if(g.every((v,j)=>v===p1[j])||g.every((v,j)=>v===p2[j]))s+=40;}return s;};
+    for(let r=0;r<size;r++)p+=sc(m[r]);
+    for(let c=0;c<size;c++)p+=sc(m.map(x=>x[c]));
+    let d=0;for(let r=0;r<size;r++)for(let c=0;c<size;c++)d+=m[r][c];
+    p+=Math.floor(Math.abs(d*100/(size*size)-50)/5)*10;
+    return p;
+  }
+
+  function encode(text){
+    const bytes=Array.from(new TextEncoder().encode(text));
+    let v=0;
+    for(let i=1;i<=10;i++){const cci=i<=9?8:16;
+      if(4+cci+bytes.length*8<=cap(i)*8){v=i;break;}}
+    if(!v) throw new Error("Adresse zu lang");
+    const bits=[],push=(val,len)=>{for(let i=len-1;i>=0;i--)bits.push((val>>i)&1);};
+    push(0b0100,4); push(bytes.length,v<=9?8:16);
+    for(const b of bytes)push(b,8);
+    const cb=cap(v)*8;
+    for(let i=0;i<4&&bits.length<cb;i++)bits.push(0);
+    while(bits.length%8!==0)bits.push(0);
+    let pi=0; while(bits.length<cb){push([0xEC,0x11][pi%2],8);pi++;}
+    const cws=[];
+    for(let i=0;i<bits.length;i+=8){let b=0;for(let j=0;j<8;j++)b=(b<<1)|bits[i+j];cws.push(b);}
+
+    const t=T[v],blocks=[];let ix=0;
+    for(let i=0;i<t.g1;i++){blocks.push(cws.slice(ix,ix+t.d1));ix+=t.d1;}
+    for(let i=0;i<t.g2;i++){blocks.push(cws.slice(ix,ix+t.d2));ix+=t.d2;}
+    const ecb=blocks.map(b=>rs(b,t.ec));
+    const fin=[],maxD=Math.max(...blocks.map(b=>b.length));
+    for(let i=0;i<maxD;i++)for(const b of blocks)if(i<b.length)fin.push(b[i]);
+    for(let i=0;i<t.ec;i++)for(const b of ecb)fin.push(b[i]);
+
+    const {m,res,size}=matrix(v);
+    const db=[];for(const c of fin)for(let i=7;i>=0;i--)db.push((c>>i)&1);
+    let bi=0,up=true;
+    for(let col=size-1;col>0;col-=2){
+      if(col===6)col--;
+      for(let i=0;i<size;i++){const row=up?size-1-i:i;
+        for(let k=0;k<2;k++){const c=col-k;
+          if(!res[row][c])m[row][c]=bi<db.length?db[bi++]:0;}}
+      up=!up;
+    }
+    let best=null,bs=Infinity;
+    for(let mk=0;mk<8;mk++){
+      const cd=m.map(r=>r.slice());
+      for(let r=0;r<size;r++)for(let c=0;c<size;c++)
+        if(!res[r][c]&&MASKS[mk](r,c))cd[r][c]^=1;
+      const f=fmt(mk),G=i=>(f>>i)&1;
+      for(let i=0;i<=5;i++)cd[8][i]=G(i);
+      cd[8][7]=G(6);cd[8][8]=G(7);cd[7][8]=G(8);
+      for(let i=9;i<=14;i++)cd[14-i][8]=G(i);
+      for(let i=0;i<=7;i++)cd[size-1-i][8]=G(i);
+      for(let i=8;i<=14;i++)cd[8][size-15+i]=G(i);
+      cd[size-8][8]=1;
+      const s=pen(cd,size);
+      if(s<bs){bs=s;best=cd;}
+    }
+    return {matrix:best,size};
+  }
+
+  function draw(canvas,text){
+    const {matrix,size}=encode(text);
+    const q=4, dim=size+q*2, scale=8;
+    canvas.width=dim*scale; canvas.height=dim*scale;
+    const g=canvas.getContext('2d');
+    g.fillStyle='#fff'; g.fillRect(0,0,canvas.width,canvas.height);
+    g.fillStyle='#16212b';
+    for(let r=0;r<size;r++)for(let c=0;c<size;c++)
+      if(matrix[r][c]) g.fillRect((c+q)*scale,(r+q)*scale,scale,scale);
+  }
+  return {draw};
+})();
+
+/* ==========================================================
+   APP
+   ========================================================== */
+const $ = id => document.getElementById(id);
+const params = new URLSearchParams(location.search);
+const IS_BEAMER = params.get('m') === 'beamer';
+
+let lang = null;
+let curEx = null, curIdx = 0, curScore = 0;
+let doneMap = {};
+
+/* --- persistence (funktioniert im echten Browser) --- */
+function load(k,def){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):def; }catch(e){ return def; } }
+function save(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+
+function show(id){
+  ['scStart','scMenu','scEx','scResult','scBeamer'].forEach(s=>{
+    $(s).classList.toggle('hidden', s!==id);
+  });
+  window.scrollTo(0,0);
+}
+
+function langObj(){ return LANGS.find(l=>l.code===lang) || LANGS[0]; }
+
+/* ---------- Sprachauswahl ---------- */
+function renderLangGrid(){
+  $('langGrid').innerHTML = LANGS.map(l=>`
+    <button data-code="${l.code}">
+      <span class="native" ${l.rtl?'dir="rtl"':''}>${l.native}</span>
+      <span class="de">${l.de}</span>
+    </button>`).join('');
+  $('langGrid').querySelectorAll('button').forEach(b=>{
+    b.onclick = ()=>{ lang=b.dataset.code; save('daf_lang',lang); openMenu(); };
+  });
+}
+
+/* ---------- Menü ---------- */
+function openMenu(){
+  $('changeLang').textContent = langObj().label;
+  $('exList').innerHTML = EXERCISES.map((e,i)=>{
+    const n = e.type==='sort' ? e.items.length
+            : e.type==='gap'  ? e.lines.length
+            : e.items.length;
+    const d = doneMap[e.id];
+    return `<button class="ex-item" data-i="${i}">
+      <span class="num">${i+1}</span>
+      <span class="body">
+        <span class="name">${e.title}</span>
+        <span class="meta">${n} Aufgaben</span>
+      </span>
+      <span class="badge ${d?'done':''}">${d ? d+'/'+n : 'offen'}</span>
+    </button>`;
+  }).join('');
+  $('exList').querySelectorAll('.ex-item').forEach(b=>{
+    b.onclick = ()=> startEx(EXERCISES[+b.dataset.i]);
+  });
+  show('scMenu');
+}
+
+$('changeLang').onclick = ()=> show('scStart');
+$('backBtn').onclick = ()=> openMenu();
+$('menuBtn').onclick = ()=> openMenu();
+$('againBtn').onclick = ()=> startEx(curEx);
+
+/* ---------- Übung starten ---------- */
+function startEx(ex){
+  curEx = ex; curIdx = 0; curScore = 0;
+  $('taskTitle').textContent = ex.title;
+  $('taskHint').textContent = ex.hint;
+  $('helpBox').classList.add('hidden');
+  $('helpBtn').textContent = 'Hilfe · Übersetzung';
+  show('scEx');
+  renderStep();
+}
+
+$('helpBtn').onclick = ()=>{
+  const box = $('helpBox');
+  const l = langObj();
+  if(box.classList.contains('hidden')){
+    box.innerHTML = `<span class="lbl">${l.de}</span>${curEx.help[l.code]}`;
+    box.setAttribute('dir', l.rtl?'rtl':'ltr');
+    box.classList.remove('hidden');
+    $('helpBtn').textContent = 'Hilfe ausblenden';
+  } else {
+    box.classList.add('hidden');
+    $('helpBtn').textContent = 'Hilfe · Übersetzung';
+  }
+};
+
+function totalSteps(){
+  return curEx.type==='gap' ? 1 : curEx.items.length;
+}
+function setProgress(){
+  const pct = curEx.type==='gap' ? 0 : (curIdx/curEx.items.length)*100;
+  $('progFill').style.width = pct+'%';
+}
+
+/* ---------- Schritt rendern ---------- */
+function renderStep(){
+  setProgress();
+  const area = $('qArea');
+  const next = $('nextBtn');
+  next.disabled = true;
+  next.textContent = 'Weiter';
+
+  if(curEx.type==='choice') renderChoice(area,next);
+  else if(curEx.type==='sort') renderSort(area,next);
+  else if(curEx.type==='gap') renderGap(area,next);
+}
+
+/* --- Typ: Auswahl --- */
+function renderChoice(area,next){
+  const it = curEx.items[curIdx];
+  const l = langObj();
+  area.innerHTML = `
+    <div class="qcard">
+      <div class="qnum">Aufgabe ${curIdx+1} von ${curEx.items.length}</div>
+      <div class="situation">${it.q}</div>
+      <div class="situation-help hidden" id="sitHelp" ${l.rtl?'dir="rtl"':''}>${it.qt[l.code]}</div>
+      <div class="opts">
+        ${it.opts.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join('')}
+      </div>
+      <div class="feedback" id="fb"></div>
+    </div>`;
+
+  // Situationshilfe folgt dem Hilfe-Button
+  if(!$('helpBox').classList.contains('hidden')) $('sitHelp').classList.remove('hidden');
+
+  area.querySelectorAll('.opt').forEach(b=>{
+    b.onclick = ()=>{
+      const chosen = +b.dataset.i;
+      const ok = chosen === it.a;
+      area.querySelectorAll('.opt').forEach((x,i)=>{
+        x.classList.add('locked');
+        if(i===it.a) x.classList.add('correct');
+        else if(i===chosen) x.classList.add('wrong');
+        else x.classList.add('dim');
+      });
+      const fb = $('fb');
+      fb.className = 'feedback show ' + (ok?'ok':'no');
+      fb.textContent = ok ? 'Richtig!' : 'Richtig ist: ' + it.opts[it.a];
+      if(ok) curScore++;
+      next.disabled = false;
+      next.textContent = (curIdx === curEx.items.length-1) ? 'Fertig' : 'Weiter';
+    };
+  });
+}
+
+/* --- Typ: Sortieren --- */
+function renderSort(area,next){
+  const it = curEx.items[curIdx];
+  area.innerHTML = `
+    <div class="qcard">
+      <div class="qnum">Aufgabe ${curIdx+1} von ${curEx.items.length}</div>
+      <div class="sort-item">
+        <div class="sort-phrase">${it.p}</div>
+        <div class="sort-btns" id="sortBtns">
+          ${curEx.buckets.map((b,i)=>`<button data-i="${i}">${b}</button>`).join('')}
+        </div>
+      </div>
+      <div class="feedback" id="fb"></div>
+    </div>`;
+
+  const box = $('sortBtns');
+  box.querySelectorAll('button').forEach(b=>{
+    b.onclick = ()=>{
+      const chosen = +b.dataset.i;
+      const ok = chosen === it.a;
+      box.classList.add('locked');
+      box.querySelectorAll('button').forEach((x,i)=>{
+        if(i===it.a) x.classList.add('correct');
+        else if(i===chosen) x.classList.add('wrong');
+      });
+      const fb = $('fb');
+      fb.className = 'feedback show ' + (ok?'ok':'no');
+      fb.textContent = ok ? 'Richtig!' : 'Richtig ist: ' + curEx.buckets[it.a];
+      if(ok) curScore++;
+      next.disabled = false;
+      next.textContent = (curIdx === curEx.items.length-1) ? 'Fertig' : 'Weiter';
+    };
+  });
+}
+
+/* --- Typ: Lückentext --- */
+let gapState = null;
+function renderGap(area,next){
+  gapState = { filled:{}, active:null, total:curEx.lines.length };
+  let gi = 0;
+  const linesHtml = curEx.lines.map(line=>{
+    let html = `<div class="dialog-line"><span class="who">${line.who}</span><span>`;
+    line.parts.forEach((p,i)=>{
+      html += p.replace(/</g,'&lt;');
+      if(i < line.gaps.length){
+        html += `<span class="gap" data-g="${gi}" id="gap${gi}">?</span>`;
+        gi++;
+      }
+    });
+    html += `</span></div>`;
+    return html;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="qcard">
+      ${linesHtml}
+      <div class="wordbank" id="bank">
+        ${curEx.bank.map((w,i)=>`<button data-w="${i}">${w}</button>`).join('')}
+      </div>
+      <div class="feedback" id="fb"></div>
+    </div>`;
+
+  const answers = curEx.lines.flatMap(l=>l.gaps);
+
+  area.querySelectorAll('.gap').forEach(g=>{
+    g.onclick = ()=>{
+      area.querySelectorAll('.gap').forEach(x=>x.classList.remove('active'));
+      g.classList.add('active');
+      gapState.active = +g.dataset.g;
+    };
+  });
+
+  area.querySelectorAll('#bank button').forEach(b=>{
+    b.onclick = ()=>{
+      if(gapState.active === null){
+        // erste offene Lücke automatisch wählen
+        const open = [...area.querySelectorAll('.gap')].find(g=>!g.classList.contains('filled'));
+        if(!open) return;
+        open.classList.add('active');
+        gapState.active = +open.dataset.g;
+      }
+      const g = $('gap'+gapState.active);
+      // vorheriges Wort freigeben
+      if(gapState.filled[gapState.active] !== undefined){
+        const prev = area.querySelector(`#bank button[data-w="${gapState.filled[gapState.active]}"]`);
+        if(prev) prev.classList.remove('used');
+      }
+      g.textContent = curEx.bank[+b.dataset.w];
+      g.classList.add('filled');
+      g.classList.remove('active');
+      gapState.filled[gapState.active] = +b.dataset.w;
+      b.classList.add('used');
+      gapState.active = null;
+
+      const allFilled = Object.keys(gapState.filled).length === answers.length;
+      next.disabled = !allFilled;
+      next.textContent = 'Prüfen';
+      $('progFill').style.width = (Object.keys(gapState.filled).length/answers.length*100)+'%';
+    };
+  });
+
+  next.dataset.checked = '0';
+}
+
+/* ---------- Weiter ---------- */
+$('nextBtn').onclick = ()=>{
+  if(curEx.type === 'gap'){
+    const next = $('nextBtn');
+    if(next.dataset.checked === '0'){
+      const answers = curEx.lines.flatMap(l=>l.gaps);
+      curScore = 0;
+      answers.forEach((ans,i)=>{
+        const g = $('gap'+i);
+        const given = curEx.bank[gapState.filled[i]];
+        if(given === ans){ g.style.color='var(--go)'; g.style.borderBottomColor='var(--go)'; curScore++; }
+        else { g.style.color='var(--stop)'; g.style.borderBottomColor='var(--stop)'; g.textContent = ans; }
+      });
+      const fb = $('fb');
+      fb.className = 'feedback show ' + (curScore===answers.length?'ok':'no');
+      fb.textContent = curScore===answers.length
+        ? 'Alles richtig!'
+        : `${curScore} von ${answers.length} richtig. Die Lösungen stehen jetzt im Text.`;
+      next.dataset.checked = '1';
+      next.textContent = 'Fertig';
+      return;
+    }
+    finishEx(curEx.lines.flatMap(l=>l.gaps).length);
+    return;
+  }
+
+  if(curIdx < curEx.items.length - 1){
+    curIdx++;
+    renderStep();
+  } else {
+    finishEx(curEx.items.length);
+  }
+};
+
+function finishEx(total){
+  doneMap[curEx.id] = curScore;
+  save('daf_done', doneMap);
+  $('resScore').textContent = curScore;
+  $('resOf').textContent = 'von ' + total + ' richtig';
+  const pct = curScore/total;
+  $('resTitle').textContent = pct===1 ? 'Sehr gut!' : pct>=0.6 ? 'Gut gemacht!' : 'Übe noch einmal.';
+  $('resText').textContent = pct===1
+    ? 'Alle Aufgaben richtig.'
+    : 'Du kannst die Aufgabe wiederholen.';
+  show('scResult');
+}
+
+/* ==========================================================
+   BEAMER
+   ========================================================== */
+let bIdx = 0;
+function renderBeamer(){
+  const p = PHRASES[bIdx];
+  $('bPhrase').textContent = p.de;
+  $('bCtx').textContent = p.ctx;
+  $('bChips').classList.remove('on');
+  $('bReveal').style.display = 'inline-block';
+  $('bChips').innerHTML = LANGS.map(l=>`
+    <div class="c" ${l.rtl?'dir="rtl"':''}>
+      <span class="k">${l.label}</span><span>${p.t[l.code]}</span>
+    </div>`).join('');
+  $('bDots').innerHTML = PHRASES.map((_,i)=>`<i class="${i<=bIdx?'on':''}"></i>`).join('');
+  $('bCnt').textContent = (bIdx+1)+' / '+PHRASES.length;
+  $('bPrev').disabled = bIdx===0;
+  $('bNext').disabled = bIdx===PHRASES.length-1;
+}
+$('bReveal').onclick = ()=>{ $('bChips').classList.add('on'); $('bReveal').style.display='none'; };
+$('bPrev').onclick = ()=>{ if(bIdx>0){bIdx--;renderBeamer();} };
+$('bNext').onclick = ()=>{ if(bIdx<PHRASES.length-1){bIdx++;renderBeamer();} };
+document.addEventListener('keydown', e=>{
+  if($('scBeamer').classList.contains('hidden')) return;
+  if(e.key==='ArrowRight'||e.key===' ') $('bNext').click();
+  if(e.key==='ArrowLeft') $('bPrev').click();
+});
+
+$('qrGo').onclick = ()=>{
+  const url = $('qrInput').value.trim();
+  if(!url) return;
+  try{
+    QR.draw($('qrCanvas'), url);
+    $('qrUrl').textContent = url;
+    $('qrOut').classList.add('on');
+    save('daf_url', url);
+  }catch(err){
+    $('qrUrl').textContent = 'Die Adresse ist zu lang für den Code. Bitte kürzere Adresse verwenden.';
+    $('qrOut').classList.add('on');
+  }
+};
+
+/* ==========================================================
+   START
+   ========================================================== */
+(function init(){
+  doneMap = load('daf_done', {});
+  renderLangGrid();
+
+  if(IS_BEAMER){
+    renderBeamer();
+    const savedUrl = load('daf_url', location.href.split('?')[0]);
+    $('qrInput').value = savedUrl;
+    show('scBeamer');
+    return;
+  }
+
+  lang = load('daf_lang', null);
+  if(lang) openMenu(); else show('scStart');
+})();
+</script>
+</body>
+</html>
