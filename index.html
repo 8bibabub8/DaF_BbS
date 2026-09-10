@@ -77,9 +77,9 @@ button{font-family:inherit;cursor:pointer;}
   background:var(--slate);color:#fff;font-weight:700;
   display:flex;align-items:center;justify-content:center;font-size:1rem;
 }
-.ex-item .body{flex:1;min-width:0;}
-.ex-item .name{font-weight:700;font-size:1.05rem;}
-.ex-item .meta{font-size:.82rem;color:var(--ink-soft);margin-top:2px;}
+.ex-item .body{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+.ex-item .name{font-weight:700;font-size:1.05rem;display:block;}
+.ex-item .meta{font-size:.82rem;color:var(--ink-soft);display:block;}
 .ex-item .badge{
   flex:0 0 auto;font-size:.8rem;font-weight:700;
   padding:5px 10px;border-radius:20px;background:#eef1f3;color:var(--ink-soft);
@@ -245,6 +245,81 @@ button{font-family:inherit;cursor:pointer;}
   padding:8px 14px;border-radius:999px;font-weight:700;font-size:.85rem;color:var(--ink);
 }
 .lang-picker button.active{background:var(--act);border-color:var(--act);color:#fff;}
+/* ---------- Bereichskarten (Startmenü) ---------- */
+.area-grid{display:flex;flex-direction:column;gap:12px;}
+.area-card{
+  display:flex;flex-direction:column;align-items:flex-start;gap:3px;
+  background:var(--card);border:1.5px solid var(--edge);border-left:6px solid var(--act);
+  border-radius:14px;padding:20px 20px;width:100%;text-align:left;
+}
+.area-card.alt{border-left-color:var(--signal);}
+.area-card .area-name{font-size:1.35rem;font-weight:800;color:var(--ink);}
+.area-card .area-desc{font-size:.95rem;color:var(--ink-soft);}
+.area-card .area-meta{font-size:.82rem;color:var(--act);font-weight:700;margin-top:6px;}
+.area-card.alt .area-meta{color:var(--signal-dk);}
+
+/* ---------- Regelkasten ---------- */
+.rulebox{
+  background:var(--card);border:1.5px solid var(--edge);
+  border-radius:13px;padding:16px 16px 18px;
+}
+.rulebox h3{margin:0 0 12px;font-size:1.05rem;font-weight:700;}
+.ruletable{width:100%;border-collapse:collapse;font-size:1.02rem;}
+.ruletable th{
+  background:#eef1f3;font-size:.75rem;text-transform:uppercase;letter-spacing:.03em;
+  color:var(--ink-soft);padding:7px 9px;text-align:left;font-weight:700;
+}
+.ruletable td{padding:9px;border-bottom:1px solid var(--edge);}
+.ruletable td.w{color:var(--act);font-weight:800;}
+.ruletable td.v{color:var(--stop);font-weight:800;}
+.rulenote{
+  margin-top:13px;background:#fdf3dd;border-radius:9px;padding:11px 13px;
+  font-size:.95rem;font-weight:600;color:#5e4104;
+}
+
+/* ---------- Beamer: Folien + Sprachumschalter ---------- */
+.gslide{text-align:center;position:relative;}
+.gslide .gq{
+  font-size:clamp(1.9rem,5.2vw,3.2rem);font-weight:800;margin-bottom:14px;line-height:1.2;
+}
+.gslide .gq .hl{color:var(--signal);}
+.gslide .ga{
+  font-size:clamp(1.2rem,3.2vw,1.8rem);font-weight:600;
+  color:rgba(255,255,255,.82);margin-bottom:14px;
+}
+.gslide .gasks{
+  display:inline-block;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.2);border-radius:20px;
+  padding:6px 15px;font-size:.9rem;color:var(--signal);font-weight:700;
+}
+.bruletable{
+  position:relative;border-collapse:collapse;margin:0 auto;
+  font-size:clamp(1rem,2.6vw,1.5rem);color:#fff;
+}
+.bruletable th{
+  color:var(--signal);font-size:.7em;text-transform:uppercase;
+  letter-spacing:.05em;padding:6px 14px;border-bottom:2px solid rgba(255,255,255,.25);
+}
+.bruletable td{padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.12);font-weight:700;}
+.bruletable td.w{color:var(--signal);}
+.bruletable td.v{color:#7fd4a8;}
+.brulenote{
+  position:relative;margin-top:20px;font-size:1.05rem;
+  color:var(--signal);font-weight:700;max-width:600px;
+}
+.blang{position:relative;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:26px;}
+.blang button{
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);
+  color:#fff;padding:9px 16px;border-radius:9px;font-weight:800;font-size:.9rem;
+}
+.blang button.active{background:var(--signal);border-color:var(--signal);color:var(--slate);}
+.btrans{
+  position:relative;margin-top:18px;font-size:clamp(1.1rem,2.8vw,1.6rem);
+  font-weight:700;color:#fff;min-height:1.2em;max-width:760px;
+}
+.btrans[dir="rtl"]{direction:rtl;}
+.btrans .sub{display:block;font-size:.78em;font-weight:600;color:rgba(255,255,255,.7);margin-top:6px;}
+
 .qr-panel{
   background:var(--card);border:1.5px solid var(--edge);border-radius:14px;
   padding:20px;margin-top:20px;
@@ -286,19 +361,71 @@ button{font-family:inherit;cursor:pointer;}
     <div class="lang-grid" id="langGrid"></div>
   </section>
 
+  <!-- ============ HAUPTMENÜ: ZWEI BEREICHE ============ -->
+  <section id="scHome" class="hidden">
+    <div class="bar">
+      <div>
+        <div class="t">Deutsch A1</div>
+        <div class="s">Was möchtest du üben?</div>
+      </div>
+      <button class="langbtn" id="changeLangHome">RU</button>
+    </div>
+    <div class="area-grid">
+      <button class="area-card" id="goWortschatz">
+        <span class="area-name">Wortschatz</span>
+        <span class="area-desc">Wörter und Sätze nach Kapiteln</span>
+        <span class="area-meta" id="wsMeta"></span>
+      </button>
+      <button class="area-card alt" id="goGrammatik">
+        <span class="area-name">Grammatik</span>
+        <span class="area-desc">Regeln und Formen</span>
+        <span class="area-meta" id="grMeta"></span>
+      </button>
+    </div>
+    <div class="modeswitch">
+      Für die Lehrkraft: <a href="?m=beamer">Beamer-Modus öffnen</a>
+    </div>
+  </section>
+
+  <!-- ============ GRAMMATIK: THEMENLISTE ============ -->
+  <section id="scGrammarList" class="hidden">
+    <div class="bar">
+      <div>
+        <div class="t">Grammatik</div>
+        <div class="s">Wähle ein Thema</div>
+      </div>
+      <button class="langbtn" id="changeLangGr">RU</button>
+    </div>
+    <div class="ex-top"><button class="back" id="backHomeFromGr">← Start</button></div>
+    <div class="ex-list" id="grammarList"></div>
+  </section>
+
+  <!-- ============ GRAMMATIK: EIN THEMA ============ -->
+  <section id="scGrammarTopic" class="hidden">
+    <div class="bar">
+      <div>
+        <div class="t" id="grTopicTitle"></div>
+        <div class="s" id="grTopicSubtitle"></div>
+      </div>
+      <button class="langbtn" id="changeLangGt">RU</button>
+    </div>
+    <div class="ex-top"><button class="back" id="backToGrammarList">← Themen</button></div>
+    <div id="grRuleArea"></div>
+    <p class="menu-intro" style="margin-top:18px;">Übungen zu diesem Thema:</p>
+    <div class="ex-list" id="grExList"></div>
+  </section>
+
   <!-- ============ KAPITELÜBERSICHT ============ -->
   <section id="scChapters" class="hidden">
     <div class="bar">
       <div>
-        <div class="t">Deutsch A1</div>
+        <div class="t">Wortschatz</div>
         <div class="s">Wähle ein Kapitel</div>
       </div>
       <button class="langbtn" id="changeLangCh">RU</button>
     </div>
+    <div class="ex-top"><button class="back" id="backHomeFromCh">← Start</button></div>
     <div class="ex-list" id="chapterList"></div>
-    <div class="modeswitch">
-      Für die Lehrkraft: <a href="?m=beamer">Beamer-Modus öffnen</a>
-    </div>
   </section>
 
   <!-- ============ EINHEITENÜBERSICHT ============ -->
@@ -375,10 +502,9 @@ button{font-family:inherit;cursor:pointer;}
 
     <div class="stage">
       <div class="dots" id="bDots"></div>
-      <div class="big" id="bPhrase"></div>
-      <div class="ctx" id="bCtx"></div>
-      <button class="reveal" id="bReveal">Übersetzung zeigen</button>
-      <div class="tchips" id="bChips"></div>
+      <div id="bSlideBody"></div>
+      <div class="blang" id="bLangRow"></div>
+      <div class="btrans" id="bTrans"></div>
     </div>
     <div class="bnav">
       <button id="bPrev">← Zurück</button>
@@ -422,23 +548,32 @@ const LANGS = [
    ========================================================== */
 const K1E1_PHRASES = [
   { de:'Guten Morgen!', ctx:'morgens, bis etwa 10 Uhr',
-    t:{ru:'Доброе утро!',uk:'Доброго ранку!',ar:'صباح الخير!',pt:'Bom dia!',bg:'Добро утро!'} },
+    t:{ru:'Доброе утро!',uk:'Доброго ранку!',ar:'صباح الخير!',pt:'Bom dia!',bg:'Добро утро!'},
+    ctxT:{ru:'утром, примерно до 10 часов',uk:'вранці, приблизно до 10 години',ar:'صباحاً، حتى الساعة العاشرة تقريباً',pt:'de manhã, até cerca das 10 horas',bg:'сутрин, приблизително до 10 часа'} },
   { de:'Guten Tag!', ctx:'tagsüber, formell',
-    t:{ru:'Добрый день!',uk:'Добрий день!',ar:'نهارك سعيد!',pt:'Boa tarde!',bg:'Добър ден!'} },
+    t:{ru:'Добрый день!',uk:'Добрий день!',ar:'نهارك سعيد!',pt:'Boa tarde!',bg:'Добър ден!'},
+    ctxT:{ru:'днём, вежливая форма',uk:'вдень, ввічлива форма',ar:'خلال النهار، بصيغة رسمية',pt:'durante o dia, formal',bg:'през деня, официално'} },
   { de:'Hallo!', ctx:'informell, jederzeit',
-    t:{ru:'Привет!',uk:'Привіт!',ar:'مرحبا!',pt:'Oi!',bg:'Здравей!'} },
+    t:{ru:'Привет!',uk:'Привіт!',ar:'مرحبا!',pt:'Oi!',bg:'Здравей!'},
+    ctxT:{ru:'неформально, в любое время',uk:'неформально, будь-коли',ar:'بشكل غير رسمي، في أي وقت',pt:'informal, a qualquer hora',bg:'неформално, по всяко време'} },
   { de:'Guten Abend!', ctx:'abends',
-    t:{ru:'Добрый вечер!',uk:'Добрий вечір!',ar:'مساء الخير!',pt:'Boa noite!',bg:'Добър вечер!'} },
+    t:{ru:'Добрый вечер!',uk:'Добрий вечір!',ar:'مساء الخير!',pt:'Boa noite!',bg:'Добър вечер!'},
+    ctxT:{ru:'вечером',uk:'ввечері',ar:'مساءً',pt:'à noite (ao chegar)',bg:'вечер'} },
   { de:'Gute Nacht!', ctx:'vor dem Schlafen',
-    t:{ru:'Спокойной ночи!',uk:'На добраніч!',ar:'تصبح على خير!',pt:'Boa noite! (ao dormir)',bg:'Лека нощ!'} },
+    t:{ru:'Спокойной ночи!',uk:'На добраніч!',ar:'تصبح على خير!',pt:'Boa noite! (ao dormir)',bg:'Лека нощ!'},
+    ctxT:{ru:'перед сном',uk:'перед сном',ar:'قبل النوم',pt:'antes de dormir',bg:'преди сън'} },
   { de:'Auf Wiedersehen!', ctx:'formeller Abschied',
-    t:{ru:'До свидания!',uk:'До побачення!',ar:'إلى اللقاء!',pt:'Até logo!',bg:'Довиждане!'} },
+    t:{ru:'До свидания!',uk:'До побачення!',ar:'إلى اللقاء!',pt:'Até logo!',bg:'Довиждане!'},
+    ctxT:{ru:'вежливое прощание',uk:'ввічливе прощання',ar:'وداع رسمي',pt:'despedida formal',bg:'официално сбогуване'} },
   { de:'Tschüss!', ctx:'informeller Abschied',
-    t:{ru:'Пока!',uk:'Бувай!',ar:'باي!',pt:'Tchau!',bg:'Чао!'} },
+    t:{ru:'Пока!',uk:'Бувай!',ar:'باي!',pt:'Tchau!',bg:'Чао!'},
+    ctxT:{ru:'неформальное прощание',uk:'неформальне прощання',ar:'وداع غير رسمي',pt:'despedida informal',bg:'неформално сбогуване'} },
   { de:'Bitte. – Danke.', ctx:'Höflichkeit',
-    t:{ru:'Пожалуйста. – Спасибо.',uk:'Будь ласка. – Дякую.',ar:'من فضلك. – شكراً.',pt:'Por favor. – Obrigado/a.',bg:'Моля. – Благодаря.'} },
+    t:{ru:'Пожалуйста. – Спасибо.',uk:'Будь ласка. – Дякую.',ar:'من فضلك. – شكراً.',pt:'Por favor. – Obrigado/a.',bg:'Моля. – Благодаря.'},
+    ctxT:{ru:'вежливость',uk:'ввічливість',ar:'عبارات المجاملة',pt:'cortesia',bg:'учтивост'} },
   { de:'Guten Appetit!', ctx:'vor dem Essen',
-    t:{ru:'Приятного аппетита!',uk:'Смачного!',ar:'بالهناء والشفاء!',pt:'Bom apetite!',bg:'Добър апетит!'} },
+    t:{ru:'Приятного аппетита!',uk:'Смачного!',ar:'بالهناء والشفاء!',pt:'Bom apetite!',bg:'Добър апетит!'},
+    ctxT:{ru:'перед едой',uk:'перед їжею',ar:'قبل الأكل',pt:'antes da refeição',bg:'преди хранене'} },
 ];
 
 const K1E1_EXERCISES = [
@@ -526,23 +661,32 @@ const K1E1_EXERCISES = [
    ========================================================== */
 const K2E1_PHRASES = [
   { de:'der Künstler / die Künstlerin', ctx:'Er malt Bilder.',
-    t:{ru:'художник / художница',uk:'художник / художниця',ar:'فنان / فنانة',pt:'artista',bg:'художник / художничка'} },
+    t:{ru:'художник / художница',uk:'художник / художниця',ar:'فنان / فنانة',pt:'artista',bg:'художник / художничка'},
+    ctxT:{ru:'Он рисует картины.',uk:'Він малює картини.',ar:'هو يرسم لوحات.',pt:'Ele pinta quadros.',bg:'Той рисува картини.'} },
   { de:'der Kellner / die Kellnerin', ctx:'Er bedient Gäste.',
-    t:{ru:'официант / официантка',uk:'офіціант / офіціантка',ar:'نادل / نادلة',pt:'garçom / garçonete',bg:'сервитьор / сервитьорка'} },
+    t:{ru:'официант / официантка',uk:'офіціант / офіціантка',ar:'نادل / نادلة',pt:'garçom / garçonete',bg:'сервитьор / сервитьорка'},
+    ctxT:{ru:'Он обслуживает гостей.',uk:'Він обслуговує гостей.',ar:'هو يخدم الضيوف.',pt:'Ele atende os clientes.',bg:'Той обслужва гости.'} },
   { de:'der Arzt / die Ärztin', ctx:'Er untersucht Patienten.',
-    t:{ru:'врач',uk:'лікар',ar:'طبيب / طبيبة',pt:'médico / médica',bg:'лекар'} },
+    t:{ru:'врач',uk:'лікар',ar:'طبيب / طبيبة',pt:'médico / médica',bg:'лекар'},
+    ctxT:{ru:'Он осматривает пациентов.',uk:'Він оглядає пацієнтів.',ar:'هو يفحص المرضى.',pt:'Ele examina pacientes.',bg:'Той преглежда пациенти.'} },
   { de:'der Informatiker / die Informatikerin', ctx:'Er entwickelt Computerspiele.',
-    t:{ru:'программист / программистка',uk:'програміст / програмістка',ar:'مبرمج / مبرمجة',pt:'programador / programadora',bg:'програмист / програмистка'} },
+    t:{ru:'программист / программистка',uk:'програміст / програмістка',ar:'مبرمج / مبرمجة',pt:'programador / programadora',bg:'програмист / програмистка'},
+    ctxT:{ru:'Он разрабатывает компьютерные игры.',uk:'Він розробляє комп\u2019ютерні ігри.',ar:'هو يطوّر ألعاب الكمبيوتر.',pt:'Ele desenvolve jogos de computador.',bg:'Той разработва компютърни игри.'} },
   { de:'der Lehrer / die Lehrerin', ctx:'Sie unterrichtet Kinder.',
-    t:{ru:'учитель / учительница',uk:'вчитель / вчителька',ar:'معلم / معلمة',pt:'professor / professora',bg:'учител / учителка'} },
+    t:{ru:'учитель / учительница',uk:'вчитель / вчителька',ar:'معلم / معلمة',pt:'professor / professora',bg:'учител / учителка'},
+    ctxT:{ru:'Она обучает детей.',uk:'Вона навчає дітей.',ar:'هي تُدرّس الأطفال.',pt:'Ela ensina crianças.',bg:'Тя обучава деца.'} },
   { de:'der Assistent / die Assistentin', ctx:'Sie schreibt viele E-Mails.',
-    t:{ru:'ассистент / ассистентка',uk:'асистент / асистентка',ar:'مساعد / مساعدة',pt:'assistente',bg:'асистент / асистентка'} },
+    t:{ru:'ассистент / ассистентка',uk:'асистент / асистентка',ar:'مساعد / مساعدة',pt:'assistente',bg:'асистент / асистентка'},
+    ctxT:{ru:'Она пишет много электронных писем.',uk:'Вона пише багато електронних листів.',ar:'هي تكتب الكثير من رسائل البريد الإلكتروني.',pt:'Ela escreve muitos e-mails.',bg:'Тя пише много имейли.'} },
   { de:'der Student / die Studentin', ctx:'Er liest viele Bücher.',
-    t:{ru:'студент / студентка',uk:'студент / студентка',ar:'طالب / طالبة',pt:'estudante',bg:'студент / студентка'} },
+    t:{ru:'студент / студентка',uk:'студент / студентка',ar:'طالب / طالبة',pt:'estudante',bg:'студент / студентка'},
+    ctxT:{ru:'Он читает много книг.',uk:'Він читає багато книг.',ar:'هو يقرأ الكثير من الكتب.',pt:'Ele lê muitos livros.',bg:'Той чете много книги.'} },
   { de:'der Architekt / die Architektin', ctx:'Er plant Projekte.',
-    t:{ru:'архитектор',uk:'архітектор',ar:'مهندس معماري / مهندسة معمارية',pt:'arquiteto / arquiteta',bg:'архитект'} },
+    t:{ru:'архитектор',uk:'архітектор',ar:'مهندس معماري / مهندسة معمارية',pt:'arquiteto / arquiteta',bg:'архитект'},
+    ctxT:{ru:'Он планирует проекты.',uk:'Він планує проєкти.',ar:'هو يخطط للمشاريع.',pt:'Ele planeja projetos.',bg:'Той планира проекти.'} },
   { de:'der Ingenieur / die Ingenieurin', ctx:'Sie konstruiert Solarautos.',
-    t:{ru:'инженер',uk:'інженер',ar:'مهندس / مهندسة',pt:'engenheiro / engenheira',bg:'инженер'} },
+    t:{ru:'инженер',uk:'інженер',ar:'مهندس / مهندسة',pt:'engenheiro / engenheira',bg:'инженер'},
+    ctxT:{ru:'Она конструирует солнечные автомобили.',uk:'Вона конструює сонячні автомобілі.',ar:'هي تصمم سيارات تعمل بالطاقة الشمسية.',pt:'Ela projeta carros solares.',bg:'Тя конструира соларни автомобили.'} },
 ];
 
 const K2E1_EXERCISES = [
@@ -634,6 +778,124 @@ const K2E1_EXERCISES = [
       { who:'A', parts:['Ich ', ' viele Gäste jeden Tag.'], gaps:['bediene'] },
     ],
     bank:['Student','Kellner','bediene','Lehrerin','unterrichte','Ärztin']
+  },
+];
+
+/* ==========================================================
+   GRAMMATIK (kapitelübergreifend)
+   ========================================================== */
+const GRAMMAR = [
+  {
+    id:'g_wfragen',
+    title:'W-Fragen',
+    subtitle:'wie · woher · wo · was',
+    slides:[
+      { kind:'qa', w:'Wie', q:'Wie heißen Sie?', a:'Ich heiße Marek Nowak.', asks:'Frage nach dem Namen',
+        t:{ru:'Как вас зовут? – Меня зовут Марек Новак.',uk:'Як вас звати? – Мене звати Марек Новак.',ar:'ما اسمك؟ – اسمي ماريك نوفاك.',pt:'Como o senhor se chama? – Eu me chamo Marek Nowak.',bg:'Как се казвате? – Казвам се Марек Новак.'} },
+      { kind:'qa', w:'Woher', q:'Woher kommen Sie?', a:'Ich komme aus Polen.', asks:'Frage nach dem Land',
+        t:{ru:'Откуда вы? – Я из Польши.',uk:'Звідки ви? – Я з Польщі.',ar:'من أين أنت؟ – أنا من بولندا.',pt:'De onde o senhor vem? – Eu venho da Polônia.',bg:'Откъде сте? – Аз съм от Полша.'} },
+      { kind:'qa', w:'Wo', q:'Wo wohnen Sie?', a:'Ich wohne in Naumburg.', asks:'Frage nach dem Ort',
+        t:{ru:'Где вы живёте? – Я живу в Наумбурге.',uk:'Де ви живете? – Я живу в Наумбурзі.',ar:'أين تسكن؟ – أسكن في ناومبورغ.',pt:'Onde o senhor mora? – Eu moro em Naumburg.',bg:'Къде живеете? – Живея в Наумбург.'} },
+      { kind:'qa', w:'Was', q:'Was machen Sie?', a:'Ich arbeite als Kellner.', asks:'Frage nach der Tätigkeit',
+        t:{ru:'Кем вы работаете? – Я работаю официантом.',uk:'Ким ви працюєте? – Я працюю офіціантом.',ar:'ماذا تعمل؟ – أعمل نادلاً.',pt:'O que o senhor faz? – Eu trabalho como garçom.',bg:'Какво работите? – Работя като сервитьор.'} },
+      { kind:'rule' },
+    ],
+    rule:{
+      head:['Position 1','Position 2','Rest'],
+      rows:[
+        ['Wie','heißen','Sie?'],
+        ['Woher','kommen','Sie?'],
+        ['Wo','wohnen','Sie?'],
+        ['Was','machen','Sie?'],
+      ],
+      note:'Das W-Wort steht auf Position 1. Das Verb steht immer auf Position 2.'
+    },
+    exercises:[
+      {
+        id:'g_wf_a1', type:'choice',
+        title:'Welches Fragewort passt?',
+        hint:'Lies die Frage. Wähle das richtige Fragewort.',
+        help:{
+          ru:'Прочитай вопрос. Выбери правильное вопросительное слово.',
+          uk:'Прочитай запитання. Обери правильне питальне слово.',
+          ar:'اقرأ السؤال. اختر أداة الاستفهام الصحيحة.',
+          pt:'Leia a pergunta. Escolha a palavra interrogativa correta.',
+          bg:'Прочети въпроса. Избери правилната въпросителна дума.'
+        },
+        items:[
+          { q:'___ heißen Sie? – Ich heiße Amina.',
+            qt:{ru:'Ответ: Меня зовут Амина.',uk:'Відповідь: Мене звати Аміна.',ar:'الجواب: اسمي أمينة.',pt:'Resposta: Eu me chamo Amina.',bg:'Отговор: Казвам се Амина.'},
+            opts:['Wie','Wo','Was'], a:0 },
+          { q:'___ kommen Sie? – Ich komme aus Syrien.',
+            qt:{ru:'Ответ: Я из Сирии.',uk:'Відповідь: Я із Сирії.',ar:'الجواب: أنا من سوريا.',pt:'Resposta: Eu venho da Síria.',bg:'Отговор: Аз съм от Сирия.'},
+            opts:['Wo','Woher','Wie'], a:1 },
+          { q:'___ wohnen Sie? – Ich wohne in Weißenfels.',
+            qt:{ru:'Ответ: Я живу в Вайсенфельсе.',uk:'Відповідь: Я живу у Вайсенфельсі.',ar:'الجواب: أسكن في فايسنفيلس.',pt:'Resposta: Eu moro em Weißenfels.',bg:'Отговор: Живея във Вайсенфелс.'},
+            opts:['Woher','Was','Wo'], a:2 },
+          { q:'___ machen Sie? – Ich arbeite als Kellnerin.',
+            qt:{ru:'Ответ: Я работаю официанткой.',uk:'Відповідь: Я працюю офіціанткою.',ar:'الجواب: أعمل نادلة.',pt:'Resposta: Eu trabalho como garçonete.',bg:'Отговор: Работя като сервитьорка.'},
+            opts:['Was','Wo','Woher'], a:0 },
+          { q:'___ heißt du? – Ich heiße Olena.',
+            qt:{ru:'Ответ: Меня зовут Олена.',uk:'Відповідь: Мене звати Олена.',ar:'الجواب: اسمي أولينا.',pt:'Resposta: Eu me chamo Olena.',bg:'Отговор: Казвам се Олена.'},
+            opts:['Wo','Wie','Woher'], a:1 },
+          { q:'___ kommst du? – Ich komme aus Bulgarien.',
+            qt:{ru:'Ответ: Я из Болгарии.',uk:'Відповідь: Я з Болгарії.',ar:'الجواب: أنا من بلغاريا.',pt:'Resposta: Eu venho da Bulgária.',bg:'Отговор: Аз съм от България.'},
+            opts:['Woher','Was','Wie'], a:0 },
+        ]
+      },
+      {
+        id:'g_wf_a2', type:'choice',
+        title:'Welche Antwort passt?',
+        hint:'Lies die Frage. Wähle die passende Antwort.',
+        help:{
+          ru:'Прочитай вопрос. Выбери подходящий ответ.',
+          uk:'Прочитай запитання. Обери відповідь, яка підходить.',
+          ar:'اقرأ السؤال. اختر الإجابة المناسبة.',
+          pt:'Leia a pergunta. Escolha a resposta adequada.',
+          bg:'Прочети въпроса. Избери подходящия отговор.'
+        },
+        items:[
+          { q:'Woher kommen Sie?',
+            qt:{ru:'Откуда вы?',uk:'Звідки ви?',ar:'من أين أنت؟',pt:'De onde o senhor vem?',bg:'Откъде сте?'},
+            opts:['Ich komme aus Syrien.','Ich wohne in Naumburg.','Ich heiße Amina.'], a:0 },
+          { q:'Wo wohnen Sie?',
+            qt:{ru:'Где вы живёте?',uk:'Де ви живете?',ar:'أين تسكن؟',pt:'Onde o senhor mora?',bg:'Къде живеете?'},
+            opts:['Ich komme aus Polen.','Ich wohne in Weißenfels.','Ich bin Studentin.'], a:1 },
+          { q:'Wie heißen Sie?',
+            qt:{ru:'Как вас зовут?',uk:'Як вас звати?',ar:'ما اسمك؟',pt:'Como o senhor se chama?',bg:'Как се казвате?'},
+            opts:['Ich wohne in Halle.','Ich komme aus Bulgarien.','Ich heiße Marek Nowak.'], a:2 },
+          { q:'Was machen Sie?',
+            qt:{ru:'Кем вы работаете?',uk:'Ким ви працюєте?',ar:'ماذا تعمل؟',pt:'O que o senhor faz?',bg:'Какво работите?'},
+            opts:['Ich arbeite als Kellner.','Ich komme aus der Ukraine.','Ich heiße Olena.'], a:0 },
+          { q:'Woher kommst du?',
+            qt:{ru:'Откуда ты?',uk:'Звідки ти?',ar:'من أين أنت؟',pt:'De onde você vem?',bg:'Откъде си?'},
+            opts:['Ich wohne in Naumburg.','Ich komme aus Brasilien.','Ich bin Student.'], a:1 },
+        ]
+      },
+      {
+        id:'g_wf_a3', type:'gap',
+        title:'Das Gespräch im Betrieb',
+        hint:'Ergänze die Fragewörter. Tippe zuerst auf die Lücke, dann auf das Wort.',
+        help:{
+          ru:'Дополни вопросительные слова. Сначала нажми на пропуск, потом на слово.',
+          uk:'Доповни питальні слова. Спершу натисни на пропуск, потім на слово.',
+          ar:'أكمل أدوات الاستفهام. اضغط أولاً على الفراغ، ثم على الكلمة.',
+          pt:'Complete as palavras interrogativas. Toque primeiro na lacuna, depois na palavra.',
+          bg:'Допълни въпросителните думи. Първо натисни празното място, после думата.'
+        },
+        lines:[
+          { who:'A', parts:['', ' heißen Sie?'], gaps:['Wie'] },
+          { who:'B', parts:['Ich heiße Olena Kovalenko.'], gaps:[] },
+          { who:'A', parts:['', ' kommen Sie?'], gaps:['Woher'] },
+          { who:'B', parts:['Ich komme aus der Ukraine.'], gaps:[] },
+          { who:'A', parts:['Und ', ' wohnen Sie jetzt?'], gaps:['wo'] },
+          { who:'B', parts:['Ich wohne in Naumburg.'], gaps:[] },
+          { who:'A', parts:['', ' machen Sie beruflich?'], gaps:['Was'] },
+          { who:'B', parts:['Ich arbeite als Assistentin.'], gaps:[] },
+        ],
+        bank:['Wie','Woher','wo','Was','Wer','Wann']
+      },
+    ]
   },
 ];
 
@@ -809,7 +1071,9 @@ const IS_BEAMER = params.get('m') === 'beamer';
 
 let lang = null;
 let curChapter = null, curUnit = null;
+let curTopic = null;
 let curEx = null, curIdx = 0, curScore = 0;
+let backTarget = 'scMenu';
 let doneMap = {};
 
 /* --- persistence (funktioniert im echten Browser) --- */
@@ -817,7 +1081,8 @@ function load(k,def){ try{ const v=localStorage.getItem(k); return v?JSON.parse(
 function save(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 
 function show(id){
-  ['scStart','scChapters','scUnits','scMenu','scEx','scResult','scBeamer'].forEach(s=>{
+  ['scStart','scHome','scChapters','scUnits','scMenu',
+   'scGrammarList','scGrammarTopic','scEx','scResult','scBeamer'].forEach(s=>{
     $(s).classList.toggle('hidden', s!==id);
   });
   window.scrollTo(0,0);
@@ -833,7 +1098,7 @@ function renderLangGrid(){
       <span class="de">${l.de}</span>
     </button>`).join('');
   $('langGrid').querySelectorAll('button').forEach(b=>{
-    b.onclick = ()=>{ lang=b.dataset.code; save('daf_lang',lang); openChapters(); };
+    b.onclick = ()=>{ lang=b.dataset.code; save('daf_lang',lang); openHome(); };
   });
 }
 
@@ -842,10 +1107,90 @@ function exCount(e){
        : e.type==='gap'  ? e.lines.flatMap(l=>l.gaps).length
        : e.items.length;
 }
+function setAllLangBtns(){
+  ['changeLangHome','changeLangCh','changeLangUn','changeLang',
+   'changeLangGr','changeLangGt'].forEach(id=>{
+    const el = $(id); if(el) el.textContent = langObj().label;
+  });
+}
+
+/* ---------- 0: Hauptmenü ---------- */
+function openHome(){
+  setAllLangBtns();
+  const wsTotal = CHAPTERS.reduce((s,c)=>s+c.units.reduce((x,u)=>x+u.exercises.length,0),0);
+  const wsDone = CHAPTERS.reduce((s,c)=>s+c.units.reduce((x,u)=>
+    x+u.exercises.filter(e=>doneMap[e.id]!==undefined).length,0),0);
+  const grTotal = GRAMMAR.reduce((s,t)=>s+t.exercises.length,0);
+  const grDone = GRAMMAR.reduce((s,t)=>s+t.exercises.filter(e=>doneMap[e.id]!==undefined).length,0);
+  $('wsMeta').textContent = `${wsDone} von ${wsTotal} Aufgaben bearbeitet`;
+  $('grMeta').textContent = `${grDone} von ${grTotal} Aufgaben bearbeitet`;
+  show('scHome');
+}
+$('goWortschatz').onclick = ()=> openChapters();
+$('goGrammatik').onclick  = ()=> openGrammarList();
+
+/* ---------- Grammatik: Themenliste ---------- */
+function openGrammarList(){
+  setAllLangBtns();
+  $('grammarList').innerHTML = GRAMMAR.map((t,i)=>{
+    const n = t.exercises.length;
+    const d = t.exercises.filter(e=>doneMap[e.id]!==undefined).length;
+    return `<button class="ex-item" data-i="${i}" style="border-left-color:var(--signal);">
+      <span class="num" style="background:var(--signal);color:var(--slate);">${i+1}</span>
+      <span class="body">
+        <span class="name">${t.title}</span>
+        <span class="meta">${t.subtitle}</span>
+      </span>
+      <span class="badge ${d===n?'done':''}">${d}/${n}</span>
+    </button>`;
+  }).join('');
+  $('grammarList').querySelectorAll('.ex-item').forEach(b=>{
+    b.onclick = ()=> openGrammarTopic(GRAMMAR[+b.dataset.i]);
+  });
+  show('scGrammarList');
+}
+
+/* ---------- Grammatik: ein Thema ---------- */
+function openGrammarTopic(topic){
+  if(topic) curTopic = topic;
+  setAllLangBtns();
+  $('grTopicTitle').textContent = curTopic.title;
+  $('grTopicSubtitle').textContent = curTopic.subtitle;
+
+  const r = curTopic.rule;
+  $('grRuleArea').innerHTML = `
+    <div class="rulebox">
+      <h3>So geht es</h3>
+      <table class="ruletable">
+        <tr>${r.head.map(h=>`<th>${h}</th>`).join('')}</tr>
+        ${r.rows.map(row=>`<tr>
+          <td class="w">${row[0]}</td><td class="v">${row[1]}</td><td>${row[2]}</td>
+        </tr>`).join('')}
+      </table>
+      <div class="rulenote">${r.note}</div>
+    </div>`;
+
+  $('grExList').innerHTML = curTopic.exercises.map((e,i)=>{
+    const n = exCount(e);
+    const d = doneMap[e.id];
+    return `<button class="ex-item" data-i="${i}" style="border-left-color:var(--signal);">
+      <span class="num" style="background:var(--signal);color:var(--slate);">${i+1}</span>
+      <span class="body">
+        <span class="name">${e.title}</span>
+        <span class="meta">${n} Aufgaben</span>
+      </span>
+      <span class="badge ${d?'done':''}">${d ? d+'/'+n : 'offen'}</span>
+    </button>`;
+  }).join('');
+  $('grExList').querySelectorAll('.ex-item').forEach(b=>{
+    b.onclick = ()=>{ backTarget='scGrammarTopic'; startEx(curTopic.exercises[+b.dataset.i]); };
+  });
+  show('scGrammarTopic');
+}
 
 /* ---------- 1: Kapitelübersicht ---------- */
 function openChapters(){
-  $('changeLangCh').textContent = langObj().label;
+  setAllLangBtns();
   $('chapterList').innerHTML = CHAPTERS.map((c,i)=>{
     const totalEx = c.units.reduce((s,u)=>s+u.exercises.length,0);
     const doneEx = c.units.reduce((s,u)=>s+u.exercises.filter(e=>doneMap[e.id]!==undefined).length,0);
@@ -866,11 +1211,11 @@ function openChapters(){
 
 /* ---------- 2: Einheitenübersicht ---------- */
 function openUnits(chapter){
-  curChapter = chapter;
-  $('changeLangUn').textContent = langObj().label;
-  $('unitsChapterTitle').textContent = chapter.title;
-  $('unitsChapterSubtitle').textContent = chapter.subtitle;
-  $('unitList').innerHTML = chapter.units.map((u,i)=>{
+  if(chapter) curChapter = chapter;
+  setAllLangBtns();
+  $('unitsChapterTitle').textContent = curChapter.title;
+  $('unitsChapterSubtitle').textContent = curChapter.subtitle;
+  $('unitList').innerHTML = curChapter.units.map((u,i)=>{
     const n = u.exercises.length;
     const d = u.exercises.filter(e=>doneMap[e.id]!==undefined).length;
     return `<button class="ex-item" data-i="${i}">
@@ -883,7 +1228,7 @@ function openUnits(chapter){
     </button>`;
   }).join('');
   $('unitList').querySelectorAll('.ex-item').forEach(b=>{
-    b.onclick = ()=> openMenu(chapter.units[+b.dataset.i]);
+    b.onclick = ()=> openMenu(curChapter.units[+b.dataset.i]);
   });
   show('scUnits');
 }
@@ -891,7 +1236,7 @@ function openUnits(chapter){
 /* ---------- 3: Aufgabenliste einer Einheit ---------- */
 function openMenu(unit){
   if(unit) curUnit = unit;
-  $('changeLang').textContent = langObj().label;
+  setAllLangBtns();
   $('menuUnitTitle').textContent = curUnit.title;
   $('menuUnitSubtitle').textContent = curChapter.title + ' · ' + curUnit.title;
   $('exList').innerHTML = curUnit.exercises.map((e,i)=>{
@@ -907,18 +1252,26 @@ function openMenu(unit){
     </button>`;
   }).join('');
   $('exList').querySelectorAll('.ex-item').forEach(b=>{
-    b.onclick = ()=> startEx(curUnit.exercises[+b.dataset.i]);
+    b.onclick = ()=>{ backTarget='scMenu'; startEx(curUnit.exercises[+b.dataset.i]); };
   });
   show('scMenu');
 }
 
-$('changeLangCh').onclick = ()=> show('scStart');
-$('changeLangUn').onclick = ()=> show('scStart');
-$('changeLang').onclick = ()=> show('scStart');
+function goBackFromEx(){
+  if(backTarget==='scGrammarTopic') openGrammarTopic();
+  else openMenu();
+}
+
+['changeLangHome','changeLangCh','changeLangUn','changeLang','changeLangGr','changeLangGt']
+  .forEach(id=>{ const el=$(id); if(el) el.onclick = ()=> show('scStart'); });
+
+$('backHomeFromCh').onclick = ()=> openHome();
+$('backHomeFromGr').onclick = ()=> openHome();
+$('backToGrammarList').onclick = ()=> openGrammarList();
 $('backToChapters').onclick = ()=> openChapters();
-$('backToUnits').onclick = ()=> openUnits(curChapter);
-$('backBtn').onclick = ()=> openMenu();
-$('menuBtn').onclick = ()=> openMenu();
+$('backToUnits').onclick = ()=> openUnits();
+$('backBtn').onclick = ()=> goBackFromEx();
+$('menuBtn').onclick = ()=> goBackFromEx();
 $('againBtn').onclick = ()=> startEx(curEx);
 
 /* ---------- Übung starten ---------- */
@@ -935,7 +1288,8 @@ function startEx(ex){
 $('helpBtn').onclick = ()=>{
   const box = $('helpBox');
   const l = langObj();
-  if(box.classList.contains('hidden')){
+  const opening = box.classList.contains('hidden');
+  if(opening){
     box.innerHTML = `<span class="lbl">${l.de}</span>${curEx.help[l.code]}`;
     box.setAttribute('dir', l.rtl?'rtl':'ltr');
     box.classList.remove('hidden');
@@ -944,6 +1298,9 @@ $('helpBtn').onclick = ()=>{
     box.classList.add('hidden');
     $('helpBtn').textContent = 'Hilfe · Übersetzung';
   }
+  // Übersetzung des Aufgabentexts mitschalten
+  const sit = $('sitHelp');
+  if(sit) sit.classList.toggle('hidden', !opening);
 };
 
 function totalSteps(){
@@ -1160,18 +1517,40 @@ function finishEx(total){
    BEAMER
    ========================================================== */
 let bIdx = 0;
-let bChapter = CHAPTERS[0], bUnit = CHAPTERS[0].units[0];
+let bSel = { kind:'unit', chapter:CHAPTERS[0], unit:CHAPTERS[0].units[0] };
+let bLang = null;   // null = keine Übersetzung sichtbar
+
+function beamerSlides(){
+  if(bSel.kind==='unit'){
+    return bSel.unit.phrases.map(p=>({
+      kind:'word', de:p.de, ctx:p.ctx, t:p.t, ctxT:p.ctxT
+    }));
+  }
+  return bSel.topic.slides;
+}
+function beamerTitle(){
+  return bSel.kind==='unit'
+    ? { t:bSel.unit.title, s:bSel.chapter.title + ' · Wortschatz · Beamer' }
+    : { t:bSel.topic.title, s:'Grammatik · ' + bSel.topic.subtitle + ' · Beamer' };
+}
 
 function renderBeamerPicker(){
-  $('beamerUnitPicker').innerHTML = CHAPTERS.flatMap(c =>
-    c.units.map(u => `<button data-c="${c.id}" data-u="${u.id}"
-      class="${u===bUnit?'active':''}">${c.title}: ${u.title}</button>`)
-  ).join('');
+  const vocab = CHAPTERS.flatMap(c => c.units.map(u =>
+    `<button data-kind="unit" data-c="${c.id}" data-u="${u.id}"
+      class="${bSel.kind==='unit'&&bSel.unit.id===u.id?'active':''}">${c.title}: ${u.title}</button>`));
+  const gram = GRAMMAR.map(t =>
+    `<button data-kind="topic" data-t="${t.id}"
+      class="${bSel.kind==='topic'&&bSel.topic.id===t.id?'active':''}">Grammatik: ${t.title}</button>`);
+  $('beamerUnitPicker').innerHTML = vocab.concat(gram).join('');
   $('beamerUnitPicker').querySelectorAll('button').forEach(b=>{
     b.onclick = ()=>{
-      bChapter = CHAPTERS.find(c=>c.id===b.dataset.c);
-      bUnit = bChapter.units.find(u=>u.id===b.dataset.u);
-      bIdx = 0;
+      if(b.dataset.kind==='unit'){
+        const c = CHAPTERS.find(x=>x.id===b.dataset.c);
+        bSel = { kind:'unit', chapter:c, unit:c.units.find(u=>u.id===b.dataset.u) };
+      } else {
+        bSel = { kind:'topic', topic:GRAMMAR.find(t=>t.id===b.dataset.t) };
+      }
+      bIdx = 0; bLang = null;
       renderBeamerPicker();
       renderBeamer();
     };
@@ -1179,26 +1558,66 @@ function renderBeamerPicker(){
 }
 
 function renderBeamer(){
-  const phrases = bUnit.phrases;
-  const p = phrases[bIdx];
-  $('bUnitTitle').textContent = bUnit.title;
-  $('bUnitSubtitle').textContent = bChapter.title + ' · ' + bUnit.title + ' · Beamer';
-  $('bPhrase').textContent = p.de;
-  $('bCtx').textContent = p.ctx;
-  $('bChips').classList.remove('on');
-  $('bReveal').style.display = 'inline-block';
-  $('bChips').innerHTML = LANGS.map(l=>`
-    <div class="c" ${l.rtl?'dir="rtl"':''}>
-      <span class="k">${l.label}</span><span>${p.t[l.code]}</span>
-    </div>`).join('');
-  $('bDots').innerHTML = phrases.map((_,i)=>`<i class="${i<=bIdx?'on':''}"></i>`).join('');
-  $('bCnt').textContent = (bIdx+1)+' / '+phrases.length;
+  const slides = beamerSlides();
+  const s = slides[bIdx];
+  const ttl = beamerTitle();
+  $('bUnitTitle').textContent = ttl.t;
+  $('bUnitSubtitle').textContent = ttl.s;
+
+  /* --- Folieninhalt --- */
+  let body = '';
+  if(s.kind==='word'){
+    body = `<div class="big">${s.de}</div><div class="ctx">${s.ctx}</div>`;
+  } else if(s.kind==='qa'){
+    const q = s.q.replace(s.w, `<span class="hl">${s.w}</span>`);
+    body = `<div class="gslide">
+      <div class="gq">${q}</div>
+      <div class="ga">${s.a}</div>
+      <div class="gasks">${s.asks}</div>
+    </div>`;
+  } else if(s.kind==='rule'){
+    const r = bSel.topic.rule;
+    body = `<table class="bruletable">
+      <tr>${r.head.map(h=>`<th>${h}</th>`).join('')}</tr>
+      ${r.rows.map(row=>`<tr>
+        <td class="w">${row[0]}</td><td class="v">${row[1]}</td><td>${row[2]}</td>
+      </tr>`).join('')}
+    </table>
+    <div class="brulenote">${r.note}</div>`;
+  }
+  $('bSlideBody').innerHTML = body;
+
+  /* --- Sprachumschalter: nur eine Sprache auf Tippen --- */
+  const hasTrans = !!s.t;
+  $('bLangRow').innerHTML = hasTrans
+    ? LANGS.map(l=>`<button data-code="${l.code}" class="${bLang===l.code?'active':''}">${l.label}</button>`).join('')
+    : '';
+  $('bLangRow').querySelectorAll('button').forEach(b=>{
+    b.onclick = ()=>{
+      bLang = (bLang === b.dataset.code) ? null : b.dataset.code;  // nochmal tippen = ausblenden
+      renderBeamer();
+    };
+  });
+
+  /* --- Übersetzung (genau eine Sprache) --- */
+  const tr = $('bTrans');
+  if(hasTrans && bLang){
+    const l = LANGS.find(x=>x.code===bLang);
+    const sub = s.ctxT ? `<span class="sub">${s.ctxT[bLang]}</span>` : '';
+    tr.innerHTML = s.t[bLang] + sub;
+    tr.setAttribute('dir', l.rtl ? 'rtl' : 'ltr');
+  } else {
+    tr.innerHTML = '';
+    tr.setAttribute('dir','ltr');
+  }
+
+  $('bDots').innerHTML = slides.map((_,i)=>`<i class="${i<=bIdx?'on':''}"></i>`).join('');
+  $('bCnt').textContent = (bIdx+1)+' / '+slides.length;
   $('bPrev').disabled = bIdx===0;
-  $('bNext').disabled = bIdx===phrases.length-1;
+  $('bNext').disabled = bIdx===slides.length-1;
 }
-$('bReveal').onclick = ()=>{ $('bChips').classList.add('on'); $('bReveal').style.display='none'; };
-$('bPrev').onclick = ()=>{ if(bIdx>0){bIdx--;renderBeamer();} };
-$('bNext').onclick = ()=>{ if(bIdx<bUnit.phrases.length-1){bIdx++;renderBeamer();} };
+$('bPrev').onclick = ()=>{ if(bIdx>0){bIdx--;bLang=null;renderBeamer();} };
+$('bNext').onclick = ()=>{ if(bIdx<beamerSlides().length-1){bIdx++;bLang=null;renderBeamer();} };
 document.addEventListener('keydown', e=>{
   if($('scBeamer').classList.contains('hidden')) return;
   if(e.key==='ArrowRight'||e.key===' ') $('bNext').click();
@@ -1262,7 +1681,7 @@ $('qrGo').onclick = ()=>{
   }
 
   lang = load('daf_lang', null);
-  if(lang) openChapters(); else show('scStart');
+  if(lang) openHome(); else show('scStart');
 })();
 </script>
 </body>
