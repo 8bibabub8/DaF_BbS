@@ -690,7 +690,7 @@ const K2E1_PHRASES = [
 ];
 
 const K2E1_EXERCISES = [
-  /* ---------- 1: Tätigkeit → Beruf ---------- */
+  /* ---------- 1: Tätigkeit → Beruf (14 Items) ---------- */
   {
     id:'k2e1_a1', type:'choice',
     title:'Welcher Beruf ist das?',
@@ -713,28 +713,52 @@ const K2E1_EXERCISES = [
         qt:{ru:'Он осматривает пациентов.',uk:'Він оглядає пацієнтів.',ar:'هو يفحص المرضى.',pt:'Ele examina pacientes.',bg:'Той преглежда пациенти.'},
         opts:['Arzt','Kellner','Ingenieur'], a:0 },
       { q:'Sie schreibt viele E-Mails.',
-        qt:{ru:'Она пишет много писем по электронной почте.',uk:'Вона пише багато електронних листів.',ar:'هي تكتب الكثير من رسائل البريد الإلكتروني.',pt:'Ela escreve muitos e-mails.',bg:'Тя пише много имейли.'},
+        qt:{ru:'Она пишет много электронных писем.',uk:'Вона пише багато електронних листів.',ar:'هي تكتب الكثير من رسائل البريد الإلكتروني.',pt:'Ela escreve muitos e-mails.',bg:'Тя пише много имейли.'},
         opts:['Architektin','Assistentin','Künstlerin'], a:1 },
       { q:'Er entwickelt Computerspiele.',
         qt:{ru:'Он разрабатывает компьютерные игры.',uk:'Він розробляє комп\u2019ютерні ігри.',ar:'هو يطوّر ألعاب الكمبيوتر.',pt:'Ele desenvolve jogos de computador.',bg:'Той разработва компютърни игри.'},
         opts:['Informatiker','Kellner','Lehrer'], a:0 },
       { q:'Sie konstruiert Solarautos.',
-        qt:{ru:'Она конструирует автомобили на солнечных батареях.',uk:'Вона конструює автомобілі на сонячних батареях.',ar:'هي تصمم سيارات تعمل بالطاقة الشمسية.',pt:'Ela projeta carros solares.',bg:'Тя конструира соларни автомобили.'},
+        qt:{ru:'Она конструирует солнечные автомобили.',uk:'Вона конструює сонячні автомобілі.',ar:'هي تصمم سيارات تعمل بالطاقة الشمسية.',pt:'Ela projeta carros solares.',bg:'Тя конструира соларни автомобили.'},
         opts:['Ingenieurin','Studentin','Kellnerin'], a:0 },
+      { q:'Er bedient Gäste im Restaurant.',
+        qt:{ru:'Он обслуживает гостей в ресторане.',uk:'Він обслуговує гостей у ресторані.',ar:'هو يخدم الضيوف في المطعم.',pt:'Ele atende os clientes no restaurante.',bg:'Той обслужва гости в ресторанта.'},
+        opts:['Architekt','Physiker','Kellner'], a:2 },
+      { q:'Sie kocht in der Küche.',
+        qt:{ru:'Она готовит на кухне.',uk:'Вона готує на кухні.',ar:'هي تطبخ في المطبخ.',pt:'Ela cozinha na cozinha.',bg:'Тя готви в кухнята.'},
+        opts:['Köchin','Ärztin','Designerin'], a:0 },
+      { q:'Er liest viele Bücher und studiert.',
+        qt:{ru:'Он читает много книг и учится в университете.',uk:'Він читає багато книг і навчається в університеті.',ar:'هو يقرأ الكثير من الكتب ويدرس في الجامعة.',pt:'Ele lê muitos livros e estuda na universidade.',bg:'Той чете много книги и учи в университета.'},
+        opts:['Kellner','Student','Musiker'], a:1 },
+      { q:'Sie plant Häuser.',
+        qt:{ru:'Она проектирует дома.',uk:'Вона проєктує будинки.',ar:'هي تصمم المنازل.',pt:'Ela projeta casas.',bg:'Тя проектира къщи.'},
+        opts:['Architektin','Journalistin','Köchin'], a:0 },
+      { q:'Er schreibt Artikel für die Zeitung.',
+        qt:{ru:'Он пишет статьи для газеты.',uk:'Він пише статті для газети.',ar:'هو يكتب مقالات للصحيفة.',pt:'Ele escreve artigos para o jornal.',bg:'Той пише статии за вестника.'},
+        opts:['Physiker','Journalist','Ingenieur'], a:1 },
+      { q:'Sie arbeitet mit Zahlen.',
+        qt:{ru:'Она работает с числами.',uk:'Вона працює з числами.',ar:'هي تعمل بالأرقام.',pt:'Ela trabalha com números.',bg:'Тя работи с числа.'},
+        opts:['Musikerin','Kellnerin','Mathematikerin'], a:2 },
+      { q:'Er macht Experimente im Labor.',
+        qt:{ru:'Он проводит эксперименты в лаборатории.',uk:'Він проводить експерименти в лабораторії.',ar:'هو يجري تجارب في المختبر.',pt:'Ele faz experimentos no laboratório.',bg:'Той прави експерименти в лабораторията.'},
+        opts:['Physiker','Künstler','Student'], a:0 },
+      { q:'Sie entwirft Kleidung.',
+        qt:{ru:'Она разрабатывает одежду.',uk:'Вона розробляє одяг.',ar:'هي تصمم الملابس.',pt:'Ela cria roupas.',bg:'Тя проектира дрехи.'},
+        opts:['Ärztin','Designerin','Lehrerin'], a:1 },
     ]
   },
 
-  /* ---------- 2: männlich → weiblich ---------- */
+  /* ---------- 2: männlich → weiblich (12 Items) ---------- */
   {
     id:'k2e1_a2', type:'choice',
     title:'Wie heißt die weibliche Form?',
     hint:'Wähle die richtige weibliche Form.',
     help:{
-      ru:'Выбери правильную форму женского рода.',
-      uk:'Обери правильну форму жіночого роду.',
-      ar:'اختر صيغة المؤنث الصحيحة.',
-      pt:'Escolha a forma feminina correta.',
-      bg:'Избери правилната форма за женски род.'
+      ru:'Выбери правильную форму женского рода. Обычно добавляется окончание -in.',
+      uk:'Обери правильну форму жіночого роду. Зазвичай додається закінчення -in.',
+      ar:'اختر صيغة المؤنث الصحيحة. غالباً تُضاف النهاية ‎-in‎.',
+      pt:'Escolha a forma feminina correta. Normalmente acrescenta-se a terminação -in.',
+      bg:'Избери правилната форма за женски род. Обикновено се добавя окончание -in.'
     },
     items:[
       { q:'der Lehrer',
@@ -755,29 +779,83 @@ const K2E1_EXERCISES = [
       { q:'der Künstler',
         qt:{ru:'художник',uk:'художник',ar:'الفنان',pt:'o artista',bg:'художникът'},
         opts:['die Künstlerin','die Künstlerine','die Künstler'], a:0 },
+      { q:'der Kellner',
+        qt:{ru:'официант',uk:'офіціант',ar:'النادل',pt:'o garçom',bg:'сервитьорът'},
+        opts:['die Kellnerine','die Kellnerin','die Kellner'], a:1 },
+      { q:'der Informatiker',
+        qt:{ru:'программист',uk:'програміст',ar:'المبرمج',pt:'o programador',bg:'програмистът'},
+        opts:['die Informatikere','die Informatik','die Informatikerin'], a:2 },
+      { q:'der Journalist',
+        qt:{ru:'журналист',uk:'журналіст',ar:'الصحفي',pt:'o jornalista',bg:'журналистът'},
+        opts:['die Journalistin','die Journaliste','die Journalisterin'], a:0 },
+      { q:'der Physiker',
+        qt:{ru:'физик',uk:'фізик',ar:'الفيزيائي',pt:'o físico',bg:'физикът'},
+        opts:['die Physikere','die Physikerin','die Physikin'], a:1 },
+      { q:'der Musiker',
+        qt:{ru:'музыкант',uk:'музикант',ar:'الموسيقي',pt:'o músico',bg:'музикантът'},
+        opts:['die Musikin','die Musikere','die Musikerin'], a:2 },
+      { q:'der Arzt  (Achtung: mit Umlaut!)',
+        qt:{ru:'врач (внимание: с умлаутом!)',uk:'лікар (увага: з умлаутом!)',ar:'الطبيب (انتبه: مع تغيير حركة الحرف!)',pt:'o médico (atenção: com trema!)',bg:'лекарят (внимание: с умлаут!)'},
+        opts:['die Arztin','die Ärztin','die Arzterin'], a:1 },
     ]
   },
 
-  /* ---------- 3: Dialog ergänzen ---------- */
+  /* ---------- 3: der oder die? (12 Items) ---------- */
   {
-    id:'k2e1_a3', type:'gap',
-    title:'Kennenlernen im Betrieb',
-    hint:'Ergänze den Dialog. Tippe zuerst auf die Lücke, dann auf das Wort.',
+    id:'k2e1_a3', type:'sort',
+    title:'der oder die?',
+    hint:'Männliche Form = der. Weibliche Form = die. Ordne zu.',
     help:{
-      ru:'Дополни диалог. Сначала нажми на пропуск, потом на нужное слово.',
-      uk:'Доповни діалог. Спершу натисни на пропуск, потім на потрібне слово.',
-      ar:'أكمل الحوار. اضغط أولاً على الفراغ، ثم على الكلمة المناسبة.',
-      pt:'Complete o diálogo. Toque primeiro na lacuna, depois na palavra.',
-      bg:'Допълни диалога. Първо натисни празното място, после думата.'
+      ru:'Мужская форма = der. Женская форма = die. Окончание -in всегда указывает на die.',
+      uk:'Чоловіча форма = der. Жіноча форма = die. Закінчення -in завжди вказує на die.',
+      ar:'صيغة المذكر = der. صيغة المؤنث = die. النهاية ‎-in‎ تدل دائماً على die.',
+      pt:'Forma masculina = der. Forma feminina = die. A terminação -in indica sempre die.',
+      bg:'Мъжка форма = der. Женска форма = die. Окончанието -in винаги показва die.'
+    },
+    buckets:['der','die'],
+    items:[
+      { p:'Kellner', a:0 },
+      { p:'Ärztin', a:1 },
+      { p:'Student', a:0 },
+      { p:'Lehrerin', a:1 },
+      { p:'Ingenieur', a:0 },
+      { p:'Köchin', a:1 },
+      { p:'Künstler', a:0 },
+      { p:'Assistentin', a:1 },
+      { p:'Journalist', a:0 },
+      { p:'Designerin', a:1 },
+      { p:'Architekt', a:0 },
+      { p:'Musikerin', a:1 },
+    ]
+  },
+
+  /* ---------- 4: Dialoge ergänzen (8 Lücken) ---------- */
+  {
+    id:'k2e1_a4', type:'gap',
+    title:'Gespräche über den Beruf',
+    hint:'Ergänze die Dialoge. Tippe zuerst auf die Lücke, dann auf das Wort.',
+    help:{
+      ru:'Дополни диалоги. Сначала нажми на пропуск, потом на нужное слово.',
+      uk:'Доповни діалоги. Спершу натисни на пропуск, потім на потрібне слово.',
+      ar:'أكمل الحوارات. اضغط أولاً على الفراغ، ثم على الكلمة المناسبة.',
+      pt:'Complete os diálogos. Toque primeiro na lacuna, depois na palavra.',
+      bg:'Допълни диалозите. Първо натисни празното място, после думата.'
     },
     lines:[
+      { who:'A', parts:['Guten Tag! Was sind Sie von ', '?'], gaps:['Beruf'] },
+      { who:'B', parts:['Ich bin ', '. Ich untersuche Patienten.'], gaps:['Ärztin'] },
+      { who:'A', parts:['Und wo ', ' Sie?'], gaps:['arbeiten'] },
+      { who:'B', parts:['Ich arbeite im Krankenhaus.'], gaps:[] },
+      { who:'A', parts:['Meine Schwester ist ', '. Sie unterrichtet Kinder.'], gaps:['Lehrerin'] },
+      { who:'B', parts:['Interessant!'], gaps:[] },
       { who:'A', parts:['Hallo! Bist du ', '?'], gaps:['Student'] },
-      { who:'B', parts:['Ja, ich bin ', '. Und du?'], gaps:['Student'] },
-      { who:'A', parts:['Nein, ich arbeite als ', '.'], gaps:['Kellner'] },
-      { who:'B', parts:['Und was machst du als Kellner?'], gaps:[] },
-      { who:'A', parts:['Ich ', ' viele Gäste jeden Tag.'], gaps:['bediene'] },
+      { who:'B', parts:['Ja, ich ', ' viele Bücher. Und du?'], gaps:['lese'] },
+      { who:'A', parts:['Ich arbeite als ', '.'], gaps:['Kellner'] },
+      { who:'B', parts:['Was machst du als Kellner?'], gaps:[] },
+      { who:'A', parts:['Ich ', ' Gäste.'], gaps:['bediene'] },
     ],
-    bank:['Student','Kellner','bediene','Lehrerin','unterrichte','Ärztin']
+    bank:['Beruf','Ärztin','arbeiten','Lehrerin','Student','lese','Kellner','bediene',
+          'Köchin','wohnen','male','Arzt']
   },
 ];
 
