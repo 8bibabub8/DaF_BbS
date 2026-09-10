@@ -239,6 +239,12 @@ button{font-family:inherit;cursor:pointer;}
 .bnav button:disabled{opacity:.35;}
 .bnav .cnt{font-size:.9rem;color:var(--ink-soft);}
 
+.lang-picker{display:flex;gap:8px;overflow-x:auto;flex-wrap:wrap;}
+.lang-picker button{
+  flex:0 0 auto;border:1.5px solid var(--edge);background:var(--card);
+  padding:8px 14px;border-radius:999px;font-weight:700;font-size:.85rem;color:var(--ink);
+}
+.lang-picker button.active{background:var(--act);border-color:var(--act);color:#fff;}
 .qr-panel{
   background:var(--card);border:1.5px solid var(--edge);border-radius:14px;
   padding:20px;margin-top:20px;
@@ -280,20 +286,46 @@ button{font-family:inherit;cursor:pointer;}
     <div class="lang-grid" id="langGrid"></div>
   </section>
 
-  <!-- ============ MENÜ ============ -->
-  <section id="scMenu" class="hidden">
+  <!-- ============ KAPITELÜBERSICHT ============ -->
+  <section id="scChapters" class="hidden">
     <div class="bar">
       <div>
-        <div class="t">Begrüßen und verabschieden</div>
-        <div class="s">Kapitel 1 · Einheit 1</div>
+        <div class="t">Deutsch A1</div>
+        <div class="s">Wähle ein Kapitel</div>
       </div>
-      <button class="langbtn" id="changeLang">RU</button>
+      <button class="langbtn" id="changeLangCh">RU</button>
     </div>
-    <p class="menu-intro">Wähle eine Aufgabe. Du kannst jede Aufgabe wiederholen.</p>
-    <div class="ex-list" id="exList"></div>
+    <div class="ex-list" id="chapterList"></div>
     <div class="modeswitch">
       Für die Lehrkraft: <a href="?m=beamer">Beamer-Modus öffnen</a>
     </div>
+  </section>
+
+  <!-- ============ EINHEITENÜBERSICHT ============ -->
+  <section id="scUnits" class="hidden">
+    <div class="bar">
+      <div>
+        <div class="t" id="unitsChapterTitle"></div>
+        <div class="s" id="unitsChapterSubtitle"></div>
+      </div>
+      <button class="langbtn" id="changeLangUn">RU</button>
+    </div>
+    <div class="ex-top"><button class="back" id="backToChapters">← Kapitel</button></div>
+    <div class="ex-list" id="unitList"></div>
+  </section>
+
+  <!-- ============ MENÜ (Aufgaben einer Einheit) ============ -->
+  <section id="scMenu" class="hidden">
+    <div class="bar">
+      <div>
+        <div class="t" id="menuUnitTitle">Begrüßen und verabschieden</div>
+        <div class="s" id="menuUnitSubtitle">Kapitel 1 · Einheit 1</div>
+      </div>
+      <button class="langbtn" id="changeLang">RU</button>
+    </div>
+    <div class="ex-top"><button class="back" id="backToUnits">← Einheiten</button></div>
+    <p class="menu-intro">Wähle eine Aufgabe. Du kannst jede Aufgabe wiederholen.</p>
+    <div class="ex-list" id="exList"></div>
   </section>
 
   <!-- ============ ÜBUNG ============ -->
@@ -335,10 +367,11 @@ button{font-family:inherit;cursor:pointer;}
   <section id="scBeamer" class="hidden">
     <div class="bar">
       <div>
-        <div class="t">Begrüßen und verabschieden</div>
-        <div class="s">Kapitel 1 · Einheit 1 · Beamer</div>
+        <div class="t" id="bUnitTitle">Begrüßen und verabschieden</div>
+        <div class="s" id="bUnitSubtitle">Kapitel 1 · Einheit 1 · Beamer</div>
       </div>
     </div>
+    <div class="lang-picker" id="beamerUnitPicker" style="margin-bottom:16px;"></div>
 
     <div class="stage">
       <div class="dots" id="bDots"></div>
@@ -384,8 +417,10 @@ const LANGS = [
   { code:'bg', label:'BG', native:'Български',  de:'Bulgarisch' },
 ];
 
-/* Phrasen für den Beamer-Teil */
-const PHRASES = [
+/* ==========================================================
+   KAPITEL 1 · EINHEIT 1 — Begrüßen und verabschieden
+   ========================================================== */
+const K1E1_PHRASES = [
   { de:'Guten Morgen!', ctx:'morgens, bis etwa 10 Uhr',
     t:{ru:'Доброе утро!',uk:'Доброго ранку!',ar:'صباح الخير!',pt:'Bom dia!',bg:'Добро утро!'} },
   { de:'Guten Tag!', ctx:'tagsüber, formell',
@@ -406,11 +441,10 @@ const PHRASES = [
     t:{ru:'Приятного аппетита!',uk:'Смачного!',ar:'بالهناء والشفاء!',pt:'Bom apetite!',bg:'Добър апетит!'} },
 ];
 
-/* Übungen */
-const EXERCISES = [
+const K1E1_EXERCISES = [
   /* ---------- 1: Situation → Begrüßung ---------- */
   {
-    id:'a1', type:'choice',
+    id:'k1e1_a1', type:'choice',
     title:'Welche Begrüßung passt?',
     hint:'Lies die Situation. Wähle die richtige Antwort.',
     help:{
@@ -444,7 +478,7 @@ const EXERCISES = [
 
   /* ---------- 2: formell / informell ---------- */
   {
-    id:'a2', type:'sort',
+    id:'k1e1_a2', type:'sort',
     title:'Formell oder informell?',
     hint:'Formell = Sie. Informell = du. Ordne jede Wendung zu.',
     help:{
@@ -467,7 +501,7 @@ const EXERCISES = [
 
   /* ---------- 3: Dialog ergänzen ---------- */
   {
-    id:'a3', type:'gap',
+    id:'k1e1_a3', type:'gap',
     title:'Der erste Tag im Betrieb',
     hint:'Ergänze den Dialog. Tippe zuerst auf die Lücke, dann auf das Wort.',
     help:{
@@ -484,6 +518,138 @@ const EXERCISES = [
       { who:'B', parts:['Auch gut. Bis morgen! Auf ', ' !'], gaps:['Wiedersehen'] },
     ],
     bank:['Guten Tag','Ihnen','Danke','Wiedersehen','Tschüss','Morgen']
+  },
+];
+
+/* ==========================================================
+   KAPITEL 2 · EINHEIT 1 — Berufe und Tätigkeiten
+   ========================================================== */
+const K2E1_PHRASES = [
+  { de:'der Künstler / die Künstlerin', ctx:'Er malt Bilder.',
+    t:{ru:'художник / художница',uk:'художник / художниця',ar:'فنان / فنانة',pt:'artista',bg:'художник / художничка'} },
+  { de:'der Kellner / die Kellnerin', ctx:'Er bedient Gäste.',
+    t:{ru:'официант / официантка',uk:'офіціант / офіціантка',ar:'نادل / نادلة',pt:'garçom / garçonete',bg:'сервитьор / сервитьорка'} },
+  { de:'der Arzt / die Ärztin', ctx:'Er untersucht Patienten.',
+    t:{ru:'врач',uk:'лікар',ar:'طبيب / طبيبة',pt:'médico / médica',bg:'лекар'} },
+  { de:'der Informatiker / die Informatikerin', ctx:'Er entwickelt Computerspiele.',
+    t:{ru:'программист / программистка',uk:'програміст / програмістка',ar:'مبرمج / مبرمجة',pt:'programador / programadora',bg:'програмист / програмистка'} },
+  { de:'der Lehrer / die Lehrerin', ctx:'Sie unterrichtet Kinder.',
+    t:{ru:'учитель / учительница',uk:'вчитель / вчителька',ar:'معلم / معلمة',pt:'professor / professora',bg:'учител / учителка'} },
+  { de:'der Assistent / die Assistentin', ctx:'Sie schreibt viele E-Mails.',
+    t:{ru:'ассистент / ассистентка',uk:'асистент / асистентка',ar:'مساعد / مساعدة',pt:'assistente',bg:'асистент / асистентка'} },
+  { de:'der Student / die Studentin', ctx:'Er liest viele Bücher.',
+    t:{ru:'студент / студентка',uk:'студент / студентка',ar:'طالب / طالبة',pt:'estudante',bg:'студент / студентка'} },
+  { de:'der Architekt / die Architektin', ctx:'Er plant Projekte.',
+    t:{ru:'архитектор',uk:'архітектор',ar:'مهندس معماري / مهندسة معمارية',pt:'arquiteto / arquiteta',bg:'архитект'} },
+  { de:'der Ingenieur / die Ingenieurin', ctx:'Sie konstruiert Solarautos.',
+    t:{ru:'инженер',uk:'інженер',ar:'مهندس / مهندسة',pt:'engenheiro / engenheira',bg:'инженер'} },
+];
+
+const K2E1_EXERCISES = [
+  /* ---------- 1: Tätigkeit → Beruf ---------- */
+  {
+    id:'k2e1_a1', type:'choice',
+    title:'Welcher Beruf ist das?',
+    hint:'Lies den Satz. Wähle den passenden Beruf.',
+    help:{
+      ru:'Прочитай предложение. Выбери подходящую профессию.',
+      uk:'Прочитай речення. Обери відповідну професію.',
+      ar:'اقرأ الجملة. اختر المهنة المناسبة.',
+      pt:'Leia a frase. Escolha a profissão correspondente.',
+      bg:'Прочети изречението. Избери подходящата професия.'
+    },
+    items:[
+      { q:'Er malt Bilder.',
+        qt:{ru:'Он рисует картины.',uk:'Він малює картини.',ar:'هو يرسم لوحات.',pt:'Ele pinta quadros.',bg:'Той рисува картини.'},
+        opts:['Künstler','Kellner','Arzt'], a:0 },
+      { q:'Sie unterrichtet Kinder.',
+        qt:{ru:'Она обучает детей.',uk:'Вона навчає дітей.',ar:'هي تُدرّس الأطفال.',pt:'Ela ensina crianças.',bg:'Тя обучава деца.'},
+        opts:['Ärztin','Lehrerin','Studentin'], a:1 },
+      { q:'Er untersucht Patienten.',
+        qt:{ru:'Он осматривает пациентов.',uk:'Він оглядає пацієнтів.',ar:'هو يفحص المرضى.',pt:'Ele examina pacientes.',bg:'Той преглежда пациенти.'},
+        opts:['Arzt','Kellner','Ingenieur'], a:0 },
+      { q:'Sie schreibt viele E-Mails.',
+        qt:{ru:'Она пишет много писем по электронной почте.',uk:'Вона пише багато електронних листів.',ar:'هي تكتب الكثير من رسائل البريد الإلكتروني.',pt:'Ela escreve muitos e-mails.',bg:'Тя пише много имейли.'},
+        opts:['Architektin','Assistentin','Künstlerin'], a:1 },
+      { q:'Er entwickelt Computerspiele.',
+        qt:{ru:'Он разрабатывает компьютерные игры.',uk:'Він розробляє комп\u2019ютерні ігри.',ar:'هو يطوّر ألعاب الكمبيوتر.',pt:'Ele desenvolve jogos de computador.',bg:'Той разработва компютърни игри.'},
+        opts:['Informatiker','Kellner','Lehrer'], a:0 },
+      { q:'Sie konstruiert Solarautos.',
+        qt:{ru:'Она конструирует автомобили на солнечных батареях.',uk:'Вона конструює автомобілі на сонячних батареях.',ar:'هي تصمم سيارات تعمل بالطاقة الشمسية.',pt:'Ela projeta carros solares.',bg:'Тя конструира соларни автомобили.'},
+        opts:['Ingenieurin','Studentin','Kellnerin'], a:0 },
+    ]
+  },
+
+  /* ---------- 2: männlich → weiblich ---------- */
+  {
+    id:'k2e1_a2', type:'choice',
+    title:'Wie heißt die weibliche Form?',
+    hint:'Wähle die richtige weibliche Form.',
+    help:{
+      ru:'Выбери правильную форму женского рода.',
+      uk:'Обери правильну форму жіночого роду.',
+      ar:'اختر صيغة المؤنث الصحيحة.',
+      pt:'Escolha a forma feminina correta.',
+      bg:'Избери правилната форма за женски род.'
+    },
+    items:[
+      { q:'der Lehrer',
+        qt:{ru:'учитель',uk:'вчитель',ar:'المعلم',pt:'o professor',bg:'учителят'},
+        opts:['die Lehrerin','die Lehrer','die Lehrerine'], a:0 },
+      { q:'der Student',
+        qt:{ru:'студент',uk:'студент',ar:'الطالب',pt:'o estudante',bg:'студентът'},
+        opts:['die Studentin','die Studenterin','die Studentine'], a:0 },
+      { q:'der Assistent',
+        qt:{ru:'ассистент',uk:'асистент',ar:'المساعد',pt:'o assistente',bg:'асистентът'},
+        opts:['die Assistentin','die Assistenterin','die Assistente'], a:0 },
+      { q:'der Ingenieur',
+        qt:{ru:'инженер',uk:'інженер',ar:'المهندس',pt:'o engenheiro',bg:'инженерът'},
+        opts:['die Ingenieurin','die Ingenieuse','die Ingenieurine'], a:0 },
+      { q:'der Architekt',
+        qt:{ru:'архитектор',uk:'архітектор',ar:'المهندس المعماري',pt:'o arquiteto',bg:'архитектът'},
+        opts:['die Architektin','die Architektess','die Architekterin'], a:0 },
+      { q:'der Künstler',
+        qt:{ru:'художник',uk:'художник',ar:'الفنان',pt:'o artista',bg:'художникът'},
+        opts:['die Künstlerin','die Künstlerine','die Künstler'], a:0 },
+    ]
+  },
+
+  /* ---------- 3: Dialog ergänzen ---------- */
+  {
+    id:'k2e1_a3', type:'gap',
+    title:'Kennenlernen im Betrieb',
+    hint:'Ergänze den Dialog. Tippe zuerst auf die Lücke, dann auf das Wort.',
+    help:{
+      ru:'Дополни диалог. Сначала нажми на пропуск, потом на нужное слово.',
+      uk:'Доповни діалог. Спершу натисни на пропуск, потім на потрібне слово.',
+      ar:'أكمل الحوار. اضغط أولاً على الفراغ، ثم على الكلمة المناسبة.',
+      pt:'Complete o diálogo. Toque primeiro na lacuna, depois na palavra.',
+      bg:'Допълни диалога. Първо натисни празното място, после думата.'
+    },
+    lines:[
+      { who:'A', parts:['Hallo! Bist du ', '?'], gaps:['Student'] },
+      { who:'B', parts:['Ja, ich bin ', '. Und du?'], gaps:['Student'] },
+      { who:'A', parts:['Nein, ich arbeite als ', '.'], gaps:['Kellner'] },
+      { who:'B', parts:['Und was machst du als Kellner?'], gaps:[] },
+      { who:'A', parts:['Ich ', ' viele Gäste jeden Tag.'], gaps:['bediene'] },
+    ],
+    bank:['Student','Kellner','bediene','Lehrerin','unterrichte','Ärztin']
+  },
+];
+
+/* ==========================================================
+   KAPITELSTRUKTUR
+   ========================================================== */
+const CHAPTERS = [
+  { id:'k1', title:'Kapitel 1', subtitle:'Hallo und guten Tag!',
+    units:[
+      { id:'k1e1', title:'Begrüßen und verabschieden', phrases:K1E1_PHRASES, exercises:K1E1_EXERCISES }
+    ]
+  },
+  { id:'k2', title:'Kapitel 2', subtitle:'Beruf und Familie',
+    units:[
+      { id:'k2e1', title:'Berufe und Tätigkeiten', phrases:K2E1_PHRASES, exercises:K2E1_EXERCISES }
+    ]
   },
 ];
 
@@ -509,6 +675,9 @@ const QR=(function(){
   const AL={1:[],2:[6,18],3:[6,22],4:[6,26],5:[6,30],6:[6,34],
     7:[6,22,38],8:[6,24,42],9:[6,26,46],10:[6,28,50]};
   const cap=v=>T[v].g1*T[v].d1+T[v].g2*T[v].d2;
+  function vbits(v){let rem=v<<12;const g=0b1111100100101;
+    for(let i=17;i>=12;i--)if((rem>>i)&1)rem^=g<<(i-12);
+    return (v<<12)|rem;}
 
   const MASKS=[(r,c)=>(r+c)%2===0,(r,c)=>r%2===0,(r,c)=>c%3===0,(r,c)=>(r+c)%3===0,
     (r,c)=>(Math.floor(r/2)+Math.floor(c/3))%2===0,(r,c)=>((r*c)%2+(r*c)%3)===0,
@@ -530,6 +699,10 @@ const QR=(function(){
       for(let dr=-2;dr<=2;dr++)for(let dc=-2;dc<=2;dc++){
         const ring=Math.max(Math.abs(dr),Math.abs(dc));S(r+dr,c+dc,ring===1?0:1);}}
     S(size-8,8,1);
+    if(v>=7){const vb=vbits(v);
+      for(let i=0;i<18;i++){const b=(vb>>i)&1;
+        S(Math.floor(i/3),size-11+(i%3),b);
+        S(size-11+(i%3),Math.floor(i/3),b);}}
     for(let i=0;i<9;i++){if(m[8][i]===null){m[8][i]=0;res[8][i]=true;}
       if(m[i][8]===null){m[i][8]=0;res[i][8]=true;}}
     for(let i=0;i<8;i++){if(m[8][size-1-i]===null){m[8][size-1-i]=0;res[8][size-1-i]=true;}
@@ -601,12 +774,12 @@ const QR=(function(){
       const cd=m.map(r=>r.slice());
       for(let r=0;r<size;r++)for(let c=0;c<size;c++)
         if(!res[r][c]&&MASKS[mk](r,c))cd[r][c]^=1;
-      const f=fmt(mk),G=i=>(f>>i)&1;
+      const f=fmt(mk),G=i=>(f>>(14-i))&1;
       for(let i=0;i<=5;i++)cd[8][i]=G(i);
       cd[8][7]=G(6);cd[8][8]=G(7);cd[7][8]=G(8);
       for(let i=9;i<=14;i++)cd[14-i][8]=G(i);
-      for(let i=0;i<=7;i++)cd[size-1-i][8]=G(i);
-      for(let i=8;i<=14;i++)cd[8][size-15+i]=G(i);
+      for(let i=0;i<=6;i++)cd[size-1-i][8]=G(i);
+      for(let i=7;i<=14;i++)cd[8][size-15+i]=G(i);
       cd[size-8][8]=1;
       const s=pen(cd,size);
       if(s<bs){bs=s;best=cd;}
@@ -635,6 +808,7 @@ const params = new URLSearchParams(location.search);
 const IS_BEAMER = params.get('m') === 'beamer';
 
 let lang = null;
+let curChapter = null, curUnit = null;
 let curEx = null, curIdx = 0, curScore = 0;
 let doneMap = {};
 
@@ -643,7 +817,7 @@ function load(k,def){ try{ const v=localStorage.getItem(k); return v?JSON.parse(
 function save(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 
 function show(id){
-  ['scStart','scMenu','scEx','scResult','scBeamer'].forEach(s=>{
+  ['scStart','scChapters','scUnits','scMenu','scEx','scResult','scBeamer'].forEach(s=>{
     $(s).classList.toggle('hidden', s!==id);
   });
   window.scrollTo(0,0);
@@ -659,17 +833,69 @@ function renderLangGrid(){
       <span class="de">${l.de}</span>
     </button>`).join('');
   $('langGrid').querySelectorAll('button').forEach(b=>{
-    b.onclick = ()=>{ lang=b.dataset.code; save('daf_lang',lang); openMenu(); };
+    b.onclick = ()=>{ lang=b.dataset.code; save('daf_lang',lang); openChapters(); };
   });
 }
 
-/* ---------- Menü ---------- */
-function openMenu(){
+function exCount(e){
+  return e.type==='sort' ? e.items.length
+       : e.type==='gap'  ? e.lines.flatMap(l=>l.gaps).length
+       : e.items.length;
+}
+
+/* ---------- 1: Kapitelübersicht ---------- */
+function openChapters(){
+  $('changeLangCh').textContent = langObj().label;
+  $('chapterList').innerHTML = CHAPTERS.map((c,i)=>{
+    const totalEx = c.units.reduce((s,u)=>s+u.exercises.length,0);
+    const doneEx = c.units.reduce((s,u)=>s+u.exercises.filter(e=>doneMap[e.id]!==undefined).length,0);
+    return `<button class="ex-item" data-i="${i}">
+      <span class="num">${i+1}</span>
+      <span class="body">
+        <span class="name">${c.title} · ${c.subtitle}</span>
+        <span class="meta">${c.units.length} Einheit${c.units.length>1?'en':''}</span>
+      </span>
+      <span class="badge ${doneEx===totalEx&&totalEx>0?'done':''}">${doneEx}/${totalEx}</span>
+    </button>`;
+  }).join('');
+  $('chapterList').querySelectorAll('.ex-item').forEach(b=>{
+    b.onclick = ()=> openUnits(CHAPTERS[+b.dataset.i]);
+  });
+  show('scChapters');
+}
+
+/* ---------- 2: Einheitenübersicht ---------- */
+function openUnits(chapter){
+  curChapter = chapter;
+  $('changeLangUn').textContent = langObj().label;
+  $('unitsChapterTitle').textContent = chapter.title;
+  $('unitsChapterSubtitle').textContent = chapter.subtitle;
+  $('unitList').innerHTML = chapter.units.map((u,i)=>{
+    const n = u.exercises.length;
+    const d = u.exercises.filter(e=>doneMap[e.id]!==undefined).length;
+    return `<button class="ex-item" data-i="${i}">
+      <span class="num">${i+1}</span>
+      <span class="body">
+        <span class="name">${u.title}</span>
+        <span class="meta">${n} Aufgaben</span>
+      </span>
+      <span class="badge ${d===n?'done':''}">${d}/${n}</span>
+    </button>`;
+  }).join('');
+  $('unitList').querySelectorAll('.ex-item').forEach(b=>{
+    b.onclick = ()=> openMenu(chapter.units[+b.dataset.i]);
+  });
+  show('scUnits');
+}
+
+/* ---------- 3: Aufgabenliste einer Einheit ---------- */
+function openMenu(unit){
+  if(unit) curUnit = unit;
   $('changeLang').textContent = langObj().label;
-  $('exList').innerHTML = EXERCISES.map((e,i)=>{
-    const n = e.type==='sort' ? e.items.length
-            : e.type==='gap'  ? e.lines.length
-            : e.items.length;
+  $('menuUnitTitle').textContent = curUnit.title;
+  $('menuUnitSubtitle').textContent = curChapter.title + ' · ' + curUnit.title;
+  $('exList').innerHTML = curUnit.exercises.map((e,i)=>{
+    const n = exCount(e);
     const d = doneMap[e.id];
     return `<button class="ex-item" data-i="${i}">
       <span class="num">${i+1}</span>
@@ -681,12 +907,16 @@ function openMenu(){
     </button>`;
   }).join('');
   $('exList').querySelectorAll('.ex-item').forEach(b=>{
-    b.onclick = ()=> startEx(EXERCISES[+b.dataset.i]);
+    b.onclick = ()=> startEx(curUnit.exercises[+b.dataset.i]);
   });
   show('scMenu');
 }
 
+$('changeLangCh').onclick = ()=> show('scStart');
+$('changeLangUn').onclick = ()=> show('scStart');
 $('changeLang').onclick = ()=> show('scStart');
+$('backToChapters').onclick = ()=> openChapters();
+$('backToUnits').onclick = ()=> openUnits(curChapter);
 $('backBtn').onclick = ()=> openMenu();
 $('menuBtn').onclick = ()=> openMenu();
 $('againBtn').onclick = ()=> startEx(curEx);
@@ -930,8 +1160,29 @@ function finishEx(total){
    BEAMER
    ========================================================== */
 let bIdx = 0;
+let bChapter = CHAPTERS[0], bUnit = CHAPTERS[0].units[0];
+
+function renderBeamerPicker(){
+  $('beamerUnitPicker').innerHTML = CHAPTERS.flatMap(c =>
+    c.units.map(u => `<button data-c="${c.id}" data-u="${u.id}"
+      class="${u===bUnit?'active':''}">${c.title}: ${u.title}</button>`)
+  ).join('');
+  $('beamerUnitPicker').querySelectorAll('button').forEach(b=>{
+    b.onclick = ()=>{
+      bChapter = CHAPTERS.find(c=>c.id===b.dataset.c);
+      bUnit = bChapter.units.find(u=>u.id===b.dataset.u);
+      bIdx = 0;
+      renderBeamerPicker();
+      renderBeamer();
+    };
+  });
+}
+
 function renderBeamer(){
-  const p = PHRASES[bIdx];
+  const phrases = bUnit.phrases;
+  const p = phrases[bIdx];
+  $('bUnitTitle').textContent = bUnit.title;
+  $('bUnitSubtitle').textContent = bChapter.title + ' · ' + bUnit.title + ' · Beamer';
   $('bPhrase').textContent = p.de;
   $('bCtx').textContent = p.ctx;
   $('bChips').classList.remove('on');
@@ -940,31 +1191,53 @@ function renderBeamer(){
     <div class="c" ${l.rtl?'dir="rtl"':''}>
       <span class="k">${l.label}</span><span>${p.t[l.code]}</span>
     </div>`).join('');
-  $('bDots').innerHTML = PHRASES.map((_,i)=>`<i class="${i<=bIdx?'on':''}"></i>`).join('');
-  $('bCnt').textContent = (bIdx+1)+' / '+PHRASES.length;
+  $('bDots').innerHTML = phrases.map((_,i)=>`<i class="${i<=bIdx?'on':''}"></i>`).join('');
+  $('bCnt').textContent = (bIdx+1)+' / '+phrases.length;
   $('bPrev').disabled = bIdx===0;
-  $('bNext').disabled = bIdx===PHRASES.length-1;
+  $('bNext').disabled = bIdx===phrases.length-1;
 }
 $('bReveal').onclick = ()=>{ $('bChips').classList.add('on'); $('bReveal').style.display='none'; };
 $('bPrev').onclick = ()=>{ if(bIdx>0){bIdx--;renderBeamer();} };
-$('bNext').onclick = ()=>{ if(bIdx<PHRASES.length-1){bIdx++;renderBeamer();} };
+$('bNext').onclick = ()=>{ if(bIdx<bUnit.phrases.length-1){bIdx++;renderBeamer();} };
 document.addEventListener('keydown', e=>{
   if($('scBeamer').classList.contains('hidden')) return;
   if(e.key==='ArrowRight'||e.key===' ') $('bNext').click();
   if(e.key==='ArrowLeft') $('bPrev').click();
 });
 
+function qrError(msg){
+  $('qrCanvas').style.display='none';
+  $('qrUrl').innerHTML = '<span style="color:var(--stop);">'+msg+'</span>';
+  $('qrOut').classList.add('on');
+}
+
 $('qrGo').onclick = ()=>{
-  const url = $('qrInput').value.trim();
-  if(!url) return;
+  let url = $('qrInput').value.trim();
+  if(!url){ qrError('Bitte zuerst eine Adresse eintragen.'); return; }
+
+  // Lokale Dateipfade können Handys nicht öffnen
+  if(/^file:/i.test(url)){
+    qrError('Das ist ein Pfad auf diesem Rechner. Handys können ihn nicht öffnen. '
+      + 'Lade die Datei zuerst online hoch und trage dann die Internetadresse ein.');
+    return;
+  }
+  // Fehlendes https:// ergänzen – sonst erkennen Handykameras keinen Link
+  if(!/^https?:\/\//i.test(url)) url = 'https://' + url;
+  // Grobe Plausibilitätsprüfung
+  if(!/^https?:\/\/[^\s.]+\.[^\s]{2,}/i.test(url)){
+    qrError('Die Adresse sieht unvollständig aus. Beispiel: https://name.github.io/daf/');
+    return;
+  }
+
   try{
+    $('qrCanvas').style.display='';
     QR.draw($('qrCanvas'), url);
+    $('qrInput').value = url;
     $('qrUrl').textContent = url;
     $('qrOut').classList.add('on');
     save('daf_url', url);
   }catch(err){
-    $('qrUrl').textContent = 'Die Adresse ist zu lang für den Code. Bitte kürzere Adresse verwenden.';
-    $('qrOut').classList.add('on');
+    qrError('Die Adresse ist zu lang für den Code. Bitte eine kürzere Adresse verwenden.');
   }
 };
 
@@ -976,15 +1249,20 @@ $('qrGo').onclick = ()=>{
   renderLangGrid();
 
   if(IS_BEAMER){
+    renderBeamerPicker();
     renderBeamer();
-    const savedUrl = load('daf_url', location.href.split('?')[0]);
-    $('qrInput').value = savedUrl;
+    const isWeb = /^https?:/i.test(location.href);
+    const fallback = isWeb ? location.href.split('?')[0] : '';
+    $('qrInput').value = load('daf_url', fallback);
+    if(!isWeb){
+      $('qrInput').placeholder = 'https://... (Datei muss online liegen)';
+    }
     show('scBeamer');
     return;
   }
 
   lang = load('daf_lang', null);
-  if(lang) openMenu(); else show('scStart');
+  if(lang) openChapters(); else show('scStart');
 })();
 </script>
 </body>
