@@ -320,6 +320,63 @@ button{font-family:inherit;cursor:pointer;}
 .btrans[dir="rtl"]{direction:rtl;}
 .btrans .sub{display:block;font-size:.78em;font-weight:600;color:rgba(255,255,255,.7);margin-top:6px;}
 
+.area-card.vok{border-left-color:var(--go);}
+.area-card.vok .area-meta{color:var(--go);}
+
+/* ---------- Vokabeln: Tabs ---------- */
+.vk-tabs{display:flex;gap:8px;margin-bottom:14px;}
+.vk-tabs button{
+  flex:1;padding:11px;border-radius:10px;border:1.5px solid var(--edge);
+  background:var(--card);font-weight:700;font-size:.95rem;color:var(--ink-soft);
+}
+.vk-tabs button.active{background:var(--go);border-color:var(--go);color:#fff;}
+
+/* ---------- Vokabeln: Liste ---------- */
+#vkSearch{
+  width:100%;padding:12px 14px;border:1.5px solid var(--edge);border-radius:10px;
+  font-size:1rem;font-family:inherit;margin-bottom:12px;background:var(--card);
+}
+.vk-rows{display:flex;flex-direction:column;gap:7px;}
+.vk-row{
+  background:var(--card);border:1.5px solid var(--edge);border-radius:11px;
+  padding:13px 15px;cursor:pointer;
+}
+.vk-row.known{border-left:5px solid var(--go);}
+.vk-row .vk-top{display:flex;justify-content:space-between;gap:12px;align-items:baseline;}
+.vk-row .vk-de{font-weight:700;font-size:1.08rem;}
+.vk-row .vk-tr{color:var(--go);font-weight:600;font-size:1.02rem;text-align:right;}
+.vk-row .vk-tr[dir="rtl"]{direction:rtl;}
+.vk-row .vk-ex{
+  display:none;margin-top:9px;padding-top:9px;border-top:1px solid var(--edge);
+  font-size:.98rem;color:var(--ink-soft);font-style:italic;
+}
+.vk-row.open .vk-ex{display:block;}
+.vk-empty{text-align:center;color:var(--ink-soft);padding:26px 0;}
+
+/* ---------- Vokabeln: Karteikarten ---------- */
+.vk-progress{text-align:center;font-size:.88rem;color:var(--ink-soft);font-weight:600;margin-bottom:12px;}
+.flashcard{
+  background:var(--card);border:1.5px solid var(--edge);border-radius:16px;
+  min-height:250px;display:flex;align-items:center;justify-content:center;
+  padding:26px 20px;cursor:pointer;text-align:center;
+}
+.fc-word{font-size:1.9rem;font-weight:800;line-height:1.25;}
+.fc-hint{margin-top:14px;font-size:.82rem;color:var(--ink-soft);}
+.fc-back{margin-top:18px;padding-top:16px;border-top:2px solid var(--edge);}
+.fc-trans{font-size:1.5rem;font-weight:700;color:var(--go);}
+.fc-trans[dir="rtl"]{direction:rtl;}
+.fc-ex{margin-top:12px;font-size:1.02rem;color:var(--ink-soft);font-style:italic;}
+.fc-actions{display:flex;gap:10px;margin-top:14px;}
+.fc-actions button{flex:1;padding:15px;border-radius:11px;font-weight:700;font-size:1rem;border:2px solid;}
+.fc-again{background:#fff;border-color:var(--signal);color:var(--signal-dk);}
+.fc-known{background:var(--go);border-color:var(--go);color:#fff;}
+.fc-done{
+  background:var(--card);border:1.5px solid var(--edge);border-radius:14px;
+  padding:30px 20px;text-align:center;margin-top:14px;
+}
+.fc-done-num{font-size:2.6rem;font-weight:800;color:var(--go);}
+.fc-done p{color:var(--ink-soft);margin:8px 0 18px;}
+
 .qr-panel{
   background:var(--card);border:1.5px solid var(--edge);border-radius:14px;
   padding:20px;margin-top:20px;
@@ -381,9 +438,74 @@ button{font-family:inherit;cursor:pointer;}
         <span class="area-desc">Regeln und Formen</span>
         <span class="area-meta" id="grMeta"></span>
       </button>
+      <button class="area-card vok" id="goVokabeln">
+        <span class="area-name">Vokabeln</span>
+        <span class="area-desc">Wörter lernen und nachschlagen</span>
+        <span class="area-meta" id="vkMeta"></span>
+      </button>
     </div>
     <div class="modeswitch">
       Für die Lehrkraft: <a href="?m=beamer">Beamer-Modus öffnen</a>
+    </div>
+  </section>
+
+  <!-- ============ VOKABELN: THEMENBLÖCKE ============ -->
+  <section id="scVocabList" class="hidden">
+    <div class="bar">
+      <div>
+        <div class="t">Vokabeln</div>
+        <div class="s">Wähle einen Themenblock</div>
+      </div>
+      <button class="langbtn" id="changeLangVk">RU</button>
+    </div>
+    <div class="ex-top"><button class="back" id="backHomeFromVk">← Start</button></div>
+    <div class="ex-list" id="vocabList"></div>
+  </section>
+
+  <!-- ============ VOKABELN: EIN BLOCK ============ -->
+  <section id="scVocabBlock" class="hidden">
+    <div class="bar">
+      <div>
+        <div class="t" id="vkBlockTitle"></div>
+        <div class="s" id="vkBlockSub"></div>
+      </div>
+      <button class="langbtn" id="changeLangVb">RU</button>
+    </div>
+    <div class="ex-top"><button class="back" id="backToVocabList">← Themen</button></div>
+
+    <div class="vk-tabs">
+      <button id="tabList" class="active">Liste</button>
+      <button id="tabCards">Karteikarten</button>
+    </div>
+
+    <!-- Listenansicht -->
+    <div id="vkListView">
+      <input type="search" id="vkSearch" placeholder="Wort suchen ..." autocomplete="off">
+      <div class="vk-rows" id="vkRows"></div>
+    </div>
+
+    <!-- Karteikarten -->
+    <div id="vkCardView" class="hidden">
+      <div class="vk-progress" id="vkProgress"></div>
+      <div class="flashcard" id="flashcard">
+        <div class="fc-inner">
+          <div class="fc-word" id="fcWord"></div>
+          <div class="fc-hint" id="fcHint">Tippen zum Umdrehen</div>
+          <div class="fc-back hidden" id="fcBack">
+            <div class="fc-trans" id="fcTrans"></div>
+            <div class="fc-ex" id="fcEx"></div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-actions hidden" id="fcActions">
+        <button class="fc-again" id="fcAgain">Nochmal üben</button>
+        <button class="fc-known" id="fcKnown">Kann ich</button>
+      </div>
+      <div class="fc-done hidden" id="fcDone">
+        <div class="fc-done-num" id="fcDoneNum"></div>
+        <p id="fcDoneText"></p>
+        <button class="btn-primary" id="fcRestart">Noch einmal</button>
+      </div>
     </div>
   </section>
 
@@ -660,33 +782,33 @@ const K1E1_EXERCISES = [
    KAPITEL 2 · EINHEIT 1 — Berufe und Tätigkeiten
    ========================================================== */
 const K2E1_PHRASES = [
-  { de:'der Künstler / die Künstlerin', ctx:'Er malt Bilder.',
+  { de:'der Künstler / die Künstlerin', ctx:'Sie malt und zeichnet gern.',
     t:{ru:'художник / художница',uk:'художник / художниця',ar:'فنان / فنانة',pt:'artista',bg:'художник / художничка'},
-    ctxT:{ru:'Он рисует картины.',uk:'Він малює картини.',ar:'هو يرسم لوحات.',pt:'Ele pinta quadros.',bg:'Той рисува картини.'} },
-  { de:'der Kellner / die Kellnerin', ctx:'Er bedient Gäste.',
+    ctxT:{ru:'Она любит рисовать красками и карандашом.',uk:'Вона любить малювати фарбами й олівцем.',ar:'هي تحب الرسم بالألوان وبالقلم.',pt:'Ela gosta de pintar e desenhar.',bg:'Тя обича да рисува с бои и молив.'} },
+  { de:'der Kellner / die Kellnerin', ctx:'Er bringt das Essen an den Tisch.',
     t:{ru:'официант / официантка',uk:'офіціант / офіціантка',ar:'نادل / نادلة',pt:'garçom / garçonete',bg:'сервитьор / сервитьорка'},
-    ctxT:{ru:'Он обслуживает гостей.',uk:'Він обслуговує гостей.',ar:'هو يخدم الضيوف.',pt:'Ele atende os clientes.',bg:'Той обслужва гости.'} },
-  { de:'der Arzt / die Ärztin', ctx:'Er untersucht Patienten.',
+    ctxT:{ru:'Он приносит еду к столу.',uk:'Він приносить їжу до столу.',ar:'هو يحضر الطعام إلى الطاولة.',pt:'Ele leva a comida à mesa.',bg:'Той носи храната до масата.'} },
+  { de:'der Arzt / die Ärztin', ctx:'Sie hilft kranken Menschen.',
     t:{ru:'врач',uk:'лікар',ar:'طبيب / طبيبة',pt:'médico / médica',bg:'лекар'},
-    ctxT:{ru:'Он осматривает пациентов.',uk:'Він оглядає пацієнтів.',ar:'هو يفحص المرضى.',pt:'Ele examina pacientes.',bg:'Той преглежда пациенти.'} },
-  { de:'der Informatiker / die Informatikerin', ctx:'Er entwickelt Computerspiele.',
+    ctxT:{ru:'Она помогает больным людям.',uk:'Вона допомагає хворим людям.',ar:'هي تساعد المرضى.',pt:'Ela ajuda pessoas doentes.',bg:'Тя помага на болни хора.'} },
+  { de:'der Informatiker / die Informatikerin', ctx:'Er programmiert am Computer.',
     t:{ru:'программист / программистка',uk:'програміст / програмістка',ar:'مبرمج / مبرمجة',pt:'programador / programadora',bg:'програмист / програмистка'},
-    ctxT:{ru:'Он разрабатывает компьютерные игры.',uk:'Він розробляє комп\u2019ютерні ігри.',ar:'هو يطوّر ألعاب الكمبيوتر.',pt:'Ele desenvolve jogos de computador.',bg:'Той разработва компютърни игри.'} },
-  { de:'der Lehrer / die Lehrerin', ctx:'Sie unterrichtet Kinder.',
+    ctxT:{ru:'Он программирует на компьютере.',uk:'Він програмує на комп\u2019ютері.',ar:'هو يبرمج على الكمبيوتر.',pt:'Ele programa no computador.',bg:'Той програмира на компютър.'} },
+  { de:'der Lehrer / die Lehrerin', ctx:'Er erklärt die Aufgaben in der Schule.',
     t:{ru:'учитель / учительница',uk:'вчитель / вчителька',ar:'معلم / معلمة',pt:'professor / professora',bg:'учител / учителка'},
-    ctxT:{ru:'Она обучает детей.',uk:'Вона навчає дітей.',ar:'هي تُدرّس الأطفال.',pt:'Ela ensina crianças.',bg:'Тя обучава деца.'} },
-  { de:'der Assistent / die Assistentin', ctx:'Sie schreibt viele E-Mails.',
+    ctxT:{ru:'Он объясняет задания в школе.',uk:'Він пояснює завдання в школі.',ar:'هو يشرح الواجبات في المدرسة.',pt:'Ele explica os exercícios na escola.',bg:'Той обяснява задачите в училище.'} },
+  { de:'der Assistent / die Assistentin', ctx:'Sie organisiert Termine im Büro.',
     t:{ru:'ассистент / ассистентка',uk:'асистент / асистентка',ar:'مساعد / مساعدة',pt:'assistente',bg:'асистент / асистентка'},
-    ctxT:{ru:'Она пишет много электронных писем.',uk:'Вона пише багато електронних листів.',ar:'هي تكتب الكثير من رسائل البريد الإلكتروني.',pt:'Ela escreve muitos e-mails.',bg:'Тя пише много имейли.'} },
-  { de:'der Student / die Studentin', ctx:'Er liest viele Bücher.',
+    ctxT:{ru:'Она организует встречи в офисе.',uk:'Вона організовує зустрічі в офісі.',ar:'هي تنظم المواعيد في المكتب.',pt:'Ela organiza compromissos no escritório.',bg:'Тя организира срещи в офиса.'} },
+  { de:'der Student / die Studentin', ctx:'Sie lernt an der Universität.',
     t:{ru:'студент / студентка',uk:'студент / студентка',ar:'طالب / طالبة',pt:'estudante',bg:'студент / студентка'},
-    ctxT:{ru:'Он читает много книг.',uk:'Він читає багато книг.',ar:'هو يقرأ الكثير من الكتب.',pt:'Ele lê muitos livros.',bg:'Той чете много книги.'} },
-  { de:'der Architekt / die Architektin', ctx:'Er plant Projekte.',
+    ctxT:{ru:'Она учится в университете.',uk:'Вона навчається в університеті.',ar:'هي تدرس في الجامعة.',pt:'Ela estuda na universidade.',bg:'Тя учи в университета.'} },
+  { de:'der Architekt / die Architektin', ctx:'Er zeichnet Pläne für Häuser.',
     t:{ru:'архитектор',uk:'архітектор',ar:'مهندس معماري / مهندسة معمارية',pt:'arquiteto / arquiteta',bg:'архитект'},
-    ctxT:{ru:'Он планирует проекты.',uk:'Він планує проєкти.',ar:'هو يخطط للمشاريع.',pt:'Ele planeja projetos.',bg:'Той планира проекти.'} },
-  { de:'der Ingenieur / die Ingenieurin', ctx:'Sie konstruiert Solarautos.',
+    ctxT:{ru:'Он чертит планы домов.',uk:'Він креслить плани будинків.',ar:'هو يرسم مخططات المنازل.',pt:'Ele desenha plantas de casas.',bg:'Той чертае планове на къщи.'} },
+  { de:'der Ingenieur / die Ingenieurin', ctx:'Sie baut Maschinen.',
     t:{ru:'инженер',uk:'інженер',ar:'مهندس / مهندسة',pt:'engenheiro / engenheira',bg:'инженер'},
-    ctxT:{ru:'Она конструирует солнечные автомобили.',uk:'Вона конструює сонячні автомобілі.',ar:'هي تصمم سيارات تعمل بالطاقة الشمسية.',pt:'Ela projeta carros solares.',bg:'Тя конструира соларни автомобили.'} },
+    ctxT:{ru:'Она конструирует машины.',uk:'Вона конструює машини.',ar:'هي تصنع الآلات.',pt:'Ela constrói máquinas.',bg:'Тя изгражда машини.'} },
 ];
 
 const K2E1_EXERCISES = [
@@ -703,48 +825,48 @@ const K2E1_EXERCISES = [
       bg:'Прочети изречението. Избери подходящата професия.'
     },
     items:[
-      { q:'Er malt Bilder.',
-        qt:{ru:'Он рисует картины.',uk:'Він малює картини.',ar:'هو يرسم لوحات.',pt:'Ele pinta quadros.',bg:'Той рисува картини.'},
-        opts:['Künstler','Kellner','Arzt'], a:0 },
-      { q:'Sie unterrichtet Kinder.',
-        qt:{ru:'Она обучает детей.',uk:'Вона навчає дітей.',ar:'هي تُدرّس الأطفال.',pt:'Ela ensina crianças.',bg:'Тя обучава деца.'},
-        opts:['Ärztin','Lehrerin','Studentin'], a:1 },
-      { q:'Er untersucht Patienten.',
-        qt:{ru:'Он осматривает пациентов.',uk:'Він оглядає пацієнтів.',ar:'هو يفحص المرضى.',pt:'Ele examina pacientes.',bg:'Той преглежда пациенти.'},
-        opts:['Arzt','Kellner','Ingenieur'], a:0 },
-      { q:'Sie schreibt viele E-Mails.',
-        qt:{ru:'Она пишет много электронных писем.',uk:'Вона пише багато електронних листів.',ar:'هي تكتب الكثير من رسائل البريد الإلكتروني.',pt:'Ela escreve muitos e-mails.',bg:'Тя пише много имейли.'},
+      { q:'Sie malt und zeichnet gern.',
+        qt:{ru:'Она любит рисовать красками и карандашом.',uk:'Вона любить малювати фарбами й олівцем.',ar:'هي تحب الرسم بالألوان وبالقلم.',pt:'Ela gosta de pintar e desenhar.',bg:'Тя обича да рисува с бои и молив.'},
+        opts:['Künstlerin','Kellnerin','Ärztin'], a:0 },
+      { q:'Er erklärt die Aufgaben in der Schule.',
+        qt:{ru:'Он объясняет задания в школе.',uk:'Він пояснює завдання в школі.',ar:'هو يشرح الواجبات في المدرسة.',pt:'Ele explica os exercícios na escola.',bg:'Той обяснява задачите в училище.'},
+        opts:['Arzt','Lehrer','Student'], a:1 },
+      { q:'Sie hilft kranken Menschen.',
+        qt:{ru:'Она помогает больным людям.',uk:'Вона допомагає хворим людям.',ar:'هي تساعد المرضى.',pt:'Ela ajuda pessoas doentes.',bg:'Тя помага на болни хора.'},
+        opts:['Ärztin','Kellnerin','Ingenieurin'], a:0 },
+      { q:'Sie organisiert Termine im Büro.',
+        qt:{ru:'Она организует встречи в офисе.',uk:'Вона організовує зустрічі в офісі.',ar:'هي تنظم المواعيد في المكتب.',pt:'Ela organiza compromissos no escritório.',bg:'Тя организира срещи в офиса.'},
         opts:['Architektin','Assistentin','Künstlerin'], a:1 },
-      { q:'Er entwickelt Computerspiele.',
-        qt:{ru:'Он разрабатывает компьютерные игры.',uk:'Він розробляє комп\u2019ютерні ігри.',ar:'هو يطوّر ألعاب الكمبيوتر.',pt:'Ele desenvolve jogos de computador.',bg:'Той разработва компютърни игри.'},
+      { q:'Er programmiert am Computer.',
+        qt:{ru:'Он программирует на компьютере.',uk:'Він програмує на комп\u2019ютері.',ar:'هو يبرمج على الكمبيوتر.',pt:'Ele programa no computador.',bg:'Той програмира на компютър.'},
         opts:['Informatiker','Kellner','Lehrer'], a:0 },
-      { q:'Sie konstruiert Solarautos.',
-        qt:{ru:'Она конструирует солнечные автомобили.',uk:'Вона конструює сонячні автомобілі.',ar:'هي تصمم سيارات تعمل بالطاقة الشمسية.',pt:'Ela projeta carros solares.',bg:'Тя конструира соларни автомобили.'},
+      { q:'Sie baut Maschinen.',
+        qt:{ru:'Она конструирует машины.',uk:'Вона конструює машини.',ar:'هي تصنع الآلات.',pt:'Ela constrói máquinas.',bg:'Тя изгражда машини.'},
         opts:['Ingenieurin','Studentin','Kellnerin'], a:0 },
-      { q:'Er bedient Gäste im Restaurant.',
-        qt:{ru:'Он обслуживает гостей в ресторане.',uk:'Він обслуговує гостей у ресторані.',ar:'هو يخدم الضيوف في المطعم.',pt:'Ele atende os clientes no restaurante.',bg:'Той обслужва гости в ресторанта.'},
+      { q:'Er bringt das Essen an den Tisch.',
+        qt:{ru:'Он приносит еду к столу.',uk:'Він приносить їжу до столу.',ar:'هو يحضر الطعام إلى الطاولة.',pt:'Ele leva a comida à mesa.',bg:'Той носи храната до масата.'},
         opts:['Architekt','Physiker','Kellner'], a:2 },
       { q:'Sie kocht in der Küche.',
         qt:{ru:'Она готовит на кухне.',uk:'Вона готує на кухні.',ar:'هي تطبخ في المطبخ.',pt:'Ela cozinha na cozinha.',bg:'Тя готви в кухнята.'},
         opts:['Köchin','Ärztin','Designerin'], a:0 },
-      { q:'Er liest viele Bücher und studiert.',
-        qt:{ru:'Он читает много книг и учится в университете.',uk:'Він читає багато книг і навчається в університеті.',ar:'هو يقرأ الكثير من الكتب ويدرس في الجامعة.',pt:'Ele lê muitos livros e estuda na universidade.',bg:'Той чете много книги и учи в университета.'},
-        opts:['Kellner','Student','Musiker'], a:1 },
-      { q:'Sie plant Häuser.',
-        qt:{ru:'Она проектирует дома.',uk:'Вона проєктує будинки.',ar:'هي تصمم المنازل.',pt:'Ela projeta casas.',bg:'Тя проектира къщи.'},
-        opts:['Architektin','Journalistin','Köchin'], a:0 },
-      { q:'Er schreibt Artikel für die Zeitung.',
-        qt:{ru:'Он пишет статьи для газеты.',uk:'Він пише статті для газети.',ar:'هو يكتب مقالات للصحيفة.',pt:'Ele escreve artigos para o jornal.',bg:'Той пише статии за вестника.'},
-        opts:['Physiker','Journalist','Ingenieur'], a:1 },
-      { q:'Sie arbeitet mit Zahlen.',
-        qt:{ru:'Она работает с числами.',uk:'Вона працює з числами.',ar:'هي تعمل بالأرقام.',pt:'Ela trabalha com números.',bg:'Тя работи с числа.'},
-        opts:['Musikerin','Kellnerin','Mathematikerin'], a:2 },
-      { q:'Er macht Experimente im Labor.',
-        qt:{ru:'Он проводит эксперименты в лаборатории.',uk:'Він проводить експерименти в лабораторії.',ar:'هو يجري تجارب في المختبر.',pt:'Ele faz experimentos no laboratório.',bg:'Той прави експерименти в лабораторията.'},
-        opts:['Physiker','Künstler','Student'], a:0 },
-      { q:'Sie entwirft Kleidung.',
-        qt:{ru:'Она разрабатывает одежду.',uk:'Вона розробляє одяг.',ar:'هي تصمم الملابس.',pt:'Ela cria roupas.',bg:'Тя проектира дрехи.'},
-        opts:['Ärztin','Designerin','Lehrerin'], a:1 },
+      { q:'Sie lernt an der Universität.',
+        qt:{ru:'Она учится в университете.',uk:'Вона навчається в університеті.',ar:'هي تدرس في الجامعة.',pt:'Ela estuda na universidade.',bg:'Тя учи в университета.'},
+        opts:['Kellnerin','Studentin','Musikerin'], a:1 },
+      { q:'Er zeichnet Pläne für Häuser.',
+        qt:{ru:'Он чертит планы домов.',uk:'Він креслить плани будинків.',ar:'هو يرسم مخططات المنازل.',pt:'Ele desenha plantas de casas.',bg:'Той чертае планове на къщи.'},
+        opts:['Architekt','Journalist','Koch'], a:0 },
+      { q:'Sie schreibt Texte für die Zeitung.',
+        qt:{ru:'Она пишет тексты для газеты.',uk:'Вона пише тексти для газети.',ar:'هي تكتب نصوصاً للصحيفة.',pt:'Ela escreve textos para o jornal.',bg:'Тя пише текстове за вестника.'},
+        opts:['Physikerin','Journalistin','Ingenieurin'], a:1 },
+      { q:'Er rechnet den ganzen Tag mit Zahlen.',
+        qt:{ru:'Он весь день считает и работает с числами.',uk:'Він цілий день рахує й працює з числами.',ar:'هو يحسب ويعمل بالأرقام طوال اليوم.',pt:'Ele calcula com números o dia todo.',bg:'Той смята с числа цял ден.'},
+        opts:['Musiker','Kellner','Mathematiker'], a:2 },
+      { q:'Sie arbeitet im Labor.',
+        qt:{ru:'Она работает в лаборатории.',uk:'Вона працює в лабораторії.',ar:'هي تعمل في المختبر.',pt:'Ela trabalha no laboratório.',bg:'Тя работи в лабораторията.'},
+        opts:['Physikerin','Künstlerin','Studentin'], a:0 },
+      { q:'Er zeichnet neue Kleidung.',
+        qt:{ru:'Он рисует новую одежду.',uk:'Він малює новий одяг.',ar:'هو يرسم ملابس جديدة.',pt:'Ele desenha roupas novas.',bg:'Той рисува нови дрехи.'},
+        opts:['Arzt','Designer','Lehrer'], a:1 },
     ]
   },
 
@@ -843,18 +965,18 @@ const K2E1_EXERCISES = [
     },
     lines:[
       { who:'A', parts:['Guten Tag! Was sind Sie von ', '?'], gaps:['Beruf'] },
-      { who:'B', parts:['Ich bin ', '. Ich untersuche Patienten.'], gaps:['Ärztin'] },
+      { who:'B', parts:['Ich bin ', '. Ich helfe kranken Menschen.'], gaps:['Ärztin'] },
       { who:'A', parts:['Und wo ', ' Sie?'], gaps:['arbeiten'] },
       { who:'B', parts:['Ich arbeite im Krankenhaus.'], gaps:[] },
-      { who:'A', parts:['Meine Schwester ist ', '. Sie unterrichtet Kinder.'], gaps:['Lehrerin'] },
+      { who:'A', parts:['Meine Schwester ist ', '. Sie arbeitet in der Schule.'], gaps:['Lehrerin'] },
       { who:'B', parts:['Interessant!'], gaps:[] },
       { who:'A', parts:['Hallo! Bist du ', '?'], gaps:['Student'] },
-      { who:'B', parts:['Ja, ich ', ' viele Bücher. Und du?'], gaps:['lese'] },
+      { who:'B', parts:['Ja, ich ', ' an der Universität. Und du?'], gaps:['lerne'] },
       { who:'A', parts:['Ich arbeite als ', '.'], gaps:['Kellner'] },
       { who:'B', parts:['Was machst du als Kellner?'], gaps:[] },
-      { who:'A', parts:['Ich ', ' Gäste.'], gaps:['bediene'] },
+      { who:'A', parts:['Ich ', ' das Essen an den Tisch.'], gaps:['bringe'] },
     ],
-    bank:['Beruf','Ärztin','arbeiten','Lehrerin','Student','lese','Kellner','bediene',
+    bank:['Beruf','Ärztin','arbeiten','Lehrerin','Student','lerne','Kellner','bringe',
           'Köchin','wohnen','male','Arzt']
   },
 ];
@@ -975,6 +1097,97 @@ const GRAMMAR = [
       },
     ]
   },
+];
+
+/* ==========================================================
+   VOKABELN (Grundlage: Goethe-Wortliste A1, eigene Beispielsätze)
+   ========================================================== */
+const VOCAB = [
+{
+  id:'v_person', title:'Person und Familie', subtitle:'40 Wörter',
+  words:[
+    {w:'die Familie, die Familien', ex:'Meine Familie ist groß.',
+     t:{ru:'семья',uk:'сім\u2019я',ar:'عائلة',pt:'família',bg:'семейство'}},
+    {w:'die Eltern (nur Plural)', ex:'Wo wohnen deine Eltern?',
+     t:{ru:'родители',uk:'батьки',ar:'الوالدان',pt:'pais',bg:'родители'}},
+    {w:'der Vater, die Väter', ex:'Mein Vater arbeitet viel.',
+     t:{ru:'отец',uk:'батько',ar:'أب',pt:'pai',bg:'баща'}},
+    {w:'die Mutter, die Mütter', ex:'Meine Mutter kocht gern.',
+     t:{ru:'мать',uk:'мати',ar:'أم',pt:'mãe',bg:'майка'}},
+    {w:'der Sohn, die Söhne', ex:'Ich habe einen Sohn.',
+     t:{ru:'сын',uk:'син',ar:'ابن',pt:'filho',bg:'син'}},
+    {w:'die Tochter, die Töchter', ex:'Meine Tochter ist fünf Jahre alt.',
+     t:{ru:'дочь',uk:'дочка',ar:'ابنة',pt:'filha',bg:'дъщеря'}},
+    {w:'das Kind, die Kinder', ex:'Wir haben zwei Kinder.',
+     t:{ru:'ребёнок',uk:'дитина',ar:'طفل',pt:'criança',bg:'дете'}},
+    {w:'der Bruder, die Brüder', ex:'Mein Bruder lernt Deutsch.',
+     t:{ru:'брат',uk:'брат',ar:'أخ',pt:'irmão',bg:'брат'}},
+    {w:'die Schwester, die Schwestern', ex:'Ich habe eine Schwester.',
+     t:{ru:'сестра',uk:'сестра',ar:'أخت',pt:'irmã',bg:'сестра'}},
+    {w:'die Großeltern (nur Plural)', ex:'Meine Großeltern wohnen weit weg.',
+     t:{ru:'бабушка и дедушка',uk:'бабуся й дідусь',ar:'الأجداد',pt:'avós',bg:'баба и дядо'}},
+    {w:'der Großvater, die Großväter', ex:'Mein Großvater ist 75 Jahre alt.',
+     t:{ru:'дедушка',uk:'дідусь',ar:'جد',pt:'avô',bg:'дядо'}},
+    {w:'die Großmutter, die Großmütter', ex:'Meine Großmutter macht guten Kuchen.',
+     t:{ru:'бабушка',uk:'бабуся',ar:'جدة',pt:'avó',bg:'баба'}},
+    {w:'der Mann, die Männer', ex:'Das ist mein Mann.',
+     t:{ru:'мужчина; муж',uk:'чоловік',ar:'رجل؛ زوج',pt:'homem; marido',bg:'мъж; съпруг'}},
+    {w:'die Frau, die Frauen', ex:'Seine Frau heißt Anna.',
+     t:{ru:'женщина; жена',uk:'жінка; дружина',ar:'امرأة؛ زوجة',pt:'mulher; esposa',bg:'жена; съпруга'}},
+    {w:'der Junge, die Jungen', ex:'Der Junge spielt Fußball.',
+     t:{ru:'мальчик',uk:'хлопчик',ar:'ولد',pt:'menino',bg:'момче'}},
+    {w:'das Mädchen, die Mädchen', ex:'Das Mädchen liest ein Buch.',
+     t:{ru:'девочка',uk:'дівчинка',ar:'بنت',pt:'menina',bg:'момиче'}},
+    {w:'das Baby, die Babys', ex:'Das Baby schläft.',
+     t:{ru:'младенец',uk:'немовля',ar:'رضيع',pt:'bebê',bg:'бебе'}},
+    {w:'der Freund, die Freunde', ex:'Mein Freund kommt aus Syrien.',
+     t:{ru:'друг',uk:'друг',ar:'صديق',pt:'amigo',bg:'приятел'}},
+    {w:'die Freundin, die Freundinnen', ex:'Meine Freundin arbeitet hier.',
+     t:{ru:'подруга',uk:'подруга',ar:'صديقة',pt:'amiga',bg:'приятелка'}},
+    {w:'der Mensch, die Menschen', ex:'Viele Menschen warten hier.',
+     t:{ru:'человек',uk:'людина',ar:'إنسان',pt:'pessoa',bg:'човек'}},
+    {w:'der Herr, die Herren', ex:'Guten Tag, Herr Meier!',
+     t:{ru:'господин',uk:'пан',ar:'سيد',pt:'senhor',bg:'господин'}},
+    {w:'der Name, die Namen', ex:'Wie ist Ihr Name?',
+     t:{ru:'имя',uk:'ім\u2019я',ar:'اسم',pt:'nome',bg:'име'}},
+    {w:'der Vorname, die Vornamen', ex:'Mein Vorname ist Amina.',
+     t:{ru:'имя (личное)',uk:'ім\u2019я (особисте)',ar:'الاسم الأول',pt:'primeiro nome',bg:'собствено име'}},
+    {w:'der Familienname, die Familiennamen', ex:'Bitte schreiben Sie Ihren Familiennamen.',
+     t:{ru:'фамилия',uk:'прізвище',ar:'اسم العائلة',pt:'sobrenome',bg:'фамилно име'}},
+    {w:'die Adresse, die Adressen', ex:'Wie ist deine Adresse?',
+     t:{ru:'адрес',uk:'адреса',ar:'عنوان',pt:'endereço',bg:'адрес'}},
+    {w:'die Straße, die Straßen', ex:'Ich wohne in der Bahnhofstraße.',
+     t:{ru:'улица',uk:'вулиця',ar:'شارع',pt:'rua',bg:'улица'}},
+    {w:'die Stadt, die Städte', ex:'Naumburg ist eine kleine Stadt.',
+     t:{ru:'город',uk:'місто',ar:'مدينة',pt:'cidade',bg:'град'}},
+    {w:'das Land, die Länder', ex:'Aus welchem Land kommst du?',
+     t:{ru:'страна',uk:'країна',ar:'بلد',pt:'país',bg:'страна'}},
+    {w:'das Alter (kein Plural)', ex:'Name, Adresse und Alter, bitte.',
+     t:{ru:'возраст',uk:'вік',ar:'العمر',pt:'idade',bg:'възраст'}},
+    {w:'der Beruf, die Berufe', ex:'Mein Beruf ist Kellner.',
+     t:{ru:'профессия',uk:'професія',ar:'مهنة',pt:'profissão',bg:'професия'}},
+    {w:'die Telefonnummer, die Telefonnummern', ex:'Wie ist deine Telefonnummer?',
+     t:{ru:'номер телефона',uk:'номер телефону',ar:'رقم الهاتف',pt:'número de telefone',bg:'телефонен номер'}},
+    {w:'ledig', ex:'Ich bin ledig.',
+     t:{ru:'холост / не замужем',uk:'неодружений / незаміжня',ar:'أعزب / عزباء',pt:'solteiro / solteira',bg:'неженен / неомъжена'}},
+    {w:'verheiratet', ex:'Sie ist verheiratet.',
+     t:{ru:'женат / замужем',uk:'одружений / заміжня',ar:'متزوج / متزوجة',pt:'casado / casada',bg:'женен / омъжена'}},
+    {w:'geboren', ex:'Ich bin in Damaskus geboren.',
+     t:{ru:'рождённый',uk:'народжений',ar:'مولود',pt:'nascido',bg:'роден'}},
+    {w:'alt', ex:'Wie alt bist du?',
+     t:{ru:'старый; ... лет',uk:'старий; ... років',ar:'كبير السن؛ عمره',pt:'velho; de idade',bg:'стар; на години'}},
+    {w:'jung', ex:'Mein Bruder ist noch jung.',
+     t:{ru:'молодой',uk:'молодий',ar:'شاب',pt:'jovem',bg:'млад'}},
+    {w:'heißen', ex:'Ich heiße Olena.',
+     t:{ru:'зваться',uk:'зватися',ar:'يُدعى',pt:'chamar-se',bg:'казвам се'}},
+    {w:'wohnen', ex:'Wir wohnen in Weißenfels.',
+     t:{ru:'жить (проживать)',uk:'мешкати',ar:'يسكن',pt:'morar',bg:'живея (обитавам)'}},
+    {w:'leben', ex:'Meine Familie lebt in der Ukraine.',
+     t:{ru:'жить',uk:'жити',ar:'يعيش',pt:'viver',bg:'живея'}},
+    {w:'haben', ex:'Ich habe zwei Kinder.',
+     t:{ru:'иметь',uk:'мати',ar:'يملك',pt:'ter',bg:'имам'}},
+  ]
+}
 ];
 
 /* ==========================================================
@@ -1159,8 +1372,8 @@ function load(k,def){ try{ const v=localStorage.getItem(k); return v?JSON.parse(
 function save(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 
 function show(id){
-  ['scStart','scHome','scChapters','scUnits','scMenu',
-   'scGrammarList','scGrammarTopic','scEx','scResult','scBeamer'].forEach(s=>{
+  ['scStart','scHome','scChapters','scUnits','scMenu','scGrammarList','scGrammarTopic',
+   'scVocabList','scVocabBlock','scEx','scResult','scBeamer'].forEach(s=>{
     $(s).classList.toggle('hidden', s!==id);
   });
   window.scrollTo(0,0);
@@ -1187,7 +1400,7 @@ function exCount(e){
 }
 function setAllLangBtns(){
   ['changeLangHome','changeLangCh','changeLangUn','changeLang',
-   'changeLangGr','changeLangGt'].forEach(id=>{
+   'changeLangGr','changeLangGt','changeLangVk','changeLangVb'].forEach(id=>{
     const el = $(id); if(el) el.textContent = langObj().label;
   });
 }
@@ -1202,6 +1415,9 @@ function openHome(){
   const grDone = GRAMMAR.reduce((s,t)=>s+t.exercises.filter(e=>doneMap[e.id]!==undefined).length,0);
   $('wsMeta').textContent = `${wsDone} von ${wsTotal} Aufgaben bearbeitet`;
   $('grMeta').textContent = `${grDone} von ${grTotal} Aufgaben bearbeitet`;
+  const vkTotal = VOCAB.reduce((s,b)=>s+b.words.length,0);
+  const vkDone = VOCAB.reduce((s,b)=>s+vocabKnownCount(b),0);
+  $('vkMeta').textContent = `${vkDone} von ${vkTotal} Wörtern gekonnt`;
   show('scHome');
 }
 $('goWortschatz').onclick = ()=> openChapters();
@@ -1340,7 +1556,7 @@ function goBackFromEx(){
   else openMenu();
 }
 
-['changeLangHome','changeLangCh','changeLangUn','changeLang','changeLangGr','changeLangGt']
+['changeLangHome','changeLangCh','changeLangUn','changeLang','changeLangGr','changeLangGt','changeLangVk','changeLangVb']
   .forEach(id=>{ const el=$(id); if(el) el.onclick = ()=> show('scStart'); });
 
 $('backHomeFromCh').onclick = ()=> openHome();
@@ -1592,6 +1808,159 @@ function finishEx(total){
 }
 
 /* ==========================================================
+   VOKABELN
+   ========================================================== */
+let curBlock = null;
+let knownMap = {};          // { "blockId:index": true }
+let deck = [], deckPos = 0, deckAgain = [], deckFlipped = false, deckRound = 0;
+
+const kKey = (b,i)=> b.id + ':' + i;
+
+function vocabKnownCount(b){
+  return b.words.reduce((s,_,i)=> s + (knownMap[kKey(b,i)] ? 1 : 0), 0);
+}
+
+$('goVokabeln').onclick = ()=> openVocabList();
+
+function openVocabList(){
+  setAllLangBtns();
+  $('vocabList').innerHTML = VOCAB.map((b,i)=>{
+    const d = vocabKnownCount(b), n = b.words.length;
+    return `<button class="ex-item" data-i="${i}" style="border-left-color:var(--go);">
+      <span class="num" style="background:var(--go);">${i+1}</span>
+      <span class="body">
+        <span class="name">${b.title}</span>
+        <span class="meta">${b.subtitle}</span>
+      </span>
+      <span class="badge ${d===n?'done':''}">${d}/${n}</span>
+    </button>`;
+  }).join('');
+  $('vocabList').querySelectorAll('.ex-item').forEach(b=>{
+    b.onclick = ()=> openVocabBlock(VOCAB[+b.dataset.i]);
+  });
+  show('scVocabList');
+}
+
+function openVocabBlock(block){
+  if(block) curBlock = block;
+  setAllLangBtns();
+  $('vkBlockTitle').textContent = curBlock.title;
+  $('vkBlockSub').textContent = vocabKnownCount(curBlock) + ' von ' + curBlock.words.length + ' gekonnt';
+  switchVkTab('list');
+  show('scVocabBlock');
+}
+
+function switchVkTab(which){
+  const isList = which === 'list';
+  $('tabList').classList.toggle('active', isList);
+  $('tabCards').classList.toggle('active', !isList);
+  $('vkListView').classList.toggle('hidden', !isList);
+  $('vkCardView').classList.toggle('hidden', isList);
+  if(isList) renderVkRows();
+  else startDeck();
+}
+$('tabList').onclick  = ()=> switchVkTab('list');
+$('tabCards').onclick = ()=> switchVkTab('cards');
+
+/* ---------- Listenansicht ---------- */
+function renderVkRows(){
+  const l = langObj();
+  const q = ($('vkSearch').value || '').trim().toLowerCase();
+  const rows = curBlock.words.map((wd,i)=>({wd,i}))
+    .filter(({wd})=> !q || wd.w.toLowerCase().includes(q)
+                  || (wd.t[l.code]||'').toLowerCase().includes(q));
+
+  if(!rows.length){
+    $('vkRows').innerHTML = '<div class="vk-empty">Kein Wort gefunden.</div>';
+    return;
+  }
+  $('vkRows').innerHTML = rows.map(({wd,i})=>`
+    <div class="vk-row ${knownMap[kKey(curBlock,i)]?'known':''}" data-i="${i}">
+      <div class="vk-top">
+        <span class="vk-de">${wd.w}</span>
+        <span class="vk-tr" ${l.rtl?'dir="rtl"':''}>${wd.t[l.code]}</span>
+      </div>
+      <div class="vk-ex">${wd.ex}</div>
+    </div>`).join('');
+  $('vkRows').querySelectorAll('.vk-row').forEach(r=>{
+    r.onclick = ()=> r.classList.toggle('open');
+  });
+}
+$('vkSearch').addEventListener('input', renderVkRows);
+
+/* ---------- Karteikarten ---------- */
+function startDeck(){
+  deck = curBlock.words.map((_,i)=>i);
+  deckPos = 0; deckAgain = []; deckRound = 1;
+  $('fcDone').classList.add('hidden');
+  $('flashcard').classList.remove('hidden');
+  renderCard();
+}
+
+function renderCard(){
+  if(deckPos >= deck.length){
+    if(deckAgain.length){                    // Runde mit den schwierigen Wörtern
+      deck = deckAgain; deckAgain = []; deckPos = 0; deckRound++;
+      renderCard(); return;
+    }
+    finishDeck(); return;
+  }
+  const i = deck[deckPos];
+  const wd = curBlock.words[i];
+  deckFlipped = false;
+  $('fcWord').textContent = wd.w;
+  $('fcHint').classList.remove('hidden');
+  $('fcBack').classList.add('hidden');
+  $('fcActions').classList.add('hidden');
+  const l = langObj();
+  $('fcTrans').textContent = wd.t[l.code];
+  $('fcTrans').setAttribute('dir', l.rtl?'rtl':'ltr');
+  $('fcEx').textContent = wd.ex;
+  $('vkProgress').textContent = deckRound === 1
+    ? `Karte ${deckPos+1} von ${deck.length}`
+    : `Wiederholung · Karte ${deckPos+1} von ${deck.length}`;
+}
+
+$('flashcard').onclick = ()=>{
+  if(deckFlipped) return;
+  deckFlipped = true;
+  $('fcBack').classList.remove('hidden');
+  $('fcHint').classList.add('hidden');
+  $('fcActions').classList.remove('hidden');
+};
+
+$('fcKnown').onclick = ()=>{
+  const i = deck[deckPos];
+  knownMap[kKey(curBlock,i)] = true;
+  save('daf_known', knownMap);
+  deckPos++; renderCard();
+};
+$('fcAgain').onclick = ()=>{
+  const i = deck[deckPos];
+  delete knownMap[kKey(curBlock,i)];
+  save('daf_known', knownMap);
+  deckAgain.push(i);
+  deckPos++; renderCard();
+};
+$('fcRestart').onclick = ()=> startDeck();
+
+function finishDeck(){
+  $('flashcard').classList.add('hidden');
+  $('fcActions').classList.add('hidden');
+  $('vkProgress').textContent = '';
+  const d = vocabKnownCount(curBlock), n = curBlock.words.length;
+  $('fcDoneNum').textContent = d + ' / ' + n;
+  $('fcDoneText').textContent = d===n
+    ? 'Alle Wörter gekonnt. Sehr gut!'
+    : 'Wörter, die du kannst. Übe die anderen noch einmal.';
+  $('fcDone').classList.remove('hidden');
+  $('vkBlockSub').textContent = d + ' von ' + n + ' gekonnt';
+}
+
+$('backHomeFromVk').onclick = ()=> openHome();
+$('backToVocabList').onclick = ()=> openVocabList();
+
+/* ==========================================================
    BEAMER
    ========================================================== */
 let bIdx = 0;
@@ -1743,6 +2112,7 @@ $('qrGo').onclick = ()=>{
    ========================================================== */
 (function init(){
   doneMap = load('daf_done', {});
+  knownMap = load('daf_known', {});
   renderLangGrid();
 
   if(IS_BEAMER){
