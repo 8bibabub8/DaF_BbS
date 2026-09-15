@@ -20,6 +20,15 @@
   --stop:#b34a33;
   --stop-bg:#fbeae6;
   --act:#2d6089;
+  /* Artikelfarben – ausschließlich für der/die/das */
+  --art-der:#1a5fb4;
+  --art-die:#c0392b;
+  --art-das:#1e8449;
+  /* Grammatik-Hervorhebungen – bewusst NICHT blau/rot/grün */
+  --gram-end:#7a4fa3;   /* Endungen, Fokusform */
+  --gram-sec:#c8890c;   /* Sekundär: W-Wort, Stamm-Kontrast */
+  --gram-end-d:#c9a3e8;  /* Endungen auf dunklem Grund */
+  --gram-sec-d:#e8a317;  /* Sekundär auf dunklem Grund */
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{margin:0;padding:0;}
@@ -270,8 +279,8 @@ button{font-family:inherit;cursor:pointer;}
   color:var(--ink-soft);padding:7px 9px;text-align:left;font-weight:700;
 }
 .ruletable td{padding:9px;border-bottom:1px solid var(--edge);}
-.ruletable td.w{color:var(--act);font-weight:800;}
-.ruletable td.v{color:var(--stop);font-weight:800;}
+.ruletable td.w{color:var(--gram-sec);font-weight:800;}
+.ruletable td.v{color:var(--gram-end);font-weight:800;}
 .rulenote{
   margin-top:13px;background:#fdf3dd;border-radius:9px;padding:11px 13px;
   font-size:.95rem;font-weight:600;color:#5e4104;
@@ -282,7 +291,7 @@ button{font-family:inherit;cursor:pointer;}
 .gslide .gq{
   font-size:clamp(1.9rem,5.2vw,3.2rem);font-weight:800;margin-bottom:14px;line-height:1.2;
 }
-.gslide .gq .hl{color:var(--signal);}
+.gslide .gq .hl{color:var(--gram-sec-d);}
 .gslide .ga{
   font-size:clamp(1.2rem,3.2vw,1.8rem);font-weight:600;
   color:rgba(255,255,255,.82);margin-bottom:14px;
@@ -301,8 +310,8 @@ button{font-family:inherit;cursor:pointer;}
   letter-spacing:.05em;padding:6px 14px;border-bottom:2px solid rgba(255,255,255,.25);
 }
 .bruletable td{padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.12);font-weight:700;}
-.bruletable td.w{color:var(--signal);}
-.bruletable td.v{color:#7fd4a8;}
+.bruletable td.w{color:var(--gram-sec-d);}
+.bruletable td.v{color:var(--gram-end-d);}
 .brulenote{
   position:relative;margin-top:20px;font-size:1.05rem;
   color:var(--signal);font-weight:700;max-width:600px;
@@ -336,6 +345,20 @@ button{font-family:inherit;cursor:pointer;}
   width:100%;padding:12px 14px;border:1.5px solid var(--edge);border-radius:10px;
   font-size:1rem;font-family:inherit;margin-bottom:12px;background:var(--card);
 }
+.a-der{color:var(--art-der);}
+.a-die{color:var(--art-die);}
+.a-das{color:var(--art-das);}
+.a-pl{color:var(--ink-soft);}
+.vk-plural{color:var(--ink-soft);font-weight:600;}
+.vk-indef{
+  display:inline-block;background:#eef1f3;color:var(--ink-soft);
+  font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:20px;
+  margin-left:6px;vertical-align:middle;white-space:nowrap;
+}
+.vk-tag{
+  display:inline-block;background:#f4f0e2;color:#8a7412;
+  font-size:.72rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:4px;
+}
 .vk-rows{display:flex;flex-direction:column;gap:7px;}
 .vk-row{
   background:var(--card);border:1.5px solid var(--edge);border-radius:11px;
@@ -344,7 +367,7 @@ button{font-family:inherit;cursor:pointer;}
 .vk-row.known{border-left:5px solid var(--go);}
 .vk-row .vk-top{display:flex;justify-content:space-between;gap:12px;align-items:baseline;}
 .vk-row .vk-de{font-weight:700;font-size:1.08rem;}
-.vk-row .vk-tr{color:var(--go);font-weight:600;font-size:1.02rem;text-align:right;}
+.vk-row .vk-tr{color:var(--ink);font-weight:600;font-size:1.02rem;text-align:right;}
 .vk-row .vk-tr[dir="rtl"]{direction:rtl;}
 .vk-row .vk-ex{
   display:none;margin-top:9px;padding-top:9px;border-top:1px solid var(--edge);
@@ -355,27 +378,127 @@ button{font-family:inherit;cursor:pointer;}
 
 /* ---------- Vokabeln: Karteikarten ---------- */
 .vk-progress{text-align:center;font-size:.88rem;color:var(--ink-soft);font-weight:600;margin-bottom:12px;}
-.flashcard{
-  background:var(--card);border:1.5px solid var(--edge);border-radius:16px;
-  min-height:250px;display:flex;align-items:center;justify-content:center;
-  padding:26px 20px;cursor:pointer;text-align:center;
+.pr-type{
+  font-size:.85rem;font-weight:700;color:var(--ink-soft);
+  text-transform:uppercase;letter-spacing:.04em;margin-bottom:12px;text-align:center;
 }
-.fc-word{font-size:1.9rem;font-weight:800;line-height:1.25;}
-.fc-hint{margin-top:14px;font-size:.82rem;color:var(--ink-soft);}
-.fc-back{margin-top:18px;padding-top:16px;border-top:2px solid var(--edge);}
-.fc-trans{font-size:1.5rem;font-weight:700;color:var(--go);}
-.fc-trans[dir="rtl"]{direction:rtl;}
-.fc-ex{margin-top:12px;font-size:1.02rem;color:var(--ink-soft);font-style:italic;}
-.fc-actions{display:flex;gap:10px;margin-top:14px;}
-.fc-actions button{flex:1;padding:15px;border-radius:11px;font-weight:700;font-size:1rem;border:2px solid;}
-.fc-again{background:#fff;border-color:var(--signal);color:var(--signal-dk);}
-.fc-known{background:var(--go);border-color:var(--go);color:#fff;}
+.pr-prompt{
+  font-size:1.7rem;font-weight:800;line-height:1.3;text-align:center;
+  margin-bottom:6px;
+}
+.pr-prompt .vk-indef{display:block;margin:10px auto 0;width:max-content;}
+.pr-noun{font-size:2rem;}
+.opt.a-der{color:var(--art-der);}
+.opt.a-die{color:var(--art-die);}
+.opt.a-das{color:var(--art-das);}
+.opt.correct.a-der,.opt.correct.a-die,.opt.correct.a-das{color:var(--go);}
+.opt.wrong.a-der,.opt.wrong.a-die,.opt.wrong.a-das{color:var(--stop);}
 .fc-done{
   background:var(--card);border:1.5px solid var(--edge);border-radius:14px;
   padding:30px 20px;text-align:center;margin-top:14px;
 }
 .fc-done-num{font-size:2.6rem;font-weight:800;color:var(--go);}
 .fc-done p{color:var(--ink-soft);margin:8px 0 18px;}
+
+/* ---------- Beamer: Aufbau-Tabelle ---------- */
+.btable{position:relative;border-collapse:collapse;margin:0 auto;color:#fff;}
+.btable caption{
+  caption-side:top;color:var(--gram-sec-d);font-size:.9rem;font-weight:800;
+  letter-spacing:.05em;text-transform:uppercase;padding-bottom:14px;
+}
+.btable th{
+  color:#fff;font-size:clamp(1.3rem,3.4vw,2.1rem);font-weight:800;
+  padding:6px 18px 14px;border-bottom:2px solid rgba(255,255,255,.28);
+}
+.btable td{
+  padding:7px 18px;font-size:clamp(1.15rem,3vw,1.85rem);font-weight:700;
+  border-bottom:1px solid transparent;
+  opacity:0;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease;
+}
+.btable tr.on td{opacity:1;transform:none;border-bottom-color:rgba(255,255,255,.1);}
+.btable td.pron{color:rgba(255,255,255,.7);text-align:right;font-weight:600;}
+.btable td.form{text-align:left;}
+.btable .stem{color:#fff;}
+.btable .end{color:var(--gram-end-d);}
+.btable .irr{color:var(--gram-sec-d);}
+.ctable{position:relative;border-collapse:collapse;margin:0 auto;color:#fff;}
+.ctable caption{
+  caption-side:top;color:var(--gram-sec-d);font-size:.9rem;font-weight:800;
+  letter-spacing:.05em;text-transform:uppercase;padding-bottom:14px;
+}
+.ctable th{
+  color:rgba(255,255,255,.6);font-size:.8rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.05em;padding:0 18px 12px;border-bottom:2px solid rgba(255,255,255,.22);
+}
+.ctable td{
+  padding:9px 18px;font-size:clamp(1.05rem,2.7vw,1.7rem);font-weight:700;
+  border-bottom:1px solid transparent;
+  opacity:0;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease;
+}
+.ctable tr.on td{opacity:1;transform:none;border-bottom-color:rgba(255,255,255,.1);}
+.ctable td.cpos{text-align:right;color:rgba(255,255,255,.62);}
+.ctable td.carrow{font-size:1.2em;padding:9px 6px;}
+.ctable td.cneg{text-align:left;color:#fff;}
+.bcaption{
+  position:relative;margin-top:18px;color:var(--gram-sec-d);
+  font-size:1rem;font-weight:700;
+}
+
+/* ---------- Vollbildmodus ---------- */
+body.fs .wrap{max-width:none;padding:0;}
+body.fs .bar,
+body.fs #beamerUnitPicker,
+body.fs .qr-panel,
+body.fs .modeswitch,
+body.fs .bnav,
+body.fs .fs-btn{display:none !important;}
+body.fs .stage{
+  border-radius:0;min-height:100vh;justify-content:center;padding:40px 30px;
+}
+.fs-exit,.fs-arrow{
+  position:fixed;z-index:50;border:none;border-radius:50%;
+  background:rgba(255,255,255,.14);color:#fff;font-size:1.3rem;font-weight:700;
+  width:52px;height:52px;display:none;align-items:center;justify-content:center;
+}
+body.fs .fs-exit,body.fs .fs-arrow{display:flex;}
+.fs-exit{top:18px;right:18px;font-size:1.1rem;}
+#fsPrev{left:18px;top:50%;transform:translateY(-50%);}
+#fsNext{right:18px;top:50%;transform:translateY(-50%);}
+.fs-btn{
+  background:var(--slate);color:#fff;border:none;padding:11px 18px;
+  border-radius:10px;font-weight:700;font-size:.92rem;
+}
+
+/* ---------- Konjugationsübung ---------- */
+.tf-source{
+  font-size:1.2rem;font-weight:600;color:var(--ink-soft);
+  background:#eef1f3;border-radius:10px;padding:12px 14px;text-align:center;
+}
+.tf-arrow{text-align:center;font-size:1.5rem;color:var(--act);margin:8px 0;}
+.tf-target{
+  font-size:1.3rem;font-weight:700;line-height:1.6;text-align:center;
+}
+.tf-slot{
+  display:inline-block;min-width:80px;padding:2px 10px;margin:0 2px;
+  border-bottom:3px solid var(--act);color:var(--act);text-align:center;
+}
+.tf-slot.ok{border-bottom-color:var(--go);color:var(--go);}
+.tf-slot.no{border-bottom-color:var(--stop);color:var(--stop);}
+.conj-card{text-align:center;}
+.conj-inf{
+  display:inline-block;background:#eef1f3;color:var(--ink-soft);
+  padding:6px 14px;border-radius:20px;font-size:.9rem;font-weight:700;margin-bottom:16px;
+}
+.conj-line{font-size:1.5rem;font-weight:700;display:flex;align-items:center;
+  justify-content:center;gap:10px;flex-wrap:wrap;}
+.conj-input{
+  font-family:inherit;font-size:1.4rem;font-weight:700;text-align:center;
+  border:none;border-bottom:3px solid var(--act);background:#eaf2f8;
+  border-radius:8px 8px 0 0;padding:8px 12px;width:190px;color:var(--ink);
+}
+.conj-input.ok{border-bottom-color:var(--go);background:var(--go-bg);color:var(--go);}
+.conj-input.no{border-bottom-color:var(--stop);background:var(--stop-bg);color:var(--stop);}
+.conj-solution{margin-top:12px;font-size:1.2rem;font-weight:700;color:var(--go);}
 
 .qr-panel{
   background:var(--card);border:1.5px solid var(--edge);border-radius:14px;
@@ -429,8 +552,8 @@ button{font-family:inherit;cursor:pointer;}
     </div>
     <div class="area-grid">
       <button class="area-card" id="goWortschatz">
-        <span class="area-name">Wortschatz</span>
-        <span class="area-desc">Wörter und Sätze nach Kapiteln</span>
+        <span class="area-name">Kapitel üben</span>
+        <span class="area-desc">Aufgaben zu Kapitel 1 und 2</span>
         <span class="area-meta" id="wsMeta"></span>
       </button>
       <button class="area-card alt" id="goGrammatik">
@@ -439,8 +562,8 @@ button{font-family:inherit;cursor:pointer;}
         <span class="area-meta" id="grMeta"></span>
       </button>
       <button class="area-card vok" id="goVokabeln">
-        <span class="area-name">Vokabeln</span>
-        <span class="area-desc">Wörter lernen und nachschlagen</span>
+        <span class="area-name">Wörter lernen</span>
+        <span class="area-desc">Vokabeln nach Themen</span>
         <span class="area-meta" id="vkMeta"></span>
       </button>
     </div>
@@ -453,7 +576,7 @@ button{font-family:inherit;cursor:pointer;}
   <section id="scVocabList" class="hidden">
     <div class="bar">
       <div>
-        <div class="t">Vokabeln</div>
+        <div class="t">Wörter lernen</div>
         <div class="s">Wähle einen Themenblock</div>
       </div>
       <button class="langbtn" id="changeLangVk">RU</button>
@@ -475,7 +598,7 @@ button{font-family:inherit;cursor:pointer;}
 
     <div class="vk-tabs">
       <button id="tabList" class="active">Liste</button>
-      <button id="tabCards">Karteikarten</button>
+      <button id="tabCards">Üben</button>
     </div>
 
     <!-- Listenansicht -->
@@ -484,22 +607,17 @@ button{font-family:inherit;cursor:pointer;}
       <div class="vk-rows" id="vkRows"></div>
     </div>
 
-    <!-- Karteikarten -->
+    <!-- Übungsmodus -->
     <div id="vkCardView" class="hidden">
       <div class="vk-progress" id="vkProgress"></div>
-      <div class="flashcard" id="flashcard">
-        <div class="fc-inner">
-          <div class="fc-word" id="fcWord"></div>
-          <div class="fc-hint" id="fcHint">Tippen zum Umdrehen</div>
-          <div class="fc-back hidden" id="fcBack">
-            <div class="fc-trans" id="fcTrans"></div>
-            <div class="fc-ex" id="fcEx"></div>
-          </div>
-        </div>
+      <div class="qcard" id="prCard">
+        <div class="pr-type" id="prType"></div>
+        <div class="pr-prompt" id="prPrompt"></div>
+        <div class="opts" id="prOpts"></div>
+        <div class="feedback" id="prFb"></div>
       </div>
-      <div class="fc-actions hidden" id="fcActions">
-        <button class="fc-again" id="fcAgain">Nochmal üben</button>
-        <button class="fc-known" id="fcKnown">Kann ich</button>
+      <div class="nav-row">
+        <button class="btn-primary" id="prNext" disabled>Weiter</button>
       </div>
       <div class="fc-done hidden" id="fcDone">
         <div class="fc-done-num" id="fcDoneNum"></div>
@@ -541,7 +659,7 @@ button{font-family:inherit;cursor:pointer;}
   <section id="scChapters" class="hidden">
     <div class="bar">
       <div>
-        <div class="t">Wortschatz</div>
+        <div class="t">Kapitel üben</div>
         <div class="s">Wähle ein Kapitel</div>
       </div>
       <button class="langbtn" id="changeLangCh">RU</button>
@@ -633,6 +751,12 @@ button{font-family:inherit;cursor:pointer;}
       <div class="cnt" id="bCnt"></div>
       <button id="bNext">Weiter →</button>
     </div>
+    <div style="text-align:center;margin-top:12px;">
+      <button class="fs-btn" id="fsStart">Vollbild für die Projektion</button>
+    </div>
+    <button class="fs-exit" id="fsExit">✕</button>
+    <button class="fs-arrow" id="fsPrev">←</button>
+    <button class="fs-arrow" id="fsNext">→</button>
 
     <div class="qr-panel">
       <h3>QR-Code für die Klasse</h3>
@@ -663,6 +787,9 @@ const LANGS = [
   { code:'ar', label:'AR', native:'العربية',    de:'Arabisch', rtl:true },
   { code:'pt', label:'PT', native:'Português',  de:'Portugiesisch' },
   { code:'bg', label:'BG', native:'Български',  de:'Bulgarisch' },
+  { code:'en', label:'EN', native:'English',    de:'Englisch' },
+  { code:'fr', label:'FR', native:'Français',   de:'Französisch' },
+  { code:'ro', label:'RO', native:'Română',     de:'Rumänisch' },
 ];
 
 /* ==========================================================
@@ -1097,6 +1224,395 @@ const GRAMMAR = [
       },
     ]
   },
+  {
+    id:'g_konj',
+    title:'Verbkonjugation',
+    subtitle:'Präsens · ich, du, er/sie/es …',
+    slides:[
+      { kind:'build', verb:'wohnen', caption:'regelmäßig',
+        rows:[['ich','wohn','e'],['du','wohn','st'],['er / sie / es','wohn','t'],
+              ['wir','wohn','en'],['ihr','wohn','t'],['sie / Sie','wohn','en']] },
+      { kind:'build', verb:'kommen', caption:'gleiche Endungen',
+        rows:[['ich','komm','e'],['du','komm','st'],['er / sie / es','komm','t'],
+              ['wir','komm','en'],['ihr','komm','t'],['sie / Sie','komm','en']] },
+      { kind:'build', verb:'arbeiten', caption:'mit -e- dazwischen',
+        rows:[['ich','arbeit','e'],['du','arbeit','est'],['er / sie / es','arbeit','et'],
+              ['wir','arbeit','en'],['ihr','arbeit','et'],['sie / Sie','arbeit','en']] },
+      { kind:'build', verb:'haben', caption:'unregelmäßig bei du und er',
+        rows:[['ich','hab','e'],['du','','hast'],['er / sie / es','','hat'],
+              ['wir','hab','en'],['ihr','hab','t'],['sie / Sie','hab','en']] },
+      { kind:'build', verb:'sein', caption:'ganz unregelmäßig',
+        rows:[['ich','','bin'],['du','','bist'],['er / sie / es','','ist'],
+              ['wir','','sind'],['ihr','','seid'],['sie / Sie','','sind']] },
+      { kind:'rule' },
+    ],
+    rule:{
+      head:['Person','Endung','Beispiel'],
+      rows:[
+        ['ich','-e','ich wohne'],
+        ['du','-st','du wohnst'],
+        ['er / sie / es','-t','er wohnt'],
+        ['wir','-en','wir wohnen'],
+        ['ihr','-t','ihr wohnt'],
+        ['sie / Sie','-en','sie wohnen'],
+      ],
+      note:'Der Stamm bleibt gleich. Nur die Endung ändert sich.'
+    },
+    exercises:[
+      {
+        id:'g_konj_a1', type:'conj',
+        title:'Wie heißt die Form?',
+        hint:'Schreibe das Verb in der richtigen Form.',
+        help:{
+          ru:'Напиши глагол в правильной форме. Основа остаётся, меняется окончание.',
+          uk:'Напиши дієслово у правильній формі. Основа залишається, змінюється закінчення.',
+          ar:'اكتب الفعل بالصيغة الصحيحة. جذر الفعل يبقى، والنهاية تتغير.',
+          pt:'Escreva o verbo na forma correta. O radical fica, a terminação muda.',
+          bg:'Напиши глагола в правилната форма. Основата остава, окончанието се променя.'
+        },
+        items:[
+          {inf:'wohnen',  pron:'ich',        a:'wohne'},
+          {inf:'wohnen',  pron:'du',         a:'wohnst'},
+          {inf:'kommen',  pron:'er',         a:'kommt'},
+          {inf:'lernen',  pron:'wir',        a:'lernen'},
+          {inf:'machen',  pron:'ihr',        a:'macht'},
+          {inf:'spielen', pron:'sie (Pl.)',  a:'spielen'},
+          {inf:'arbeiten',pron:'du',         a:'arbeitest'},
+          {inf:'arbeiten',pron:'er',         a:'arbeitet'},
+          {inf:'heißen',  pron:'du',         a:'heißt'},
+          {inf:'haben',   pron:'er',         a:'hat'},
+          {inf:'sein',    pron:'ich',        a:'bin'},
+          {inf:'sein',    pron:'du',         a:'bist'},
+        ]
+      },
+      {
+        id:'g_konj_a2', type:'choice',
+        title:'Welche Form ist richtig?',
+        hint:'Wähle die richtige Verbform.',
+        help:{
+          ru:'Выбери правильную форму глагола.',
+          uk:'Обери правильну форму дієслова.',
+          ar:'اختر صيغة الفعل الصحيحة.',
+          pt:'Escolha a forma verbal correta.',
+          bg:'Избери правилната глаголна форма.'
+        },
+        items:[
+          { q:'Ich ___ in Naumburg.',
+            qt:{ru:'Я живу в Наумбурге.',uk:'Я живу в Наумбурзі.',ar:'أنا أسكن في ناومبورغ.',pt:'Eu moro em Naumburg.',bg:'Живея в Наумбург.'},
+            opts:['wohne','wohnst','wohnt'], a:0 },
+          { q:'Du ___ aus Syrien.',
+            qt:{ru:'Ты из Сирии.',uk:'Ти із Сирії.',ar:'أنت من سوريا.',pt:'Você vem da Síria.',bg:'Ти си от Сирия.'},
+            opts:['komme','kommst','kommen'], a:1 },
+          { q:'Er ___ Deutsch.',
+            qt:{ru:'Он учит немецкий.',uk:'Він вивчає німецьку.',ar:'هو يتعلم الألمانية.',pt:'Ele aprende alemão.',bg:'Той учи немски.'},
+            opts:['lerne','lernst','lernt'], a:2 },
+          { q:'Wir ___ im Betrieb.',
+            qt:{ru:'Мы работаем на предприятии.',uk:'Ми працюємо на підприємстві.',ar:'نحن نعمل في الشركة.',pt:'Nós trabalhamos na empresa.',bg:'Работим в предприятието.'},
+            opts:['arbeiten','arbeitest','arbeitet'], a:0 },
+          { q:'Ihr ___ gern Fußball.',
+            qt:{ru:'Вы любите играть в футбол.',uk:'Ви любите грати у футбол.',ar:'أنتم تحبون لعب كرة القدم.',pt:'Vocês gostam de jogar futebol.',bg:'Обичате да играете футбол.'},
+            opts:['spielen','spielt','spielst'], a:1 },
+          { q:'Sie ___ Frau Meier.',
+            qt:{ru:'Её зовут госпожа Майер.',uk:'Її звати пані Маєр.',ar:'اسمها السيدة ماير.',pt:'Ela se chama Sra. Meier.',bg:'Тя се казва госпожа Майер.'},
+            opts:['heiße','heißt','heißen'], a:1 },
+          { q:'Du ___ zwei Kinder.',
+            qt:{ru:'У тебя двое детей.',uk:'У тебе двоє дітей.',ar:'لديك طفلان.',pt:'Você tem dois filhos.',bg:'Имаш две деца.'},
+            opts:['habe','hat','hast'], a:2 },
+          { q:'Ich ___ Kellner von Beruf.',
+            qt:{ru:'Я официант по профессии.',uk:'Я офіціант за професією.',ar:'أنا نادل بالمهنة.',pt:'Eu sou garçom de profissão.',bg:'По професия съм сервитьор.'},
+            opts:['bin','bist','ist'], a:0 },
+          { q:'Ihr ___ aus Bulgarien.',
+            qt:{ru:'Вы из Болгарии.',uk:'Ви з Болгарії.',ar:'أنتم من بلغاريا.',pt:'Vocês vêm da Bulgária.',bg:'Вие сте от България.'},
+            opts:['sind','seid','ist'], a:1 },
+          { q:'Meine Schwester ___ in der Schule.',
+            qt:{ru:'Моя сестра работает в школе.',uk:'Моя сестра працює в школі.',ar:'أختي تعمل في المدرسة.',pt:'Minha irmã trabalha na escola.',bg:'Сестра ми работи в училище.'},
+            opts:['arbeite','arbeitest','arbeitet'], a:2 },
+        ]
+      },
+      {
+        id:'g_konj_a3', type:'gap',
+        title:'Ein Gespräch in der Pause',
+        hint:'Ergänze die Verbformen. Tippe zuerst auf die Lücke, dann auf das Wort.',
+        help:{
+          ru:'Дополни формы глаголов. Сначала нажми на пропуск, потом на слово.',
+          uk:'Доповни форми дієслів. Спершу натисни на пропуск, потім на слово.',
+          ar:'أكمل صيغ الأفعال. اضغط أولاً على الفراغ، ثم على الكلمة.',
+          pt:'Complete as formas verbais. Toque primeiro na lacuna, depois na palavra.',
+          bg:'Допълни глаголните форми. Първо натисни празното място, после думата.'
+        },
+        lines:[
+          { who:'A', parts:['Hallo! Wie ', ' du?'], gaps:['heißt'] },
+          { who:'B', parts:['Ich ', ' Amina. Und du?'], gaps:['heiße'] },
+          { who:'A', parts:['Ich bin Marek. Woher ', ' du?'], gaps:['kommst'] },
+          { who:'B', parts:['Ich komme aus Syrien. Meine Familie ', ' noch dort.'], gaps:['lebt'] },
+          { who:'A', parts:['', ' du hier in Naumburg?'], gaps:['Wohnst'] },
+          { who:'B', parts:['Ja. Mein Bruder und ich ', ' zusammen.'], gaps:['wohnen'] },
+          { who:'A', parts:['Und was ', ' ihr beruflich?'], gaps:['macht'] },
+          { who:'B', parts:['Mein Bruder ', ' als Kellner. Ich lerne noch.'], gaps:['arbeitet'] },
+        ],
+        bank:['heißt','heiße','kommst','lebt','Wohnst','wohnen','macht','arbeitet',
+              'komme','arbeiten','bist','machen']
+      },
+    ]
+  },
+  {
+    id:'g_kein',
+    title:'Negation mit kein',
+    subtitle:'kein · keine · nicht',
+    slides:[
+      { kind:'contrast', caption:'aus ein wird kein',
+        head:['positiv','negativ'],
+        rows:[
+          ['der','ein Drucker','kein Drucker'],
+          ['die','eine Tasche','keine Tasche'],
+          ['das','ein Auto','kein Auto'],
+          ['pl', 'Bücher','keine Bücher'],
+        ] },
+      { kind:'contrast', caption:'im Satz',
+        head:['positiv','negativ'],
+        rows:[
+          ['der','Das ist ein Stuhl.','Das ist kein Stuhl.'],
+          ['die','Das ist eine Uhr.','Das ist keine Uhr.'],
+          ['das','Ich habe ein Auto.','Ich habe kein Auto.'],
+          ['pl', 'Wir haben Kinder.','Wir haben keine Kinder.'],
+        ] },
+      { kind:'rule' },
+      { kind:'contrast', caption:'kein oder nicht?',
+        head:['kein + Nomen','nicht + Rest'],
+        rows:[
+          ['x','Das ist kein Auto.','Das Auto ist nicht neu.'],
+          ['x','Ich habe keine Zeit.','Ich komme nicht.'],
+          ['x','Er hat kein Problem.','Er arbeitet nicht hier.'],
+        ] },
+    ],
+    rule:{
+      head:['Artikel','Negation','Beispiel'],
+      rows:[
+        ['ein (der)','kein','kein Drucker'],
+        ['eine (die)','keine','keine Tasche'],
+        ['ein (das)','kein','kein Auto'],
+        ['– (Plural)','keine','keine Bücher'],
+      ],
+      note:'kein verneint ein Nomen. Vor allem anderen steht nicht.'
+    },
+    exercises:[
+      {
+        id:'g_kein_a1', type:'transform',
+        title:'Sag es negativ',
+        hint:'Lies den Satz. Wähle das richtige Wort für den negativen Satz.',
+        help:{
+          ru:'Прочитай предложение. Выбери правильное слово для отрицания.',
+          uk:'Прочитай речення. Обери правильне слово для заперечення.',
+          ar:'اقرأ الجملة. اختر الكلمة الصحيحة للنفي.',
+          pt:'Leia a frase. Escolha a palavra certa para a negação.',
+          bg:'Прочети изречението. Избери правилната дума за отрицание.'
+        },
+        items:[
+          { pos:'Das ist ein Drucker.',  neg:['Das ist ',' Drucker.'],  a:'kein',  opts:['kein','keine'] },
+          { pos:'Das ist eine Tasche.',  neg:['Das ist ',' Tasche.'],   a:'keine', opts:['kein','keine'] },
+          { pos:'Das ist ein Auto.',     neg:['Das ist ',' Auto.'],     a:'kein',  opts:['kein','keine'] },
+          { pos:'Das sind Bücher.',      neg:['Das sind ',' Bücher.'],  a:'keine', opts:['kein','keine'] },
+          { pos:'Hier ist eine Uhr.',    neg:['Hier ist ',' Uhr.'],     a:'keine', opts:['kein','keine'] },
+          { pos:'Ich habe ein Handy.',   neg:['Ich habe ',' Handy.'],   a:'kein',  opts:['kein','keine'] },
+          { pos:'Wir haben Zeit.',       neg:['Wir haben ',' Zeit.'],   a:'keine', opts:['kein','keine'] },
+          { pos:'Das ist ein Stuhl.',    neg:['Das ist ',' Stuhl.'],    a:'kein',  opts:['kein','keine'] },
+          { pos:'Sie hat eine Brille.',  neg:['Sie hat ',' Brille.'],   a:'keine', opts:['kein','keine'] },
+          { pos:'Das sind Kinder.',      neg:['Das sind ',' Kinder.'],  a:'keine', opts:['kein','keine'] },
+        ]
+      },
+      {
+        id:'g_kein_a2', type:'choice',
+        title:'kein oder nicht?',
+        hint:'kein steht vor einem Nomen. Sonst steht nicht.',
+        help:{
+          ru:'kein ставится перед существительным. В остальных случаях — nicht.',
+          uk:'kein стоїть перед іменником. В інших випадках — nicht.',
+          ar:'تُستخدم kein قبل الاسم. في الحالات الأخرى تُستخدم nicht.',
+          pt:'kein vem antes de um substantivo. Nos outros casos usa-se nicht.',
+          bg:'kein стои пред съществително. В останалите случаи се използва nicht.'
+        },
+        items:[
+          { q:'Ich habe ___ Auto.',
+            qt:{ru:'У меня нет машины.',uk:'У мене немає машини.',ar:'ليس لدي سيارة.',pt:'Eu não tenho carro.',bg:'Нямам кола.'},
+            opts:['kein','nicht'], a:0 },
+          { q:'Das Auto ist ___ neu.',
+            qt:{ru:'Машина не новая.',uk:'Машина не нова.',ar:'السيارة ليست جديدة.',pt:'O carro não é novo.',bg:'Колата не е нова.'},
+            opts:['kein','nicht'], a:1 },
+          { q:'Er arbeitet ___ hier.',
+            qt:{ru:'Он здесь не работает.',uk:'Він тут не працює.',ar:'هو لا يعمل هنا.',pt:'Ele não trabalha aqui.',bg:'Той не работи тук.'},
+            opts:['keine','nicht'], a:1 },
+          { q:'Ich habe ___ Zeit.',
+            qt:{ru:'У меня нет времени.',uk:'У мене немає часу.',ar:'ليس لدي وقت.',pt:'Eu não tenho tempo.',bg:'Нямам време.'},
+            opts:['keine','nicht'], a:0 },
+          { q:'Sie kommt heute ___.',
+            qt:{ru:'Сегодня она не придёт.',uk:'Сьогодні вона не прийде.',ar:'هي لن تأتي اليوم.',pt:'Ela não vem hoje.',bg:'Тя няма да дойде днес.'},
+            opts:['kein','nicht'], a:1 },
+          { q:'Das ist ___ Problem.',
+            qt:{ru:'Это не проблема.',uk:'Це не проблема.',ar:'هذه ليست مشكلة.',pt:'Isso não é um problema.',bg:'Това не е проблем.'},
+            opts:['kein','nicht'], a:0 },
+          { q:'Der Kurs ist ___ schwer.',
+            qt:{ru:'Курс не трудный.',uk:'Курс не важкий.',ar:'الدورة ليست صعبة.',pt:'O curso não é difícil.',bg:'Курсът не е труден.'},
+            opts:['kein','nicht'], a:1 },
+          { q:'Wir haben ___ Kinder.',
+            qt:{ru:'У нас нет детей.',uk:'У нас немає дітей.',ar:'ليس لدينا أطفال.',pt:'Nós não temos filhos.',bg:'Нямаме деца.'},
+            opts:['keine','nicht'], a:0 },
+        ]
+      },
+      {
+        id:'g_kein_a3', type:'gap',
+        title:'Im Betrieb',
+        hint:'Ergänze kein, keine oder nicht. Tippe zuerst auf die Lücke.',
+        help:{
+          ru:'Дополни kein, keine или nicht. Сначала нажми на пропуск.',
+          uk:'Доповни kein, keine або nicht. Спершу натисни на пропуск.',
+          ar:'أكمل بـ kein أو keine أو nicht. اضغط أولاً على الفراغ.',
+          pt:'Complete com kein, keine ou nicht. Toque primeiro na lacuna.',
+          bg:'Допълни с kein, keine или nicht. Първо натисни празното място.'
+        },
+        lines:[
+          { who:'A', parts:['Ist hier ein Drucker?'], gaps:[] },
+          { who:'B', parts:['Nein, hier ist ', ' Drucker.'], gaps:['kein'] },
+          { who:'A', parts:['Und eine Kaffeemaschine?'], gaps:[] },
+          { who:'B', parts:['Nein, hier ist auch ', ' Kaffeemaschine.'], gaps:['keine'] },
+          { who:'A', parts:['Ist das Büro neu?'], gaps:[] },
+          { who:'B', parts:['Nein, das Büro ist ', ' neu.'], gaps:['nicht'] },
+          { who:'A', parts:['Arbeitet Frau Berg heute?'], gaps:[] },
+          { who:'B', parts:['Nein, sie kommt heute ', '.'], gaps:['nicht mehr'] },
+        ],
+        bank:['kein','keine','nicht','nicht mehr','keinen','keiner']
+      },
+    ]
+  },
+  {
+    id:'g_poss',
+    title:'Possessivartikel',
+    subtitle:'mein · dein · sein · ihr',
+    slides:[
+      { kind:'build', verb:'Wem gehört es?', caption:'Personalpronomen → Possessivartikel',
+        rows:[['ich','','mein'],['du','','dein'],['er','','sein'],['sie','','ihr'],
+              ['wir','','unser'],['ihr','','euer'],['sie / Sie','','ihr / Ihr']] },
+      { kind:'contrast', caption:'mein passt sich an',
+        head:['bestimmter Artikel','mit mein'],
+        rows:[
+          ['der','der Vater','mein Vater'],
+          ['die','die Mutter','meine Mutter'],
+          ['das','das Kind','mein Kind'],
+          ['pl', 'die Eltern','meine Eltern'],
+        ] },
+      { kind:'contrast', caption:'wer hat es?',
+        head:['Person','im Satz'],
+        rows:[
+          ['x','ich habe ein Auto','Das ist mein Auto.'],
+          ['x','du hast ein Auto','Das ist dein Auto.'],
+          ['x','er hat ein Auto','Das ist sein Auto.'],
+          ['x','sie hat ein Auto','Das ist ihr Auto.'],
+        ] },
+      { kind:'rule' },
+    ],
+    rule:{
+      head:['Person','Form','Beispiel'],
+      rows:[
+        ['ich','mein / meine','mein Vater · meine Mutter'],
+        ['du','dein / deine','dein Bruder · deine Schwester'],
+        ['er','sein / seine','sein Kind · seine Familie'],
+        ['sie','ihr / ihre','ihr Sohn · ihre Tochter'],
+      ],
+      note:'Vor der und das steht mein. Vor die und im Plural steht meine.'
+    },
+    exercises:[
+      {
+        id:'g_poss_a1', type:'transform',
+        title:'Wem gehört es?',
+        hint:'Lies den Satz. Wähle das richtige Wort.',
+        help:{
+          ru:'Прочитай предложение. Выбери правильное притяжательное слово.',
+          uk:'Прочитай речення. Обери правильний присвійний займенник.',
+          ar:'اقرأ الجملة. اختر الكلمة الصحيحة للملكية.',
+          pt:'Leia a frase. Escolha a palavra possessiva correta.',
+          bg:'Прочети изречението. Избери правилната притежателна дума.'
+        },
+        items:[
+          { pos:'Ich habe ein Auto.',      neg:['Das ist ',' Auto.'],      a:'mein',   opts:['mein','meine'] },
+          { pos:'Du hast eine Tasche.',    neg:['Das ist ',' Tasche.'],    a:'deine',  opts:['dein','deine'] },
+          { pos:'Er hat ein Handy.',       neg:['Das ist ',' Handy.'],     a:'sein',   opts:['sein','seine'] },
+          { pos:'Sie hat eine Uhr.',       neg:['Das ist ',' Uhr.'],       a:'ihre',   opts:['ihr','ihre'] },
+          { pos:'Ich habe eine Schwester.',neg:['Das ist ',' Schwester.'], a:'meine',  opts:['mein','meine'] },
+          { pos:'Du hast ein Kind.',       neg:['Das ist ',' Kind.'],      a:'dein',   opts:['dein','deine'] },
+          { pos:'Er hat eine Familie.',    neg:['Das ist ',' Familie.'],   a:'seine',  opts:['sein','seine'] },
+          { pos:'Sie hat ein Baby.',       neg:['Das ist ',' Baby.'],      a:'ihr',    opts:['ihr','ihre'] },
+          { pos:'Wir haben ein Büro.',     neg:['Das ist ',' Büro.'],      a:'unser',  opts:['unser','unsere'] },
+          { pos:'Ich habe Bücher.',        neg:['Das sind ',' Bücher.'],   a:'meine',  opts:['mein','meine'] },
+        ]
+      },
+      {
+        id:'g_poss_a2', type:'choice',
+        title:'mein oder meine?',
+        hint:'Vor der und das steht mein. Vor die und im Plural steht meine.',
+        help:{
+          ru:'Перед der и das — mein. Перед die и во множественном числе — meine.',
+          uk:'Перед der і das — mein. Перед die та в множині — meine.',
+          ar:'قبل der و das تُستخدم mein. قبل die وفي الجمع تُستخدم meine.',
+          pt:'Antes de der e das usa-se mein. Antes de die e no plural, meine.',
+          bg:'Пред der и das се използва mein. Пред die и в множествено число — meine.'
+        },
+        items:[
+          { q:'Das ist ___ Vater.',
+            qt:{ru:'Это мой отец.',uk:'Це мій батько.',ar:'هذا أبي.',pt:'Este é o meu pai.',bg:'Това е баща ми.'},
+            opts:['mein','meine'], a:0 },
+          { q:'Das ist ___ Mutter.',
+            qt:{ru:'Это моя мать.',uk:'Це моя мати.',ar:'هذه أمي.',pt:'Esta é a minha mãe.',bg:'Това е майка ми.'},
+            opts:['mein','meine'], a:1 },
+          { q:'Das ist ___ Kind.',
+            qt:{ru:'Это мой ребёнок.',uk:'Це моя дитина.',ar:'هذا طفلي.',pt:'Esta é a minha criança.',bg:'Това е моето дете.'},
+            opts:['mein','meine'], a:0 },
+          { q:'Das sind ___ Eltern.',
+            qt:{ru:'Это мои родители.',uk:'Це мої батьки.',ar:'هؤلاء والداي.',pt:'Estes são os meus pais.',bg:'Това са моите родители.'},
+            opts:['mein','meine'], a:1 },
+          { q:'Das ist ___ Bruder.',
+            qt:{ru:'Это мой брат.',uk:'Це мій брат.',ar:'هذا أخي.',pt:'Este é o meu irmão.',bg:'Това е брат ми.'},
+            opts:['mein','meine'], a:0 },
+          { q:'Das ist ___ Schwester.',
+            qt:{ru:'Это моя сестра.',uk:'Це моя сестра.',ar:'هذه أختي.',pt:'Esta é a minha irmã.',bg:'Това е сестра ми.'},
+            opts:['mein','meine'], a:1 },
+          { q:'Das ist ___ Adresse.',
+            qt:{ru:'Это мой адрес.',uk:'Це моя адреса.',ar:'هذا عنواني.',pt:'Este é o meu endereço.',bg:'Това е моят адрес.'},
+            opts:['mein','meine'], a:1 },
+          { q:'Das ist ___ Name.',
+            qt:{ru:'Это моё имя.',uk:'Це моє ім\u2019я.',ar:'هذا اسمي.',pt:'Este é o meu nome.',bg:'Това е моето име.'},
+            opts:['mein','meine'], a:0 },
+          { q:'Das ist ___ Telefonnummer.',
+            qt:{ru:'Это мой номер телефона.',uk:'Це мій номер телефону.',ar:'هذا رقم هاتفي.',pt:'Este é o meu número de telefone.',bg:'Това е моят телефонен номер.'},
+            opts:['mein','meine'], a:1 },
+          { q:'Das ist ___ Beruf.',
+            qt:{ru:'Это моя профессия.',uk:'Це моя професія.',ar:'هذه مهنتي.',pt:'Esta é a minha profissão.',bg:'Това е моята професия.'},
+            opts:['mein','meine'], a:0 },
+        ]
+      },
+      {
+        id:'g_poss_a3', type:'gap',
+        title:'Ein Foto von der Familie',
+        hint:'Ergänze die Possessivartikel. Tippe zuerst auf die Lücke.',
+        help:{
+          ru:'Дополни притяжательные слова. Сначала нажми на пропуск.',
+          uk:'Доповни присвійні займенники. Спершу натисни на пропуск.',
+          ar:'أكمل كلمات الملكية. اضغط أولاً على الفراغ.',
+          pt:'Complete os possessivos. Toque primeiro na lacuna.',
+          bg:'Допълни притежателните думи. Първо натисни празното място.'
+        },
+        lines:[
+          { who:'A', parts:['Ist das ', ' Familie?'], gaps:['deine'] },
+          { who:'B', parts:['Ja. Links ist ', ' Mutter.'], gaps:['meine'] },
+          { who:'A', parts:['Und der Mann daneben?'], gaps:[] },
+          { who:'B', parts:['Das ist ', ' Vater.'], gaps:['mein'] },
+          { who:'A', parts:['Der Junge rechts ist Ali, oder?'], gaps:[] },
+          { who:'B', parts:['Ja. Daneben steht ', ' Bruder Omar.'], gaps:['sein'] },
+          { who:'A', parts:['Und das Mädchen vorne?'], gaps:[] },
+          { who:'B', parts:['Das ist Lina. Rechts steht ', ' Vater.'], gaps:['ihr'] },
+        ],
+        bank:['deine','meine','mein','sein','ihr','seine','ihre','dein']
+      },
+    ]
+  },
 ];
 
 /* ==========================================================
@@ -1352,6 +1868,824 @@ const QR=(function(){
   }
   return {draw};
 })();
+
+
+/* ==========================================================
+   ZUSATZSPRACHEN (Englisch, Französisch, Rumänisch)
+   Werden beim Start in die vorhandenen Strukturen eingemischt.
+   ========================================================== */
+const EXTRA = {
+"words": {
+"die Familie, die Familien": {
+"en": "family",
+"fr": "la famille",
+"ro": "familia"
+},
+"die Eltern (nur Plural)": {
+"en": "parents",
+"fr": "les parents",
+"ro": "părinții"
+},
+"der Vater, die Väter": {
+"en": "father",
+"fr": "le père",
+"ro": "tatăl"
+},
+"die Mutter, die Mütter": {
+"en": "mother",
+"fr": "la mère",
+"ro": "mama"
+},
+"der Sohn, die Söhne": {
+"en": "son",
+"fr": "le fils",
+"ro": "fiul"
+},
+"die Tochter, die Töchter": {
+"en": "daughter",
+"fr": "la fille",
+"ro": "fiica"
+},
+"das Kind, die Kinder": {
+"en": "child",
+"fr": "l'enfant",
+"ro": "copilul"
+},
+"der Bruder, die Brüder": {
+"en": "brother",
+"fr": "le frère",
+"ro": "fratele"
+},
+"die Schwester, die Schwestern": {
+"en": "sister",
+"fr": "la sœur",
+"ro": "sora"
+},
+"die Großeltern (nur Plural)": {
+"en": "grandparents",
+"fr": "les grands-parents",
+"ro": "bunicii"
+},
+"der Großvater, die Großväter": {
+"en": "grandfather",
+"fr": "le grand-père",
+"ro": "bunicul"
+},
+"die Großmutter, die Großmütter": {
+"en": "grandmother",
+"fr": "la grand-mère",
+"ro": "bunica"
+},
+"der Mann, die Männer": {
+"en": "man; husband",
+"fr": "l'homme ; le mari",
+"ro": "bărbatul; soțul"
+},
+"die Frau, die Frauen": {
+"en": "woman; wife",
+"fr": "la femme ; l'épouse",
+"ro": "femeia; soția"
+},
+"der Junge, die Jungen": {
+"en": "boy",
+"fr": "le garçon",
+"ro": "băiatul"
+},
+"das Mädchen, die Mädchen": {
+"en": "girl",
+"fr": "la fille",
+"ro": "fata"
+},
+"das Baby, die Babys": {
+"en": "baby",
+"fr": "le bébé",
+"ro": "bebelușul"
+},
+"der Freund, die Freunde": {
+"en": "friend",
+"fr": "l'ami",
+"ro": "prietenul"
+},
+"die Freundin, die Freundinnen": {
+"en": "friend (female)",
+"fr": "l'amie",
+"ro": "prietena"
+},
+"der Mensch, die Menschen": {
+"en": "person, human being",
+"fr": "l'être humain",
+"ro": "omul"
+},
+"der Herr, die Herren": {
+"en": "Mr, gentleman",
+"fr": "monsieur",
+"ro": "domnul"
+},
+"der Name, die Namen": {
+"en": "name",
+"fr": "le nom",
+"ro": "numele"
+},
+"der Vorname, die Vornamen": {
+"en": "first name",
+"fr": "le prénom",
+"ro": "prenumele"
+},
+"der Familienname, die Familiennamen": {
+"en": "surname",
+"fr": "le nom de famille",
+"ro": "numele de familie"
+},
+"die Adresse, die Adressen": {
+"en": "address",
+"fr": "l'adresse",
+"ro": "adresa"
+},
+"die Straße, die Straßen": {
+"en": "street",
+"fr": "la rue",
+"ro": "strada"
+},
+"die Stadt, die Städte": {
+"en": "city, town",
+"fr": "la ville",
+"ro": "orașul"
+},
+"das Land, die Länder": {
+"en": "country",
+"fr": "le pays",
+"ro": "țara"
+},
+"das Alter (kein Plural)": {
+"en": "age",
+"fr": "l'âge",
+"ro": "vârsta"
+},
+"der Beruf, die Berufe": {
+"en": "job, profession",
+"fr": "la profession",
+"ro": "profesia"
+},
+"die Telefonnummer, die Telefonnummern": {
+"en": "phone number",
+"fr": "le numéro de téléphone",
+"ro": "numărul de telefon"
+},
+"ledig": {
+"en": "single, unmarried",
+"fr": "célibataire",
+"ro": "necăsătorit(ă)"
+},
+"verheiratet": {
+"en": "married",
+"fr": "marié(e)",
+"ro": "căsătorit(ă)"
+},
+"geboren": {
+"en": "born",
+"fr": "né(e)",
+"ro": "născut(ă)"
+},
+"alt": {
+"en": "old; ... years old",
+"fr": "vieux, âgé ; ... ans",
+"ro": "bătrân; de ... ani"
+},
+"jung": {
+"en": "young",
+"fr": "jeune",
+"ro": "tânăr"
+},
+"heißen": {
+"en": "to be called",
+"fr": "s'appeler",
+"ro": "a se numi"
+},
+"wohnen": {
+"en": "to live, to reside",
+"fr": "habiter",
+"ro": "a locui"
+},
+"leben": {
+"en": "to live",
+"fr": "vivre",
+"ro": "a trăi"
+},
+"haben": {
+"en": "to have",
+"fr": "avoir",
+"ro": "a avea"
+},
+"Guten Morgen!": {
+"en": "Good morning!",
+"fr": "Bonjour ! (le matin)",
+"ro": "Bună dimineața!"
+},
+"Guten Tag!": {
+"en": "Good day! Hello!",
+"fr": "Bonjour !",
+"ro": "Bună ziua!"
+},
+"Hallo!": {
+"en": "Hello! Hi!",
+"fr": "Salut !",
+"ro": "Salut!"
+},
+"Guten Abend!": {
+"en": "Good evening!",
+"fr": "Bonsoir !",
+"ro": "Bună seara!"
+},
+"Gute Nacht!": {
+"en": "Good night!",
+"fr": "Bonne nuit !",
+"ro": "Noapte bună!"
+},
+"Auf Wiedersehen!": {
+"en": "Goodbye!",
+"fr": "Au revoir !",
+"ro": "La revedere!"
+},
+"Tschüss!": {
+"en": "Bye!",
+"fr": "Salut ! (en partant)",
+"ro": "Pa!"
+},
+"Bitte. – Danke.": {
+"en": "Please. – Thank you.",
+"fr": "S'il vous plaît. – Merci.",
+"ro": "Vă rog. – Mulțumesc."
+},
+"Guten Appetit!": {
+"en": "Enjoy your meal!",
+"fr": "Bon appétit !",
+"ro": "Poftă bună!"
+},
+"der Künstler / die Künstlerin": {
+"en": "artist",
+"fr": "l'artiste",
+"ro": "artistul / artista"
+},
+"der Kellner / die Kellnerin": {
+"en": "waiter / waitress",
+"fr": "le serveur / la serveuse",
+"ro": "chelnerul / chelnerița"
+},
+"der Arzt / die Ärztin": {
+"en": "doctor",
+"fr": "le médecin",
+"ro": "medicul"
+},
+"der Informatiker / die Informatikerin": {
+"en": "computer scientist, programmer",
+"fr": "l'informaticien(ne)",
+"ro": "informaticianul"
+},
+"der Lehrer / die Lehrerin": {
+"en": "teacher",
+"fr": "l'enseignant(e)",
+"ro": "profesorul / profesoara"
+},
+"der Assistent / die Assistentin": {
+"en": "assistant",
+"fr": "l'assistant(e)",
+"ro": "asistentul / asistenta"
+},
+"der Student / die Studentin": {
+"en": "student",
+"fr": "l'étudiant(e)",
+"ro": "studentul / studenta"
+},
+"der Architekt / die Architektin": {
+"en": "architect",
+"fr": "l'architecte",
+"ro": "arhitectul"
+},
+"der Ingenieur / die Ingenieurin": {
+"en": "engineer",
+"fr": "l'ingénieur(e)",
+"ro": "inginerul"
+}
+},
+"sent": {
+"morgens, bis etwa 10 Uhr": {
+"en": "in the morning, until about 10",
+"fr": "le matin, jusque vers 10 h",
+"ro": "dimineața, până pe la ora 10"
+},
+"tagsüber, formell": {
+"en": "during the day, formal",
+"fr": "dans la journée, formel",
+"ro": "în timpul zilei, formal"
+},
+"informell, jederzeit": {
+"en": "informal, any time",
+"fr": "informel, à tout moment",
+"ro": "informal, oricând"
+},
+"abends": {
+"en": "in the evening",
+"fr": "le soir",
+"ro": "seara"
+},
+"vor dem Schlafen": {
+"en": "before going to sleep",
+"fr": "avant de dormir",
+"ro": "înainte de culcare"
+},
+"formeller Abschied": {
+"en": "formal goodbye",
+"fr": "adieu formel",
+"ro": "rămas-bun formal"
+},
+"informeller Abschied": {
+"en": "informal goodbye",
+"fr": "au revoir informel",
+"ro": "rămas-bun informal"
+},
+"Höflichkeit": {
+"en": "politeness",
+"fr": "politesse",
+"ro": "politețe"
+},
+"vor dem Essen": {
+"en": "before eating",
+"fr": "avant le repas",
+"ro": "înainte de masă"
+},
+"Sie malt und zeichnet gern.": {
+"en": "She likes painting and drawing.",
+"fr": "Elle aime peindre et dessiner.",
+"ro": "Îi place să picteze și să deseneze."
+},
+"Er bringt das Essen an den Tisch.": {
+"en": "He brings the food to the table.",
+"fr": "Il apporte les plats à table.",
+"ro": "El aduce mâncarea la masă."
+},
+"Sie hilft kranken Menschen.": {
+"en": "She helps sick people.",
+"fr": "Elle aide les personnes malades.",
+"ro": "Ea ajută oamenii bolnavi."
+},
+"Er programmiert am Computer.": {
+"en": "He programs on the computer.",
+"fr": "Il programme sur l'ordinateur.",
+"ro": "El programează la calculator."
+},
+"Er erklärt die Aufgaben in der Schule.": {
+"en": "He explains the exercises at school.",
+"fr": "Il explique les exercices à l'école.",
+"ro": "El explică exercițiile la școală."
+},
+"Sie organisiert Termine im Büro.": {
+"en": "She organises appointments in the office.",
+"fr": "Elle organise les rendez-vous au bureau.",
+"ro": "Ea organizează întâlnirile la birou."
+},
+"Sie lernt an der Universität.": {
+"en": "She studies at university.",
+"fr": "Elle étudie à l'université.",
+"ro": "Ea studiază la universitate."
+},
+"Er zeichnet Pläne für Häuser.": {
+"en": "He draws plans for houses.",
+"fr": "Il dessine des plans de maisons.",
+"ro": "El desenează planuri de case."
+},
+"Sie baut Maschinen.": {
+"en": "She builds machines.",
+"fr": "Elle construit des machines.",
+"ro": "Ea construiește mașini."
+},
+"Es ist 8 Uhr. Sie kommen in den Betrieb.": {
+"en": "It is 8 o'clock. You arrive at the company.",
+"fr": "Il est 8 h. Vous arrivez à l'entreprise.",
+"ro": "Este ora 8. Ajungeți la firmă."
+},
+"Es ist 20 Uhr. Sie kommen zu einem Fest.": {
+"en": "It is 8 p.m. You arrive at a party.",
+"fr": "Il est 20 h. Vous arrivez à une fête.",
+"ro": "Este ora 20. Ajungeți la o petrecere."
+},
+"Es ist 22 Uhr. Sie gehen ins Bett.": {
+"en": "It is 10 p.m. You go to bed.",
+"fr": "Il est 22 h. Vous allez vous coucher.",
+"ro": "Este ora 22. Mergeți la culcare."
+},
+"Es ist 14 Uhr. Sie treffen Ihren Chef.": {
+"en": "It is 2 p.m. You meet your boss.",
+"fr": "Il est 14 h. Vous rencontrez votre chef.",
+"ro": "Este ora 14. Îl întâlniți pe șeful dumneavoastră."
+},
+"Ihr Kollege gibt Ihnen einen Kaffee.": {
+"en": "Your colleague gives you a coffee.",
+"fr": "Votre collègue vous donne un café.",
+"ro": "Colegul vă dă o cafea."
+},
+"Die Arbeit ist zu Ende. Sie gehen nach Hause.": {
+"en": "Work is over. You go home.",
+"fr": "Le travail est fini. Vous rentrez à la maison.",
+"ro": "Munca s-a terminat. Mergeți acasă."
+},
+"Sie kocht in der Küche.": {
+"en": "She cooks in the kitchen.",
+"fr": "Elle cuisine dans la cuisine.",
+"ro": "Ea gătește în bucătărie."
+},
+"Sie schreibt Texte für die Zeitung.": {
+"en": "She writes texts for the newspaper.",
+"fr": "Elle écrit des textes pour le journal.",
+"ro": "Ea scrie texte pentru ziar."
+},
+"Er rechnet den ganzen Tag mit Zahlen.": {
+"en": "He works with numbers all day.",
+"fr": "Il calcule avec des chiffres toute la journée.",
+"ro": "El calculează cu cifre toată ziua."
+},
+"Sie arbeitet im Labor.": {
+"en": "She works in the laboratory.",
+"fr": "Elle travaille au laboratoire.",
+"ro": "Ea lucrează în laborator."
+},
+"Er zeichnet neue Kleidung.": {
+"en": "He designs new clothes.",
+"fr": "Il dessine de nouveaux vêtements.",
+"ro": "El desenează haine noi."
+},
+"der Lehrer": {
+"en": "the teacher",
+"fr": "l'enseignant",
+"ro": "profesorul"
+},
+"der Student": {
+"en": "the student",
+"fr": "l'étudiant",
+"ro": "studentul"
+},
+"der Assistent": {
+"en": "the assistant",
+"fr": "l'assistant",
+"ro": "asistentul"
+},
+"der Ingenieur": {
+"en": "the engineer",
+"fr": "l'ingénieur",
+"ro": "inginerul"
+},
+"der Architekt": {
+"en": "the architect",
+"fr": "l'architecte",
+"ro": "arhitectul"
+},
+"der Künstler": {
+"en": "the artist",
+"fr": "l'artiste",
+"ro": "artistul"
+},
+"der Kellner": {
+"en": "the waiter",
+"fr": "le serveur",
+"ro": "chelnerul"
+},
+"der Informatiker": {
+"en": "the programmer",
+"fr": "l'informaticien",
+"ro": "informaticianul"
+},
+"der Journalist": {
+"en": "the journalist",
+"fr": "le journaliste",
+"ro": "jurnalistul"
+},
+"der Physiker": {
+"en": "the physicist",
+"fr": "le physicien",
+"ro": "fizicianul"
+},
+"der Musiker": {
+"en": "the musician",
+"fr": "le musicien",
+"ro": "muzicianul"
+},
+"der Arzt  (Achtung: mit Umlaut!)": {
+"en": "the doctor (careful: with umlaut!)",
+"fr": "le médecin (attention : avec tréma !)",
+"ro": "medicul (atenție: cu umlaut!)"
+},
+"___ heißen Sie? – Ich heiße Amina.": {
+"en": "Answer: My name is Amina.",
+"fr": "Réponse : Je m'appelle Amina.",
+"ro": "Răspuns: Mă numesc Amina."
+},
+"___ kommen Sie? – Ich komme aus Syrien.": {
+"en": "Answer: I come from Syria.",
+"fr": "Réponse : Je viens de Syrie.",
+"ro": "Răspuns: Vin din Siria."
+},
+"___ wohnen Sie? – Ich wohne in Weißenfels.": {
+"en": "Answer: I live in Weißenfels.",
+"fr": "Réponse : J'habite à Weißenfels.",
+"ro": "Răspuns: Locuiesc în Weißenfels."
+},
+"___ machen Sie? – Ich arbeite als Kellnerin.": {
+"en": "Answer: I work as a waitress.",
+"fr": "Réponse : Je travaille comme serveuse.",
+"ro": "Răspuns: Lucrez ca chelneriță."
+},
+"___ heißt du? – Ich heiße Olena.": {
+"en": "Answer: My name is Olena.",
+"fr": "Réponse : Je m'appelle Olena.",
+"ro": "Răspuns: Mă numesc Olena."
+},
+"___ kommst du? – Ich komme aus Bulgarien.": {
+"en": "Answer: I come from Bulgaria.",
+"fr": "Réponse : Je viens de Bulgarie.",
+"ro": "Răspuns: Vin din Bulgaria."
+},
+"Woher kommen Sie?": {
+"en": "Where do you come from?",
+"fr": "D'où venez-vous ?",
+"ro": "De unde veniți?"
+},
+"Wo wohnen Sie?": {
+"en": "Where do you live?",
+"fr": "Où habitez-vous ?",
+"ro": "Unde locuiți?"
+},
+"Wie heißen Sie?": {
+"en": "What is your name?",
+"fr": "Comment vous appelez-vous ?",
+"ro": "Cum vă numiți?"
+},
+"Was machen Sie?": {
+"en": "What do you do for a living?",
+"fr": "Que faites-vous comme travail ?",
+"ro": "Cu ce vă ocupați?"
+},
+"Woher kommst du?": {
+"en": "Where do you come from?",
+"fr": "D'où viens-tu ?",
+"ro": "De unde vii?"
+},
+"Ich ___ in Naumburg.": {
+"en": "I live in Naumburg.",
+"fr": "J'habite à Naumburg.",
+"ro": "Locuiesc în Naumburg."
+},
+"Du ___ aus Syrien.": {
+"en": "You come from Syria.",
+"fr": "Tu viens de Syrie.",
+"ro": "Tu vii din Siria."
+},
+"Er ___ Deutsch.": {
+"en": "He learns German.",
+"fr": "Il apprend l'allemand.",
+"ro": "El învață germana."
+},
+"Wir ___ im Betrieb.": {
+"en": "We work at the company.",
+"fr": "Nous travaillons dans l'entreprise.",
+"ro": "Lucrăm în firmă."
+},
+"Ihr ___ gern Fußball.": {
+"en": "You like playing football.",
+"fr": "Vous aimez jouer au football.",
+"ro": "Vouă vă place să jucați fotbal."
+},
+"Sie ___ Frau Meier.": {
+"en": "Her name is Mrs Meier.",
+"fr": "Elle s'appelle Madame Meier.",
+"ro": "Ea se numește doamna Meier."
+},
+"Du ___ zwei Kinder.": {
+"en": "You have two children.",
+"fr": "Tu as deux enfants.",
+"ro": "Tu ai doi copii."
+},
+"Ich ___ Kellner von Beruf.": {
+"en": "I am a waiter by profession.",
+"fr": "Je suis serveur de profession.",
+"ro": "Sunt chelner de profesie."
+},
+"Ihr ___ aus Bulgarien.": {
+"en": "You are from Bulgaria.",
+"fr": "Vous êtes de Bulgarie.",
+"ro": "Voi sunteți din Bulgaria."
+},
+"Meine Schwester ___ in der Schule.": {
+"en": "My sister works at the school.",
+"fr": "Ma sœur travaille à l'école.",
+"ro": "Sora mea lucrează la școală."
+},
+"Ich habe ___ Auto.": {
+"en": "I have no car.",
+"fr": "Je n'ai pas de voiture.",
+"ro": "Nu am mașină."
+},
+"Das Auto ist ___ neu.": {
+"en": "The car is not new.",
+"fr": "La voiture n'est pas neuve.",
+"ro": "Mașina nu este nouă."
+},
+"Er arbeitet ___ hier.": {
+"en": "He does not work here.",
+"fr": "Il ne travaille pas ici.",
+"ro": "El nu lucrează aici."
+},
+"Ich habe ___ Zeit.": {
+"en": "I have no time.",
+"fr": "Je n'ai pas le temps.",
+"ro": "Nu am timp."
+},
+"Sie kommt heute ___.": {
+"en": "She is not coming today.",
+"fr": "Elle ne vient pas aujourd'hui.",
+"ro": "Ea nu vine azi."
+},
+"Das ist ___ Problem.": {
+"en": "That is not a problem.",
+"fr": "Ce n'est pas un problème.",
+"ro": "Nu este o problemă."
+},
+"Der Kurs ist ___ schwer.": {
+"en": "The course is not difficult.",
+"fr": "Le cours n'est pas difficile.",
+"ro": "Cursul nu este greu."
+},
+"Wir haben ___ Kinder.": {
+"en": "We have no children.",
+"fr": "Nous n'avons pas d'enfants.",
+"ro": "Nu avem copii."
+},
+"Das ist ___ Vater.": {
+"en": "This is my father.",
+"fr": "C'est mon père.",
+"ro": "Acesta este tatăl meu."
+},
+"Das ist ___ Mutter.": {
+"en": "This is my mother.",
+"fr": "C'est ma mère.",
+"ro": "Aceasta este mama mea."
+},
+"Das ist ___ Kind.": {
+"en": "This is my child.",
+"fr": "C'est mon enfant.",
+"ro": "Acesta este copilul meu."
+},
+"Das sind ___ Eltern.": {
+"en": "These are my parents.",
+"fr": "Ce sont mes parents.",
+"ro": "Aceștia sunt părinții mei."
+},
+"Das ist ___ Bruder.": {
+"en": "This is my brother.",
+"fr": "C'est mon frère.",
+"ro": "Acesta este fratele meu."
+},
+"Das ist ___ Schwester.": {
+"en": "This is my sister.",
+"fr": "C'est ma sœur.",
+"ro": "Aceasta este sora mea."
+},
+"Das ist ___ Adresse.": {
+"en": "This is my address.",
+"fr": "C'est mon adresse.",
+"ro": "Aceasta este adresa mea."
+},
+"Das ist ___ Name.": {
+"en": "This is my name.",
+"fr": "C'est mon nom.",
+"ro": "Acesta este numele meu."
+},
+"Das ist ___ Telefonnummer.": {
+"en": "This is my phone number.",
+"fr": "C'est mon numéro de téléphone.",
+"ro": "Acesta este numărul meu de telefon."
+},
+"Das ist ___ Beruf.": {
+"en": "This is my profession.",
+"fr": "C'est ma profession.",
+"ro": "Aceasta este profesia mea."
+}
+},
+"help": {
+"k1e1_a1": {
+"en": "Read the situation. Choose the correct greeting.",
+"fr": "Lis la situation. Choisis la bonne salutation.",
+"ro": "Citește situația. Alege salutul potrivit."
+},
+"k1e1_a2": {
+"en": "Formal = Sie (polite form). Informal = du. Sort each expression.",
+"fr": "Formel = Sie (vouvoiement). Informel = du (tutoiement). Classe chaque expression.",
+"ro": "Formal = Sie (politicos). Informal = du. Clasifică fiecare expresie."
+},
+"k1e1_a3": {
+"en": "Complete the dialogue. Tap the gap first, then the word.",
+"fr": "Complète le dialogue. Touche d'abord le blanc, puis le mot.",
+"ro": "Completează dialogul. Atinge mai întâi spațiul, apoi cuvântul."
+},
+"k2e1_a1": {
+"en": "Read the sentence. Choose the matching profession.",
+"fr": "Lis la phrase. Choisis la profession qui convient.",
+"ro": "Citește propoziția. Alege profesia potrivită."
+},
+"k2e1_a2": {
+"en": "Choose the correct feminine form. Usually the ending -in is added.",
+"fr": "Choisis la forme féminine correcte. On ajoute généralement la terminaison -in.",
+"ro": "Alege forma corectă de feminin. De obicei se adaugă terminația -in."
+},
+"k2e1_a3": {
+"en": "Masculine form = der. Feminine form = die. The ending -in always means die.",
+"fr": "Forme masculine = der. Forme féminine = die. La terminaison -in indique toujours die.",
+"ro": "Forma masculină = der. Forma feminină = die. Terminația -in indică întotdeauna die."
+},
+"k2e1_a4": {
+"en": "Complete the dialogues. Tap the gap first, then the word.",
+"fr": "Complète les dialogues. Touche d'abord le blanc, puis le mot.",
+"ro": "Completează dialogurile. Atinge mai întâi spațiul, apoi cuvântul."
+},
+"g_wf_a1": {
+"en": "Read the question. Choose the correct question word.",
+"fr": "Lis la question. Choisis le bon mot interrogatif.",
+"ro": "Citește întrebarea. Alege cuvântul interogativ corect."
+},
+"g_wf_a2": {
+"en": "Read the question. Choose the matching answer.",
+"fr": "Lis la question. Choisis la réponse qui convient.",
+"ro": "Citește întrebarea. Alege răspunsul potrivit."
+},
+"g_wf_a3": {
+"en": "Complete the question words. Tap the gap first, then the word.",
+"fr": "Complète les mots interrogatifs. Touche d'abord le blanc, puis le mot.",
+"ro": "Completează cuvintele interogative. Atinge mai întâi spațiul, apoi cuvântul."
+},
+"g_konj_a1": {
+"en": "Write the verb in the correct form. The stem stays, the ending changes.",
+"fr": "Écris le verbe à la bonne forme. Le radical reste, la terminaison change.",
+"ro": "Scrie verbul la forma corectă. Radicalul rămâne, terminația se schimbă."
+},
+"g_konj_a2": {
+"en": "Choose the correct verb form.",
+"fr": "Choisis la forme verbale correcte.",
+"ro": "Alege forma verbală corectă."
+},
+"g_konj_a3": {
+"en": "Complete the verb forms. Tap the gap first, then the word.",
+"fr": "Complète les formes verbales. Touche d'abord le blanc, puis le mot.",
+"ro": "Completează formele verbale. Atinge mai întâi spațiul, apoi cuvântul."
+},
+"g_kein_a1": {
+"en": "Read the sentence. Choose the right word for the negative sentence.",
+"fr": "Lis la phrase. Choisis le mot juste pour la négation.",
+"ro": "Citește propoziția. Alege cuvântul potrivit pentru negație."
+},
+"g_kein_a2": {
+"en": "kein comes before a noun. Otherwise use nicht.",
+"fr": "kein se place devant un nom. Sinon, on utilise nicht.",
+"ro": "kein stă înaintea unui substantiv. În rest se folosește nicht."
+},
+"g_kein_a3": {
+"en": "Complete with kein, keine or nicht. Tap the gap first.",
+"fr": "Complète avec kein, keine ou nicht. Touche d'abord le blanc.",
+"ro": "Completează cu kein, keine sau nicht. Atinge mai întâi spațiul."
+},
+"g_poss_a1": {
+"en": "Read the sentence. Choose the correct possessive word.",
+"fr": "Lis la phrase. Choisis le bon déterminant possessif.",
+"ro": "Citește propoziția. Alege cuvântul posesiv corect."
+},
+"g_poss_a2": {
+"en": "Before der and das use mein. Before die and in the plural use meine.",
+"fr": "Devant der et das, on met mein. Devant die et au pluriel, meine.",
+"ro": "Înainte de der și das se folosește mein. Înainte de die și la plural, meine."
+},
+"g_poss_a3": {
+"en": "Complete the possessives. Tap the gap first.",
+"fr": "Complète les possessifs. Touche d'abord le blanc.",
+"ro": "Completează posesivele. Atinge mai întâi spațiul."
+}
+}
+};
+
+function mergeExtraLangs(){
+  const add = (obj, key, table) => { if(obj && table[key]) Object.assign(obj, table[key]); };
+  VOCAB.forEach(b => b.words.forEach(w => add(w.t, w.w, EXTRA.words)));
+  CHAPTERS.forEach(c => c.units.forEach(u => u.phrases.forEach(p => {
+    add(p.t, p.de, EXTRA.words);
+    add(p.ctxT, p.ctx, EXTRA.sent);
+  })));
+  const allEx = [
+    ...CHAPTERS.flatMap(c => c.units.flatMap(u => u.exercises)),
+    ...GRAMMAR.flatMap(t => t.exercises)
+  ];
+  allEx.forEach(e => {
+    add(e.help, e.id, EXTRA.help);
+    if(e.items) e.items.forEach(it => add(it.qt, it.q, EXTRA.sent));
+  });
+  GRAMMAR.forEach(t => t.slides.forEach(sl => { if(sl.t && sl.q) add(sl.t, sl.q, EXTRA.sent); }));
+}
+mergeExtraLangs();
 
 /* ==========================================================
    APP
@@ -1615,6 +2949,8 @@ function renderStep(){
 
   if(curEx.type==='choice') renderChoice(area,next);
   else if(curEx.type==='sort') renderSort(area,next);
+  else if(curEx.type==='conj') renderConj(area,next);
+  else if(curEx.type==='transform') renderTransform(area,next);
   else if(curEx.type==='gap') renderGap(area,next);
 }
 
@@ -1684,6 +3020,96 @@ function renderSort(area,next){
       const fb = $('fb');
       fb.className = 'feedback show ' + (ok?'ok':'no');
       fb.textContent = ok ? 'Richtig!' : 'Richtig ist: ' + curEx.buckets[it.a];
+      if(ok) curScore++;
+      next.disabled = false;
+      next.textContent = (curIdx === curEx.items.length-1) ? 'Fertig' : 'Weiter';
+    };
+  });
+}
+
+/* --- Typ: Konjugation (Eingabe) --- */
+function renderConj(area,next){
+  const it = curEx.items[curIdx];
+  area.innerHTML = `
+    <div class="qcard conj-card">
+      <div class="qnum">Aufgabe ${curIdx+1} von ${curEx.items.length}</div>
+      <div class="conj-inf">${it.inf}</div>
+      <div class="conj-line">
+        <span>${it.pron}</span>
+        <input class="conj-input" id="conjIn" type="text" autocomplete="off"
+               autocapitalize="off" autocorrect="off" spellcheck="false">
+      </div>
+      <div class="conj-solution hidden" id="conjSol"></div>
+      <div class="feedback" id="fb"></div>
+    </div>`;
+
+  const inp = $('conjIn');
+  inp.focus();
+  let checked = false;
+
+  const check = ()=>{
+    if(checked) return;
+    checked = true;
+    const given = inp.value.trim().toLowerCase();
+    const ok = given === it.a.toLowerCase();
+    inp.classList.add(ok ? 'ok' : 'no');
+    inp.readOnly = true;
+    const fb = $('fb');
+    fb.className = 'feedback show ' + (ok?'ok':'no');
+    if(ok){
+      fb.textContent = 'Richtig!';
+      curScore++;
+    } else {
+      fb.textContent = 'Noch nicht richtig.';
+      $('conjSol').textContent = it.pron + ' ' + it.a;
+      $('conjSol').classList.remove('hidden');
+    }
+    next.disabled = false;
+    next.textContent = (curIdx === curEx.items.length-1) ? 'Fertig' : 'Weiter';
+    next.dataset.mode = 'advance';
+  };
+
+  inp.addEventListener('input', ()=>{ next.disabled = inp.value.trim()===''; });
+  inp.addEventListener('keydown', e=>{
+    if(e.key === 'Enter'){ e.preventDefault(); if(!checked) check(); else next.click(); }
+  });
+
+  next.textContent = 'Prüfen';
+  next.dataset.mode = 'check';
+  next.dataset.check = '1';
+  curEx._check = check;
+}
+
+/* --- Typ: Umformen (Satz → umgeformter Satz) --- */
+function renderTransform(area,next){
+  const it = curEx.items[curIdx];
+  area.innerHTML = `
+    <div class="qcard">
+      <div class="qnum">Aufgabe ${curIdx+1} von ${curEx.items.length}</div>
+      <div class="tf-source">${it.pos}</div>
+      <div class="tf-arrow">↓</div>
+      <div class="tf-target">${it.neg[0]}<span class="tf-slot" id="tfSlot">?</span>${it.neg[1]}</div>
+      <div class="opts" id="tfOpts">
+        ${it.opts.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join('')}
+      </div>
+      <div class="feedback" id="fb"></div>
+    </div>`;
+
+  area.querySelectorAll('.opt').forEach(b=>{
+    b.onclick = ()=>{
+      const chosen = it.opts[+b.dataset.i];
+      const ok = chosen === it.a;
+      $('tfSlot').textContent = ok ? chosen : it.a;
+      $('tfSlot').classList.add(ok ? 'ok' : 'no');
+      area.querySelectorAll('.opt').forEach((x,i)=>{
+        x.classList.add('locked');
+        if(it.opts[i]===it.a) x.classList.add('correct');
+        else if(i===+b.dataset.i) x.classList.add('wrong');
+        else x.classList.add('dim');
+      });
+      const fb = $('fb');
+      fb.className = 'feedback show ' + (ok?'ok':'no');
+      fb.textContent = ok ? 'Richtig!' : 'Richtig ist: ' + it.a;
       if(ok) curScore++;
       next.disabled = false;
       next.textContent = (curIdx === curEx.items.length-1) ? 'Fertig' : 'Weiter';
@@ -1762,6 +3188,13 @@ function renderGap(area,next){
 
 /* ---------- Weiter ---------- */
 $('nextBtn').onclick = ()=>{
+  if(curEx.type === 'conj'){
+    const next = $('nextBtn');
+    if(next.dataset.mode === 'check'){ curEx._check(); return; }
+    if(curIdx < curEx.items.length-1){ curIdx++; renderStep(); }
+    else finishEx(curEx.items.length);
+    return;
+  }
   if(curEx.type === 'gap'){
     const next = $('nextBtn');
     if(next.dataset.checked === '0'){
@@ -1807,12 +3240,35 @@ function finishEx(total){
   show('scResult');
 }
 
+/* Wortdarstellung: bestimmter Artikel farbig, Plural grau, unbestimmter Artikel als Zusatz.
+   Der Plural-Artikel "die" bleibt bewusst grau – er bedeutet nicht feminin. */
+function wordHtml(w){
+  if(w.includes('(nur Plural)')){
+    const noun = w.replace(/^die\s+/,'').replace(' (nur Plural)','');
+    return `<span class="a-pl">die</span> ${noun} <span class="vk-tag">nur Plural</span>`;
+  }
+  const m = w.match(/^(der|die|das)\s+(.+)$/);
+  if(!m) return w;
+  const art = m[1];
+  let rest = m[2];
+  const cls   = art==='der' ? 'a-der' : art==='die' ? 'a-die' : 'a-das';
+  const indef = art==='die' ? 'eine' : 'ein';
+  let plural = '';
+  const c = rest.indexOf(', die ');
+  if(c > -1){ plural = rest.slice(c+2); rest = rest.slice(0,c); }
+  const noKeinPl = rest.includes('(kein Plural)');
+  if(noKeinPl) rest = rest.replace(' (kein Plural)','');
+  return `<span class="${cls}">${art}</span> ${rest}`
+       + (plural ? `<span class="vk-plural">, ${plural.replace(/^die /,'')}</span>`
+                 : (noKeinPl ? ' <span class="vk-tag">kein Plural</span>' : ''))
+       + ` <span class="vk-indef">${indef} ${rest}</span>`;
+}
+
 /* ==========================================================
    VOKABELN
    ========================================================== */
 let curBlock = null;
 let knownMap = {};          // { "blockId:index": true }
-let deck = [], deckPos = 0, deckAgain = [], deckFlipped = false, deckRound = 0;
 
 const kKey = (b,i)=> b.id + ':' + i;
 
@@ -1857,7 +3313,7 @@ function switchVkTab(which){
   $('vkListView').classList.toggle('hidden', !isList);
   $('vkCardView').classList.toggle('hidden', isList);
   if(isList) renderVkRows();
-  else startDeck();
+  else startPractice();
 }
 $('tabList').onclick  = ()=> switchVkTab('list');
 $('tabCards').onclick = ()=> switchVkTab('cards');
@@ -1877,7 +3333,7 @@ function renderVkRows(){
   $('vkRows').innerHTML = rows.map(({wd,i})=>`
     <div class="vk-row ${knownMap[kKey(curBlock,i)]?'known':''}" data-i="${i}">
       <div class="vk-top">
-        <span class="vk-de">${wd.w}</span>
+        <span class="vk-de">${wordHtml(wd.w)}</span>
         <span class="vk-tr" ${l.rtl?'dir="rtl"':''}>${wd.t[l.code]}</span>
       </div>
       <div class="vk-ex">${wd.ex}</div>
@@ -1888,71 +3344,153 @@ function renderVkRows(){
 }
 $('vkSearch').addEventListener('input', renderVkRows);
 
-/* ---------- Karteikarten ---------- */
-function startDeck(){
-  deck = curBlock.words.map((_,i)=>i);
-  deckPos = 0; deckAgain = []; deckRound = 1;
+/* ---------- Übungsmodus ---------- */
+
+/* Wortanalyse: Artikel, Grundform, ob Nomen mit Genus */
+function wordInfo(w){
+  const plOnly = w.includes('(nur Plural)');
+  const m = w.match(/^(der|die|das)\s+(.+)$/);
+  if(!m) return { isNoun:false, base:w, art:null };
+  let rest = m[2];
+  const c = rest.indexOf(', die ');
+  if(c > -1) rest = rest.slice(0,c);
+  rest = rest.replace(' (nur Plural)','').replace(' (kein Plural)','');
+  return { isNoun:true, base:rest, art:m[1], genusUsable: !plOnly };
+}
+/* Kurzform für Antwortoptionen: nur Artikel + Wort */
+function wordShort(w){
+  const inf = wordInfo(w);
+  if(!inf.isNoun) return w;
+  const cls = inf.art==='der' ? 'a-der' : inf.art==='die' ? 'a-die' : 'a-das';
+  const artCls = inf.genusUsable ? cls : 'a-pl';
+  return `<span class="${artCls}">${inf.art}</span> ${inf.base}`;
+}
+function shuffle(a){
+  const r = a.slice();
+  for(let i=r.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [r[i],r[j]]=[r[j],r[i]]; }
+  return r;
+}
+
+let pQueue = [], pPos = 0, pScore = 0, pAnswered = false, pTries = {};
+
+function typesFor(i){
+  const inf = wordInfo(curBlock.words[i].w);
+  return (inf.isNoun && inf.genusUsable) ? ['de2mt','mt2de','art'] : ['de2mt','mt2de'];
+}
+
+function startPractice(){
+  const idx = shuffle(curBlock.words.map((_,i)=>i));
+  pQueue = idx.map((i,n)=>{
+    const types = typesFor(i);
+    return { i, type: types[n % types.length] };
+  });
+  pPos = 0; pScore = 0; pTries = {};
   $('fcDone').classList.add('hidden');
-  $('flashcard').classList.remove('hidden');
-  renderCard();
+  $('prCard').classList.remove('hidden');
+  $('prNext').parentElement.classList.remove('hidden');
+  renderPractice();
 }
 
-function renderCard(){
-  if(deckPos >= deck.length){
-    if(deckAgain.length){                    // Runde mit den schwierigen Wörtern
-      deck = deckAgain; deckAgain = []; deckPos = 0; deckRound++;
-      renderCard(); return;
-    }
-    finishDeck(); return;
-  }
-  const i = deck[deckPos];
+function renderPractice(){
+  if(pPos >= pQueue.length){ finishPractice(); return; }
+  const { i, type } = pQueue[pPos];
   const wd = curBlock.words[i];
-  deckFlipped = false;
-  $('fcWord').textContent = wd.w;
-  $('fcHint').classList.remove('hidden');
-  $('fcBack').classList.add('hidden');
-  $('fcActions').classList.add('hidden');
+  const inf = wordInfo(wd.w);
   const l = langObj();
-  $('fcTrans').textContent = wd.t[l.code];
-  $('fcTrans').setAttribute('dir', l.rtl?'rtl':'ltr');
-  $('fcEx').textContent = wd.ex;
-  $('vkProgress').textContent = deckRound === 1
-    ? `Karte ${deckPos+1} von ${deck.length}`
-    : `Wiederholung · Karte ${deckPos+1} von ${deck.length}`;
+  pAnswered = false;
+  $('prNext').disabled = true;
+  $('prFb').className = 'feedback';
+
+  let label, prompt, opts, correct, rtl = false;
+
+  if(type === 'de2mt'){
+    label  = 'Was bedeutet das Wort?';
+    prompt = wordHtml(wd.w);
+    correct = wd.t[l.code];
+    const pool = curBlock.words
+      .map((o,j)=>({o,j}))
+      .filter(({o,j})=> j!==i && wordInfo(o.w).isNoun === inf.isNoun && o.t[l.code]!==correct)
+      .map(({o})=>o.t[l.code]);
+    opts = shuffle([correct, ...shuffle(pool).slice(0,3)]);
+    rtl = l.rtl;
+
+  } else if(type === 'mt2de'){
+    label  = 'Welches deutsche Wort passt?';
+    prompt = `<span ${l.rtl?'dir="rtl"':''}>${wd.t[l.code]}</span>`;
+    correct = wd.w;
+    const pool = curBlock.words
+      .filter((o,j)=> j!==i && wordInfo(o.w).isNoun === inf.isNoun)
+      .map(o=>o.w);
+    opts = shuffle([correct, ...shuffle(pool).slice(0,3)]);
+
+  } else {  // art
+    label  = 'der, die oder das?';
+    prompt = `<span class="pr-noun">${inf.base}</span>`;
+    correct = inf.art;
+    opts = ['der','die','das'];
+  }
+
+  $('prType').textContent = label;
+  $('prPrompt').innerHTML = prompt;
+  $('prOpts').innerHTML = opts.map((o,n)=>{
+    const artCls = type==='art' ? ` a-${o}` : '';
+    const body = (type==='mt2de') ? wordShort(o) : o;
+    return `<button class="opt${artCls}" data-n="${n}" ${rtl?'dir="rtl"':''}>${body}</button>`;
+  }).join('');
+
+  $('prOpts').querySelectorAll('.opt').forEach(btn=>{
+    btn.onclick = ()=>{
+      if(pAnswered) return;
+      pAnswered = true;
+      const chosen = opts[+btn.dataset.n];
+      const ok = chosen === correct;
+      $('prOpts').querySelectorAll('.opt').forEach((x,n)=>{
+        x.classList.add('locked');
+        if(opts[n]===correct) x.classList.add('correct');
+        else if(n===+btn.dataset.n) x.classList.add('wrong');
+        else x.classList.add('dim');
+      });
+      const fb = $('prFb');
+      fb.className = 'feedback show ' + (ok?'ok':'no');
+      if(ok){
+        fb.textContent = 'Richtig!';
+        pScore++;
+        knownMap[kKey(curBlock,i)] = true;
+      } else {
+        const shown = type==='art' ? correct+' '+inf.base
+                    : type==='mt2de' ? wordInfo(correct).art ? wordInfo(correct).art+' '+wordInfo(correct).base : correct
+                    : correct;
+        fb.innerHTML = 'Richtig ist: <strong>' + shown + '</strong>';
+        delete knownMap[kKey(curBlock,i)];
+        // Wort kommt wieder – mit anderem Aufgabentyp, aber höchstens zweimal,
+        // damit die Übung auch bei vielen Fehlern ein Ende hat
+        pTries[i] = (pTries[i]||0) + 1;
+        if(pTries[i] <= 2){
+          const others = typesFor(i).filter(t=>t!==type);
+          pQueue.push({ i, type: others[Math.floor(Math.random()*others.length)] });
+        }
+      }
+      save('daf_known', knownMap);
+      $('prNext').disabled = false;
+      $('prNext').textContent = (pPos === pQueue.length-1) ? 'Fertig' : 'Weiter';
+    };
+  });
+
+  $('vkProgress').textContent = `Aufgabe ${pPos+1} von ${pQueue.length}  ·  ${pScore} richtig`;
 }
 
-$('flashcard').onclick = ()=>{
-  if(deckFlipped) return;
-  deckFlipped = true;
-  $('fcBack').classList.remove('hidden');
-  $('fcHint').classList.add('hidden');
-  $('fcActions').classList.remove('hidden');
-};
+$('prNext').onclick = ()=>{ pPos++; renderPractice(); };
+$('fcRestart').onclick = ()=> startPractice();
 
-$('fcKnown').onclick = ()=>{
-  const i = deck[deckPos];
-  knownMap[kKey(curBlock,i)] = true;
-  save('daf_known', knownMap);
-  deckPos++; renderCard();
-};
-$('fcAgain').onclick = ()=>{
-  const i = deck[deckPos];
-  delete knownMap[kKey(curBlock,i)];
-  save('daf_known', knownMap);
-  deckAgain.push(i);
-  deckPos++; renderCard();
-};
-$('fcRestart').onclick = ()=> startDeck();
-
-function finishDeck(){
-  $('flashcard').classList.add('hidden');
-  $('fcActions').classList.add('hidden');
+function finishPractice(){
+  $('prCard').classList.add('hidden');
+  $('prNext').parentElement.classList.add('hidden');
   $('vkProgress').textContent = '';
   const d = vocabKnownCount(curBlock), n = curBlock.words.length;
   $('fcDoneNum').textContent = d + ' / ' + n;
   $('fcDoneText').textContent = d===n
-    ? 'Alle Wörter gekonnt. Sehr gut!'
-    : 'Wörter, die du kannst. Übe die anderen noch einmal.';
+    ? 'Alle Wörter richtig. Sehr gut!'
+    : 'Wörter richtig beantwortet. Übe die anderen noch einmal.';
   $('fcDone').classList.remove('hidden');
   $('vkBlockSub').textContent = d + ' von ' + n + ' gekonnt';
 }
@@ -1963,7 +3501,7 @@ $('backToVocabList').onclick = ()=> openVocabList();
 /* ==========================================================
    BEAMER
    ========================================================== */
-let bIdx = 0;
+let bIdx = 0, bSub = 0;
 let bSel = { kind:'unit', chapter:CHAPTERS[0], unit:CHAPTERS[0].units[0] };
 let bLang = null;   // null = keine Übersetzung sichtbar
 
@@ -1975,9 +3513,12 @@ function beamerSlides(){
   }
   return bSel.topic.slides;
 }
+/* Anzahl der Zwischenschritte einer Folie (Aufbau-Tabelle) */
+function slideSteps(s){ return (s.kind==='build'||s.kind==='contrast') ? s.rows.length : 0; }
+
 function beamerTitle(){
   return bSel.kind==='unit'
-    ? { t:bSel.unit.title, s:bSel.chapter.title + ' · Wortschatz · Beamer' }
+    ? { t:bSel.unit.title, s:bSel.chapter.title + ' · Kapitel · Beamer' }
     : { t:bSel.topic.title, s:'Grammatik · ' + bSel.topic.subtitle + ' · Beamer' };
 }
 
@@ -1997,7 +3538,7 @@ function renderBeamerPicker(){
       } else {
         bSel = { kind:'topic', topic:GRAMMAR.find(t=>t.id===b.dataset.t) };
       }
-      bIdx = 0; bLang = null;
+      bIdx = 0; bSub = 0; bLang = null;
       renderBeamerPicker();
       renderBeamer();
     };
@@ -2022,6 +3563,37 @@ function renderBeamer(){
       <div class="ga">${s.a}</div>
       <div class="gasks">${s.asks}</div>
     </div>`;
+  } else if(s.kind==='build'){
+    const rows = s.rows.map((r,i)=>{
+      const [pron,stem,end] = r;
+      const form = stem
+        ? `<span class="stem">${stem}</span><span class="end">${end}</span>`
+        : `<span class="irr">${end}</span>`;
+      return `<tr class="${i < bSub ? 'on' : ''}">
+        <td class="pron">${pron}</td><td class="form">${form}</td></tr>`;
+    }).join('');
+    body = `<table class="btable">
+      <caption>${s.caption}</caption>
+      <tr><th colspan="2">${s.verb}</th></tr>
+      ${rows}
+    </table>`;
+  } else if(s.kind==='contrast'){
+    const colOf = k => k==='der' ? 'var(--art-der)'
+                     : k==='die' ? 'var(--art-die)'
+                     : k==='das' ? 'var(--art-das)'
+                     : 'rgba(255,255,255,.7)';
+    const rows = s.rows.map((r,i)=>{
+      const [key,pos,neg] = r;
+      return `<tr class="${i < bSub ? 'on' : ''}">
+        <td class="cpos">${pos}</td>
+        <td class="carrow" style="color:${colOf(key)}">→</td>
+        <td class="cneg">${neg}</td></tr>`;
+    }).join('');
+    body = `<table class="ctable">
+      <caption>${s.caption}</caption>
+      <tr><th>${s.head[0]}</th><th></th><th>${s.head[1]}</th></tr>
+      ${rows}
+    </table>`;
   } else if(s.kind==='rule'){
     const r = bSel.topic.rule;
     body = `<table class="bruletable">
@@ -2059,12 +3631,47 @@ function renderBeamer(){
   }
 
   $('bDots').innerHTML = slides.map((_,i)=>`<i class="${i<=bIdx?'on':''}"></i>`).join('');
-  $('bCnt').textContent = (bIdx+1)+' / '+slides.length;
-  $('bPrev').disabled = bIdx===0;
-  $('bNext').disabled = bIdx===slides.length-1;
+  const steps = slideSteps(s);
+  $('bCnt').textContent = steps
+    ? `${bIdx+1} / ${slides.length}  ·  ${bSub}/${steps}`
+    : `${bIdx+1} / ${slides.length}`;
+  $('bPrev').disabled = (bIdx===0 && bSub===0);
+  $('bNext').disabled = (bIdx===slides.length-1 && bSub>=steps);
 }
-$('bPrev').onclick = ()=>{ if(bIdx>0){bIdx--;bLang=null;renderBeamer();} };
-$('bNext').onclick = ()=>{ if(bIdx<beamerSlides().length-1){bIdx++;bLang=null;renderBeamer();} };
+
+function beamerNext(){
+  const slides = beamerSlides(), s = slides[bIdx];
+  if(bSub < slideSteps(s)){ bSub++; renderBeamer(); return; }
+  if(bIdx < slides.length-1){ bIdx++; bSub=0; bLang=null; renderBeamer(); }
+}
+function beamerPrev(){
+  if(bSub > 0){ bSub--; renderBeamer(); return; }
+  if(bIdx > 0){
+    bIdx--; bLang=null;
+    bSub = slideSteps(beamerSlides()[bIdx]);   // vorherige Folie vollständig zeigen
+    renderBeamer();
+  }
+}
+$('bPrev').onclick = beamerPrev;
+$('bNext').onclick = beamerNext;
+$('fsPrev').onclick = beamerPrev;
+$('fsNext').onclick = beamerNext;
+
+/* ---------- Vollbildmodus ---------- */
+function enterFs(){
+  document.body.classList.add('fs');
+  const el = document.documentElement;
+  if(el.requestFullscreen) el.requestFullscreen().catch(()=>{});
+}
+function exitFs(){
+  document.body.classList.remove('fs');
+  if(document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(()=>{});
+}
+$('fsStart').onclick = enterFs;
+$('fsExit').onclick = exitFs;
+document.addEventListener('fullscreenchange', ()=>{
+  if(!document.fullscreenElement) document.body.classList.remove('fs');
+});
 document.addEventListener('keydown', e=>{
   if($('scBeamer').classList.contains('hidden')) return;
   if(e.key==='ArrowRight'||e.key===' ') $('bNext').click();
