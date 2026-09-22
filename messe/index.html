@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1F6B4A">
+<title>Messe-Hilfe · Naumburg</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+:root{
+  --green:#1F6B4A; --green-2:#2E8A61; --green-soft:#E6F2EB; --peach:#FDEEDC; --peach-2:#F6D7B0;
+  --ink:#17231D; --ink-2:#4B5A52; --bg:#F7F5F0; --card:#FFFFFF; --line:#DAD6CC; --ok:#1F8A4C; --bad:#B3261E;
+  --radius:18px; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:#101814; --card:#18231D; --ink:#EEF3EF; --ink-2:#A9B8AF; --line:#2C3A32; --green-soft:#1D3328; --peach:#3A2D1E; --peach-2:#5A4428; } }
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Noto Sans","Noto Sans Arabic",sans-serif;font-size:18px;line-height:1.4;-webkit-tap-highlight-color:transparent}
+.app{max-width:560px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
+header{background:var(--green);color:#fff;padding:14px 18px 16px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;border-radius:0 0 22px 22px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.pass{display:flex;align-items:center;gap:12px}
+.hole{width:34px;height:10px;border-radius:6px;background:rgba(255,255,255,.35)}
+header h1{font-size:21px;margin:0;font-weight:700;letter-spacing:.2px}
+header p{margin:2px 0 0;font-size:14px;opacity:.85}
+.langbtn{margin-left:auto;background:rgba(255,255,255,.16);color:#fff;border:1.5px solid rgba(255,255,255,.5);border-radius:999px;padding:8px 14px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap}
+main{flex:1;padding:16px 14px 110px}
+h2{font-size:22px;margin:6px 4px 4px}
+.lead{color:var(--ink-2);margin:0 4px 14px;font-size:16px}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;display:flex;gap:12px;align-items:center;cursor:pointer;width:100%;text-align:left;color:inherit;font:inherit}
+.card:active{transform:scale(.985)}
+.card .de{font-size:21px;font-weight:700;line-height:1.25}
+.card .tr{font-size:16px;color:var(--ink-2);margin-top:4px}
+.card .tr[dir=rtl]{text-align:right;font-size:18px}
+.card .txt{flex:1;min-width:0}
+.spk{flex:none;width:48px;height:48px;border-radius:50%;background:var(--green-soft);display:grid;place-items:center}
+.spk svg{width:24px;height:24px;fill:var(--green)}
+.card.playing .spk{background:var(--green)} .card.playing .spk svg{fill:#fff}
+.art-der{color:#1F4E9C;font-weight:700}.art-die{color:#B3261E;font-weight:700}.art-das{color:#1F6B4A;font-weight:700}
+@media (prefers-color-scheme:dark){.art-der{color:#8FB3F0}.art-die{color:#F09A94}.art-das{color:#7DD3A6}}
+.sect{font-size:15px;font-weight:700;color:var(--green);margin:18px 6px 8px}
+@media (prefers-color-scheme:dark){.sect{color:#7DD3A6}}
+.show{background:var(--peach);border:2px dashed var(--peach-2);border-radius:var(--radius);padding:18px;margin-bottom:14px;cursor:pointer}
+.show b{display:block;font-size:22px;margin-bottom:6px}
+.show span{color:var(--ink-2);font-size:15px}
+.big{position:fixed;inset:0;background:#fff;color:#111;z-index:50;display:none;flex-direction:column;justify-content:center;padding:calc(30px + env(safe-area-inset-top,0px)) 28px calc(30px + env(safe-area-inset-bottom,0px));text-align:center}
+.big.on{display:flex}
+.big p{font-size:clamp(30px,9vw,46px);font-weight:700;line-height:1.2;margin:0 0 22px}
+.big small{font-size:16px;color:#666}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1.5px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));z-index:10}
+nav .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+nav button{background:none;border:0;color:var(--ink-2);font:inherit;font-size:13px;font-weight:600;padding:6px 2px;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+nav button svg{width:26px;height:26px;fill:currentColor}
+nav button.on{color:var(--green);background:var(--green-soft)}
+@media (prefers-color-scheme:dark){nav button.on{color:#7DD3A6}}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40;display:none;align-items:flex-end}
+.sheet.on{display:flex}
+.sheet .box{background:var(--card);width:100%;max-width:560px;margin:0 auto;border-radius:22px 22px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));max-height:85%;overflow:auto}
+.langs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.langs button{padding:14px 10px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:17px;cursor:pointer}
+.langs button.on{border-color:var(--green);background:var(--green-soft);font-weight:700}
+.row{display:flex;gap:8px;margin:0 2px 14px}
+.chip{flex:1;padding:10px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.chip.on{background:var(--green);border-color:var(--green);color:#fff}
+.mode{display:block}
+.quiz .q{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:14px;text-align:center}
+.quiz .q .de{font-size:24px;font-weight:700}
+.quiz .q .tr{color:var(--ink-2);margin-top:6px;font-size:18px}
+.quiz .opts button{display:block;width:100%;padding:16px;margin-bottom:10px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:19px;font-weight:600;cursor:pointer;text-align:left}
+.quiz .opts button.ok{border-color:var(--ok);background:#E3F4EA;color:#10301E}
+.quiz .opts button.bad{border-color:var(--bad);background:#FBE5E3;color:#4A0F0B}
+.progress{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin:0 2px 12px}
+.progress i{display:block;height:100%;background:var(--green);width:0;transition:width .3s}
+.btn{display:block;width:100%;padding:16px;border-radius:14px;border:0;background:var(--green);color:#fff;font:inherit;font-size:19px;font-weight:700;cursor:pointer;margin-top:6px}
+.btn.alt{background:var(--peach);color:var(--ink)}
+.stat{display:flex;gap:10px;margin:4px 2px 16px}
+.stat div{flex:1;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:10px;text-align:center}
+.stat b{display:block;font-size:24px;color:var(--green)}
+.stat span{font-size:13px;color:var(--ink-2)}
+@media (prefers-color-scheme:dark){.stat b{color:#7DD3A6}}
+.playbig{width:96px;height:96px;border-radius:50%;background:var(--green);border:0;display:grid;place-items:center;margin:4px auto 8px;cursor:pointer}
+.playbig svg{width:44px;height:44px;fill:#fff}
+.hint{font-size:14px;color:var(--ink-2);text-align:center;margin:8px 0 0}
+.slow{display:flex;justify-content:flex-end;margin:0 4px 10px}
+.slow label{font-size:15px;color:var(--ink-2);display:flex;gap:8px;align-items:center}
+.slow input{width:22px;height:22px;accent-color:var(--green)}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="pass">
+      <div>
+        <div class="hole" aria-hidden="true"></div>
+        <h1>Messe-Hilfe</h1>
+        <p>Ausbildungsmesse Naumburg</p>
+      </div>
+      <button class="langbtn" id="langbtn" aria-label="Meine Sprache wählen">🌐 <span id="langname">Sprache</span></button>
+    </div>
+  </header>
+  <main id="main"></main>
+</div>
+
+<div class="big" id="big" role="dialog" aria-label="Karte zeigen">
+  <p>Ich lerne Deutsch.<br>Bitte sprechen Sie langsam und einfach.<br>Danke!</p>
+  <small>Antippen zum Schließen</small>
+</div>
+
+<div class="sheet" id="sheet">
+  <div class="box">
+    <h2>Meine Sprache</h2>
+    <div class="lead">Wähle deine Sprache. Du siehst dann die Übersetzung.</div>
+    <div class="langs" id="langs"></div>
+  </div>
+</div>
+
+<nav><div class="in" id="nav"></div></nav>
+
+<script>
+"use strict";
+const LANGS = [
+  ["ar","العربية",true],["bg","Български"],["en","English"],["fr","Français"],["hu","Magyar"],
+  ["pt","Português (BR)"],["ro","Română"],["ru","Русский"],["tr","Türkçe"],["uk","Українська"]];
+// Reihenfolge der Übersetzungen: ar bg en fr hu pt ro ru tr uk
+const K = LANGS.map(l=>l[0]);
+function T(arr){ const o={}; K.forEach((k,i)=>o[k]=arr[i]); return o; }
+
+const FRAGEN = [
+  {de:"Guten Tag! Ich heiße …", t:T(["مرحبًا! اسمي …","Добър ден! Казвам се …","Hello! My name is …","Bonjour ! Je m'appelle …","Jó napot! A nevem …","Bom dia! Meu nome é …","Bună ziua! Mă numesc …","Здравствуйте! Меня зовут …","İyi günler! Benim adım …","Добрий день! Мене звати …"])},
+  {de:"Welche Ausbildung haben Sie?", t:T(["ما التدريب المهني الذي تقدّمونه؟","Какво професионално обучение предлагате?","Which apprenticeships do you offer?","Quelle formation proposez-vous ?","Milyen szakképzést kínálnak?","Que formação profissional vocês oferecem?","Ce formare profesională oferiți?","Какое профессиональное обучение вы предлагаете?","Hangi meslek eğitimini sunuyorsunuz?","Яке професійне навчання ви пропонуєте?"])},
+  {de:"Wie lange dauert die Ausbildung?", t:T(["كم تستغرق مدة التدريب؟","Колко време продължава обучението?","How long does the apprenticeship take?","Combien de temps dure la formation ?","Mennyi ideig tart a képzés?","Quanto tempo dura a formação?","Cât durează formarea?","Сколько длится обучение?","Eğitim ne kadar sürüyor?","Скільки триває навчання?"])},
+  {de:"Wann beginnt die Ausbildung?", t:T(["متى يبدأ التدريب؟","Кога започва обучението?","When does the apprenticeship start?","Quand commence la formation ?","Mikor kezdődik a képzés?","Quando começa a formação?","Când începe formarea?","Когда начинается обучение?","Eğitim ne zaman başlıyor?","Коли починається навчання?"])},
+  {de:"Wann beginnt die Arbeit?", t:T(["متى يبدأ العمل في الصباح؟","В колко часа започва работата?","What time does work start?","À quelle heure commence le travail ?","Hány órakor kezdődik a munka?","A que horas começa o trabalho?","La ce oră începe lucrul?","Во сколько начинается рабочий день?","İş saat kaçta başlıyor?","О котрій починається робочий день?"])},
+  {de:"Kann ich ein Praktikum machen?", t:T(["هل يمكنني القيام بتدريب عملي؟","Мога ли да направя стаж?","Can I do an internship?","Est-ce que je peux faire un stage ?","Csinálhatok szakmai gyakorlatot?","Posso fazer um estágio?","Pot să fac un stagiu de practică?","Могу ли я пройти практику?","Staj yapabilir miyim?","Чи можу я пройти практику?"])},
+  {de:"Danke! Auf Wiedersehen!", t:T(["شكرًا! مع السلامة!","Благодаря! Довиждане!","Thank you! Goodbye!","Merci ! Au revoir !","Köszönöm! Viszontlátásra!","Obrigado! Até logo!","Mulțumesc! La revedere!","Спасибо! До свидания!","Teşekkürler! Hoşça kalın!","Дякую! До побачення!"])}];
+
+const HILFE = [
+  {de:"Können Sie das bitte langsam sagen?", t:T(["هل يمكنك أن تقول ذلك ببطء من فضلك؟","Може ли да го кажете по-бавно, моля?","Could you say that slowly, please?","Pouvez-vous le dire lentement, s'il vous plaît ?","Mondaná lassabban, kérem?","Pode falar mais devagar, por favor?","Puteți spune asta mai rar, vă rog?","Не могли бы вы сказать это помедленнее?","Lütfen yavaş söyler misiniz?","Чи могли б ви сказати це повільніше?"])},
+  {de:"Können Sie das bitte aufschreiben?", t:T(["هل يمكنك كتابة ذلك من فضلك؟","Може ли да го напишете, моля?","Could you write that down, please?","Pouvez-vous l'écrire, s'il vous plaît ?","Le tudná írni, kérem?","Pode escrever isso, por favor?","Puteți să scrieți asta, vă rog?","Не могли бы вы это записать?","Lütfen yazar mısınız?","Чи могли б ви це записати?"])},
+  {de:"Ich verstehe das nicht. Noch einmal, bitte.", t:T(["لا أفهم. مرة أخرى من فضلك.","Не разбирам. Още веднъж, моля.","I don't understand. Once more, please.","Je ne comprends pas. Encore une fois, s'il vous plaît.","Nem értem. Még egyszer, kérem.","Não entendi. Mais uma vez, por favor.","Nu înțeleg. Încă o dată, vă rog.","Я не понимаю. Ещё раз, пожалуйста.","Anlamıyorum. Bir kez daha, lütfen.","Я не розумію. Ще раз, будь ласка."])}];
+
+const ZEIGEN_T = T(["أنا أتعلّم الألمانية. من فضلك تكلّم ببطء وببساطة. شكرًا!","Уча немски. Моля, говорете бавно и просто. Благодаря!","I'm learning German. Please speak slowly and simply. Thank you!","J'apprends l'allemand. Parlez lentement et simplement, s'il vous plaît. Merci !","Németül tanulok. Kérem, beszéljen lassan és egyszerűen. Köszönöm!","Estou aprendendo alemão. Por favor, fale devagar e de forma simples. Obrigado!","Învăț germana. Vă rog să vorbiți rar și simplu. Mulțumesc!","Я учу немецкий. Пожалуйста, говорите медленно и просто. Спасибо!","Almanca öğreniyorum. Lütfen yavaş ve basit konuşun. Teşekkürler!","Я вивчаю німецьку. Будь ласка, говоріть повільно і просто. Дякую!"]);
+
+const ANTWORTEN = [
+  {de:"Die Ausbildung dauert drei Jahre.", t:T(["يستغرق التدريب ثلاث سنوات.","Обучението продължава три години.","The apprenticeship takes three years.","La formation dure trois ans.","A képzés három évig tart.","A formação dura três anos.","Formarea durează trei ani.","Обучение длится три года.","Eğitim üç yıl sürüyor.","Навчання триває три роки."])},
+  {de:"Die Arbeit beginnt um 7 Uhr.", t:T(["يبدأ العمل في الساعة السابعة.","Работата започва в 7 часа.","Work starts at 7 o'clock.","Le travail commence à 7 heures.","A munka 7 órakor kezdődik.","O trabalho começa às 7 horas.","Lucrul începe la ora 7.","Работа начинается в 7 часов.","İş saat 7'de başlıyor.","Робота починається о 7 годині."])},
+  {de:"Ja, gern.", t:T(["نعم، بكل سرور.","Да, с удоволствие.","Yes, of course.","Oui, volontiers.","Igen, szívesen.","Sim, claro.","Da, cu plăcere.","Да, конечно.","Evet, memnuniyetle.","Так, звісно."])},
+  {de:"Nein, leider nicht.", t:T(["لا، للأسف.","Не, за съжаление.","No, unfortunately not.","Non, malheureusement pas.","Nem, sajnos nem.","Não, infelizmente não.","Nu, din păcate.","Нет, к сожалению, нет.","Hayır, maalesef.","Ні, на жаль, ні."])},
+  {de:"Schreiben Sie uns eine E-Mail.", t:T(["اكتب لنا بريدًا إلكترونيًا.","Пишете ни имейл.","Send us an email.","Écrivez-nous un e-mail.","Írjon nekünk e-mailt.","Mande-nos um e-mail.","Scrieți-ne un e-mail.","Напишите нам электронное письмо.","Bize bir e-posta yazın.","Напишіть нам електронного листа."])},
+  {de:"Hier ist unser Flyer.", t:T(["تفضّل، هذا منشورنا.","Ето нашата брошура.","Here is our flyer.","Voici notre dépliant.","Tessék, itt a szórólapunk.","Aqui está o nosso folheto.","Poftiți pliantul nostru.","Вот наша листовка.","Buyurun, broşürümüz.","Ось наша листівка."])},
+  {de:"Bewerben Sie sich online.", t:T(["قدّم طلبك عبر الإنترنت.","Кандидатствайте онлайн.","Apply online.","Postulez en ligne.","Jelentkezzen online.","Candidate-se online.","Aplicați online.","Подайте заявку онлайн.","Online başvurun.","Подайте заявку онлайн."])},
+  {de:"Wie alt sind Sie?", t:T(["كم عمرك؟","На колко години сте?","How old are you?","Quel âge avez-vous ?","Hány éves?","Quantos anos você tem?","Câți ani aveți?","Сколько вам лет?","Kaç yaşındasınız?","Скільки вам років?"])},
+  {de:"Was möchten Sie werden?", t:T(["ماذا تريد أن تصبح؟","Какъв искате да станете?","What would you like to become?","Que voulez-vous devenir ?","Mi szeretne lenni?","O que você quer ser?","Ce vreți să deveniți?","Кем вы хотите стать?","Ne olmak istiyorsunuz?","Ким ви хочете стати?"])}];
+
+const BERUFE = [
+  {de:"der Verkäufer / die Verkäuferin", k:"Verkäufer/in", t:T(["بائع / بائعة","продавач / продавачка","sales assistant","vendeur / vendeuse","eladó","vendedor / vendedora","vânzător / vânzătoare","продавец","satış elemanı","продавець"])},
+  {de:"der Koch / die Köchin", k:"Koch/Köchin", t:T(["طبّاخ / طبّاخة","готвач / готвачка","cook","cuisinier / cuisinière","szakács","cozinheiro / cozinheira","bucătar / bucătăreasă","повар","aşçı","кухар"])},
+  {de:"der Pflegefachmann / die Pflegefachfrau", k:"Pflegefachmann/-frau", t:T(["ممرّض / ممرّضة","медицински брат / медицинска сестра","nurse","infirmier / infirmière","ápoló","enfermeiro / enfermeira","asistent medical / asistentă medicală","медбрат / медсестра","hemşire","медбрат / медсестра"])},
+  {de:"der Friseur / die Friseurin", k:"Friseur/in", t:T(["حلّاق / مصفّفة شعر","фризьор / фризьорка","hairdresser","coiffeur / coiffeuse","fodrász","cabeleireiro / cabeleireira","frizer / coafeză","парикмахер","kuaför","перукар"])},
+  {de:"der Bäcker / die Bäckerin", k:"Bäcker/in", t:T(["خبّاز / خبّازة","хлебар / хлебарка","baker","boulanger / boulangère","pék","padeiro / padeira","brutar / brutăriță","пекарь","fırıncı","пекар"])},
+  {de:"der Kfz-Mechatroniker / die Kfz-Mechatronikerin", k:"Kfz-Mechatroniker/in", t:T(["ميكانيكي سيارات","автомонтьор","car mechanic","mécanicien / mécanicienne automobile","autószerelő","mecânico / mecânica de automóveis","mecanic auto","автомеханик","oto mekatronik teknisyeni","автомеханік"])},
+  {de:"der Maler / die Malerin", k:"Maler/in", t:T(["دهّان / دهّانة","бояджия","painter and decorator","peintre en bâtiment","szobafestő","pintor / pintora de paredes","zugrav","маляр","boyacı","маляр"])},
+  {de:"der Tischler / die Tischlerin", k:"Tischler/in", t:T(["نجّار / نجّارة","дърводелец","carpenter, joiner","menuisier / menuisière","asztalos","marceneiro / marceneira","tâmplar","столяр","marangoz","столяр"])},
+  {de:"der Elektroniker / die Elektronikerin", k:"Elektroniker/in", t:T(["فنّي كهرباء","електротехник","electrician","électricien / électricienne","villanyszerelő","eletricista","electrician","электрик","elektrikçi","електрик"])},
+  {de:"die Fachkraft für Lagerlogistik", k:"Fachkraft für Lagerlogistik", t:T(["أخصائي لوجستيات المستودعات","специалист по складова логистика","warehouse logistics specialist","agent / agente de logistique d'entrepôt","raktárlogisztikai szakember","técnico / técnica de logística de armazém","specialist în logistică de depozit","специалист по складской логистике","depo lojistik elemanı","фахівець зі складської логістики"])}];
+
+const WOERTER = [
+  {de:"die Ausbildung", t:T(["التدريب المهني","професионално обучение","apprenticeship, vocational training","formation professionnelle, apprentissage","szakképzés","formação profissional","formare profesională, ucenicie","профессиональное обучение","meslek eğitimi","професійне навчання"])},
+  {de:"das Praktikum", t:T(["تدريب عملي","стаж, практика","internship, work placement","stage","szakmai gyakorlat","estágio","stagiu de practică","практика, стажировка","staj","практика, стажування"])},
+  {de:"die Firma", t:T(["شركة","фирма","company","entreprise","cég","empresa","firmă","фирма, компания","şirket","фірма, компанія"])},
+  {de:"der Stand", t:T(["جناح في المعرض","щанд","stand, booth","stand","stand","estande","stand","стенд","stant","стенд"])},
+  {de:"die Bewerbung", t:T(["طلب توظيف","кандидатура","application","candidature","jelentkezés, pályázat","candidatura","candidatură","заявка, резюме","başvuru","заявка, резюме"])}];
+
+// Frage-Antwort-Paare für das Quiz
+const PAARE = [
+  ["Guten Tag! Ich heiße Amir.","Guten Tag! Was möchten Sie wissen?"],
+  ["Welche Ausbildung haben Sie?","Koch und Köchin."],
+  ["Wie lange dauert die Ausbildung?","Drei Jahre."],
+  ["Wann beginnt die Ausbildung?","Am 1. August."],
+  ["Wann beginnt die Arbeit?","Um 7 Uhr."],
+  ["Kann ich ein Praktikum machen?","Ja, gern."],
+  ["Danke! Auf Wiedersehen!","Auf Wiedersehen!"]];
+
+// ---------- Zustand ----------
+const store = {
+  get(k,d){ try{ const v=localStorage.getItem("messe_"+k); return v===null?d:JSON.parse(v);}catch(e){return d;} },
+  set(k,v){ try{ localStorage.setItem("messe_"+k, JSON.stringify(v)); }catch(e){} }
+};
+let lang = store.get("lang", null);
+let slow = store.get("slow", false);
+let tab = "fragen";
+const stats = store.get("stats", {rounds:0, heard:0, best:{berufe:0,hoeren:0,antwort:0}});
+const saveStats = ()=>store.set("stats", stats);
+
+// ---------- Sprache (Vorlesen) ----------
+let deVoice = null;
+function pickVoice(){ if(!("speechSynthesis" in window)) return; const vs = speechSynthesis.getVoices(); deVoice = vs.find(v=>/^de(-|_|$)/i.test(v.lang) && v.localService) || vs.find(v=>/^de/i.test(v.lang)) || null; }
+if("speechSynthesis" in window){ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+function speak(text, el){
+  if(!("speechSynthesis" in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text.replace(/…/g,""));
+  u.lang = "de-DE"; if(deVoice) u.voice = deVoice; u.rate = slow ? 0.6 : 0.9;
+  if(el){ el.classList.add("playing"); u.onend = u.onerror = ()=>el.classList.remove("playing"); }
+  speechSynthesis.speak(u);
+  stats.heard++; saveStats();
+}
+
+// ---------- Hilfsfunktionen ----------
+const $ = s=>document.querySelector(s);
+const esc = s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const isRtl = ()=> lang==="ar";
+const SPK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>';
+function artHtml(s){ return esc(s).replace(/\b(der|die|das)\b/g, m=>`<span class="art-${m}">${m}</span>`); }
+function card(item, opts={}){
+  const tr = lang && item.t ? `<div class="tr" ${isRtl()?'dir="rtl" lang="ar"':''}>${esc(item.t[lang])}</div>` : "";
+  const de = opts.art ? artHtml(item.de) : esc(item.de);
+  return `<button class="card" data-say="${esc(item.de)}"><div class="txt"><div class="de">${de}</div>${tr}</div><div class="spk">${SPK}</div></button>`;
+}
+function slowToggle(){ return `<div class="slow"><label><input type="checkbox" id="slowcb" ${slow?"checked":""}> langsam vorlesen</label></div>`; }
+function bindCards(){
+  document.querySelectorAll(".card[data-say]").forEach(b=>b.onclick=()=>speak(b.dataset.say,b));
+  const cb=$("#slowcb"); if(cb) cb.onchange=()=>{ slow=cb.checked; store.set("slow",slow); };
+}
+function shuffle(a){ a=[...a]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+// ---------- Seiten ----------
+const PAGES = {
+  fragen(){
+    return `<h2>Meine Fragen</h2><p class="lead">Tippe auf eine Frage. Das Handy liest sie vor.</p>${slowToggle()}
+      ${FRAGEN.map(f=>card(f)).join("")}
+      <div class="sect">Das hörst du vielleicht</div>
+      ${ANTWORTEN.map(f=>card(f)).join("")}`;
+  },
+  hilfe(){
+    return `<h2>Hilfe!</h2><p class="lead">Du verstehst nicht? Kein Problem.</p>
+      <div class="show" id="showbtn"><b>Karte zeigen</b><span>Groß auf dem Bildschirm – zeig sie am Stand.</span>
+      ${lang?`<div style="margin-top:8px;color:var(--ink-2);font-size:15px" ${isRtl()?'dir="rtl"':''}>${esc(ZEIGEN_T[lang])}</div>`:""}</div>
+      ${slowToggle()}${HILFE.map(f=>card(f)).join("")}`;
+  },
+  berufe(){
+    return `<h2>Berufe</h2><p class="lead">Zehn Berufe von der Messe. Tippe zum Anhören.</p>${slowToggle()}
+      ${BERUFE.map(f=>card(f,{art:true})).join("")}
+      <div class="sect">Wichtige Wörter</div>${WOERTER.map(f=>card(f,{art:true})).join("")}`;
+  },
+  ueben(){
+    const b = stats.best;
+    return `<h2>Üben</h2><p class="lead">Wähle ein Spiel. Zehn Fragen pro Runde.</p>
+      <div class="stat"><div><b>${stats.rounds}</b><span>Runden</span></div><div><b>${stats.heard}</b><span>× angehört</span></div><div><b>${Math.max(b.berufe,b.hoeren,b.antwort)}</b><span>beste Runde</span></div></div>
+      <button class="card" data-game="berufe"><div class="txt"><div class="de">Berufe</div><div class="tr">Hören und das richtige Wort finden · Rekord: ${b.berufe}/10</div></div></button>
+      <button class="card" data-game="hoeren"><div class="txt"><div class="de">Fragen hören</div><div class="tr">Welche Frage hörst du? · Rekord: ${b.hoeren}/10</div></div></button>
+      <button class="card" data-game="antwort"><div class="txt"><div class="de">Frage und Antwort</div><div class="tr">Was passt? · Rekord: ${b.antwort}/10</div></div></button>`;
+  }
+};
+
+// ---------- Quiz ----------
+function makeRound(kind){
+  const items=[];
+  for(let n=0;n<10;n++){
+    if(kind==="berufe"){
+      const pool=shuffle(BERUFE); const right=pool[0];
+      items.push({say:right.de, show:lang?right.t[lang]:null, prompt:"Welcher Beruf ist das?", right:right.k, opts:shuffle([right.k,pool[1].k,pool[2].k])});
+    } else if(kind==="hoeren"){
+      const pool=shuffle(FRAGEN.concat(HILFE)); const right=pool[0];
+      items.push({say:right.de, prompt:"Welche Frage hörst du?", right:right.de, opts:shuffle([right.de,pool[1].de,pool[2].de])});
+    } else {
+      const pool=shuffle(PAARE); const right=pool[0];
+      items.push({showDe:right[0], say:right[0], prompt:"Was passt?", right:right[1], opts:shuffle([right[1],pool[1][1],pool[2][1]])});
+    }
+  }
+  return items;
+}
+function playGame(kind){
+  const items=makeRound(kind); let i=0, score=0, locked=false;
+  function render(){
+    const it=items[i];
+    $("#main").innerHTML = `<div class="quiz"><div class="progress"><i style="width:${i*10}%"></i></div>
+      <div class="q">
+        ${it.showDe?`<div class="de">${esc(it.showDe)}</div>`:""}
+        <button class="playbig" id="play" aria-label="Anhören">${SPK}</button>
+        ${it.show?`<div class="tr" ${isRtl()?'dir="rtl"':''}>${esc(it.show)}</div>`:""}
+        <div class="hint">${esc(it.prompt)} · ${i+1}/10</div>
+      </div>
+      <div class="opts">${it.opts.map(o=>`<button data-o="${esc(o)}">${esc(o)}</button>`).join("")}</div>
+      <button class="btn alt" id="stop">Beenden</button></div>`;
+    $("#play").onclick=()=>speak(it.say);
+    $("#stop").onclick=()=>show("ueben");
+    if(kind!=="antwort") setTimeout(()=>speak(it.say),250);
+    locked=false;
+    document.querySelectorAll(".opts button").forEach(b=>b.onclick=()=>{
+      if(locked) return; locked=true;
+      const ok = b.dataset.o===it.right;
+      if(ok){ score++; b.classList.add("ok"); } else { b.classList.add("bad"); document.querySelectorAll(".opts button").forEach(x=>{ if(x.dataset.o===it.right) x.classList.add("ok"); }); }
+      setTimeout(()=>{ i++; i<10?render():finish(); }, ok?700:1500);
+    });
+  }
+  function finish(){
+    stats.rounds++; if(score>stats.best[kind]) stats.best[kind]=score; saveStats();
+    const msg = score>=9?"Super!":score>=6?"Gut gemacht!":"Weiter üben!";
+    $("#main").innerHTML = `<div class="quiz"><div class="q"><div class="de" style="font-size:44px">${score}/10</div><div class="tr">${msg}</div></div>
+      <button class="btn" id="again">Noch einmal</button><button class="btn alt" id="back">Zurück</button></div>`;
+    $("#again").onclick=()=>playGame(kind); $("#back").onclick=()=>show("ueben");
+  }
+  render();
+}
+
+// ---------- Navigation ----------
+const NAV = [
+  ["fragen","Fragen",'<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 17h-2v-2h2zm2.1-7.7-.9.9A3.4 3.4 0 0 0 13 15h-2v-.5a4 4 0 0 1 1.2-2.8l1.2-1.3A2 2 0 1 0 10 9H8a4 4 0 1 1 7.1 2.3z"/>'],
+  ["hilfe","Hilfe",'<path d="M12 2 1 21h22L12 2zm1 16h-2v-2h2zm0-4h-2v-4h2z"/>'],
+  ["berufe","Berufe",'<path d="M10 4h4a2 2 0 0 1 2 2v1h4a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h4V6a2 2 0 0 1 2-2zm0 3h4V6h-4z"/>'],
+  ["ueben","Üben",'<path d="M12 2l3 6.3 7 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 7-1z"/>']];
+function show(t){
+  tab=t; $("#main").innerHTML = PAGES[t]();
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on", b.dataset.t===t));
+  bindCards();
+  if(t==="hilfe") $("#showbtn").onclick=()=>$("#big").classList.add("on");
+  if(t==="ueben") document.querySelectorAll("[data-game]").forEach(b=>b.onclick=()=>playGame(b.dataset.game));
+  window.scrollTo(0,0);
+}
+$("#nav").innerHTML = NAV.map(([k,l,p])=>`<button data-t="${k}"><svg viewBox="0 0 24 24" aria-hidden="true">${p}</svg>${l}</button>`).join("");
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>show(b.dataset.t));
+$("#big").onclick=()=>$("#big").classList.remove("on");
+
+// ---------- Sprachwahl ----------
+function renderLangs(){
+  $("#langs").innerHTML = LANGS.map(([k,n,r])=>`<button data-l="${k}" class="${lang===k?"on":""}" ${r?'dir="rtl"':''}>${n}</button>`).join("") +
+    `<button data-l="" class="${!lang?"on":""}">nur Deutsch</button>`;
+  document.querySelectorAll("#langs button").forEach(b=>b.onclick=()=>{
+    lang=b.dataset.l||null; store.set("lang",lang); $("#sheet").classList.remove("on"); updateLangBtn(); show(tab);
+  });
+}
+function updateLangBtn(){ const l=LANGS.find(x=>x[0]===lang); $("#langname").textContent = l?l[1]:"Sprache"; }
+$("#langbtn").onclick=()=>{ renderLangs(); $("#sheet").classList.add("on"); };
+$("#sheet").onclick=e=>{ if(e.target.id==="sheet") $("#sheet").classList.remove("on"); };
+
+updateLangBtn(); show("fragen");
+if(lang===null && !store.get("asked",false)){ store.set("asked",true); renderLangs(); $("#sheet").classList.add("on"); }
+
+if("serviceWorker" in navigator){ window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{})); }
+</script>
+</body>
+</html>
