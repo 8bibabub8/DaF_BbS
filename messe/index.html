@@ -19,13 +19,13 @@
 html,body{height:100%;margin:0}
 body{background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Noto Sans","Noto Sans Arabic",sans-serif;font-size:18px;line-height:1.4;-webkit-tap-highlight-color:transparent}
 .app{max-width:560px;margin:0 auto;min-height:100%}
-header{background:var(--green);color:#fff;padding:12px 16px 14px;position:sticky;top:0;z-index:5;border-radius:0 0 22px 22px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
-.pass{display:flex;align-items:center;gap:12px}
-.hole{width:34px;height:9px;border-radius:6px;background:rgba(255,255,255,.35);margin-bottom:4px}
-header h1{font-size:20px;margin:0;font-weight:700}
-header p{margin:1px 0 0;font-size:14px;opacity:.85}
-.langbtn{margin-left:auto;background:rgba(255,255,255,.16);color:#fff;border:1.5px solid rgba(255,255,255,.5);border-radius:999px;padding:8px 14px;font:inherit;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap}
-main{padding:16px 14px 110px}
+header{background:var(--green);color:#fff;padding:7px 14px 8px;position:sticky;top:0;z-index:5;border-radius:0 0 16px 16px;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+.pass{display:flex;align-items:center;gap:10px}
+.hole{display:none}
+header h1{font-size:17px;margin:0;font-weight:700;line-height:1.2}
+header p{margin:0;font-size:12px;opacity:.85;line-height:1.2}
+.langbtn{margin-left:auto;background:rgba(255,255,255,.16);color:#fff;border:1.5px solid rgba(255,255,255,.5);border-radius:999px;padding:4px 11px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}
+main{padding:14px 14px 84px}
 h2{font-size:22px;margin:6px 4px 4px}
 .lead{color:var(--ink-2);margin:0 4px 14px;font-size:16px}
 .sect{font-size:16px;font-weight:700;color:var(--accent);margin:22px 6px 8px}
@@ -43,10 +43,10 @@ h2{font-size:22px;margin:6px 4px 4px}
 .big .t{font-size:clamp(28px,8.5vw,44px);font-weight:700;line-height:1.22;margin:0 0 20px}
 .big .t.long{font-size:clamp(22px,6.2vw,32px);text-align:left}
 .big small{font-size:16px;color:#666}
-nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1.5px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));z-index:10}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1.5px solid var(--line);padding:3px 6px calc(3px + env(safe-area-inset-bottom,0px));z-index:10}
 nav .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
-nav button{background:none;border:0;color:var(--ink-2);font:inherit;font-size:13px;font-weight:600;padding:6px 2px;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
-nav button svg{width:26px;height:26px;fill:currentColor}
+nav button{background:none;border:0;color:var(--ink-2);font:inherit;font-size:11.5px;font-weight:600;padding:4px 2px;border-radius:10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px}
+nav button svg{width:21px;height:21px;fill:currentColor}
 nav button.on{color:var(--accent);background:var(--green-soft)}
 .sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40;display:none;align-items:flex-end}
 .sheet.on{display:flex}
@@ -93,7 +93,6 @@ select.t{width:100%;font:inherit;font-size:18px;padding:12px;border-radius:12px;
 .quiz .opts button{display:block;width:100%;padding:15px 16px;margin-bottom:10px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:19px;font-weight:600;cursor:pointer;text-align:left}
 .quiz .opts.art{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .quiz .opts.art button{text-align:center;font-size:24px;padding:20px 0;margin:0}
-.quiz .opts button.a-der{color:var(--der)}.quiz .opts button.a-die{color:var(--die)}.quiz .opts button.a-das{color:var(--das)}
 .quiz .opts button.ok{border-color:var(--ok);background:#E3F4EA;color:#10301E}
 .quiz .opts button.bad{border-color:var(--bad);background:#FBE5E3;color:#4A0F0B}
 .build{min-height:64px;background:var(--card);border:2px dashed var(--line);border-radius:14px;padding:10px;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
@@ -103,6 +102,12 @@ select.t{width:100%;font:inherit;font-size:18px;padding:12px;border-radius:12px;
 .tile{padding:10px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--peach);color:var(--ink);font:inherit;font-size:19px;font-weight:600;cursor:pointer}
 .build .tile{background:var(--green-soft)}
 .tile.used{visibility:hidden}
+.star{color:#C97A00;font-size:.85em}
+.legend{font-size:14px;color:var(--ink-2);margin:0 4px 8px}
+.chips.seg{margin:0 0 14px}
+.chips.filt{margin:0 0 4px}
+.chips.filt .chip{font-size:14px;padding:7px 11px}
+.card .sub .tr{display:inline;font-size:14px}
 .sol{font-size:16px;color:var(--ink-2);text-align:center;margin:0 0 10px}
 .end{text-align:center}
 .end .m{font-size:48px;font-weight:800}
@@ -158,18 +163,6 @@ const ANTWORTEN = [
   {de:"Wie alt sind Sie?", t:T(["كم عمرك؟","На колко години сте?","How old are you?","Quel âge avez-vous ?","Hány éves?","Quantos anos você tem?","Câți ani aveți?","Сколько вам лет?","Kaç yaşındasınız?","Скільки вам років?"])},
   {de:"Was möchten Sie werden?", t:T(["ماذا تريد أن تصبح؟","Какъв искате да станете?","What would you like to become?","Que voulez-vous devenir ?","Mi szeretne lenni?","O que você quer ser?","Ce vreți să deveniți?","Кем вы хотите стать?","Ne olmak istiyorsunuz?","Ким ви хочете стати?"])}];
 
-const BERUFE = [
-  {de:"der Verkäufer / die Verkäuferin", k:"Verkäufer/in", t:T(["بائع / بائعة","продавач / продавачка","sales assistant","vendeur / vendeuse","eladó","vendedor / vendedora","vânzător / vânzătoare","продавец","satış elemanı","продавець"])},
-  {de:"der Koch / die Köchin", k:"Koch/Köchin", t:T(["طبّاخ / طبّاخة","готвач / готвачка","cook","cuisinier / cuisinière","szakács","cozinheiro / cozinheira","bucătar / bucătăreasă","повар","aşçı","кухар"])},
-  {de:"der Pflegefachmann / die Pflegefachfrau", k:"Pflegefachmann/-frau", t:T(["ممرّض / ممرّضة","медицински брат / медицинска сестра","nurse","infirmier / infirmière","ápoló","enfermeiro / enfermeira","asistent medical / asistentă medicală","медбрат / медсестра","hemşire","медбрат / медсестра"])},
-  {de:"der Friseur / die Friseurin", k:"Friseur/in", t:T(["حلّاق / مصفّفة شعر","фризьор / фризьорка","hairdresser","coiffeur / coiffeuse","fodrász","cabeleireiro / cabeleireira","frizer / coafeză","парикмахер","kuaför","перукар"])},
-  {de:"der Bäcker / die Bäckerin", k:"Bäcker/in", t:T(["خبّاز / خبّازة","хлебар / хлебарка","baker","boulanger / boulangère","pék","padeiro / padeira","brutar / brutăriță","пекарь","fırıncı","пекар"])},
-  {de:"der Kfz-Mechatroniker / die Kfz-Mechatronikerin", k:"Kfz-Mechatroniker/in", t:T(["ميكانيكي سيارات","автомонтьор","car mechanic","mécanicien / mécanicienne automobile","autószerelő","mecânico / mecânica de automóveis","mecanic auto","автомеханик","oto mekatronik teknisyeni","автомеханік"])},
-  {de:"der Maler / die Malerin", k:"Maler/in", t:T(["دهّان / دهّانة","бояджия","painter and decorator","peintre en bâtiment","szobafestő","pintor / pintora de paredes","zugrav","маляр","boyacı","маляр"])},
-  {de:"der Tischler / die Tischlerin", k:"Tischler/in", t:T(["نجّار / نجّارة","дърводелец","carpenter, joiner","menuisier / menuisière","asztalos","marceneiro / marceneira","tâmplar","столяр","marangoz","столяр"])},
-  {de:"der Elektroniker / die Elektronikerin", k:"Elektroniker/in", t:T(["فنّي كهرباء","електротехник","electrician","électricien / électricienne","villanyszerelő","eletricista","electrician","электрик","elektrikçi","електрик"])},
-  {de:"die Fachkraft für Lagerlogistik", k:"Fachkraft für Lagerlogistik", t:T(["أخصائي لوجستيات المستودعات","специалист по складова логистика","warehouse logistics specialist","agent / agente de logistique d'entrepôt","raktárlogisztikai szakember","técnico / técnica de logística de armazém","specialist în logistică de depozit","специалист по складской логистике","depo lojistik elemanı","фахівець зі складської логістики"])}];
-
 const WOERTER = [
   {de:"die Ausbildung", t:T(["التدريب المهني","професионално обучение","apprenticeship, vocational training","formation professionnelle, apprentissage","szakképzés","formação profissional","formare profesională, ucenicie","профессиональное обучение","meslek eğitimi","професійне навчання"])},
   {de:"das Praktikum", t:T(["تدريب عملي","стаж, практика","internship, work placement","stage","szakmai gyakorlat","estágio","stagiu de practică","практика, стажировка","staj","практика, стажування"])},
@@ -178,20 +171,96 @@ const WOERTER = [
   {de:"die Bewerbung", t:T(["طلب توظيف","кандидатура","application","candidature","jelentkezés, pályázat","candidatura","candidatură","заявка, резюме","başvuru","заявка, резюме"])}];
 
 
+// Reihenfolge der Übersetzungen: ar bg en fr hu pt ro ru tr uk
+const ORT = {
+  supermarkt:["im Supermarkt",["سوبرماركت","супермаркет","supermarket","supermarché","szupermarket","supermercado","supermarket","супермаркет","süpermarket","супермаркет"]],
+  modegeschaeft:["im Modegeschäft",["متجر ملابس","магазин за дрехи","clothes shop","magasin de vêtements","ruhabolt","loja de roupas","magazin de haine","магазин одежды","giyim mağazası","магазин одягу"]],
+  geschaeft:["im Geschäft",["متجر","магазин","shop","magasin","bolt","loja","magazin","магазин","mağaza","магазин"]],
+  baeckerei:["in der Bäckerei",["مخبز","пекарна","bakery","boulangerie","pékség","padaria","brutărie","пекарня","fırın","пекарня"]],
+  fleischerei:["in der Fleischerei",["ملحمة (محل جزارة)","месарница","butcher's shop","boucherie","hentesüzlet","açougue","măcelărie","мясная лавка","kasap dükkânı","м'ясна крамниця"]],
+  kueche:["in der Küche",["مطبخ","кухня","kitchen","cuisine","konyha","cozinha","bucătărie","кухня","mutfak","кухня"]],
+  restaurant:["im Restaurant",["مطعم","ресторант","restaurant","restaurant","étterem","restaurante","restaurant","ресторан","restoran","ресторан"]],
+  hotel:["im Hotel",["فندق","хотел","hotel","hôtel","szálloda","hotel","hotel","гостиница","otel","готель"]],
+  krankenhaus:["im Krankenhaus",["مستشفى","болница","hospital","hôpital","kórház","hospital","spital","больница","hastane","лікарня"]],
+  pflegeheim:["im Pflegeheim",["دار رعاية المسنين","дом за стари хора","care home","maison de retraite","idősotthon","casa de repouso","cămin de bătrâni","дом престарелых","huzurevi","будинок для літніх людей"]],
+  arztpraxis:["in der Arztpraxis",["عيادة طبيب","лекарски кабинет","doctor's surgery","cabinet médical","orvosi rendelő","consultório médico","cabinet medical","врачебный кабинет","doktor muayenehanesi","лікарський кабінет"]],
+  zahnarztpraxis:["in der Zahnarztpraxis",["عيادة أسنان","зъболекарски кабинет","dental practice","cabinet dentaire","fogorvosi rendelő","consultório odontológico","cabinet stomatologic","стоматологический кабинет","diş muayenehanesi","стоматологічний кабінет"]],
+  rettungswagen:["im Rettungswagen",["سيارة إسعاف","линейка","ambulance","ambulance","mentőautó","ambulância","ambulanță","машина скорой помощи","ambulans","машина швидкої допомоги"]],
+  baustelle:["auf der Baustelle",["موقع البناء","строителна площадка","building site","chantier","építkezés","obra","șantier","стройка","şantiye","будівельний майданчик"]],
+  dach:["auf dem Dach",["سطح البيت","покрив","roof","toit","tető","telhado","acoperiș","крыша","çatı","дах"]],
+  strasse:["auf der Straße",["شارع","улица, път","road","route","út","rua, estrada","stradă, drum","дорога","yol","дорога"]],
+  haus:["in Häusern und Wohnungen",["في البيوت والشقق","в къщи и апартаменти","in houses and flats","dans les maisons et appartements","házakban és lakásokban","em casas e apartamentos","în case și apartamente","в домах и квартирах","evlerde ve dairelerde","у будинках і квартирах"]],
+  gebaeude:["in Gebäuden (Büros, Schulen)",["في المباني (مكاتب، مدارس)","в сгради (офиси, училища)","in buildings (offices, schools)","dans les bâtiments (bureaux, écoles)","épületekben (irodák, iskolák)","em prédios (escritórios, escolas)","în clădiri (birouri, școli)","в зданиях (офисы, школы)","binalarda (ofisler, okullar)","у будівлях (офіси, школи)"]],
+  werkstatt:["in der Werkstatt",["ورشة","работилница","workshop","atelier","műhely","oficina","atelier","мастерская","atölye","майстерня"]],
+  autowerkstatt:["in der Autowerkstatt",["ورشة تصليح سيارات","автосервиз","car repair garage","garage automobile","autószerviz","oficina mecânica","service auto","автомастерская","oto tamirhanesi","автомайстерня"]],
+  fabrik:["in der Fabrik",["مصنع","фабрика","factory","usine","gyár","fábrica","fabrică","завод","fabrika","завод"]],
+  friseursalon:["im Friseursalon",["صالون حلاقة","фризьорски салон","hair salon","salon de coiffure","fodrászat","salão de cabeleireiro","salon de coafură","парикмахерская","kuaför salonu","перукарня"]],
+  lager:["im Lager",["مستودع","склад","warehouse","entrepôt","raktár","armazém","depozit","склад","depo","склад"]],
+  lkw:["im Lkw",["شاحنة","камион","lorry, truck","camion","kamion","caminhão","camion","грузовик","kamyon","вантажівка"]],
+  garten:["im Garten und im Park",["في الحديقة والمنتزه","в градината и в парка","in gardens and parks","dans les jardins et les parcs","kertben és parkban","em jardins e parques","în grădini și parcuri","в саду и в парке","bahçede ve parkta","у саду і в парку"]],
+  bauernhof:["auf dem Bauernhof",["مزرعة","ферма","farm","ferme","tanya, gazdaság","fazenda","fermă","ферма","çiftlik","ферма"]],
+  buero:["im Büro",["مكتب","офис","office","bureau","iroda","escritório","birou","офис","ofis","офіс"]],
+  bank:["in der Bank",["بنك","банка","bank","banque","bank","banco","bancă","банк","banka","банк"]],
+  kindergarten:["im Kindergarten",["روضة أطفال","детска градина","kindergarten, nursery","école maternelle, crèche","óvoda","jardim de infância","grădiniță","детский сад","anaokulu","дитячий садок"]],
+  polizei:["bei der Polizei",["الشرطة","полиция","police","police","rendőrség","polícia","poliție","полиция","polis","поліція"]]
+};
+
+const BEREICHE = ["Handel und Lebensmittel","Gastronomie und Hotel","Pflege und Gesundheit","Bau","Handwerk und Technik","Logistik und Verkehr","Natur","Büro, Soziales, Sicherheit"];
+
+// [männlich, weiblich, Bereich-Index, Arbeitsorte, ★ oft Realschulabschluss, Kurzform, Übersetzungen]
+const BERUFE_RAW = [
+  ["der Verkäufer","die Verkäuferin",0,["supermarkt","modegeschaeft"],0,"Verkäufer/in",["بائع / بائعة","продавач / продавачка","sales assistant","vendeur / vendeuse","eladó","vendedor / vendedora","vânzător / vânzătoare","продавец","satış elemanı","продавець"]],
+  ["der Kaufmann im Einzelhandel","die Kauffrau im Einzelhandel",0,["geschaeft","supermarkt"],1,"Kaufmann/-frau im Einzelhandel",["موظف مبيعات في تجارة التجزئة","търговец на дребно","retail management assistant","employé(e) de commerce de détail","kiskereskedelmi kereskedő","comerciante varejista","comerciant în comerțul cu amănuntul","специалист розничной торговли","perakende satış uzmanı","фахівець роздрібної торгівлі"]],
+  ["der Fachverkäufer im Lebensmittelhandwerk","die Fachverkäuferin im Lebensmittelhandwerk",0,["baeckerei","fleischerei"],0,"Fachverkäufer/in Lebensmittel",["بائع متخصص في المواد الغذائية","продавач на хранителни стоки","specialist food sales assistant","vendeur / vendeuse en alimentation","élelmiszer-szakeladó","vendedor(a) especializado(a) em alimentos","vânzător specializat în alimente","продавец продуктов","gıda satış elemanı","продавець продуктів"]],
+  ["der Fleischer","die Fleischerin",0,["fleischerei"],0,"Fleischer/in",["جزّار / جزّارة","месар / месарка","butcher","boucher / bouchère","hentes","açougueiro / açougueira","măcelar","мясник","kasap","м'ясник"]],
+  ["der Bäcker","die Bäckerin",0,["baeckerei"],0,"Bäcker/in",["خبّاز / خبّازة","хлебар / хлебарка","baker","boulanger / boulangère","pék","padeiro / padeira","brutar / brutăriță","пекарь","fırıncı","пекар"]],
+  ["der Koch","die Köchin",1,["kueche","restaurant"],0,"Koch/Köchin",["طبّاخ / طبّاخة","готвач / готвачка","cook, chef","cuisinier / cuisinière","szakács","cozinheiro / cozinheira","bucătar / bucătăreasă","повар","aşçı","кухар"]],
+  ["die Fachkraft für Gastronomie","die Fachkraft für Gastronomie",1,["restaurant","hotel"],0,"Fachkraft für Gastronomie",["عامل في المطاعم","служител в ресторантьорството","hospitality worker","employé(e) de restauration","vendéglátóipari szakember","profissional de gastronomia","lucrător în alimentație publică","работник общепита","restoran çalışanı","працівник закладів харчування"]],
+  ["der Fachmann für Restaurants und Veranstaltungsgastronomie","die Fachfrau für Restaurants und Veranstaltungsgastronomie",1,["restaurant","hotel"],0,"Fachmann/-frau für Restaurants",["نادل / نادلة","сервитьор / сервитьорка","waiter / waitress","serveur / serveuse","felszolgáló","garçom / garçonete","ospătar / ospătăriță","официант / официантка","garson","офіціант / офіціантка"]],
+  ["der Hotelfachmann","die Hotelfachfrau",1,["hotel"],1,"Hotelfachmann/-frau",["موظف فندق","хотелиер","hotel specialist","employé(e) d'hôtel","szállodai szakember","profissional de hotelaria","lucrător hotelier","специалист гостиничного дела","otel görevlisi","працівник готелю"]],
+  ["der Pflegefachmann","die Pflegefachfrau",2,["krankenhaus","pflegeheim"],1,"Pflegefachmann/-frau",["ممرّض / ممرّضة","медицински брат / медицинска сестра","nurse","infirmier / infirmière","ápoló","enfermeiro / enfermeira","asistent medical / asistentă medicală","медбрат / медсестра","hemşire","медбрат / медсестра"]],
+  ["der Pflegehelfer","die Pflegehelferin",2,["pflegeheim","krankenhaus"],0,"Pflegehelfer/in",["مساعد تمريض","санитар / помощник по грижи","care assistant","aide-soignant(e)","ápolási asszisztens","auxiliar de enfermagem","infirmier / infirmieră","помощник по уходу, санитар","hasta bakıcı","помічник з догляду"]],
+  ["der Medizinische Fachangestellte","die Medizinische Fachangestellte",2,["arztpraxis"],1,"Medizinische/r Fachangestellte/r",["مساعد طبي","медицински асистент","medical assistant","assistant(e) médical(e)","orvosi asszisztens","assistente médico(a)","asistent medical de cabinet","медицинский ассистент","muayenehane asistanı","медичний асистент"]],
+  ["der Zahnmedizinische Fachangestellte","die Zahnmedizinische Fachangestellte",2,["zahnarztpraxis"],1,"Zahnmedizinische/r Fachangestellte/r",["مساعد طبيب أسنان","асистент на зъболекар","dental assistant","assistant(e) dentaire","fogászati asszisztens","assistente odontológico(a)","asistent stomatologic","ассистент стоматолога","diş hekimi asistanı","асистент стоматолога"]],
+  ["der Notfallsanitäter","die Notfallsanitäterin",2,["rettungswagen"],1,"Notfallsanitäter/in",["مسعف / مسعفة","парамедик","paramedic","ambulancier / ambulancière","mentőtiszt","socorrista, paramédico","paramedic","фельдшер скорой помощи","acil tıp teknisyeni","парамедик"]],
+  ["der Maurer","die Maurerin",3,["baustelle"],0,"Maurer/in",["بنّاء","зидар","bricklayer","maçon / maçonne","kőműves","pedreiro / pedreira","zidar","каменщик","duvar ustası","муляр"]],
+  ["der Gerüstbauer","die Gerüstbauerin",3,["baustelle"],0,"Gerüstbauer/in",["عامل سقالات","монтажник на скелета","scaffolder","échafaudeur / échafaudeuse","állványozó","montador(a) de andaimes","montator de schele","монтажник строительных лесов","iskele kurucu","монтажник риштувань"]],
+  ["der Dachdecker","die Dachdeckerin",3,["dach","baustelle"],0,"Dachdecker/in",["عامل تسقيف","покривач","roofer","couvreur / couvreuse","tetőfedő","telhadista","acoperișar","кровельщик","çatı ustası","покрівельник"]],
+  ["der Maler und Lackierer","die Malerin und Lackiererin",3,["haus","baustelle"],0,"Maler/in und Lackierer/in",["دهّان / دهّانة","бояджия","painter and decorator","peintre en bâtiment","szobafestő","pintor / pintora","zugrav","маляр","boyacı","маляр"]],
+  ["der Fliesenleger","die Fliesenlegerin",3,["haus","baustelle"],0,"Fliesenleger/in",["مبلّط","плочкаджия","tiler","carreleur / carreleuse","burkoló","azulejista","faianțar","плиточник","fayans ustası","плиточник"]],
+  ["der Straßenbauer","die Straßenbauerin",3,["strasse"],0,"Straßenbauer/in",["عامل بناء طرق","пътен строител","road builder","constructeur / constructrice de routes","útépítő","construtor(a) de estradas","constructor de drumuri","дорожный строитель","yol yapım işçisi","дорожній будівельник"]],
+  ["der Anlagenmechaniker für Sanitär-, Heizungs- und Klimatechnik","die Anlagenmechanikerin für Sanitär-, Heizungs- und Klimatechnik",3,["haus","baustelle"],0,"Anlagenmechaniker/in SHK",["سبّاك وفني تدفئة","водопроводчик и техник по отопление","plumber and heating engineer","plombier-chauffagiste","víz- és fűtésszerelő","encanador(a) e técnico(a) de aquecimento","instalator (sanitare și încălzire)","сантехник и монтажник отопления","su ve ısıtma tesisatçısı","сантехнік і монтажник опалення"]],
+  ["der Elektroniker","die Elektronikerin",3,["haus","baustelle"],0,"Elektroniker/in",["فنّي كهرباء","електротехник","electrician","électricien / électricienne","villanyszerelő","eletricista","electrician","электрик","elektrikçi","електрик"]],
+  ["der Tischler","die Tischlerin",4,["werkstatt"],0,"Tischler/in",["نجّار / نجّارة","дърводелец","carpenter, joiner","menuisier / menuisière","asztalos","marceneiro / marceneira","tâmplar","столяр","marangoz","столяр"]],
+  ["der Metallbauer","die Metallbauerin",4,["werkstatt","baustelle"],0,"Metallbauer/in",["حدّاد، عامل معادن","металообработчик","metalworker","métallier / métallière","lakatos","serralheiro / serralheira","lăcătuș","слесарь по металлоконструкциям","metal işçisi","слюсар по металоконструкціях"]],
+  ["der Kfz-Mechatroniker","die Kfz-Mechatronikerin",4,["autowerkstatt"],0,"Kfz-Mechatroniker/in",["ميكانيكي سيارات","автомонтьор","car mechanic","mécanicien / mécanicienne automobile","autószerelő","mecânico / mecânica de automóveis","mecanic auto","автомеханик","oto mekatronik teknisyeni","автомеханік"]],
+  ["der Industriemechaniker","die Industriemechanikerin",4,["fabrik"],1,"Industriemechaniker/in",["ميكانيكي صناعي","индустриален механик","industrial mechanic","mécanicien / mécanicienne industriel(le)","ipari gépész","mecânico(a) industrial","mecanic industrial","промышленный механик","endüstri mekanisyeni","промисловий механік"]],
+  ["der Friseur","die Friseurin",4,["friseursalon"],0,"Friseur/in",["حلّاق / مصفّفة شعر","фризьор / фризьорка","hairdresser","coiffeur / coiffeuse","fodrász","cabeleireiro / cabeleireira","frizer / coafeză","парикмахер","kuaför","перукар"]],
+  ["der Gebäudereiniger","die Gebäudereinigerin",4,["gebaeude"],0,"Gebäudereiniger/in",["عامل تنظيف المباني","чистач на сгради","building cleaner","agent / agente de nettoyage","épülettakarító","profissional de limpeza","lucrător în curățenie","уборщик зданий","bina temizlik görevlisi","прибиральник будівель"]],
+  ["die Fachkraft für Lagerlogistik","die Fachkraft für Lagerlogistik",5,["lager"],0,"Fachkraft für Lagerlogistik",["أخصائي لوجستيات المستودعات","специалист по складова логистика","warehouse logistics specialist","agent / agente de logistique d'entrepôt","raktárlogisztikai szakember","técnico(a) de logística de armazém","specialist în logistică de depozit","специалист по складской логистике","depo lojistik elemanı","фахівець зі складської логістики"]],
+  ["der Fachlagerist","die Fachlageristin",5,["lager"],0,"Fachlagerist/in",["عامل مستودع","складов работник","warehouse operative","magasinier / magasinière","raktáros","almoxarife","lucrător de depozit","кладовщик","depo elemanı","комірник"]],
+  ["der Berufskraftfahrer","die Berufskraftfahrerin",5,["lkw"],0,"Berufskraftfahrer/in",["سائق شاحنة","професионален шофьор","professional lorry driver","chauffeur / chauffeuse routier","hivatásos gépkocsivezető","motorista profissional","șofer profesionist","профессиональный водитель","profesyonel şoför","професійний водій"]],
+  ["der Gärtner","die Gärtnerin",6,["garten"],0,"Gärtner/in",["بستاني","градинар","gardener","jardinier / jardinière","kertész","jardineiro / jardineira","grădinar","садовник","bahçıvan","садівник"]],
+  ["der Landwirt","die Landwirtin",6,["bauernhof"],0,"Landwirt/in",["مزارع / مزارعة","фермер","farmer","agriculteur / agricultrice","gazdálkodó","agricultor / agricultora","fermier","фермер","çiftçi","фермер"]],
+  ["der Kaufmann für Büromanagement","die Kauffrau für Büromanagement",7,["buero"],1,"Kaufmann/-frau für Büromanagement",["موظف إداري","офис служител","office administrator","employé(e) de bureau","irodai ügyintéző","assistente administrativo(a)","funcționar administrativ","офисный сотрудник","büro elemanı","офісний працівник"]],
+  ["der Industriekaufmann","die Industriekauffrau",7,["buero","fabrik"],1,"Industriekaufmann/-frau",["موظف تجاري في شركة صناعية","търговски служител в индустрията","industrial business assistant","employé(e) commercial(e) dans l'industrie","ipari kereskedelmi ügyintéző","assistente comercial industrial","funcționar comercial în industrie","менеджер промышленного предприятия","sanayi ticaret elemanı","менеджер промислового підприємства"]],
+  ["der Bankkaufmann","die Bankkauffrau",7,["bank"],1,"Bankkaufmann/-frau",["موظف بنك","банков служител","bank clerk","employé(e) de banque","banki ügyintéző","bancário / bancária","funcționar bancar","банковский служащий","banka memuru","банківський службовець"]],
+  ["der Fachinformatiker","die Fachinformatikerin",7,["buero"],1,"Fachinformatiker/in",["متخصص في تكنولوجيا المعلومات","IT специалист","IT specialist","informaticien / informaticienne","informatikus","técnico(a) de informática","informatician","IT-специалист","bilişim uzmanı","IT-фахівець"]],
+  ["der Erzieher","die Erzieherin",7,["kindergarten"],1,"Erzieher/in",["مربٍّ / مربية أطفال","детски възпитател","nursery teacher","éducateur / éducatrice","óvodapedagógus","educador / educadora","educator / educatoare","воспитатель","çocuk eğitmeni","вихователь"]],
+  ["der Polizist","die Polizistin",7,["polizei"],1,"Polizist/in",["شرطي / شرطية","полицай","police officer","policier / policière","rendőr","policial","polițist / polițistă","полицейский","polis memuru","поліцейський"]]
+];
+const BERUFE = BERUFE_RAW.map(([m,f,b,pl,star,k,tr])=>({m,f,b,pl,star:!!star,k,de: m===f?m:`${m} / ${f}`, t:T(tr)}));
+const ORTE_LIST = Object.keys(ORT).map(key=>({key, de:ORT[key][0], t:T(ORT[key][1])}));
+
 
 // ---------- Zusatzdaten (nur Deutsch) ----------
-const BERUF_MF = [["Verkäufer","Verkäuferin","im Supermarkt"],["Koch","Köchin","in der Küche"],["Pflegefachmann","Pflegefachfrau","im Krankenhaus"],
-  ["Friseur","Friseurin","im Friseursalon"],["Bäcker","Bäckerin","in der Bäckerei"],["Kfz-Mechatroniker","Kfz-Mechatronikerin","in der Autowerkstatt"],
-  ["Maler","Malerin","auf der Baustelle"],["Tischler","Tischlerin","in der Werkstatt"],["Elektroniker","Elektronikerin","auf der Baustelle"],
-  ["Fachkraft für Lagerlogistik","Fachkraft für Lagerlogistik","im Lager"]];
-const ORTE = ["im Supermarkt","in der Küche","im Krankenhaus","im Friseursalon","in der Bäckerei","in der Autowerkstatt","auf der Baustelle","in der Werkstatt","im Lager"];
-const ARTIKEL = [["Verkäufer","der"],["Verkäuferin","die"],["Koch","der"],["Köchin","die"],["Friseurin","die"],["Bäcker","der"],["Malerin","die"],["Tischler","der"],
+const ARTIKEL = [["Verkäufer","der"],["Verkäuferin","die"],["Koch","der"],["Köchin","die"],["Friseurin","die"],["Bäcker","der"],["Malerin","die"],["Tischler","der"],["Polizist","der"],["Erzieherin","die"],["Maurer","der"],["Dachdeckerin","die"],
   ["Fachkraft","die"],["Küche","die"],["Lager","das"],["Werkstatt","die"],["Krankenhaus","das"],["Supermarkt","der"],["Bäckerei","die"],["Baustelle","die"],
-  ["Friseursalon","der"],["Firma","die"],["Stand","der"],["Ausbildung","die"],["Praktikum","das"],["Bewerbung","die"],["Messe","die"],["Arbeit","die"],["Jahr","das"]];
+  ["Friseursalon","der"],["Firma","die"],["Stand","der"],["Ausbildung","die"],["Praktikum","das"],["Bewerbung","die"],["Messe","die"],["Arbeit","die"],["Jahr","das"],["Restaurant","das"],["Hotel","das"],["Dach","das"],["Fabrik","die"],["Büro","das"],["Kindergarten","der"],["Bank","die"],["Garten","der"],["Bauernhof","der"],["Fleischerei","die"],["Geschäft","das"],["Pflegeheim","das"],["Arztpraxis","die"],["Straße","die"],["Lkw","der"],["Polizei","die"]];
 const FORMEN = [["der Verkäufer","die Verkäuferin",["die Verkäuferfrau","die Verkaufin"]],["der Koch","die Köchin",["die Kochin","die Köchen"]],
   ["der Pflegefachmann","die Pflegefachfrau",["die Pflegefachmännin","die Pflegefachin"]],["der Friseur","die Friseurin",["die Friseurfrau","die Friseuse"]],
   ["der Bäcker","die Bäckerin",["die Backerin","die Bäckerfrau"]],["der Maler","die Malerin",["die Malfrau","die Malern"]],["der Tischler","die Tischlerin",["die Tischlern","die Tischfrau"]],
-  ["der Elektroniker","die Elektronikerin",["die Elektronikfrau","die Elektronin"]],["der Kfz-Mechatroniker","die Kfz-Mechatronikerin",["die Kfz-Mechatronikfrau","die Kfz-Mechatronin"]]];
+  ["der Elektroniker","die Elektronikerin",["die Elektronikfrau","die Elektronin"]],["der Kfz-Mechatroniker","die Kfz-Mechatronikerin",["die Kfz-Mechatronikfrau","die Kfz-Mechatronin"]],["der Fleischer","die Fleischerin",["die Fleischfrau","die Fleischern"]],["der Dachdecker","die Dachdeckerin",["die Dachdeckfrau","die Dachin"]],["der Maurer","die Maurerin",["die Maurefrau","die Mauerin"]],["der Polizist","die Polizistin",["die Polizeifrau","die Polizisten"]],["der Kaufmann","die Kauffrau",["die Kaufmännin","die Kaufmannin"]],["der Hotelfachmann","die Hotelfachfrau",["die Hotelfachmännin","die Hotelin"]],["der Erzieher","die Erzieherin",["die Erziehfrau","die Erziehin"]],["der Gärtner","die Gärtnerin",["die Gartnerin","die Gärtnerfrau"]]];
 const PAARE = [["Guten Tag! Ich heiße Amir.","Guten Tag! Was möchten Sie wissen?"],["Welche Ausbildung haben Sie?","Koch und Köchin."],["Wie lange dauert die Ausbildung?","Drei Jahre."],
   ["Wann beginnt die Ausbildung?","Am 1. August."],["Wann beginnt die Arbeit?","Um 7 Uhr."],["Kann ich ein Praktikum machen?","Ja, gern."],["Danke! Auf Wiedersehen!","Auf Wiedersehen!"],
   ["Wie alt sind Sie?","Ich bin 19 Jahre alt."],["Was möchten Sie werden?","Ich möchte Maler werden."],["Welche Sprachen sprechen Sie?","Arabisch und Deutsch."]];
@@ -246,7 +315,9 @@ function meText(){
   return p;
 }
 function chips(name, opts, sel, multi){ return `<div class="chips" data-chips="${name}" data-multi="${multi?1:""}">${opts.map(o=>`<button class="chip ${(multi?sel.includes(o):sel===o)?"on":""}" data-v="${esc(o)}">${esc(o)}</button>`).join("")}</div>`; }
-const berufOpts = ()=> BERUF_MF.flatMap(([m,f])=> m===f?[m]:[m,f]);
+const noArt = x=>x.replace(/^(der|die|das) /,"");
+const berufOpts = ()=> BERUFE.flatMap(b=> b.m===b.f?[noArt(b.m)]:[noArt(b.m),noArt(b.f)]);
+const berufSelect = sel=> BEREICHE.map((br,i)=>`<optgroup label="${esc(br)}">${BERUFE.filter(b=>b.b===i).flatMap(b=> b.m===b.f?[noArt(b.m)]:[noArt(b.m),noArt(b.f)]).map(o=>`<option ${sel===o?"selected":""}>${esc(o)}</option>`).join("")}</optgroup>`).join("");
 
 const PAGES = {};
 PAGES.rallye = ()=>{
@@ -261,7 +332,7 @@ PAGES.rallye = ()=>{
     <label class="f">Ich spreche</label><input class="t" data-me="spr" value="${esc(m.spr)}" placeholder="z. B. Arabisch und Deutsch" autocomplete="off">
     <label class="f">Ich arbeite gern …</label>${chips("gern",GERN,m.gern,true)}
     <label class="f">Ich möchte … werden</label>
-    <select class="t" data-me="werden"><option value="">bitte wählen</option>${berufOpts().map(b=>`<option ${m.werden===b?"selected":""}>${esc(b)}</option>`).join("")}<option value="?" ${m.werden==="?"?"selected":""}>Ich weiß es noch nicht.</option></select>
+    <select class="t" data-me="werden"><option value="">bitte wählen</option>${berufSelect(m.werden)}<option value="?" ${m.werden==="?"?"selected":""}>Ich weiß es noch nicht.</option></select>
     <label class="f">Ich suche …</label>${chips("suche",["ein Praktikum","eine Ausbildung"],m.suche,true)}
     <button class="btn" id="meshow">Meine Karte zeigen</button>
   </div>
@@ -294,7 +365,7 @@ function bindRallye(){
     if(name==="gern"||name==="suche"){ const a=R.me[name]; const i=a.indexOf(v); i<0?a.push(v):a.splice(i,1); }
     else { const idx=+name.slice(-1), key=name.slice(0,-1); R.st[idx][key] = R.st[idx][key]===v ? "" : v; updProg(g.closest(".box2"), idx); }
     saveR();
-    if(multi) b.classList.toggle("on"); else { const idx=+name.slice(-1), key=name.slice(0,-1); g.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on", R.st[idx][key]===c.dataset.v)); }
+    if(multi) b.classList.toggle("on"); else g.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on", c===b && c.classList.contains("on")===false && R.st[+name.slice(-1)][name.slice(0,-1)]===v));
   });
   $("#meshow").onclick=()=>big(meText().map(esc).join("<br>"), true);
   $("#result").onclick=()=>{
@@ -315,15 +386,35 @@ PAGES.saetze = ()=>`<h2>Sätze für den Stand</h2><p class="lead">Tippe auf eine
   <div class="sect">Meine Fragen</div>${FRAGEN.map(f=>tcard(f)).join("")}
   <div class="sect">Hilfe! Ich verstehe nicht.</div>${HILFE.map(f=>tcard(f)).join("")}
   <div class="sect">Das hörst du vielleicht</div>${ANTWORTEN.map(f=>tcard(f)).join("")}`;
-PAGES.woerter = ()=>`<h2>Wörter</h2><p class="lead">Zehn Berufe und wichtige Wörter für die Messe.</p>
-  <div class="sect">Berufe</div>${BERUFE.map((f,i)=>tcard(f,{art:true, sub:"arbeitet "+BERUF_MF[i][2]})).join("")}
-  <div class="sect">Wichtige Wörter</div>${WOERTER.map(f=>tcard(f,{art:true})).join("")}`;
+let wView = "berufe", wFilter = -1;
+const ortTr = key=> lang ? ` <span class="tr"${rtl()}>(${esc(ORT[key][1][K.indexOf(lang)])})</span>` : "";
+function berufCard(b){
+  const places = b.pl.map(k=>`${esc(ORT[k][0])}${ortTr(k)}`).join(" · ");
+  const tr = lang ? `<div class="tr"${rtl()}>${esc(b.t[lang])}</div>` : "";
+  return `<button class="card" data-big="${esc(b.de)}"><div class="de">${art(b.de)}${b.star?' <span class="star" title="oft mit Realschulabschluss">★</span>':""}</div>${tr}<div class="sub">📍 ${places}</div></button>`;
+}
+PAGES.woerter = ()=>{
+  const seg = [["berufe","Berufe"],["orte","Arbeitsorte"],["woerter","Wichtige Wörter"]].map(([k,l])=>`<button class="chip ${wView===k?"on":""}" data-wv="${k}">${l}</button>`).join("");
+  let body="";
+  if(wView==="berufe"){
+    body = `<div class="legend">★ = meistens mit Realschulabschluss</div><div class="chips filt"><button class="chip ${wFilter<0?"on":""}" data-wf="-1">Alle (${BERUFE.length})</button>${BEREICHE.map((br,i)=>`<button class="chip ${wFilter===i?"on":""}" data-wf="${i}">${esc(br)}</button>`).join("")}</div>`+
+      BEREICHE.map((br,i)=> (wFilter<0||wFilter===i) ? `<div class="sect">${esc(br)}</div>${BERUFE.filter(b=>b.b===i).map(berufCard).join("")}` : "").join("");
+  } else if(wView==="orte"){
+    body = ORTE_LIST.map(o=>tcard(o)).join("");
+  } else body = WOERTER.map(f=>tcard(f,{art:true})).join("");
+  return `<h2>Wörter</h2><div class="chips seg">${seg}</div>${body}`;
+};
+function bindWoerter(){
+  $$("[data-wv]").forEach(b=>b.onclick=()=>{ wView=b.dataset.wv; show("woerter"); });
+  $$("[data-wf]").forEach(b=>b.onclick=()=>{ wFilter=+b.dataset.wf; show("woerter"); });
+}
 
 // ---------- Üben ----------
 const GAMES = [
   {id:"beruf", grp:"Wörter", name:"Welcher Beruf?", desc:"Übersetzung oder Arbeitsort → Beruf"},
   {id:"artikel", grp:"Wörter", name:"der, die, das", desc:"Welcher Artikel passt?"},
   {id:"ort", grp:"Wörter", name:"Wo arbeitet man?", desc:"Beruf → Arbeitsort"},
+  {id:"ortwort", grp:"Wörter", name:"Arbeitsorte", desc:"Übersetzung → Arbeitsort"},
   {id:"form", grp:"Wörter", name:"Mann und Frau", desc:"der Koch → die …"},
   {id:"situation", grp:"Sätze", name:"Was sagst du?", desc:"Situation → der richtige Satz"},
   {id:"paar", grp:"Sätze", name:"Frage und Antwort", desc:"Was passt zusammen?"},
@@ -331,18 +422,23 @@ const GAMES = [
   {id:"bauen", grp:"Sätze", name:"Sätze bauen", desc:"Wörter in die richtige Reihenfolge"}];
 PAGES.ueben = ()=>{
   const g = grp=>GAMES.filter(x=>x.grp===grp).map(x=>`<button class="game" data-game="${x.id}"><div><b>${x.name}</b><br><span>${x.desc}</span></div><div class="rec">${stats.best[x.id]!=null?`Rekord: ${stats.best[x.id]}/10`:"neu"}</div></button>`).join("");
-  return `<h2>Üben</h2><p class="lead">Acht Spiele, je 10 Aufgaben.</p>
+  return `<h2>Üben</h2><p class="lead">Neun Spiele, je 10 Aufgaben.</p>
   <div class="stat"><div><b>${stats.rounds}</b><span>Runden</span></div><div><b>${stats.points}</b><span>Punkte gesamt</span></div></div>
   <div class="sect">Wörter</div><div class="games">${g("Wörter")}</div>
   <div class="sect">Sätze</div><div class="games">${g("Sätze")}</div>`;
 };
 function makeItems(id){
   const it=[];
-  if(id==="beruf"){ pick(BERUFE.map((b,i)=>i),10).forEach(i=>{ const others=pick(BERUFE.map((b,j)=>j).filter(j=>j!==i && BERUF_MF[j][2]!==BERUF_MF[i][2]),2);
-      it.push({p:"Welcher Beruf ist das?", m: lang?BERUFE[i].t[lang]:"arbeitet "+BERUF_MF[i][2], mrtl:!!lang, right:BERUFE[i].k, opts:shuffle([BERUFE[i].k,...others.map(j=>BERUFE[j].k)])}); }); }
+  if(id==="beruf"){ pick(BERUFE,10).forEach(r=>{ const place=r.pl[0]; const others=pick(BERUFE.filter(x=>x!==r && !x.pl.some(p=>r.pl.includes(p))),2);
+      it.push({p:"Welcher Beruf ist das?", m: lang?r.t[lang]:"arbeitet "+ORT[place][0], mrtl:!!lang, right:r.k, opts:shuffle([r.k,...others.map(x=>x.k)])}); }); }
   if(id==="artikel"){ pick(ARTIKEL,10).forEach(([w,a])=>it.push({p:"Welcher Artikel?", m:w, right:a, opts:["der","die","das"], art:true})); }
-  if(id==="ort"){ pick(BERUF_MF,10).forEach(([m,f,o])=>{ const w=Math.random()<.5?"der "+m:"die "+f; const who=m==="Fachkraft für Lagerlogistik"?"die Fachkraft für Lagerlogistik":w;
-      it.push({p:"Wo arbeitet …", m:who+"?", right:o, opts:shuffle([o,...pick(ORTE.filter(x=>x!==o),2)])}); }); }
+  if(id==="ort"){ pick(BERUFE,10).forEach(r=>{ const who=(r.m===r.f||Math.random()<.5)?r.f:r.m; const o=ORT[pick(r.pl,1)[0]][0];
+      const wrong=pick(ORTE_LIST.filter(x=>!r.pl.includes(x.key)).map(x=>x.de),2);
+      it.push({p:"Wo arbeitet …", m:who+"?", right:o, opts:shuffle([o,...wrong])}); }); }
+  if(id==="ortwort"){ pick(ORTE_LIST,10).forEach(o=>{ const wrong=pick(ORTE_LIST.filter(x=>x!==o).map(x=>x.de),2);
+      if(lang) it.push({p:"Was ist das auf Deutsch?", m:o.t[lang], mrtl:true, right:o.de, opts:shuffle([o.de,...wrong])});
+      else { const jobs=BERUFE.filter(b=>b.pl.includes(o.key)); const r=pick(jobs,1)[0]; const oth=pick(BERUFE.filter(b=>!b.pl.includes(o.key)),2);
+        it.push({p:"Wer arbeitet hier?", m:o.de, right:r.k, opts:shuffle([r.k,...oth.map(x=>x.k)])}); } }); }
   if(id==="form"){ const src=shuffle(FORMEN); for(let k=0;k<10;k++){ const [m,f,w]=src[k%src.length]; it.push({p:"Mann → Frau", m:m+" → die …", right:f, opts:shuffle([f,...w])}); } }
   if(id==="situation"){ pick(SITUATION,10).forEach(([s,a])=>it.push({p:"Was sagst du?", m:s, right:a, opts:shuffle([a,...pick(SITUATION.filter(x=>x[1]!==a).map(x=>x[1]),2)])})); }
   if(id==="paar"){ pick(PAARE,10).forEach(([q,a],k)=>{ if(k%2===0) it.push({p:"Was ist die Antwort?", m:q, right:a, opts:shuffle([a,...pick(PAARE.filter(x=>x[1]!==a).map(x=>x[1]),2)])});
@@ -404,6 +500,7 @@ function show(t){
   $$("nav button").forEach(b=>b.classList.toggle("on", b.dataset.t===t));
   $$(".card[data-big]").forEach(c=>c.onclick=()=>big(esc(c.dataset.big)));
   if(t==="rallye") bindRallye();
+  if(t==="woerter") bindWoerter();
   if(t==="saetze") $("#zeigen").onclick=()=>big("Ich lerne Deutsch.<br>Bitte sprechen Sie langsam und einfach.<br>Danke!");
   if(t==="ueben") $$("[data-game]").forEach(b=>b.onclick=()=>playGame(b.dataset.game));
   window.scrollTo(0,0);
