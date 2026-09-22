@@ -9,112 +9,117 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <style>
 :root{
-  --green:#1F6B4A; --green-2:#2E8A61; --green-soft:#E6F2EB; --peach:#FDEEDC; --peach-2:#F6D7B0;
+  --green:#1F6B4A; --green-soft:#E6F2EB; --peach:#FDEEDC; --peach-2:#F0C996;
   --ink:#17231D; --ink-2:#4B5A52; --bg:#F7F5F0; --card:#FFFFFF; --line:#DAD6CC; --ok:#1F8A4C; --bad:#B3261E;
-  --radius:18px; box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  --der:#1F4E9C; --die:#B3261E; --das:#1F6B4A; --accent:#1F6B4A;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
-@media (prefers-color-scheme:dark){ :root{ --bg:#101814; --card:#18231D; --ink:#EEF3EF; --ink-2:#A9B8AF; --line:#2C3A32; --green-soft:#1D3328; --peach:#3A2D1E; --peach-2:#5A4428; } }
+@media (prefers-color-scheme:dark){ :root{ --bg:#101814; --card:#18231D; --ink:#EEF3EF; --ink-2:#A9B8AF; --line:#2C3A32; --green-soft:#1D3328; --peach:#3A2D1E; --peach-2:#6B4F2C; --der:#8FB3F0; --die:#F09A94; --das:#7DD3A6; --accent:#7DD3A6; } }
 *,*::before,*::after{box-sizing:inherit}
 html,body{height:100%;margin:0}
 body{background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Noto Sans","Noto Sans Arabic",sans-serif;font-size:18px;line-height:1.4;-webkit-tap-highlight-color:transparent}
-.app{max-width:560px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
-header{background:var(--green);color:#fff;padding:14px 18px 16px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;border-radius:0 0 22px 22px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.app{max-width:560px;margin:0 auto;min-height:100%}
+header{background:var(--green);color:#fff;padding:12px 16px 14px;position:sticky;top:0;z-index:5;border-radius:0 0 22px 22px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
 .pass{display:flex;align-items:center;gap:12px}
-.hole{width:34px;height:10px;border-radius:6px;background:rgba(255,255,255,.35)}
-header h1{font-size:21px;margin:0;font-weight:700;letter-spacing:.2px}
-header p{margin:2px 0 0;font-size:14px;opacity:.85}
-.langbtn{margin-left:auto;background:rgba(255,255,255,.16);color:#fff;border:1.5px solid rgba(255,255,255,.5);border-radius:999px;padding:8px 14px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap}
-main{flex:1;padding:16px 14px 110px}
+.hole{width:34px;height:9px;border-radius:6px;background:rgba(255,255,255,.35);margin-bottom:4px}
+header h1{font-size:20px;margin:0;font-weight:700}
+header p{margin:1px 0 0;font-size:14px;opacity:.85}
+.langbtn{margin-left:auto;background:rgba(255,255,255,.16);color:#fff;border:1.5px solid rgba(255,255,255,.5);border-radius:999px;padding:8px 14px;font:inherit;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap}
+main{padding:16px 14px 110px}
 h2{font-size:22px;margin:6px 4px 4px}
 .lead{color:var(--ink-2);margin:0 4px 14px;font-size:16px}
-.card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;display:flex;gap:12px;align-items:center;cursor:pointer;width:100%;text-align:left;color:inherit;font:inherit}
-.card:active{transform:scale(.985)}
-.card .de{font-size:21px;font-weight:700;line-height:1.25}
+.sect{font-size:16px;font-weight:700;color:var(--accent);margin:22px 6px 8px}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:14px 16px;margin-bottom:10px;display:block;width:100%;text-align:left;color:inherit;font:inherit;cursor:pointer}
+.card .de{font-size:20px;font-weight:700;line-height:1.25}
 .card .tr{font-size:16px;color:var(--ink-2);margin-top:4px}
-.card .tr[dir=rtl]{text-align:right;font-size:18px}
-.card .txt{flex:1;min-width:0}
-.spk{flex:none;width:48px;height:48px;border-radius:50%;background:var(--green-soft);display:grid;place-items:center}
-.spk svg{width:24px;height:24px;fill:var(--green)}
-.card.playing .spk{background:var(--green)} .card.playing .spk svg{fill:#fff}
-.art-der{color:#1F4E9C;font-weight:700}.art-die{color:#B3261E;font-weight:700}.art-das{color:#1F6B4A;font-weight:700}
-@media (prefers-color-scheme:dark){.art-der{color:#8FB3F0}.art-die{color:#F09A94}.art-das{color:#7DD3A6}}
-.sect{font-size:15px;font-weight:700;color:var(--green);margin:18px 6px 8px}
-@media (prefers-color-scheme:dark){.sect{color:#7DD3A6}}
-.show{background:var(--peach);border:2px dashed var(--peach-2);border-radius:var(--radius);padding:18px;margin-bottom:14px;cursor:pointer}
-.show b{display:block;font-size:22px;margin-bottom:6px}
+.card .sub{font-size:15px;color:var(--ink-2);margin-top:2px}
+[dir=rtl]{text-align:right}
+.a-der{color:var(--der);font-weight:700}.a-die{color:var(--die);font-weight:700}.a-das{color:var(--das);font-weight:700}
+.show{background:var(--peach);border:2px dashed var(--peach-2);border-radius:18px;padding:16px;margin-bottom:12px;cursor:pointer;display:block;width:100%;text-align:left;font:inherit;color:inherit}
+.show b{display:block;font-size:21px;margin-bottom:4px}
 .show span{color:var(--ink-2);font-size:15px}
-.big{position:fixed;inset:0;background:#fff;color:#111;z-index:50;display:none;flex-direction:column;justify-content:center;padding:calc(30px + env(safe-area-inset-top,0px)) 28px calc(30px + env(safe-area-inset-bottom,0px));text-align:center}
+.big{position:fixed;inset:0;background:#fff;color:#111;z-index:50;display:none;flex-direction:column;justify-content:center;padding:calc(24px + env(safe-area-inset-top,0px)) 24px calc(24px + env(safe-area-inset-bottom,0px));text-align:center;overflow:auto}
 .big.on{display:flex}
-.big p{font-size:clamp(30px,9vw,46px);font-weight:700;line-height:1.2;margin:0 0 22px}
+.big .t{font-size:clamp(28px,8.5vw,44px);font-weight:700;line-height:1.22;margin:0 0 20px}
+.big .t.long{font-size:clamp(22px,6.2vw,32px);text-align:left}
 .big small{font-size:16px;color:#666}
 nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1.5px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));z-index:10}
 nav .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
 nav button{background:none;border:0;color:var(--ink-2);font:inherit;font-size:13px;font-weight:600;padding:6px 2px;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
 nav button svg{width:26px;height:26px;fill:currentColor}
-nav button.on{color:var(--green);background:var(--green-soft)}
-@media (prefers-color-scheme:dark){nav button.on{color:#7DD3A6}}
+nav button.on{color:var(--accent);background:var(--green-soft)}
 .sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40;display:none;align-items:flex-end}
 .sheet.on{display:flex}
 .sheet .box{background:var(--card);width:100%;max-width:560px;margin:0 auto;border-radius:22px 22px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));max-height:85%;overflow:auto}
 .langs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .langs button{padding:14px 10px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:17px;cursor:pointer}
 .langs button.on{border-color:var(--green);background:var(--green-soft);font-weight:700}
-.row{display:flex;gap:8px;margin:0 2px 14px}
-.chip{flex:1;padding:10px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:15px;font-weight:600;cursor:pointer}
-.chip.on{background:var(--green);border-color:var(--green);color:#fff}
-.mode{display:block}
-.quiz .q{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:14px;text-align:center}
-.quiz .q .de{font-size:24px;font-weight:700}
-.quiz .q .tr{color:var(--ink-2);margin-top:6px;font-size:18px}
-.quiz .opts button{display:block;width:100%;padding:16px;margin-bottom:10px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:19px;font-weight:600;cursor:pointer;text-align:left}
+/* Rallye */
+.prog{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:14px 16px;margin-bottom:14px}
+.prog .bar{height:12px;background:var(--line);border-radius:6px;overflow:hidden;margin-top:8px}
+.prog .bar i{display:block;height:100%;background:var(--green);transition:width .3s}
+.box2{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:14px 16px;margin-bottom:12px}
+.box2.done{border-color:var(--green);box-shadow:inset 5px 0 0 var(--green)}
+.box2 h3{margin:0 0 10px;font-size:19px;display:flex;justify-content:space-between;align-items:center}
+.box2 h3 .ok{font-size:14px;color:var(--ok);font-weight:700}
+label.f{display:block;font-size:15px;font-weight:600;color:var(--ink-2);margin:10px 0 4px}
+input.t{width:100%;font:inherit;font-size:18px;padding:12px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
+input.t:focus{outline:2px solid var(--green);border-color:var(--green)}
+select.t{width:100%;font:inherit;font-size:18px;padding:12px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:10px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:16px;cursor:pointer}
+.chip.on{background:var(--green);border-color:var(--green);color:#fff;font-weight:600}
+.find{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.find span{flex:0 0 42%;font-size:16px}
+.btn{display:block;width:100%;padding:15px;border-radius:14px;border:0;background:var(--green);color:#fff;font:inherit;font-size:18px;font-weight:700;cursor:pointer;margin-top:10px}
+.btn.alt{background:var(--peach);color:var(--ink)}
+.btn.ghost{background:none;color:var(--ink-2);border:1.5px solid var(--line);font-weight:600;font-size:16px}
+/* Üben */
+.games{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.game{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:14px;text-align:left;font:inherit;color:inherit;cursor:pointer;min-height:104px;display:flex;flex-direction:column;justify-content:space-between}
+.game b{font-size:18px;line-height:1.2}
+.game span{font-size:14px;color:var(--ink-2)}
+.game .rec{font-size:13px;color:var(--accent);font-weight:700;margin-top:6px}
+.stat{display:flex;gap:10px;margin:4px 0 6px}
+.stat div{flex:1;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:10px;text-align:center}
+.stat b{display:block;font-size:24px;color:var(--accent)}
+.stat span{font-size:13px;color:var(--ink-2)}
+.quiz .progress{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin:0 2px 12px}
+.quiz .progress i{display:block;height:100%;background:var(--green);transition:width .3s}
+.quiz .q{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:20px 16px;margin-bottom:14px;text-align:center}
+.quiz .q .p{font-size:15px;color:var(--ink-2);margin-bottom:8px}
+.quiz .q .m{font-size:24px;font-weight:700;line-height:1.3}
+.quiz .q .tr{color:var(--ink-2);margin-top:8px;font-size:17px}
+.quiz .opts button{display:block;width:100%;padding:15px 16px;margin-bottom:10px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:19px;font-weight:600;cursor:pointer;text-align:left}
+.quiz .opts.art{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.quiz .opts.art button{text-align:center;font-size:24px;padding:20px 0;margin:0}
+.quiz .opts button.a-der{color:var(--der)}.quiz .opts button.a-die{color:var(--die)}.quiz .opts button.a-das{color:var(--das)}
 .quiz .opts button.ok{border-color:var(--ok);background:#E3F4EA;color:#10301E}
 .quiz .opts button.bad{border-color:var(--bad);background:#FBE5E3;color:#4A0F0B}
-.progress{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin:0 2px 12px}
-.progress i{display:block;height:100%;background:var(--green);width:0;transition:width .3s}
-.btn{display:block;width:100%;padding:16px;border-radius:14px;border:0;background:var(--green);color:#fff;font:inherit;font-size:19px;font-weight:700;cursor:pointer;margin-top:6px}
-.btn.alt{background:var(--peach);color:var(--ink)}
-.stat{display:flex;gap:10px;margin:4px 2px 16px}
-.stat div{flex:1;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:10px;text-align:center}
-.stat b{display:block;font-size:24px;color:var(--green)}
-.stat span{font-size:13px;color:var(--ink-2)}
-@media (prefers-color-scheme:dark){.stat b{color:#7DD3A6}}
-.playbig{width:96px;height:96px;border-radius:50%;background:var(--green);border:0;display:grid;place-items:center;margin:4px auto 8px;cursor:pointer}
-.playbig svg{width:44px;height:44px;fill:#fff}
-.hint{font-size:14px;color:var(--ink-2);text-align:center;margin:8px 0 0}
-.slow{display:flex;justify-content:flex-end;margin:0 4px 10px}
-.slow label{font-size:15px;color:var(--ink-2);display:flex;gap:8px;align-items:center}
-.slow input{width:22px;height:22px;accent-color:var(--green)}
+.build{min-height:64px;background:var(--card);border:2px dashed var(--line);border-radius:14px;padding:10px;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.build.ok{border-color:var(--ok);border-style:solid;background:#E3F4EA;color:#10301E}
+.build.bad{border-color:var(--bad);border-style:solid}
+.tiles{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.tile{padding:10px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--peach);color:var(--ink);font:inherit;font-size:19px;font-weight:600;cursor:pointer}
+.build .tile{background:var(--green-soft)}
+.tile.used{visibility:hidden}
+.sol{font-size:16px;color:var(--ink-2);text-align:center;margin:0 0 10px}
+.end{text-align:center}
+.end .m{font-size:48px;font-weight:800}
 </style>
 </head>
 <body>
 <div class="app">
   <header>
     <div class="pass">
-      <div>
-        <div class="hole" aria-hidden="true"></div>
-        <h1>Messe-Hilfe</h1>
-        <p>Ausbildungsmesse Naumburg</p>
-      </div>
+      <div><div class="hole" aria-hidden="true"></div><h1>Messe-Hilfe</h1><p>Ausbildungsmesse Naumburg</p></div>
       <button class="langbtn" id="langbtn" aria-label="Meine Sprache wählen">🌐 <span id="langname">Sprache</span></button>
     </div>
   </header>
   <main id="main"></main>
 </div>
-
-<div class="big" id="big" role="dialog" aria-label="Karte zeigen">
-  <p>Ich lerne Deutsch.<br>Bitte sprechen Sie langsam und einfach.<br>Danke!</p>
-  <small>Antippen zum Schließen</small>
-</div>
-
-<div class="sheet" id="sheet">
-  <div class="box">
-    <h2>Meine Sprache</h2>
-    <div class="lead">Wähle deine Sprache. Du siehst dann die Übersetzung.</div>
-    <div class="langs" id="langs"></div>
-  </div>
-</div>
-
+<div class="big" id="big" role="dialog"><div class="t" id="bigt"></div><small>Antippen zum Schließen</small></div>
+<div class="sheet" id="sheet"><div class="box"><h2>Meine Sprache</h2><div class="lead">Wähle deine Sprache. Du siehst dann die Übersetzung.</div><div class="langs" id="langs"></div></div></div>
 <nav><div class="in" id="nav"></div></nav>
 
 <script>
@@ -172,172 +177,251 @@ const WOERTER = [
   {de:"der Stand", t:T(["جناح في المعرض","щанд","stand, booth","stand","stand","estande","stand","стенд","stant","стенд"])},
   {de:"die Bewerbung", t:T(["طلب توظيف","кандидатура","application","candidature","jelentkezés, pályázat","candidatura","candidatură","заявка, резюме","başvuru","заявка, резюме"])}];
 
-// Frage-Antwort-Paare für das Quiz
-const PAARE = [
-  ["Guten Tag! Ich heiße Amir.","Guten Tag! Was möchten Sie wissen?"],
-  ["Welche Ausbildung haben Sie?","Koch und Köchin."],
-  ["Wie lange dauert die Ausbildung?","Drei Jahre."],
-  ["Wann beginnt die Ausbildung?","Am 1. August."],
-  ["Wann beginnt die Arbeit?","Um 7 Uhr."],
-  ["Kann ich ein Praktikum machen?","Ja, gern."],
-  ["Danke! Auf Wiedersehen!","Auf Wiedersehen!"]];
 
-// ---------- Zustand ----------
-const store = {
-  get(k,d){ try{ const v=localStorage.getItem("messe_"+k); return v===null?d:JSON.parse(v);}catch(e){return d;} },
-  set(k,v){ try{ localStorage.setItem("messe_"+k, JSON.stringify(v)); }catch(e){} }
-};
+
+// ---------- Zusatzdaten (nur Deutsch) ----------
+const BERUF_MF = [["Verkäufer","Verkäuferin","im Supermarkt"],["Koch","Köchin","in der Küche"],["Pflegefachmann","Pflegefachfrau","im Krankenhaus"],
+  ["Friseur","Friseurin","im Friseursalon"],["Bäcker","Bäckerin","in der Bäckerei"],["Kfz-Mechatroniker","Kfz-Mechatronikerin","in der Autowerkstatt"],
+  ["Maler","Malerin","auf der Baustelle"],["Tischler","Tischlerin","in der Werkstatt"],["Elektroniker","Elektronikerin","auf der Baustelle"],
+  ["Fachkraft für Lagerlogistik","Fachkraft für Lagerlogistik","im Lager"]];
+const ORTE = ["im Supermarkt","in der Küche","im Krankenhaus","im Friseursalon","in der Bäckerei","in der Autowerkstatt","auf der Baustelle","in der Werkstatt","im Lager"];
+const ARTIKEL = [["Verkäufer","der"],["Verkäuferin","die"],["Koch","der"],["Köchin","die"],["Friseurin","die"],["Bäcker","der"],["Malerin","die"],["Tischler","der"],
+  ["Fachkraft","die"],["Küche","die"],["Lager","das"],["Werkstatt","die"],["Krankenhaus","das"],["Supermarkt","der"],["Bäckerei","die"],["Baustelle","die"],
+  ["Friseursalon","der"],["Firma","die"],["Stand","der"],["Ausbildung","die"],["Praktikum","das"],["Bewerbung","die"],["Messe","die"],["Arbeit","die"],["Jahr","das"]];
+const FORMEN = [["der Verkäufer","die Verkäuferin",["die Verkäuferfrau","die Verkaufin"]],["der Koch","die Köchin",["die Kochin","die Köchen"]],
+  ["der Pflegefachmann","die Pflegefachfrau",["die Pflegefachmännin","die Pflegefachin"]],["der Friseur","die Friseurin",["die Friseurfrau","die Friseuse"]],
+  ["der Bäcker","die Bäckerin",["die Backerin","die Bäckerfrau"]],["der Maler","die Malerin",["die Malfrau","die Malern"]],["der Tischler","die Tischlerin",["die Tischlern","die Tischfrau"]],
+  ["der Elektroniker","die Elektronikerin",["die Elektronikfrau","die Elektronin"]],["der Kfz-Mechatroniker","die Kfz-Mechatronikerin",["die Kfz-Mechatronikfrau","die Kfz-Mechatronin"]]];
+const PAARE = [["Guten Tag! Ich heiße Amir.","Guten Tag! Was möchten Sie wissen?"],["Welche Ausbildung haben Sie?","Koch und Köchin."],["Wie lange dauert die Ausbildung?","Drei Jahre."],
+  ["Wann beginnt die Ausbildung?","Am 1. August."],["Wann beginnt die Arbeit?","Um 7 Uhr."],["Kann ich ein Praktikum machen?","Ja, gern."],["Danke! Auf Wiedersehen!","Auf Wiedersehen!"],
+  ["Wie alt sind Sie?","Ich bin 19 Jahre alt."],["Was möchten Sie werden?","Ich möchte Maler werden."],["Welche Sprachen sprechen Sie?","Arabisch und Deutsch."]];
+const SAETZE = ["Wie lange dauert die Ausbildung?","Kann ich ein Praktikum machen?","Welche Ausbildung haben Sie?","Wann beginnt die Arbeit?","Wann beginnt die Ausbildung?",
+  "Ich möchte Koch werden.","Ich arbeite gern mit Menschen.","Können Sie das bitte langsam sagen?","Ich spreche Englisch und Deutsch.","Ich suche ein Praktikum.",
+  "Können Sie das bitte aufschreiben?","Ich arbeite gern mit den Händen."];
+const SITUATION = [["Du verstehst nicht.","Ich verstehe das nicht. Noch einmal, bitte."],["Die Frau spricht sehr schnell.","Können Sie das bitte langsam sagen?"],
+  ["Du möchtest die E-Mail-Adresse auf Papier.","Können Sie das bitte aufschreiben?"],["Du kommst zum Stand.","Guten Tag! Ich heiße …"],["Du gehst.","Danke! Auf Wiedersehen!"],
+  ["Zwei Jahre oder drei Jahre?","Wie lange dauert die Ausbildung?"],["6 Uhr oder 8 Uhr?","Wann beginnt die Arbeit?"],["Du möchtest die Firma zwei Wochen testen.","Kann ich ein Praktikum machen?"],
+  ["Koch? Maler? Verkäufer?","Welche Ausbildung haben Sie?"],["August oder September?","Wann beginnt die Ausbildung?"]];
+const LUECKEN = [["Ich möchte ___ werden.","Koch",["der Koch","einen Koch"]],["Ich arbeite gern ___ Menschen.","mit",["in","um"]],["Die Arbeit beginnt ___ 7 Uhr.","um",["am","im"]],
+  ["Die Ausbildung beginnt ___ 1. August.","am",["um","mit"]],["Kann ich ein Praktikum ___?","machen",["haben","sein"]],["Wie ___ dauert die Ausbildung?","lange",["viel","alt"]],
+  ["Ich ___ Arabisch und Deutsch.","spreche",["spricht","sprechen"]],["Die Köchin arbeitet ___ der Küche.","in",["um","am"]],["Können Sie das bitte langsam ___?","sagen",["machen","gehen"]],
+  ["Ich ___ ein Praktikum.","suche",["sucht","suchen"]],["Wie alt ___ Sie?","sind",["bist","ist"]],["Ich ___ 19 Jahre alt.","bin",["bist","ist"]]];
+const GERN = ["mit Menschen","mit den Händen","mit Autos","mit Lebensmitteln","mit Computern","draußen"];
+const FINDEN = ["… Autos","… Essen oder Trinken","… Computern oder Technik","… kranken oder alten Menschen","… einem Spiel oder Mitmach-Aktion","… einem Beruf aus unserer Liste"];
+const DAUER = ["2 Jahre","3 Jahre","3,5 Jahre","anders"];
+
+// ---------- Speicher ----------
+const store = { get(k,d){ try{ const v=localStorage.getItem("messe_"+k); return v===null?d:JSON.parse(v);}catch(e){return d;} },
+  set(k,v){ try{ localStorage.setItem("messe_"+k, JSON.stringify(v)); }catch(e){} } };
 let lang = store.get("lang", null);
-let slow = store.get("slow", false);
-let tab = "fragen";
-const stats = store.get("stats", {rounds:0, heard:0, best:{berufe:0,hoeren:0,antwort:0}});
-const saveStats = ()=>store.set("stats", stats);
+let tab = "rallye";
+const stats = store.get("stats2", {rounds:0, points:0, best:{}});
+const saveStats = ()=>store.set("stats2", stats);
+const R = Object.assign({me:{name:"",land:"",spr:"",gern:[],werden:"",suche:[]}, st:[{},{},{}], find:["","","","","",""], fav:""}, store.get("rallye",{}));
+const saveR = ()=>store.set("rallye", R);
 
-// ---------- Sprache (Vorlesen) ----------
-let deVoice = null;
-function pickVoice(){ if(!("speechSynthesis" in window)) return; const vs = speechSynthesis.getVoices(); deVoice = vs.find(v=>/^de(-|_|$)/i.test(v.lang) && v.localService) || vs.find(v=>/^de/i.test(v.lang)) || null; }
-if("speechSynthesis" in window){ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
-function speak(text, el){
-  if(!("speechSynthesis" in window)) return;
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text.replace(/…/g,""));
-  u.lang = "de-DE"; if(deVoice) u.voice = deVoice; u.rate = slow ? 0.6 : 0.9;
-  if(el){ el.classList.add("playing"); u.onend = u.onerror = ()=>el.classList.remove("playing"); }
-  speechSynthesis.speak(u);
-  stats.heard++; saveStats();
-}
-
-// ---------- Hilfsfunktionen ----------
+// ---------- Hilfen ----------
 const $ = s=>document.querySelector(s);
-const esc = s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const isRtl = ()=> lang==="ar";
-const SPK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>';
-function artHtml(s){ return esc(s).replace(/\b(der|die|das)\b/g, m=>`<span class="art-${m}">${m}</span>`); }
-function card(item, opts={}){
-  const tr = lang && item.t ? `<div class="tr" ${isRtl()?'dir="rtl" lang="ar"':''}>${esc(item.t[lang])}</div>` : "";
-  const de = opts.art ? artHtml(item.de) : esc(item.de);
-  return `<button class="card" data-say="${esc(item.de)}"><div class="txt"><div class="de">${de}</div>${tr}</div><div class="spk">${SPK}</div></button>`;
+const $$ = s=>[...document.querySelectorAll(s)];
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const rtl = ()=> lang==="ar" ? ' dir="rtl" lang="ar"' : "";
+const art = s=>esc(s).replace(/\b(der|die|das)\b/g, m=>`<span class="a-${m}">${m}</span>`);
+const shuffle = a=>{ a=[...a]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const pick = (arr,n)=>shuffle(arr).slice(0,n);
+function big(text,long){ $("#bigt").innerHTML=text; $("#bigt").classList.toggle("long",!!long); $("#big").classList.add("on"); }
+function tcard(item,o={}){
+  const tr = lang && item.t ? `<div class="tr"${rtl()}>${esc(item.t[lang])}</div>` : "";
+  return `<button class="card" data-big="${esc(item.de)}"><div class="de">${o.art?art(item.de):esc(item.de)}</div>${o.sub?`<div class="sub">${esc(o.sub)}</div>`:""}${tr}</button>`;
 }
-function slowToggle(){ return `<div class="slow"><label><input type="checkbox" id="slowcb" ${slow?"checked":""}> langsam vorlesen</label></div>`; }
-function bindCards(){
-  document.querySelectorAll(".card[data-say]").forEach(b=>b.onclick=()=>speak(b.dataset.say,b));
-  const cb=$("#slowcb"); if(cb) cb.onchange=()=>{ slow=cb.checked; store.set("slow",slow); };
-}
-function shuffle(a){ a=[...a]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 
-// ---------- Seiten ----------
-const PAGES = {
-  fragen(){
-    return `<h2>Meine Fragen</h2><p class="lead">Tippe auf eine Frage. Das Handy liest sie vor.</p>${slowToggle()}
-      ${FRAGEN.map(f=>card(f)).join("")}
-      <div class="sect">Das hörst du vielleicht</div>
-      ${ANTWORTEN.map(f=>card(f)).join("")}`;
-  },
-  hilfe(){
-    return `<h2>Hilfe!</h2><p class="lead">Du verstehst nicht? Kein Problem.</p>
-      <div class="show" id="showbtn"><b>Karte zeigen</b><span>Groß auf dem Bildschirm – zeig sie am Stand.</span>
-      ${lang?`<div style="margin-top:8px;color:var(--ink-2);font-size:15px" ${isRtl()?'dir="rtl"':''}>${esc(ZEIGEN_T[lang])}</div>`:""}</div>
-      ${slowToggle()}${HILFE.map(f=>card(f)).join("")}`;
-  },
-  berufe(){
-    return `<h2>Berufe</h2><p class="lead">Zehn Berufe von der Messe. Tippe zum Anhören.</p>${slowToggle()}
-      ${BERUFE.map(f=>card(f,{art:true})).join("")}
-      <div class="sect">Wichtige Wörter</div>${WOERTER.map(f=>card(f,{art:true})).join("")}`;
-  },
-  ueben(){
-    const b = stats.best;
-    return `<h2>Üben</h2><p class="lead">Wähle ein Spiel. Zehn Fragen pro Runde.</p>
-      <div class="stat"><div><b>${stats.rounds}</b><span>Runden</span></div><div><b>${stats.heard}</b><span>× angehört</span></div><div><b>${Math.max(b.berufe,b.hoeren,b.antwort)}</b><span>beste Runde</span></div></div>
-      <button class="card" data-game="berufe"><div class="txt"><div class="de">Berufe</div><div class="tr">Hören und das richtige Wort finden · Rekord: ${b.berufe}/10</div></div></button>
-      <button class="card" data-game="hoeren"><div class="txt"><div class="de">Fragen hören</div><div class="tr">Welche Frage hörst du? · Rekord: ${b.hoeren}/10</div></div></button>
-      <button class="card" data-game="antwort"><div class="txt"><div class="de">Frage und Antwort</div><div class="tr">Was passt? · Rekord: ${b.antwort}/10</div></div></button>`;
-  }
+// ---------- Rallye ----------
+function stDone(s){ return !!(s.firma && s.firma.trim() && (s.beruf||s.dauer||s.prak)); }
+function rDone(){ return R.st.filter(stDone).length + R.find.filter(x=>x.trim()).length + (R.fav.trim()?1:0); }
+function meText(){
+  const m=R.me, p=[];
+  p.push("Guten Tag!"); if(m.name) p.push(`Ich heiße ${m.name}.`); if(m.land) p.push(`Ich komme aus ${m.land}.`); if(m.spr) p.push(`Ich spreche ${m.spr}.`);
+  if(m.gern.length) p.push(`Ich arbeite gern ${m.gern.join(" und ")}.`);
+  if(m.werden && m.werden!=="?") p.push(`Ich möchte ${m.werden} werden.`);
+  if(m.suche.length) p.push(`Ich suche ${m.suche.join(" oder ")}.`);
+  return p;
+}
+function chips(name, opts, sel, multi){ return `<div class="chips" data-chips="${name}" data-multi="${multi?1:""}">${opts.map(o=>`<button class="chip ${(multi?sel.includes(o):sel===o)?"on":""}" data-v="${esc(o)}">${esc(o)}</button>`).join("")}</div>`; }
+const berufOpts = ()=> BERUF_MF.flatMap(([m,f])=> m===f?[m]:[m,f]);
+
+const PAGES = {};
+PAGES.rallye = ()=>{
+  const d=rDone(), m=R.me;
+  return `<h2>Messe-Rallye</h2><p class="lead">Donnerstag, 24.09. · Neue Turnhalle · 9–14 Uhr</p>
+  <div class="prog"><b>${d} von 10 erledigt</b>${d===10?" – super!":""}<div class="bar"><i style="width:${d*10}%"></i></div></div>
+
+  <div class="sect">Das bin ich</div>
+  <div class="box2">
+    <label class="f">Ich heiße</label><input class="t" data-me="name" value="${esc(m.name)}" autocomplete="off">
+    <label class="f">Ich komme aus</label><input class="t" data-me="land" value="${esc(m.land)}" autocomplete="off">
+    <label class="f">Ich spreche</label><input class="t" data-me="spr" value="${esc(m.spr)}" placeholder="z. B. Arabisch und Deutsch" autocomplete="off">
+    <label class="f">Ich arbeite gern …</label>${chips("gern",GERN,m.gern,true)}
+    <label class="f">Ich möchte … werden</label>
+    <select class="t" data-me="werden"><option value="">bitte wählen</option>${berufOpts().map(b=>`<option ${m.werden===b?"selected":""}>${esc(b)}</option>`).join("")}<option value="?" ${m.werden==="?"?"selected":""}>Ich weiß es noch nicht.</option></select>
+    <label class="f">Ich suche …</label>${chips("suche",["ein Praktikum","eine Ausbildung"],m.suche,true)}
+    <button class="btn" id="meshow">Meine Karte zeigen</button>
+  </div>
+
+  <div class="sect">Aufgabe 1: Geh zu drei Ständen. Frag und schreib.</div>
+  ${R.st.map((s,i)=>`<div class="box2 ${stDone(s)?"done":""}"><h3>Stand ${i+1}${stDone(s)?'<span class="ok">✓ erledigt</span>':""}</h3>
+    <label class="f">Firma</label><input class="t" data-st="${i}" data-k="firma" value="${esc(s.firma||"")}" autocomplete="off">
+    <label class="f">Beruf</label><input class="t" data-st="${i}" data-k="beruf" value="${esc(s.beruf||"")}" list="berufliste" autocomplete="off">
+    <label class="f">Wie lange dauert die Ausbildung?</label>${chips("dauer"+i,DAUER,s.dauer||"",false)}
+    <label class="f">Kann ich ein Praktikum machen?</label>${chips("prak"+i,["ja","nein"],s.prak||"",false)}
+  </div>`).join("")}
+  <datalist id="berufliste">${berufOpts().map(b=>`<option value="${esc(b)}">`).join("")}</datalist>
+
+  <div class="sect">Aufgabe 2: Finde einen Stand mit … Schreib die Firma.</div>
+  <div class="box2">${FINDEN.map((f,i)=>`<div class="find"><span>${esc(f)}</span><input class="t" data-find="${i}" value="${esc(R.find[i])}" autocomplete="off"></div>`).join("")}</div>
+
+  <div class="sect">Aufgabe 3: Mein Lieblingsberuf auf der Messe</div>
+  <div class="box2"><input class="t" id="fav" value="${esc(R.fav)}" list="berufliste" autocomplete="off"></div>
+
+  <button class="btn alt" id="result">Mein Ergebnis zeigen</button>
+  <button class="btn ghost" id="reset">Alles löschen</button>`;
 };
-
-// ---------- Quiz ----------
-function makeRound(kind){
-  const items=[];
-  for(let n=0;n<10;n++){
-    if(kind==="berufe"){
-      const pool=shuffle(BERUFE); const right=pool[0];
-      items.push({say:right.de, show:lang?right.t[lang]:null, prompt:"Welcher Beruf ist das?", right:right.k, opts:shuffle([right.k,pool[1].k,pool[2].k])});
-    } else if(kind==="hoeren"){
-      const pool=shuffle(FRAGEN.concat(HILFE)); const right=pool[0];
-      items.push({say:right.de, prompt:"Welche Frage hörst du?", right:right.de, opts:shuffle([right.de,pool[1].de,pool[2].de])});
-    } else {
-      const pool=shuffle(PAARE); const right=pool[0];
-      items.push({showDe:right[0], say:right[0], prompt:"Was passt?", right:right[1], opts:shuffle([right[1],pool[1][1],pool[2][1]])});
-    }
-  }
-  return items;
+function bindRallye(){
+  $$("[data-me]").forEach(el=>el.oninput=el.onchange=()=>{ R.me[el.dataset.me]=el.value; saveR(); });
+  $$("[data-st]").forEach(el=>el.oninput=()=>{ R.st[el.dataset.st][el.dataset.k]=el.value; saveR(); updProg(el.closest(".box2"), +el.dataset.st); });
+  $$("[data-find]").forEach(el=>el.oninput=()=>{ R.find[el.dataset.find]=el.value; saveR(); updProg(); });
+  $("#fav").oninput=e=>{ R.fav=e.target.value; saveR(); updProg(); };
+  $$("[data-chips]").forEach(g=>g.onclick=e=>{
+    const b=e.target.closest(".chip"); if(!b) return; const name=g.dataset.chips, v=b.dataset.v, multi=!!g.dataset.multi;
+    if(name==="gern"||name==="suche"){ const a=R.me[name]; const i=a.indexOf(v); i<0?a.push(v):a.splice(i,1); }
+    else { const idx=+name.slice(-1), key=name.slice(0,-1); R.st[idx][key] = R.st[idx][key]===v ? "" : v; updProg(g.closest(".box2"), idx); }
+    saveR();
+    if(multi) b.classList.toggle("on"); else { const idx=+name.slice(-1), key=name.slice(0,-1); g.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on", R.st[idx][key]===c.dataset.v)); }
+  });
+  $("#meshow").onclick=()=>big(meText().map(esc).join("<br>"), true);
+  $("#result").onclick=()=>{
+    const st=R.st.map((s,i)=>`<b>Stand ${i+1}:</b> ${esc(s.firma||"–")} · ${esc(s.beruf||"–")} · ${esc(s.dauer||"–")} · Praktikum: ${esc(s.prak||"–")}`).join("<br>");
+    const fi=FINDEN.map((f,i)=>`${esc(f)} <b>${esc(R.find[i]||"–")}</b>`).join("<br>");
+    big(`<div style="font-size:20px;font-weight:700;margin-bottom:10px">${esc(R.me.name||"Meine Rallye")} · ${rDone()} von 10</div><div style="font-size:17px;font-weight:400">${st}<br><br>${fi}<br><br><b>Lieblingsberuf:</b> ${esc(R.fav||"–")}</div>`, true);
+  };
+  $("#reset").onclick=()=>{ if(confirm("Wirklich alles löschen?")){ R.me={name:"",land:"",spr:"",gern:[],werden:"",suche:[]}; R.st=[{},{},{}]; R.find=["","","","","",""]; R.fav=""; saveR(); show("rallye"); } };
 }
-function playGame(kind){
-  const items=makeRound(kind); let i=0, score=0, locked=false;
+function updProg(box, idx){
+  const d=rDone(); const p=$(".prog"); if(p){ p.querySelector("b").textContent=`${d} von 10 erledigt`; p.querySelector("i").style.width=d*10+"%"; }
+  if(box && idx!==undefined){ const ok=stDone(R.st[idx]); box.classList.toggle("done",ok); const h=box.querySelector("h3"); h.innerHTML=`Stand ${idx+1}${ok?'<span class="ok">✓ erledigt</span>':""}`; }
+}
+
+// ---------- Sätze & Wörter ----------
+PAGES.saetze = ()=>`<h2>Sätze für den Stand</h2><p class="lead">Tippe auf einen Satz: Er wird groß. Du kannst ihn ablesen oder zeigen.</p>
+  <button class="show" id="zeigen"><b>Karte zeigen</b><span>„Ich lerne Deutsch. Bitte sprechen Sie langsam und einfach.“</span>${lang?`<div class="tr" style="margin-top:6px;color:var(--ink-2);font-size:15px"${rtl()}>${esc(ZEIGEN_T[lang])}</div>`:""}</button>
+  <div class="sect">Meine Fragen</div>${FRAGEN.map(f=>tcard(f)).join("")}
+  <div class="sect">Hilfe! Ich verstehe nicht.</div>${HILFE.map(f=>tcard(f)).join("")}
+  <div class="sect">Das hörst du vielleicht</div>${ANTWORTEN.map(f=>tcard(f)).join("")}`;
+PAGES.woerter = ()=>`<h2>Wörter</h2><p class="lead">Zehn Berufe und wichtige Wörter für die Messe.</p>
+  <div class="sect">Berufe</div>${BERUFE.map((f,i)=>tcard(f,{art:true, sub:"arbeitet "+BERUF_MF[i][2]})).join("")}
+  <div class="sect">Wichtige Wörter</div>${WOERTER.map(f=>tcard(f,{art:true})).join("")}`;
+
+// ---------- Üben ----------
+const GAMES = [
+  {id:"beruf", grp:"Wörter", name:"Welcher Beruf?", desc:"Übersetzung oder Arbeitsort → Beruf"},
+  {id:"artikel", grp:"Wörter", name:"der, die, das", desc:"Welcher Artikel passt?"},
+  {id:"ort", grp:"Wörter", name:"Wo arbeitet man?", desc:"Beruf → Arbeitsort"},
+  {id:"form", grp:"Wörter", name:"Mann und Frau", desc:"der Koch → die …"},
+  {id:"situation", grp:"Sätze", name:"Was sagst du?", desc:"Situation → der richtige Satz"},
+  {id:"paar", grp:"Sätze", name:"Frage und Antwort", desc:"Was passt zusammen?"},
+  {id:"luecke", grp:"Sätze", name:"Das fehlt", desc:"Das richtige Wort im Satz"},
+  {id:"bauen", grp:"Sätze", name:"Sätze bauen", desc:"Wörter in die richtige Reihenfolge"}];
+PAGES.ueben = ()=>{
+  const g = grp=>GAMES.filter(x=>x.grp===grp).map(x=>`<button class="game" data-game="${x.id}"><div><b>${x.name}</b><br><span>${x.desc}</span></div><div class="rec">${stats.best[x.id]!=null?`Rekord: ${stats.best[x.id]}/10`:"neu"}</div></button>`).join("");
+  return `<h2>Üben</h2><p class="lead">Acht Spiele, je 10 Aufgaben.</p>
+  <div class="stat"><div><b>${stats.rounds}</b><span>Runden</span></div><div><b>${stats.points}</b><span>Punkte gesamt</span></div></div>
+  <div class="sect">Wörter</div><div class="games">${g("Wörter")}</div>
+  <div class="sect">Sätze</div><div class="games">${g("Sätze")}</div>`;
+};
+function makeItems(id){
+  const it=[];
+  if(id==="beruf"){ pick(BERUFE.map((b,i)=>i),10).forEach(i=>{ const others=pick(BERUFE.map((b,j)=>j).filter(j=>j!==i && BERUF_MF[j][2]!==BERUF_MF[i][2]),2);
+      it.push({p:"Welcher Beruf ist das?", m: lang?BERUFE[i].t[lang]:"arbeitet "+BERUF_MF[i][2], mrtl:!!lang, right:BERUFE[i].k, opts:shuffle([BERUFE[i].k,...others.map(j=>BERUFE[j].k)])}); }); }
+  if(id==="artikel"){ pick(ARTIKEL,10).forEach(([w,a])=>it.push({p:"Welcher Artikel?", m:w, right:a, opts:["der","die","das"], art:true})); }
+  if(id==="ort"){ pick(BERUF_MF,10).forEach(([m,f,o])=>{ const w=Math.random()<.5?"der "+m:"die "+f; const who=m==="Fachkraft für Lagerlogistik"?"die Fachkraft für Lagerlogistik":w;
+      it.push({p:"Wo arbeitet …", m:who+"?", right:o, opts:shuffle([o,...pick(ORTE.filter(x=>x!==o),2)])}); }); }
+  if(id==="form"){ const src=shuffle(FORMEN); for(let k=0;k<10;k++){ const [m,f,w]=src[k%src.length]; it.push({p:"Mann → Frau", m:m+" → die …", right:f, opts:shuffle([f,...w])}); } }
+  if(id==="situation"){ pick(SITUATION,10).forEach(([s,a])=>it.push({p:"Was sagst du?", m:s, right:a, opts:shuffle([a,...pick(SITUATION.filter(x=>x[1]!==a).map(x=>x[1]),2)])})); }
+  if(id==="paar"){ pick(PAARE,10).forEach(([q,a],k)=>{ if(k%2===0) it.push({p:"Was ist die Antwort?", m:q, right:a, opts:shuffle([a,...pick(PAARE.filter(x=>x[1]!==a).map(x=>x[1]),2)])});
+      else it.push({p:"Was ist die Frage?", m:a, right:q, opts:shuffle([q,...pick(PAARE.filter(x=>x[0]!==q).map(x=>x[0]),2)])}); }); }
+  if(id==="luecke"){ pick(LUECKEN,10).forEach(([s,r,w])=>it.push({p:"Was fehlt?", m:s, right:r, opts:shuffle([r,...w])})); }
+  if(id==="bauen"){ pick(SAETZE,10).forEach(s=>it.push({build:true, right:s})); }
+  return it;
+}
+function playGame(id){
+  const items=makeItems(id); let i=0, score=0;
+  const name=GAMES.find(g=>g.id===id).name;
+  function next(ok){ if(ok) score++; setTimeout(()=>{ i++; i<items.length?render():finish(); }, ok?700:1700); }
   function render(){
     const it=items[i];
-    $("#main").innerHTML = `<div class="quiz"><div class="progress"><i style="width:${i*10}%"></i></div>
-      <div class="q">
-        ${it.showDe?`<div class="de">${esc(it.showDe)}</div>`:""}
-        <button class="playbig" id="play" aria-label="Anhören">${SPK}</button>
-        ${it.show?`<div class="tr" ${isRtl()?'dir="rtl"':''}>${esc(it.show)}</div>`:""}
-        <div class="hint">${esc(it.prompt)} · ${i+1}/10</div>
-      </div>
-      <div class="opts">${it.opts.map(o=>`<button data-o="${esc(o)}">${esc(o)}</button>`).join("")}</div>
-      <button class="btn alt" id="stop">Beenden</button></div>`;
-    $("#play").onclick=()=>speak(it.say);
+    const head=`<div class="progress"><i style="width:${i*10}%"></i></div>`;
+    if(it.build){ renderBuild(it, head); return; }
+    $("#main").innerHTML=`<div class="quiz">${head}<div class="q"><div class="p">${esc(name)} · ${i+1}/10 · ${esc(it.p)}</div>
+      <div class="m"${it.mrtl?rtl():""}>${esc(it.m)}</div></div>
+      <div class="opts ${it.art?"art":""}">${it.opts.map(o=>`<button data-o="${esc(o)}" ${it.art?`class="a-${o}"`:""}>${esc(o)}</button>`).join("")}</div>
+      <button class="btn ghost" id="stop">Beenden</button></div>`;
     $("#stop").onclick=()=>show("ueben");
-    if(kind!=="antwort") setTimeout(()=>speak(it.say),250);
-    locked=false;
-    document.querySelectorAll(".opts button").forEach(b=>b.onclick=()=>{
-      if(locked) return; locked=true;
-      const ok = b.dataset.o===it.right;
-      if(ok){ score++; b.classList.add("ok"); } else { b.classList.add("bad"); document.querySelectorAll(".opts button").forEach(x=>{ if(x.dataset.o===it.right) x.classList.add("ok"); }); }
-      setTimeout(()=>{ i++; i<10?render():finish(); }, ok?700:1500);
-    });
+    let locked=false;
+    $$(".opts button").forEach(b=>b.onclick=()=>{ if(locked) return; locked=true; const ok=b.dataset.o===it.right;
+      b.classList.add(ok?"ok":"bad"); if(!ok) $$(".opts button").forEach(x=>{ if(x.dataset.o===it.right) x.classList.add("ok"); }); next(ok); });
+  }
+  function renderBuild(it, head){
+    const words=it.right.split(" "); let order=shuffle(words.map((w,k)=>k)); if(words.length>1 && order.every((v,k)=>v===k)) order=order.reverse();
+    const chosen=[];
+    $("#main").innerHTML=`<div class="quiz">${head}<div class="q"><div class="p">${esc(name)} · ${i+1}/10</div><div class="m" style="font-size:18px">Tippe die Wörter in der richtigen Reihenfolge.</div></div>
+      <div class="build" id="bld"></div><div class="tiles" id="tls">${order.map(k=>`<button class="tile" data-k="${k}">${esc(words[k])}</button>`).join("")}</div>
+      <div class="sol" id="sol"></div><button class="btn" id="chk">Prüfen</button><button class="btn ghost" id="stop">Beenden</button></div>`;
+    $("#stop").onclick=()=>show("ueben");
+    const draw=()=>{ $("#bld").innerHTML=chosen.map((k,p)=>`<button class="tile" data-p="${p}">${esc(words[k])}</button>`).join("");
+      $$("#tls .tile").forEach(t=>t.classList.toggle("used", chosen.includes(+t.dataset.k)));
+      $$("#bld .tile").forEach(t=>t.onclick=()=>{ chosen.splice(+t.dataset.p,1); draw(); }); };
+    $$("#tls .tile").forEach(t=>t.onclick=()=>{ const k=+t.dataset.k; if(!chosen.includes(k)){ chosen.push(k); draw(); } });
+    let done=false;
+    $("#chk").onclick=()=>{ if(done) return; if(chosen.length<words.length){ $("#sol").textContent="Nimm alle Wörter."; return; }
+      done=true; const ok=chosen.map(k=>words[k]).join(" ")===it.right; $("#bld").classList.add(ok?"ok":"bad");
+      if(!ok) $("#sol").textContent="Richtig: "+it.right; next(ok); };
   }
   function finish(){
-    stats.rounds++; if(score>stats.best[kind]) stats.best[kind]=score; saveStats();
-    const msg = score>=9?"Super!":score>=6?"Gut gemacht!":"Weiter üben!";
-    $("#main").innerHTML = `<div class="quiz"><div class="q"><div class="de" style="font-size:44px">${score}/10</div><div class="tr">${msg}</div></div>
-      <button class="btn" id="again">Noch einmal</button><button class="btn alt" id="back">Zurück</button></div>`;
-    $("#again").onclick=()=>playGame(kind); $("#back").onclick=()=>show("ueben");
+    stats.rounds++; stats.points+=score; if(stats.best[id]==null || score>stats.best[id]) stats.best[id]=score; saveStats();
+    $("#main").innerHTML=`<div class="quiz end"><div class="q"><div class="p">${esc(name)}</div><div class="m">${score}/10</div><div class="tr">${score>=9?"Super!":score>=6?"Gut gemacht!":"Weiter üben!"}</div></div>
+      <button class="btn" id="again">Noch einmal</button><button class="btn alt" id="back">Anderes Spiel</button></div>`;
+    $("#again").onclick=()=>playGame(id); $("#back").onclick=()=>show("ueben");
   }
-  render();
+  render(); window.scrollTo(0,0);
 }
 
 // ---------- Navigation ----------
 const NAV = [
-  ["fragen","Fragen",'<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 17h-2v-2h2zm2.1-7.7-.9.9A3.4 3.4 0 0 0 13 15h-2v-.5a4 4 0 0 1 1.2-2.8l1.2-1.3A2 2 0 1 0 10 9H8a4 4 0 1 1 7.1 2.3z"/>'],
-  ["hilfe","Hilfe",'<path d="M12 2 1 21h22L12 2zm1 16h-2v-2h2zm0-4h-2v-4h2z"/>'],
-  ["berufe","Berufe",'<path d="M10 4h4a2 2 0 0 1 2 2v1h4a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h4V6a2 2 0 0 1 2-2zm0 3h4V6h-4z"/>'],
+  ["rallye","Rallye",'<path d="M5 3h2v18H5zm3 1h11l-2.5 4L19 12H8z"/>'],
+  ["saetze","Sätze",'<path d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm3 5v2h10V8zm0 4v2h7v-2z"/>'],
+  ["woerter","Wörter",'<path d="M10 4h4a2 2 0 0 1 2 2v1h4a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h4V6a2 2 0 0 1 2-2zm0 3h4V6h-4z"/>'],
   ["ueben","Üben",'<path d="M12 2l3 6.3 7 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 7-1z"/>']];
 function show(t){
-  tab=t; $("#main").innerHTML = PAGES[t]();
-  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on", b.dataset.t===t));
-  bindCards();
-  if(t==="hilfe") $("#showbtn").onclick=()=>$("#big").classList.add("on");
-  if(t==="ueben") document.querySelectorAll("[data-game]").forEach(b=>b.onclick=()=>playGame(b.dataset.game));
+  tab=t; store.set("tab",t); $("#main").innerHTML=PAGES[t]();
+  $$("nav button").forEach(b=>b.classList.toggle("on", b.dataset.t===t));
+  $$(".card[data-big]").forEach(c=>c.onclick=()=>big(esc(c.dataset.big)));
+  if(t==="rallye") bindRallye();
+  if(t==="saetze") $("#zeigen").onclick=()=>big("Ich lerne Deutsch.<br>Bitte sprechen Sie langsam und einfach.<br>Danke!");
+  if(t==="ueben") $$("[data-game]").forEach(b=>b.onclick=()=>playGame(b.dataset.game));
   window.scrollTo(0,0);
 }
-$("#nav").innerHTML = NAV.map(([k,l,p])=>`<button data-t="${k}"><svg viewBox="0 0 24 24" aria-hidden="true">${p}</svg>${l}</button>`).join("");
-document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>show(b.dataset.t));
+$("#nav").innerHTML=NAV.map(([k,l,p])=>`<button data-t="${k}"><svg viewBox="0 0 24 24" aria-hidden="true">${p}</svg>${l}</button>`).join("");
+$$("nav button").forEach(b=>b.onclick=()=>show(b.dataset.t));
 $("#big").onclick=()=>$("#big").classList.remove("on");
 
-// ---------- Sprachwahl ----------
 function renderLangs(){
-  $("#langs").innerHTML = LANGS.map(([k,n,r])=>`<button data-l="${k}" class="${lang===k?"on":""}" ${r?'dir="rtl"':''}>${n}</button>`).join("") +
-    `<button data-l="" class="${!lang?"on":""}">nur Deutsch</button>`;
-  document.querySelectorAll("#langs button").forEach(b=>b.onclick=()=>{
-    lang=b.dataset.l||null; store.set("lang",lang); $("#sheet").classList.remove("on"); updateLangBtn(); show(tab);
-  });
+  $("#langs").innerHTML=LANGS.map(([k,n,r])=>`<button data-l="${k}" class="${lang===k?"on":""}"${r?' dir="rtl"':""}>${n}</button>`).join("")+`<button data-l="" class="${!lang?"on":""}">nur Deutsch</button>`;
+  $$("#langs button").forEach(b=>b.onclick=()=>{ lang=b.dataset.l||null; store.set("lang",lang); $("#sheet").classList.remove("on"); updLang(); show(tab); });
 }
-function updateLangBtn(){ const l=LANGS.find(x=>x[0]===lang); $("#langname").textContent = l?l[1]:"Sprache"; }
+function updLang(){ const l=LANGS.find(x=>x[0]===lang); $("#langname").textContent=l?l[1]:"Sprache"; }
 $("#langbtn").onclick=()=>{ renderLangs(); $("#sheet").classList.add("on"); };
 $("#sheet").onclick=e=>{ if(e.target.id==="sheet") $("#sheet").classList.remove("on"); };
 
-updateLangBtn(); show("fragen");
+updLang(); show(store.get("tab","rallye"));
 if(lang===null && !store.get("asked",false)){ store.set("asked",true); renderLangs(); $("#sheet").classList.add("on"); }
-
 if("serviceWorker" in navigator){ window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{})); }
 </script>
 </body>
