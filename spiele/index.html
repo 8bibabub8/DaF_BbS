@@ -42,6 +42,30 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--accent); ou
 .gtab { border: 2px solid var(--bar-line); background: transparent; color: var(--ink); border-radius: 999px; padding: 5px 14px; font-size: clamp(13px, 1.25vw, 17px); font-weight: 700; white-space: nowrap; }
 .gtab[aria-current="true"] { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); }
 .spacer { flex: 1; }
+.zmini { display: inline-flex; align-items: center; gap: 6px; }
+.zbar { display: inline-block; width: 70px; height: 10px; border-radius: 5px; background: var(--bar-line); overflow: hidden; vertical-align: middle; }
+.zbar span { display: block; height: 100%; background: #1E8F4E; }
+.zreward { font-size: clamp(20px, 2.6vw, 38px); font-weight: 700; text-align: center; }
+.zbig { position: relative; width: min(900px, 92%); height: clamp(60px, 11vh, 120px); border-radius: 60px; background: var(--card, #fff); border: 4px solid var(--bar-line); overflow: hidden; margin: 10px 0; }
+.zfill { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg, #2FA86A, #1E8F4E); transition: width .8s cubic-bezier(.2,.8,.2,1); }
+.zbig.full .zfill { background: linear-gradient(90deg, #E0A11F, #E0751F); }
+.zmark { position: absolute; top: 0; bottom: 0; width: 3px; background: rgba(255,255,255,.55); }
+.zlabel { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-num); font-size: clamp(28px, 5vh, 56px); font-weight: 700; color: #1D2420; text-shadow: 0 0 6px #fff, 0 0 2px #fff; }
+.zhint { font-size: clamp(18px, 2.2vw, 30px); text-align: center; }
+.zparty { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.zparty i { position: absolute; top: -20px; width: 12px; height: 18px; border-radius: 3px; animation: zfall 2.4s ease-in forwards; }
+@keyframes zfall { to { transform: translateY(110vh) rotate(540deg); opacity: .8; } }
+.stagebox { position: relative; }
+.azclock { font-family: var(--font-num); font-size: clamp(90px, 22vh, 240px); font-weight: 700; line-height: 1; color: var(--accent); }
+.azclock.warn { color: #E0751F; } .azclock.over { color: #C0392B; }
+.azbar { width: min(800px, 90%); height: 14px; border-radius: 7px; background: var(--bar-line); overflow: hidden; }
+.azbar span { display: block; height: 100%; background: var(--accent); transition: width .3s linear; }
+.azsteps { margin-top: 14px; display: grid; gap: 8px; font-size: clamp(18px, 2.3vw, 32px); }
+.azhead { font-weight: 700; }
+.azstep { display: flex; gap: 12px; align-items: center; background: var(--card, #fff); border: 2px solid var(--bar-line); border-radius: 12px; padding: 6px 14px; color: #1D2420; }
+.azstep .n { display: inline-flex; width: 1.5em; height: 1.5em; border-radius: 50%; background: var(--accent); color: #fff; align-items: center; justify-content: center; font-weight: 700; flex: none; }
+@media (prefers-reduced-motion: reduce) { .zfill, .azbar span { transition: none; } .zparty { display: none; } }
+
 .gtab.no { opacity: .42; border-style: dashed; }
 .gtab.no[aria-current="true"] { opacity: .75; }
 .gtab.ok:not([aria-current="true"])::before { content: "●"; color: var(--good, #1E8F4E); margin-right: 5px; font-size: .8em; }
@@ -284,6 +308,7 @@ kbd { font-family: inherit; border: 1px solid var(--bar-line); border-bottom-wid
     <span class="ctx" id="ctx"></span>
     <span id="tabs"></span>
     <span class="spacer"></span>
+    <button class="tbtn zmini" id="zielMini" data-act="z-open" type="button" title="Klassenziel öffnen"></button>
     <button class="tbtn" id="btnSettings" type="button">Themen &amp; Tische</button>
     <button class="tbtn" id="btnFull" type="button">Vollbild</button>
   </header>
@@ -483,7 +508,7 @@ const SHAPES = [
   { L: "C", c: "var(--s2)", svg: '<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="#fff"/></svg>' },
   { L: "D", c: "var(--s3)", svg: '<svg viewBox="0 0 40 40"><rect x="4" y="4" width="32" height="32" fill="#fff"/></svg>' },
 ];
-const GAMES = [["aufdecken", "Aufdecken"], ["blitz", "Blitzbild"], ["ttt", "Tic-Tac-Toe"], ["brett", "Quizbrett"], ["kq", "Quiz-Blitz"], ["preis", "Preis ist heiß"], ["puzzle", "Satz-Puzzle"], ["rate", "Ratekette"], ["rakete", "Wort-Rakete"], ["pause", "Pause"]];
+const GAMES = [["aufdecken", "Aufdecken"], ["blitz", "Blitzbild"], ["ttt", "Tic-Tac-Toe"], ["brett", "Quizbrett"], ["kq", "Quiz-Blitz"], ["preis", "Preis ist heiß"], ["puzzle", "Satz-Puzzle"], ["rate", "Ratekette"], ["rakete", "Wort-Rakete"], ["pause", "Pause"], ["arbeit", "Arbeitszeit"], ["ziel", "Klassenziel"]];
 const S = { themes: [], teams: 4, names: ["Tisch 1", "Tisch 2", "Tisch 3", "Tisch 4", "Tisch 5", "Tisch 6"], scores: [0, 0, 0, 0, 0, 0], game: "aufdecken", colors: true, kurs: "alle", pack: null };
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -534,13 +559,14 @@ function fit(g) {
     case "puzzle": { const n = spSentences().length; return n >= 3 ? { ok: true, n } : { ok: false, why: "Diese Themen haben zu wenige kurze Beispielsätze." }; }
     case "rate": { const n = rkItems().length; return n >= 3 ? { ok: true, n } : { ok: false, why: `Rate-Hinweise gibt es für: ${themeNames(withClues())}.` }; }
     case "rakete": { const n = wrItems().length; return n >= 3 ? { ok: true, n } : { ok: false, why: "Zu wenige einfache Einzelwörter." }; }
-    case "pause": return { ok: null };
+    case "pause": case "arbeit": case "ziel": return { ok: null };
     case "kq": return { ok: true };
     default: return P.length >= 3 ? { ok: true, n: P.length } : { ok: false, why: "Zu wenige Wörter – mehr Themen wählen." };
   }
 }
 function resetDecks() { PH.deck = null; SP.deck = null; RK.deck = null; WR.deck = null; }
 function renderCtx() {
+  if (typeof zMini === "function") zMini();
   const p = curPack();
   $("ctx").innerHTML = p ? `${kbHTML([p.kurs])} ${esc(p.name)}` : S.kurs !== "alle" ? `${kbHTML([S.kurs])} ${esc(themeNames(S.themes))}` : "";
   $("ctx").title = p ? `${KNAME[p.kurs]} · ${p.datum} · ${p.name}` : themeNames(S.themes);
@@ -1199,6 +1225,97 @@ function haDraw() {
 }
 const HA_LOG = [];
 
+// ================= Klassenziel (pro Kurs) + Arbeitszeit (Stillarbeit) =================
+const ZIEL_ANLAESSE = [["Alle Handys geparkt", 2], ["Ruhige Arbeitsphase", 1], ["Alle Blätter abgegeben", 1], ["Faires Spiel", 1]];
+const ZIEL_BELOHNUNG = ["10 Minuten Handy-Zeit am Ende", "Filmstunde", "Spielestunde", "Gemeinsames Frühstück"];
+const ZK = { K1: "Kurs 1", K2: "Kurs 2", K3: "Kurs 3" };
+let ZIEL = {};
+function zLoad() { try { ZIEL = JSON.parse(localStorage.getItem("bspiele.ziel") || "{}") || {}; } catch (e) { ZIEL = {}; } }
+function zSave() { try { localStorage.setItem("bspiele.ziel", JSON.stringify(ZIEL)); } catch (e) {} }
+const zKurs = () => (S.kurs && S.kurs !== "alle" ? S.kurs : S.zielKurs || "K3");
+function zGet(k = zKurs()) { if (!ZIEL[k]) ZIEL[k] = { pts: 0, goal: 30, reward: "", log: [], done: 0 }; return ZIEL[k]; }
+function zMini() {
+  const el = $("zielMini"); if (!el) return; const z = zGet(); const p = Math.min(100, Math.round((z.pts / z.goal) * 100));
+  el.innerHTML = `<span class="kb ${zKurs()}">${zKurs()}</span> Klassenziel <span class="zbar"><span style="width:${p}%"></span></span> ${z.pts}/${z.goal}`;
+}
+function zAdd(n, why) {
+  const z = zGet(); const before = z.pts; z.pts = Math.min(z.goal, z.pts + n);
+  z.log.unshift([new Date().toLocaleString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }), why, z.pts - before]); z.log = z.log.slice(0, 40);
+  zSave(); zMini(); toast(`+${n}  ${why}`, "#1E8F4E");
+  if (S.game === "ziel") zDraw(before < z.goal && z.pts >= z.goal);
+}
+function zUndo() { const z = zGet(); const l = z.log.shift(); if (!l) return; z.pts = Math.max(0, z.pts - l[2]); zSave(); zMini(); zDraw(); toast("Letzter Punkt zurückgenommen"); }
+function zDraw(party = false) {
+  const z = zGet(), k = zKurs(); const p = Math.min(100, (z.pts / z.goal) * 100); const full = z.pts >= z.goal;
+  const kursSel = S.kurs === "alle" ? `<div class="chips" style="justify-content:center;margin-bottom:6px">${["K1", "K2", "K3"].map((x) => `<button type="button" class="chip" data-act="z-kurs" data-v="${x}" aria-pressed="${k === x}">${kbHTML([x])} ${ZK[x]}</button>`).join("")}</div>` : "";
+  $("main").innerHTML = `<div class="play"><div class="stagebox">
+    ${kursSel}
+    <div class="ptitle" style="margin:0">${kbHTML([k])} Unser Klassenziel</div>
+    <div class="zreward">${z.reward ? `🎁 ${esc(z.reward)}` : `<span style="opacity:.6">Belohnung noch nicht gewählt</span>`}</div>
+    <div class="zbig${full ? " full" : ""}"><div class="zfill" style="width:${p}%"></div>${[0.25, 0.5, 0.75].map((m) => `<span class="zmark" style="left:${m * 100}%"></span>`).join("")}<div class="zlabel">${z.pts} / ${z.goal}</div></div>
+    <div class="zhint">${full ? "🎉 Geschafft! Ihr habt euer Ziel erreicht!" : `Noch <b>${z.goal - z.pts}</b> Punkte bis zum Ziel.`}</div>
+    ${party ? `<div class="zparty" aria-hidden="true">${Array.from({ length: 40 }, (_, i) => `<i style="left:${(i * 97) % 100}%;animation-delay:${(i % 10) * 0.12}s;background:${TEAM_COLORS[i % 6]}"></i>`).join("")}</div>` : ""}
+  </div>
+  <aside class="ctrl"><div class="lbl">Punkte für die Klasse</div>
+    ${ZIEL_ANLAESSE.map(([t, n], i) => `<button type="button" class="btn ${i === 0 ? "primary" : ""}" data-act="z-add" data-v="${i}" ${full ? "disabled" : ""}>+${n}  ${t}</button>`).join("")}
+    <button type="button" class="btn" data-act="z-undo">↶ Letzten Punkt zurücknehmen</button>
+    <div class="lbl" style="margin-top:10px">Belohnung (die Klasse wählt)</div>
+    <div class="chips">${ZIEL_BELOHNUNG.map((r) => `<button type="button" class="chip" style="font-size:14px;padding:5px 10px" data-act="z-reward" data-v="${esc(r)}" aria-pressed="${z.reward === r}">${esc(r)}</button>`).join("")}</div>
+    <input id="zRewardIn" placeholder="… oder eigene Belohnung" value="${ZIEL_BELOHNUNG.includes(z.reward) ? "" : esc(z.reward)}" style="font:inherit;font-size:15px;padding:6px 8px;border-radius:8px;border:1px solid var(--bar-line);margin-top:6px;width:100%">
+    <div class="lbl" style="margin-top:10px">Zielgröße</div>
+    <div class="chips">${[20, 30, 40, 50].map((g) => `<button type="button" class="chip" style="font-size:14px;padding:5px 10px" data-act="z-goal" data-v="${g}" aria-pressed="${z.goal === g}">${g}</button>`).join("")}</div>
+    ${full ? `<button type="button" class="btn primary" style="margin-top:10px" data-act="z-new">Neues Ziel starten</button>` : ""}
+    <div class="keys">Punkte nur dazu, nie abziehen. Wer stört, kostet die Klasse den nächsten Punkt.<br>${z.done ? `Erreichte Ziele bisher: <b>${z.done}</b><br>` : ""}${z.log.slice(0, 5).map((l) => `${esc(l[0])} · ${esc(l[1])} (+${l[2]})`).join("<br>")}</div>
+  </aside></div>`;
+}
+
+// ---- Arbeitszeit ----
+const AZ = { min: 20, left: 20 * 60, run: false, t: 0, blatt: "Blatt", iv: null };
+function azDraw() {
+  const m = Math.floor(AZ.left / 60), s = AZ.left % 60; const p = 100 - (AZ.left / (AZ.min * 60)) * 100;
+  const warn = AZ.left <= 120 && AZ.left > 0, over = AZ.left === 0;
+  $("main").innerHTML = `<div class="play"><div class="stagebox">
+    <div class="ptitle" style="margin:0">${esc(AZ.blatt)} – Stillarbeit</div>
+    <div class="azclock${warn ? " warn" : ""}${over ? " over" : ""}">${over ? "Zeit!" : `${m}:${String(s).padStart(2, "0")}`}</div>
+    <div class="azbar"><span style="width:${p}%"></span></div>
+    <div class="azsteps"><div class="azhead">Fertig? Dann:</div>
+      <div class="azstep"><span class="n">1</span><span>🟢 Mit der <b>Lösungskarte</b> kontrollieren (Grünstift)</span></div>
+      <div class="azstep"><span class="n">2</span><span>★ Die <b>Profi-Aufgabe</b> machen</span></div>
+      <div class="azstep"><span class="n">3</span><span>📦 Etwas aus der <b>Fertig-Box</b> nehmen</span></div>
+    </div>
+  </div>
+  <aside class="ctrl"><div class="lbl">Arbeitszeit</div>
+    <button type="button" class="btn primary" data-act="az-go">${AZ.run ? "⏸ Pause" : AZ.left === AZ.min * 60 ? "▶ Start" : "▶ Weiter"}</button>
+    <button type="button" class="btn" data-act="az-reset">↺ Neu</button>
+    <div class="lbl" style="margin-top:10px">Minuten</div>
+    <div class="chips">${[10, 15, 20, 25].map((n) => `<button type="button" class="chip" style="font-size:15px;padding:5px 12px" data-act="az-min" data-v="${n}" aria-pressed="${AZ.min === n}">${n}</button>`).join("")}</div>
+    <div class="lbl" style="margin-top:10px">Welches Blatt?</div>
+    <div class="chips">${[1, 2, 3, 4, 5, 6].map((n) => `<button type="button" class="chip" style="font-size:15px;padding:5px 12px" data-act="az-blatt" data-v="Blatt ${n}" aria-pressed="${AZ.blatt === "Blatt " + n}">${n}</button>`).join("")}</div>
+    <button type="button" class="btn" style="margin-top:10px" data-act="az-point" ${zGet().pts >= zGet().goal ? "disabled" : ""}>+1 Klassenziel: ruhige Arbeitsphase</button>
+    <div class="keys">Leertaste = Start / Pause. Die letzten 2 Minuten werden orange.<br>Tipp: Während deiner Erklärung läuft hier nichts – erst zur Stillarbeit einschalten.</div>
+  </aside></div>`;
+}
+function azTick() { if (!AZ.run) return; AZ.left = Math.max(0, AZ.min * 60 - Math.round((Date.now() - AZ.t) / 1000)); if (AZ.left === 0) { AZ.run = false; clearInterval(AZ.iv); } if (S.game === "arbeit") azDraw(); }
+function azGo() { if (AZ.run) { AZ.run = false; clearInterval(AZ.iv); } else { if (AZ.left === 0) AZ.left = AZ.min * 60; AZ.t = Date.now() - (AZ.min * 60 - AZ.left) * 1000; AZ.run = true; clearInterval(AZ.iv); AZ.iv = setInterval(azTick, 250); } azDraw(); }
+function azReset() { AZ.run = false; clearInterval(AZ.iv); AZ.left = AZ.min * 60; azDraw(); }
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-act]"); if (!b || b.disabled) return; const a = b.dataset.act, v = b.dataset.v;
+  if (a === "z-add") { const [t, n] = ZIEL_ANLAESSE[+v]; zAdd(n, t); }
+  else if (a === "z-undo") zUndo();
+  else if (a === "z-reward") { zGet().reward = v; zSave(); zDraw(); }
+  else if (a === "z-goal") { const z = zGet(); z.goal = +v; zSave(); zMini(); zDraw(); }
+  else if (a === "z-new") { const z = zGet(); z.done = (z.done || 0) + 1; z.pts = 0; z.reward = ""; z.log = []; zSave(); zMini(); zDraw(); }
+  else if (a === "z-kurs") { S.zielKurs = v; save(); zMini(); zDraw(); }
+  else if (a === "z-open") showGame("ziel");
+  else if (a === "az-go") azGo();
+  else if (a === "az-reset") azReset();
+  else if (a === "az-min") { AZ.min = +v; azReset(); }
+  else if (a === "az-blatt") { AZ.blatt = v; azDraw(); }
+  else if (a === "az-point") { zAdd(1, "Ruhige Arbeitsphase"); azDraw(); }
+});
+document.addEventListener("change", (e) => { if (e.target.id === "zRewardIn") { zGet().reward = e.target.value.trim(); zSave(); zDraw(); } });
+zLoad();
+
 // ================= Steuerung =================
 function renderTabs(g) {
   $("tabs").innerHTML = GAMES.map(([id, t]) => { const f = fit(id); const cls = f.ok === true ? "ok" : f.ok === false ? "no" : "";
@@ -1208,7 +1325,7 @@ function showGame(g) {
   closeOverlay(); auStop(); blClear(); cancelAnimationFrame(KQ.raf); pzStopTimer();
   S.game = g; save();
   renderTabs(g); renderCtx();
-  if (g === "aufdecken") auNew(); else if (g === "blitz") blNew(); else if (g === "ttt") ttNew(); else if (g === "brett") qbNew(); else if (g === "pause") pzMenu(); else if (g === "preis") phNext(); else if (g === "puzzle") spNext(); else if (g === "rate") rkNext(); else if (g === "rakete") wrNext(); else kqSetup();
+  if (g === "aufdecken") auNew(); else if (g === "blitz") blNew(); else if (g === "ttt") ttNew(); else if (g === "brett") qbNew(); else if (g === "pause") pzMenu(); else if (g === "preis") phNext(); else if (g === "puzzle") spNext(); else if (g === "rate") rkNext(); else if (g === "rakete") wrNext(); else if (g === "arbeit") azDraw(); else if (g === "ziel") zDraw(); else kqSetup();
 }
 $("tabs").addEventListener("click", (e) => { const b = e.target.closest("[data-game]"); if (b) showGame(b.dataset.game); });
 
@@ -1284,6 +1401,7 @@ document.addEventListener("keydown", (e) => {
   if (!$("settings").hidden || e.target.tagName === "INPUT") return;
   const k = e.key, g = S.game, ov = !$("overlay").hidden;
   if ((k === "f" || k === "F") && g !== "rakete") { toggleFull(); return; }
+  if (g === "arbeit" && k === " ") { e.preventDefault(); azGo(); return; }
   if (g === "aufdecken") { if (k === " ") { e.preventDefault(); auRemove(); } else if (k === "a" || k === "A") auToggleAuto(); else if (k === "Enter") auShow(); else if (k === "ArrowRight") auNew(); }
   else if (g === "blitz") { if (k === " ") { e.preventDefault(); blGo(); } else if (k === "Enter") blShow(); else if (k === "ArrowRight") blNew(); }
   else if (g === "ttt") { if (ov) { if (k === "Enter") document.querySelector('[data-act="ov-sol"]')?.click(); else if (k === "j" || k === "J") ttAnswer(true); else if (k === "n" || k === "N") ttAnswer(false); } else if (/^[1-9]$/.test(k)) ttOpen(+k - 1); }
