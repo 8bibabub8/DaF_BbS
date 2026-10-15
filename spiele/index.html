@@ -191,6 +191,9 @@ kbd { font-family: inherit; border: 1px solid var(--bar-line); border-bottom-wid
 .timer { flex: 1; height: 18px; border-radius: 9px; background: color-mix(in srgb, var(--bar-line) 60%, transparent); overflow: hidden; }
 .timer .bar { height: 100%; width: 100%; background: var(--accent); border-radius: 9px; }
 .timer.low .bar { background: var(--bad); }
+.kq.paused .timer .bar { background: #9AA3AD; }
+.kq.paused .kq-top .sec { animation: kqblink 1s steps(2, start) infinite; }
+@keyframes kqblink { to { visibility: hidden; } }
 .sec { font-family: var(--font-num); font-size: clamp(30px, 4vw, 56px); min-width: 1.6em; text-align: center; }
 .kq-q { font-weight: 700; font-size: clamp(26px, 3.8vw, 58px); text-align: center; line-height: 1.12; text-wrap: balance; }
 .kq-mid { min-height: 0; display: flex; align-items: center; justify-content: center; gap: 20px; }
@@ -746,7 +749,15 @@ function qbOpen(ci, r) {
 function qbDone(team) { const { ci, r } = QB.open; QB.cols[ci].cells[r].used = team; QB.open = null; closeOverlay(); qbDraw(); }
 
 // ================= Spiel 5: Quiz-Blitz (Kahoot-Stil mit Antwortkarten) =================
-const KQ = { src: "auto", n: 10, time: 20, qs: [], i: 0, phase: "setup", t0: 0, raf: 0, picks: {}, sel: null };
+const KQ = { src: "auto", n: 10, time: 20, qs: [], i: 0, phase: "setup", t0: 0, raf: 0, picks: {}, sel: null, paused: false, pausedAt: 0 };
+const kqElapsed = () => ((KQ.paused ? KQ.pausedAt : performance.now()) - KQ.t0) / 1000;
+function kqTogglePause() {
+  if (KQ.phase !== "ask") return;
+  if (KQ.paused) { KQ.t0 += performance.now() - KQ.pausedAt; KQ.paused = false; KQ.raf = requestAnimationFrame(kqTick); }
+  else { KQ.paused = true; KQ.pausedAt = performance.now(); cancelAnimationFrame(KQ.raf); }
+  const b = $("kqPauseBtn"); if (b) { b.textContent = KQ.paused ? "▶ Fortsetzen" : "⏸ Pause"; b.classList.toggle("primary", KQ.paused); }
+  const t = $("kq"); if (t) t.classList.toggle("paused", KQ.paused);
+}
 function kqAutoQs(n) {
   const P = pool(); const all = THEMES.flatMap((t) => t.items);
   const kind = (x) => (x.w2 ? "w2" : x.t ? "t" : isArr(x) ? "a" : "s");
@@ -785,13 +796,13 @@ function kqSetup() {
   $("main").innerHTML = `<div class="setupbox"><div class="panel"><h1>Quiz-Blitz</h1><p class="sub">Frage am Beamer, die Tische zeigen ihre Antwortkarte (Form und Farbe). Du klickst für jeden Tisch die Form an – wer schnell und richtig ist, bekommt mehr Punkte.</p>
     <div class="grp"><span class="lbl">Fragen</span><div class="chips">${chip("kq-src", "auto", KQ.src, "Aus den Themen (automatisch)")}${QUIZSETS.filter((q) => inKurs(qKurse(q.id))).map((q) => chip("kq-src", q.id, KQ.src, `${kbHTML(qKurse(q.id))} ${esc(q.name)}${quizFits(q.id) ? " <small>★ passt zu den Themen</small>" : ""}`)).join("")}</div></div>
     <div class="grp"><span class="lbl">Wie viele Fragen?</span><div class="chips">${[5, 8, 10, 15].map((n) => chip("kq-n", n, KQ.n, n)).join("")}</div></div>
-    <div class="grp"><span class="lbl">Zeit pro Frage</span><div class="chips">${[10, 20, 30].map((n) => chip("kq-time", n, KQ.time, n + " Sekunden")).join("")}</div></div>
+    <div class="grp"><span class="lbl">Zeit pro Frage</span><div class="chips">${[10, 20, 30, 45, 60, 90].map((n) => chip("kq-time", n, KQ.time, n + " Sekunden")).join("")}</div></div>
     <p class="hint">Punkte: richtig = 2 · richtig und in der ersten Hälfte der Zeit = 3. Die Punkte kommen in den Punktestand unten.</p>
     <div class="go"><button type="button" class="bigbtn" data-act="kq-start">Start</button></div></div></div>`;
 }
 function kqStart() { KQ.qs = kqSetQs(); KQ.i = 0; if (!KQ.qs.length) { toast("Zu wenige Wörter – mehr Themen wählen"); return; } kqQuestion(); }
 function kqQuestion() {
-  const q = KQ.qs[KQ.i]; KQ.phase = "ask"; KQ.picks = {}; KQ.sel = null;
+  const q = KQ.qs[KQ.i]; KQ.phase = "ask"; KQ.picks = {}; KQ.sel = null; KQ.paused = false;
   $("main").innerHTML = `<div class="kq" id="kq">
     <div class="kq-top"><span class="round">Frage ${KQ.i + 1} / ${KQ.qs.length}</span><div class="timer" id="kqTimer"><div class="bar" id="kqBar"></div></div><span class="sec" id="kqSec">${KQ.time}</span></div>
     <div class="kq-q">${q.prompt}</div>
@@ -799,13 +810,13 @@ function kqQuestion() {
     <div class="kq-opts ${q.opts.length === 3 ? "n3" : ""} ${!q.media && q.opts[0].startsWith("<img") ? "big" : ""}">${q.opts.map((o, i) => `<div class="kopt ${i === q.right ? "right" : ""} ${o.startsWith("<img") ? "pic" : ""}" style="--sc:${SHAPES[i].c}"><span class="shape">${SHAPES[i].svg}</span><span class="ot ${o.replace(/<[^>]+>/g, "").length > 13 ? "long" : ""}">${o}</span><span class="L">${SHAPES[i].L}</span></div>`).join("")}</div>
     <div>
       <div class="kq-teams" id="kqTeams">${teams().map((t) => `<div class="kt" data-kt="${t.k}" style="--tc:${t.color}"><span class="sw"></span><span class="nm">${esc(t.name)}</span>${q.opts.map((o, i) => `<button type="button" class="pick" style="--sc:${SHAPES[i].c}" data-act="kq-pick" data-team="${t.k}" data-opt="${i}" aria-label="${esc(t.name)}: ${SHAPES[i].L}">${SHAPES[i].svg}</button>`).join("")}<span class="res" id="kqRes${t.k}"></span></div>`).join("")}</div>
-      <div class="kq-ctrl" style="margin-top:8px"><button type="button" class="btn primary" data-act="kq-reveal" id="kqRevealBtn">Auflösen</button><button type="button" class="btn" data-act="kq-next" id="kqNextBtn" disabled>Weiter →</button><span class="keys">Tastatur: Tischnummer, dann <kbd>A</kbd>–<kbd>${SHAPES[q.opts.length - 1].L}</kbd> · <kbd>Enter</kbd> auflösen · <kbd>→</kbd> weiter</span></div>
+      <div class="kq-ctrl" style="margin-top:8px"><button type="button" class="btn primary" data-act="kq-reveal" id="kqRevealBtn">Auflösen</button><button type="button" class="btn" data-act="kq-pause" id="kqPauseBtn">⏸ Pause</button><button type="button" class="btn" data-act="kq-next" id="kqNextBtn" disabled>Weiter →</button><span class="keys">Tastatur: Tischnummer, dann <kbd>A</kbd>–<kbd>${SHAPES[q.opts.length - 1].L}</kbd> · <kbd>Leertaste</kbd> Pause · <kbd>Enter</kbd> auflösen · <kbd>→</kbd> weiter</span></div>
     </div></div>`;
   KQ.t0 = performance.now(); cancelAnimationFrame(KQ.raf); KQ.raf = requestAnimationFrame(kqTick);
 }
 function kqTick() {
-  if (KQ.phase !== "ask") return;
-  const el = (performance.now() - KQ.t0) / 1000, left = Math.max(0, KQ.time - el);
+  if (KQ.phase !== "ask" || KQ.paused) return;
+  const el = kqElapsed(), left = Math.max(0, KQ.time - el);
   const bar = $("kqBar"); if (!bar) return;
   bar.style.width = (left / KQ.time) * 100 + "%"; $("kqSec").textContent = Math.ceil(left); $("kqTimer").classList.toggle("low", left < 5);
   if (left <= 0) { kqReveal(); return; }
@@ -813,12 +824,12 @@ function kqTick() {
 }
 function kqPick(k, i) {
   if (KQ.phase !== "ask" || k >= S.teams) return; const q = KQ.qs[KQ.i]; if (i >= q.opts.length) return;
-  KQ.picks[k] = { i, t: (performance.now() - KQ.t0) / 1000 };
+  KQ.picks[k] = { i, t: kqElapsed() };
   const row = document.querySelector(`[data-kt="${k}"]`); row.classList.add("locked"); $("kqRes" + k).textContent = "✓ da";
   if (Object.keys(KQ.picks).length === S.teams) kqReveal();
 }
 function kqReveal() {
-  if (KQ.phase !== "ask") return; KQ.phase = "reveal"; cancelAnimationFrame(KQ.raf);
+  if (KQ.phase !== "ask") return; KQ.phase = "reveal"; KQ.paused = false; cancelAnimationFrame(KQ.raf); $("kq").classList.remove("paused"); $("kqPauseBtn").disabled = true; $("kqPauseBtn").textContent = "⏸ Pause"; $("kqPauseBtn").classList.remove("primary");
   const q = KQ.qs[KQ.i]; $("kq").classList.add("revealed");
   teams().forEach((t) => {
     const p = KQ.picks[t.k]; const r = $("kqRes" + t.k);
@@ -1224,12 +1235,12 @@ function pzMenu() {
   pzStopTimer(); PZ.view = "menu";
   const tile = (v, ic, t, sub) => `<button type="button" class="ptile2" data-act="pz-open" data-v="${v}">${IMG(ic, "clamp(60px,12vh,130px)")}<b>${t}</b><span>${sub}</span></button>`;
   $("main").innerHTML = `<div class="setupbox"><div class="pmenu"><h1 class="ptitle">Pause – etwas anderes!</h1><div class="pgrid">
-    ${tile("turm", "blatt", "Papierturm", "5 Blätter · 5 Minuten")}${tile("flieger", "flieger", "Papierflieger", "Falten und werfen")}${tile("haus", "tee", "Hausmittel", "Umfrage: Was macht man bei euch?")}${tile("raetsel", "fragen", "Rätsel", "5 Rätsel mit den Antwortkarten")}${tile("denk", "fragen", "Denk-Rätsel", "5 Rätsel mit etwas Deutsch")}
+    ${tile("turm", "blatt", "Papierturm", "5 Blätter · 5 Minuten")}${tile("flieger", "flieger", "Papierflieger", "Falten und werfen")}${tile("haus", "tee", "Hausmittel", "Umfrage: Was macht man bei euch?")}${tile("raetsel", "fragen", "Rätsel", "5 Rätsel · 60 Sekunden")}${tile("denk", "fragen", "Denk-Rätsel", "Mit etwas Deutsch · 60 Sek.")}
   </div></div></div>`;
 }
 function pzOpen(v) {
-  if (v === "denk") { KQ.src = "denk"; KQ.n = 5; KQ.time = 30; showGame("kq"); kqStart(); return; }
-  if (v === "raetsel") { KQ.src = "raetsel"; KQ.n = 5; KQ.time = 30; showGame("kq"); kqStart(); return; }
+  if (v === "denk") { KQ.src = "denk"; KQ.n = 5; KQ.time = 60; showGame("kq"); kqStart(); return; }
+  if (v === "raetsel") { KQ.src = "raetsel"; KQ.n = 5; KQ.time = 60; showGame("kq"); kqStart(); return; }
   if (v === "haus") { haDraw(); return; }
   PZ.view = v; PZ.sec = CH[v].sec; PZ.step = 0; PZ.left = PZ.sec; PZ.vals = {}; PZ.given = false; pzStopTimer(); pzDraw();
 }
@@ -1436,6 +1447,7 @@ document.addEventListener("click", (e) => {
     case "kq-start": kqStart(); break;
     case "kq-pick": kqPick(k, +b.dataset.opt); break;
     case "kq-reveal": kqReveal(); break;
+    case "kq-pause": kqTogglePause(); break;
     case "kq-next": case "kq-go": kqNext(); break;
     case "kq-again": closeOverlay(); kqSetup(); break;
     case "ph-show": phShow(); break;
@@ -1497,6 +1509,7 @@ document.addEventListener("keydown", (e) => {
       if (/^[1-6]$/.test(k)) { kqTeamKey = +k - 1; return; }
       const oi = "abcd".indexOf(k.toLowerCase()); if (oi >= 0 && kqTeamKey >= 0) { kqPick(kqTeamKey, oi); kqTeamKey = -1; return; }
       if (k === "Enter") kqReveal();
+      else if (k === " " || k === "p" || k === "P") { e.preventDefault(); kqTogglePause(); }
     } else if (k === "ArrowRight" || k === "Enter" || k === " ") { e.preventDefault(); kqNext(); }
   }
 });
