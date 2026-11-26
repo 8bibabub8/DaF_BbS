@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DaF BbS · Start</title>
+<meta name="theme-color" content="#F5F3EE">
+<style>
+:root{--bg:#F5F3EE;--ink:#1F2A24;--mut:#6B7570;--acc:#1F6B4A;--line:#E3DED3}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:Nunito,"Avenir Next",system-ui,sans-serif;min-height:100vh;padding:clamp(18px,4vw,48px)}
+h1{font-weight:900;font-size:clamp(30px,4vw,56px);color:var(--acc)}
+.sub{color:var(--mut);font-weight:700;font-size:clamp(15px,1.4vw,20px);margin:6px 0 clamp(18px,3vw,36px)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:clamp(14px,2vw,26px)}
+a.tile{display:flex;flex-direction:column;gap:10px;background:#fff;border:2px solid var(--line);border-radius:22px;padding:22px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden}
+a.tile:hover,a.tile:focus{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.12);outline:none}
+a.tile::before{content:"";position:absolute;left:0;right:0;top:0;height:8px;background:var(--c)}
+.ic{width:72px;height:72px}
+.t{font-weight:900;font-size:clamp(22px,2vw,30px)}
+.d{color:var(--mut);font-weight:700;font-size:16px;line-height:1.35}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.tag{font-size:13px;font-weight:800;border-radius:999px;padding:3px 10px;background:#F1EEE7}
+.tag.k1{background:#DCE8FA;color:#2F6FD6}.tag.k2{background:#FBE6D3;color:#B85F12}.tag.k3{background:#EBDDF8;color:#7440B5}
+.extra{font-size:14px;font-weight:800;color:var(--acc);margin-top:4px}
+.extra a{color:var(--acc)}
+footer{margin-top:36px;color:var(--mut);font-size:14px;font-weight:700}
+</style>
+</head>
+<body>
+<h1>Deutsch an der BbS</h1>
+<p class="sub">Alle Apps auf einen Blick · zum Öffnen einfach anklicken</p>
+<div class="grid">
+
+  <a class="tile" href="../spiele/" style="--c:#1F6B4A">
+    <svg class="ic" viewBox="0 0 64 64"><rect x="4" y="10" width="56" height="38" rx="6" fill="#2B3440"/><rect x="9" y="15" width="46" height="28" rx="2" fill="#7FB7E6"/><path d="M22 56h20M32 48v8" stroke="#2B3440" stroke-width="4" stroke-linecap="round"/><path d="M27 22l12 7-12 7z" fill="#F4C542"/></svg>
+    <div class="t">Beamer-Spiele</div>
+    <div class="d">Aufdecken, Quizbrett, Quiz-Blitz, Satz-Puzzle und mehr – mit Stunden-Paketen für jeden Kurs.</div>
+    <div class="tags"><span class="tag k1">Kurs 1</span><span class="tag k2">Kurs 2</span><span class="tag k3">Kurs 3</span><span class="tag">Beamer</span></div>
+  </a>
+
+  <a class="tile" href="../brettspiel/" style="--c:#E8862A">
+    <svg class="ic" viewBox="0 0 64 64"><rect x="6" y="6" width="52" height="52" rx="8" fill="#fff" stroke="#2B3440" stroke-width="3"/><rect x="18" y="18" width="28" height="28" rx="6" fill="#F7F5F0" stroke="#2B3440" stroke-width="3"/><circle cx="26" cy="26" r="3" fill="#2B3440"/><circle cx="38" cy="38" r="3" fill="#2B3440"/><circle cx="12" cy="12" r="4" fill="#2F6FD6"/><circle cx="52" cy="12" r="4" fill="#E07A1F"/><circle cx="52" cy="52" r="4" fill="#8A4FD1"/><circle cx="12" cy="52" r="4" fill="#14998A"/></svg>
+    <div class="t">Stadt-Rallye</div>
+    <div class="d">Brettspiel am Beamer: Jeder Tisch antwortet mit einem Handy – Aufgaben, Dialoge und Ereignisse.</div>
+    <div class="tags"><span class="tag k1">Kurs 1</span><span class="tag k2">Kurs 2</span><span class="tag k3">Kurs 3</span><span class="tag">Beamer + Handy</span></div>
+  </a>
+
+  <a class="tile" href="../" style="--c:#3B7DD8">
+    <svg class="ic" viewBox="0 0 64 64"><path d="M8 14h34a6 6 0 016 6v14a6 6 0 01-6 6H24l-10 8v-8H8a6 6 0 01-6-6V20a6 6 0 016-6z" fill="#3B7DD8"/><path d="M30 26h26a6 6 0 016 6v12a6 6 0 01-6 6h-4v8l-10-8H30a6 6 0 01-6-6V32a6 6 0 016-6z" fill="#F4C542"/><text x="25" y="32" text-anchor="middle" font-family="Arial" font-weight="900" font-size="13" fill="#fff">Hallo</text></svg>
+    <div class="t">Begrüßen und verabschieden</div>
+    <div class="d">Kapitel 1 mit Übersetzungen. Am Beamer oder auf dem Handy über QR-Code.</div>
+    <div class="tags"><span class="tag k2">Kurs 2</span><span class="tag k3">Kurs 3</span><span class="tag">Beamer + Handy</span></div>
+  </a>
+
+  <a class="tile" href="../memory/" style="--c:#8A4FD1">
+    <svg class="ic" viewBox="0 0 64 64"><rect x="6" y="8" width="24" height="30" rx="4" fill="#8A4FD1"/><rect x="34" y="8" width="24" height="30" rx="4" fill="#fff" stroke="#2B3440" stroke-width="3"/><path d="M40 28l6-12 6 12z" fill="#E07A1F"/><rect x="20" y="28" width="24" height="30" rx="4" fill="#fff" stroke="#2B3440" stroke-width="3"/><circle cx="32" cy="43" r="7" fill="#3FAE7A"/><text x="18" y="29" text-anchor="middle" font-family="Arial" font-weight="900" font-size="16" fill="#fff">?</text></svg>
+    <div class="t">Praktikum-Memory</div>
+    <div class="d">Bild-Wort-Paare zum Thema Praktikum und Arbeitsplatz.</div>
+    <div class="tags"><span class="tag k3">Kurs 3</span><span class="tag">Beamer</span></div>
+  </a>
+
+  <a class="tile" href="../messe/" style="--c:#14998A">
+    <svg class="ic" viewBox="0 0 64 64"><path d="M32 4c-11 0-20 9-20 20 0 15 20 36 20 36s20-21 20-36C52 13 43 4 32 4z" fill="#14998A"/><circle cx="32" cy="24" r="8" fill="#fff"/></svg>
+    <div class="t">Messe-Hilfe Naumburg</div>
+    <div class="d">Begleit-App für den Messebesuch – Orientierung und Redemittel.</div>
+    <div class="tags"><span class="tag k2">Kurs 2</span><span class="tag k3">Kurs 3</span><span class="tag">Handy</span></div>
+  </a>
+
+</div>
+<footer>8bibabub8.github.io/DaF_BbS/start/ · Tipp: Diese Seite am Beamer als Lesezeichen speichern.</footer>
+</body>
+</html>

@@ -89,6 +89,29 @@ button{font:inherit;cursor:pointer;border:0}
 .pop{animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
 @keyframes pop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
 
+/* Dialog */
+.chat{display:flex;flex-direction:column;gap:8px;margin:6px 0 10px;max-height:38vh;overflow:hidden;justify-content:flex-end}
+.bub{max-width:78%;padding:10px 16px;border-radius:18px;font-weight:800;font-size:clamp(16px,min(1.8vw,3.2vh),30px);line-height:1.25;animation:pop .35s cubic-bezier(.2,1.4,.4,1);text-align:left}
+.bub.o{align-self:flex-start;background:#F1EEE7;border-bottom-left-radius:6px}
+.bub.me{align-self:flex-end;color:#fff;border-bottom-right-radius:6px}
+.bub small{display:block;font-size:.6em;opacity:.7;font-weight:800;margin-bottom:2px}
+.typing{align-self:flex-start;background:#F1EEE7;border-radius:18px;padding:12px 18px;display:flex;gap:5px}
+.typing i{width:9px;height:9px;border-radius:50%;background:#9AA5B1;animation:tp 1s infinite}.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes tp{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-6px);opacity:1}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.chipw{background:#fff;border:3px solid var(--line);border-radius:12px;padding:6px 14px;font-weight:800;font-size:clamp(15px,min(1.6vw,3vh),26px)}
+.dstat{font-weight:800;color:var(--mut);font-size:clamp(13px,1.1vw,18px)}
+.ph-chat{display:flex;flex-direction:column;gap:8px}
+.ph-chat .bub{font-size:18px;max-width:88%;animation:none}
+.script{display:flex;flex-direction:column;gap:4px;margin:4px 0 8px;text-align:left}
+.script div{display:flex;gap:10px;align-items:baseline;font-weight:800;font-size:clamp(13px,min(1.45vw,2.35vh),26px);line-height:1.2}
+.script b{flex:none;min-width:7.5em;border-radius:999px;padding:2px 10px;font-size:.75em;text-align:center;color:#fff}
+.ph-line{min-height:58px;border:3px dashed #CBE6D6;border-radius:14px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#fff}
+.ph-pool{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.ph-w{background:#fff;border:3px solid var(--line);border-radius:12px;padding:10px 14px;font-weight:800;font-size:19px}
+.ph-line .ph-w{border-color:#2E9E64;background:#E9F4EE}
+.ph-w.used{visibility:hidden}
+.shakeit2{animation:shk .5s}
 /* Spielfiguren */
 #pawns{position:absolute;inset:0;pointer-events:none;z-index:8}
 .pawn{position:absolute;left:0;top:0;width:clamp(26px,2.4vw,40px);height:clamp(26px,2.4vw,40px);margin:calc(clamp(26px,2.4vw,40px)/-2) 0 0 calc(clamp(26px,2.4vw,40px)/-2);border-radius:50% 50% 50% 50%/45% 45% 55% 55%;color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:clamp(13px,1.2vw,20px);border:3px solid #fff;box-shadow:0 4px 8px rgba(0,0,0,.3)}
@@ -2522,24 +2545,105 @@ const PLACES = [
   ["pizzeria", "Pizzeria", "E"], ["werkstatt", "Werkstatt", "A"], ["markt", "Wochenmarkt", "A"], ["tanke", "Tankstelle", "E"]
 ];
 
-// Sprechkarten: [A1-Auftrag, A1-Hilfen, A2-Auftrag, A2-Hilfen]
-const SPEAK = {
-  baeckerei: ["Bestellt 3 Brötchen und eine Brezel. Fragt nach dem Preis.", ["Ich hätte gern …", "Was kostet das?", "Danke, tschüss!"],
-    "Ihr kauft für ein Frühstück mit 6 Personen ein. Bestellt und fragt, ob es auch etwas ohne Zucker gibt.", ["Wir brauchen …", "Haben Sie auch …?", "Das nehmen wir. Was macht das zusammen?"]],
-  arzt: ["Du bist krank. Sag, was dir wehtut und seit wann.", ["Ich habe …schmerzen.", "Mein … tut weh.", "Seit … Tagen."],
-    "Du rufst in der Praxis an. Beschreib dein Problem und mach einen Termin.", ["Ich fühle mich seit … nicht gut.", "Könnte ich heute noch kommen?", "Geht es auch um … Uhr?"]],
-  bahnhof: ["Kauft eine Fahrkarte nach Halle.", ["Einmal nach … bitte.", "Hin und zurück.", "Um wie viel Uhr fährt der Zug?"],
-    "Euer Zug hat 40 Minuten Verspätung. Fragt nach einer anderen Verbindung.", ["Mein Zug nach … hat Verspätung.", "Gibt es eine andere Verbindung?", "Muss ich umsteigen?"]],
-  cafe: ["Bestellt zwei Getränke und einen Kuchen.", ["Ich möchte …", "Für mich bitte …", "Wir möchten bezahlen."],
-    "Euer Kaffee ist kalt. Beschwert euch freundlich und bestellt etwas Neues.", ["Entschuldigung, der Kaffee ist …", "Könnten Sie bitte …?", "Dann nehme ich lieber …"]],
-  friseur: ["Ruf beim Friseur an und mach einen Termin.", ["Ich möchte einen Termin.", "Geht es am … um …?", "Auf Wiederhören!"],
-    "Erkläre dem Friseur genau, wie deine Haare aussehen sollen.", ["Bitte nur ein bisschen kürzer.", "An den Seiten …, oben …", "Wie viel kostet …?"]],
-  kino: ["Verabredet euch fürs Kino: Wann? Wo?", ["Hast du Lust …?", "Treffen wir uns um …?", "Vor dem Kino."],
-    "Ihr wollt ins Kino, aber ein Freund hat keine Zeit. Findet einen anderen Termin.", ["Am … kann ich leider nicht, weil …", "Wie wäre es mit …?", "Okay, dann treffen wir uns …"]],
-  kleidung: ["Du suchst eine Jacke. Frag nach Größe und Preis.", ["Haben Sie die Jacke in Größe …?", "Kann ich sie anprobieren?", "Was kostet sie?"],
-    "Die Hose ist zu klein. Du möchtest sie umtauschen.", ["Ich habe die Hose gestern gekauft.", "Sie ist mir zu …", "Kann ich sie umtauschen?"]],
-  handy: ["Dein Handy ist kaputt. Erkläre das Problem.", ["Mein Handy geht nicht.", "Der Bildschirm ist …", "Wie lange dauert die Reparatur?"],
-    "Du möchtest einen neuen Handyvertrag. Frag nach Preis und Datenvolumen.", ["Ich interessiere mich für …", "Wie viel Datenvolumen …?", "Wie lange läuft der Vertrag?"]]
+// Dialoge für die grünen Felder: who = Gesprächspartner; Schritte: {o: Satz der anderen Person, c: [richtig, falsch, falsch]} oder {o, b: [Wörter in richtiger Reihenfolge]}
+const C = (o, c) => ({ o, c }), B = (o, b) => ({ o, b });
+const DIALOG = {
+  baeckerei: {
+    A1: { who: "Verkäuferin", steps: [
+      C("Guten Morgen! Was möchten Sie?", ["Ich hätte gern drei Brötchen.", "Ich habe drei Brötchen.", "Ich bin drei Brötchen."]),
+      C("Gern. Noch etwas?", ["Ja, eine Brezel, bitte.", "Ja, ich bin eine Brezel.", "Nein, ich komme aus Polen."]),
+      B("Hier, bitte.", ["Was", "kostet", "das?"]),
+      C("Das macht 3,20 Euro.", ["Hier, bitte. Tschüss!", "Ich bin 3,20 Euro.", "Guten Morgen!"])] },
+    A2: { who: "Verkäuferin", steps: [
+      C("Guten Morgen! Was darf es sein?", ["Wir brauchen zwölf Brötchen für ein Frühstück.", "Wir brauchen zwölf Brötchen für einem Frühstück.", "Wir haben für ein Frühstück zwölf Brötchen gebraucht werden."]),
+      C("Gern. Sonst noch etwas?", ["Haben Sie auch etwas ohne Zucker?", "Haben Sie auch etwas ohne Zuckers?", "Sind Sie auch ohne Zucker?"]),
+      B("Ja, die Vollkornbrötchen.", ["Dann", "nehmen", "wir", "noch", "sechs", "davon."]),
+      C("Das macht zusammen 9,80 Euro.", ["Kann ich mit Karte zahlen?", "Kann ich mit Karte gezahlt?", "Kann mit Karte ich zahlen?"])] }
+  },
+  arzt: {
+    A1: { who: "Ärztin", steps: [
+      C("Guten Tag! Was fehlt Ihnen?", ["Ich habe Kopfschmerzen.", "Ich habe Hunger auf Pizza.", "Mir geht es super!"]),
+      C("Seit wann haben Sie die Schmerzen?", ["Seit drei Tagen.", "Um drei Uhr.", "Am Bahnhof."]),
+      B("Haben Sie auch Fieber?", ["Ja,", "ich", "habe", "Fieber."]),
+      C("Bleiben Sie zwei Tage im Bett.", ["Okay, danke. Auf Wiedersehen!", "Ich bleibe im Kino.", "Nein, ich habe kein Bett."])] },
+    A2: { who: "Praxis", steps: [
+      C("Praxis Dr. Weber, guten Tag.", ["Guten Tag, ich fühle mich seit gestern nicht gut.", "Guten Tag, ich fühle seit gestern nicht gut.", "Guten Tag, ich fühlte mich morgen nicht gut."]),
+      C("Was haben Sie denn für Beschwerden?", ["Ich habe Halsschmerzen und Fieber.", "Ich habe Halsschmerzen und Fiebers.", "Mir tut Halsschmerzen weh."]),
+      B("Möchten Sie einen Termin?", ["Könnte", "ich", "heute", "noch", "kommen?"]),
+      C("Ja, um 16 Uhr.", ["Super, dann komme ich um 16 Uhr.", "Super, dann ich komme um 16 Uhr.", "Super, um 16 Uhr ich komme."])] }
+  },
+  bahnhof: {
+    A1: { who: "Mitarbeiter", steps: [
+      C("Hallo! Wohin möchten Sie fahren?", ["Nach Halle, bitte.", "In Halle, bitte.", "Aus Halle, bitte."]),
+      C("Einfach oder hin und zurück?", ["Hin und zurück, bitte.", "Ja, bitte.", "Um 10 Uhr."]),
+      B("Das kostet 18 Euro.", ["Wann", "fährt", "der", "Zug?"]),
+      C("Um 14:30 Uhr, Gleis 2.", ["Vielen Dank!", "Ich fahre Gleis.", "Guten Appetit!"])] },
+    A2: { who: "Mitarbeiterin", steps: [
+      C("Kann ich Ihnen helfen?", ["Mein Zug nach Halle hat 40 Minuten Verspätung.", "Mein Zug nach Halle hat 40 Minuten verspätet.", "Mein Zug hat nach Halle 40 Minuten Verspätungen gehabt."]),
+      C("Oh, das tut mir leid.", ["Gibt es eine andere Verbindung?", "Gibt es einer anderen Verbindung?", "Ist es eine andere Verbindung?"]),
+      B("Ja, mit dem Bus um 15 Uhr.", ["Muss", "ich", "dann", "umsteigen?"]),
+      C("Ja, in Naumburg.", ["Alles klar, vielen Dank für Ihre Hilfe!", "Alles klar, vielen Dank für Ihrer Hilfe!", "Alles klar, vielen Dank mit Ihre Hilfe!"])] }
+  },
+  cafe: {
+    A1: { who: "Kellner", steps: [
+      C("Hallo! Was möchtet ihr trinken?", ["Zwei Cola, bitte.", "Wir trinken gestern Cola.", "Ich bin durstig Cola."]),
+      C("Möchtet ihr auch etwas essen?", ["Ja, einen Apfelkuchen, bitte.", "Ja, eine Apfelkuchen, bitte.", "Ja, ein Apfelkuchen, bitte."]),
+      B("Gern. Noch etwas?", ["Wir", "möchten", "bitte", "bezahlen."]),
+      C("Zusammen oder getrennt?", ["Zusammen, bitte.", "Am Tisch, bitte.", "Um 8 Uhr, bitte."])] },
+    A2: { who: "Kellnerin", steps: [
+      C("Ist alles in Ordnung?", ["Leider nicht. Mein Kaffee ist kalt.", "Leider nicht. Meinen Kaffee ist kalt.", "Leider nicht. Mein Kaffee ist am kältesten."]),
+      C("Oh, Entschuldigung!", ["Könnten Sie mir bitte einen neuen bringen?", "Könnten Sie mich bitte einen neuen bringen?", "Könnten Sie mir bitte ein neuen bringen?"]),
+      B("Natürlich. Wieder einen Kaffee?", ["Nein,", "dann", "nehme", "ich", "lieber", "einen", "Tee."]),
+      C("Kommt sofort!", ["Vielen Dank, das ist sehr nett.", "Vielen Dank, das ist sehr nettes.", "Vielen Dank, das war nett gewesen."])] }
+  },
+  friseur: {
+    A1: { who: "Friseurin", steps: [
+      C("Salon Schnitt, guten Tag!", ["Guten Tag! Ich möchte einen Termin.", "Guten Tag! Ich möchte eine Pizza.", "Tschüss!"]),
+      C("Wann haben Sie Zeit?", ["Am Freitag um 15 Uhr.", "Im Freitag um 15 Uhr.", "Um Freitag am 15 Uhr."]),
+      B("Das geht. Wie ist Ihr Name?", ["Mein", "Name", "ist", "Ali."]),
+      C("Gut, bis Freitag!", ["Danke, auf Wiederhören!", "Danke, guten Appetit!", "Ich bin Freitag."])] },
+    A2: { who: "Friseur", steps: [
+      C("Wie möchtest du die Haare?", ["Bitte nur ein bisschen kürzer.", "Bitte nur ein bisschen am kürzesten.", "Bitte nur ein bisschen kurzer."]),
+      C("Und an den Seiten?", ["An den Seiten kurz, oben etwas länger.", "An die Seiten kurz, oben etwas länger.", "In den Seiten kurz, oben etwas länger."]),
+      B("Okay. Soll ich die Haare auch waschen?", ["Nein,", "danke.", "Wie", "viel", "kostet", "das?"]),
+      C("Das kostet 22 Euro.", ["Gut, das passt.", "Gut, das passen.", "Gut, das gepasst."])] }
+  },
+  kino: {
+    A1: { who: "Freund", steps: [
+      C("Hey! Hast du am Samstag Zeit?", ["Ja, warum?", "Ja, ich habe Samstag.", "Nein, ich bin Zeit."]),
+      C("Wollen wir ins Kino gehen?", ["Gute Idee! Welcher Film?", "Ich gehe im Kino gestern.", "Nein, ich bin Kino."]),
+      B("Der neue Actionfilm. Er beginnt um 20 Uhr.", ["Treffen", "wir", "uns", "um", "halb", "acht?"]),
+      C("Okay! Wo?", ["Vor dem Kino.", "Vor das Kino.", "Um dem Kino."])] },
+    A2: { who: "Freundin", steps: [
+      C("Hey, gehen wir am Freitag ins Kino?", ["Am Freitag kann ich leider nicht, weil ich arbeiten muss.", "Am Freitag kann ich leider nicht, weil ich muss arbeiten.", "Am Freitag ich kann leider nicht, weil ich arbeiten muss."]),
+      C("Schade! Wann hast du denn Zeit?", ["Wie wäre es mit Samstag?", "Wie wäre es mit Samstags?", "Wie ist es am Samstag gewesen?"]),
+      B("Samstag passt! Um wie viel Uhr?", ["Treffen", "wir", "uns", "um", "sieben", "vor", "dem", "Kino?"]),
+      C("Perfekt, ich freue mich!", ["Ich freue mich auch!", "Ich mich auch!", "Ich freue auch!"])] }
+  },
+  kleidung: {
+    A1: { who: "Verkäufer", steps: [
+      C("Kann ich Ihnen helfen?", ["Ja, ich suche eine Jacke.", "Ja, ich suche ein Jacke.", "Ja, ich suche einen Jacke."]),
+      C("Welche Größe haben Sie?", ["Größe M.", "Größe blau.", "Größe 15 Euro."]),
+      B("Hier, bitte. Die Jacke ist blau.", ["Kann", "ich", "sie", "anprobieren?"]),
+      C("Natürlich, die Kabine ist dort.", ["Danke! Was kostet die Jacke?", "Danke! Was kostet der Jacke?", "Danke! Was kosten die Jacke?"])] },
+    A2: { who: "Verkäuferin", steps: [
+      C("Guten Tag, wie kann ich helfen?", ["Ich habe diese Hose gestern gekauft.", "Ich habe diese Hose gestern kaufen.", "Ich habe gestern gekauft diese Hose."]),
+      C("Gibt es ein Problem?", ["Ja, sie ist mir leider zu klein.", "Ja, sie ist mich leider zu klein.", "Ja, sie ist mir leider zu kleiner."]),
+      B("Haben Sie den Kassenbon?", ["Ja,", "hier", "ist", "der", "Kassenbon."]),
+      C("Möchten Sie eine größere Hose oder das Geld zurück?", ["Ich nehme lieber eine größere.", "Ich nehme lieber ein größeren.", "Ich nehme lieber eine größerer."])] }
+  },
+  handy: {
+    A1: { who: "Mitarbeiterin", steps: [
+      C("Hallo! Was kann ich für dich tun?", ["Mein Handy ist kaputt.", "Mein Handy ist müde.", "Ich bin kaputt Handy."]),
+      C("Oh. Was ist das Problem?", ["Der Bildschirm ist kaputt.", "Das Handy hat Hunger.", "Ich habe Bildschirm."]),
+      B("Das kann ich reparieren.", ["Wie", "lange", "dauert", "das?"]),
+      C("Zwei Tage. Es kostet 80 Euro.", ["Okay, das ist gut.", "Okay, ich bin 80 Euro.", "Zwei Tage ist kaputt."])] },
+    A2: { who: "Mitarbeiter", steps: [
+      C("Hallo, was kann ich für Sie tun?", ["Ich interessiere mich für einen neuen Vertrag.", "Ich interessiere mich an einen neuen Vertrag.", "Ich interessiere für einen neuen Vertrag."]),
+      C("Wie viel Datenvolumen brauchen Sie?", ["Ungefähr 20 Gigabyte im Monat.", "Ungefähr 20 Gigabyte am Monat.", "Ungefähr 20 Gigabyte um Monat."]),
+      B("Dann empfehle ich diesen Tarif für 15 Euro.", ["Wie", "lange", "läuft", "der", "Vertrag?"]),
+      C("24 Monate.", ["Das ist mir zu lange. Gibt es auch etwas Kürzeres?", "Das ist mich zu lange. Gibt es auch etwas Kürzeres?", "Das ist mir zu lange. Gibt es auch etwas kürzer?"])] }
+  }
 };
 
 // Ereignisse: [Text, Aktion, Wert]
@@ -2926,14 +3030,15 @@ function Host() {
       clearTimeout(tmr); tmr = setTimeout(() => reveal(), dur * 1000);
       renderAnsw(); pub();
     } else if (ty === "S") {
-      const sp = SPEAK[PLACES[i][0]]; const a2 = G.lvl === "A2";
-      G.card = { cid: G.cid, kind: "S", place: i, p: a2 ? sp[2] : sp[0], help: a2 ? sp[3] : sp[1] };
-      G.phase = "card";
-      center.innerHTML = `<div class="pane"><div class="card pop">${head("S", i)}<div class="qtext">${esc(G.card.p)}</div>
-        <div class="helps">${G.card.help.map((h) => `<span>${esc(h)}</span>`).join("")}</div>
-        <div class="hint" style="margin-bottom:12px">Tisch ${t.n} spielt die Szene zu zweit – die Hilfen stehen auch auf dem Handy.</div>
-        <div class="row"><button class="btn ok" id="sOk">✓ Gut gemacht</button><button class="btn no" id="sNo">✗ Noch nicht</button></div></div></div>`;
-      $("sOk").onclick = () => speakDone(true); $("sNo").onclick = () => speakDone(false); pub();
+      const D = DIALOG[PLACES[i][0]][G.lvl === "A2" ? "A2" : "A1"];
+      const steps = D.steps.map((st) => {
+        if (st.c) { const ord = shuffle([0, 1, 2]); return { o: st.o, type: "c", opts: ord.map((k) => st.c[k]), r: ord.indexOf(0), ans: st.c[0] }; }
+        let w = shuffle(st.b); for (let k = 0; k < 5 && w.join(" ") === st.b.join(" "); k++) w = shuffle(st.b);
+        return { o: st.o, type: "b", words: w, ans: st.b.join(" ") };
+      });
+      G.card = { cid: G.cid, kind: "S", place: i, who: D.who, steps, step: 0, log: [], miss: 0, done: false, typing: true, wrongAt: 0 };
+      G.phase = "card"; renderDialog(); pub();
+      setTimeout(() => { if (G.card && G.card.cid === G.cid) { G.card.log.push({ w: "o", t: steps[0].o }); G.card.typing = false; renderDialog(); pub(); } }, 900);
     } else if (ty === "E") {
       const ev = nextEv(); G.card = { cid: G.cid, kind: "E", place: i, p: ev[0], act: ev[1], val: ev[2], open: false };
       G.phase = "card";
@@ -2944,6 +3049,35 @@ function Host() {
       setTimeout(() => { const c = $("evc"); if (c) c.classList.remove("flip"); G.card.open = true; pub(); }, 700);
       $("eOk").onclick = () => doEvent(t);
     } else { showTurn(); }
+  }
+  function renderDialog() {
+    const c = G.card, t = cur(); if (!c || c.kind !== "S") return;
+    const st = c.steps[c.step];
+    const chat = c.log.slice(c.done ? 0 : -2).map((m) => m.w === "o" ? `<div class="bub o"><small>${esc(c.who)}</small>${esc(m.t)}</div>` : `<div class="bub me" style="background:${TCOL[t.n]}"><small>Tisch ${t.n}</small>${esc(m.t)}</div>`).join("") + (c.typing ? `<div class="typing"><i></i><i></i><i></i></div>` : "");
+    let below = "";
+    if (c.done) {
+      below = `<div class="row pop" style="align-items:center;gap:12px"><div class="result" style="font-size:clamp(15px,min(1.6vw,2.8vh),28px);color:var(--S);text-align:left;flex:1;min-width:240px">🎤 Jetzt laut! Eine Person ist ${esc(c.who)}, eine Person seid ihr.</div>
+        <button class="btn ok" id="sOk" style="font-size:clamp(14px,min(1.4vw,2.6vh),24px)">✓ Gut gesprochen${c.miss === 0 ? " (+2 ★)" : " (+1 ★)"}</button><button class="btn no" id="sNo" style="font-size:clamp(14px,min(1.4vw,2.6vh),24px)">✗ Noch nicht</button></div>`;
+    } else if (!c.typing && st) {
+      below = st.type === "c"
+        ? `<div class="opts">${st.opts.map((o, k) => `<button class="opt" data-k="${k}" style="font-size:clamp(14px,min(1.4vw,2.6vh),24px)"><b>${"ABC"[k]}</b>${esc(o)}</button>`).join("")}</div>`
+        : `<div class="dstat" style="margin-bottom:6px">Satz bauen: Wörter sortieren!</div><div class="chips" style="align-items:center">${st.words.map((w) => `<span class="chipw">${esc(w)}</span>`).join("")}<button class="btn ghost" id="dSol" style="font-size:14px;padding:.4em 1em;margin-left:10px">Lösung zeigen</button></div>`;
+      below += `<div class="dstat" style="margin-top:8px">Tisch ${t.n} antwortet auf dem Handy · Fehler: ${c.miss}</div>`;
+    }
+    const script = `<div class="script">${c.log.map((m) => `<div><b style="background:${m.w === "o" ? "#8A9389" : TCOL[t.n]}">${m.w === "o" ? esc(c.who) : "Tisch " + t.n}</b>${esc(m.t)}</div>`).join("")}</div>`;
+    center.innerHTML = `<div class="pane"><div class="card" id="card">${head("S", c.place)}${c.done ? script : `<div class="chat">${chat}</div>`}${below}</div></div>`;
+    center.querySelectorAll(".opt").forEach((b) => (b.onclick = () => dlgAnswer(+b.dataset.k)));
+    if ($("dSol")) $("dSol").onclick = () => { c.miss++; dlgAnswer(c.steps[c.step].ans, true); };
+    if ($("sOk")) { $("sOk").onclick = () => speakDone(true); $("sNo").onclick = () => speakDone(false); }
+  }
+  function dlgAnswer(val, forced) {
+    const c = G.card; if (!c || c.kind !== "S" || c.done || c.typing) return;
+    const st = c.steps[c.step]; const ok = forced || (st.type === "c" ? val === st.r : String(val) === st.ans);
+    if (!ok) { c.miss++; c.wrongAt = Date.now(); renderDialog(); $("card") && $("card").classList.add("shakeit"); pub(); return; }
+    c.log.push({ w: "me", t: st.ans }); c.step++;
+    if (c.step >= c.steps.length) { c.done = true; confetti(70); renderDialog(); pub(); return; }
+    c.typing = true; renderDialog(); pub();
+    setTimeout(() => { if (G.card !== c) return; c.typing = false; c.log.push({ w: "o", t: c.steps[c.step].o }); renderDialog(); pub(); }, 1000);
   }
   function renderAnsw() {
     const el = $("answ"); if (!el || !G.card) return;
@@ -2966,7 +3100,7 @@ function Host() {
   }
   async function speakDone(ok) {
     if (G.busy) return; G.busy = true; const t = cur();
-    if (ok) { t.stars++; floatAt(t, "+★"); confetti(90); renderBar(); await sleep(900); }
+    if (ok) { const plus = G.card && G.card.miss === 0 ? 2 : 1; t.stars += plus; floatAt(t, "+" + plus + "★"); confetti(90); renderBar(); await sleep(900); }
     else { $("center").querySelector(".card").classList.add("shakeit"); await sleep(500); await hop(t, G.from - t.pos); }
     G.busy = false; nextTurn();
   }
@@ -3006,6 +3140,7 @@ function Host() {
     else if (e.key === "Enter" && G.card && G.card.kind === "A") { if (!G.card.revealed) reveal(); else $("bNext") && $("bNext").click(); }
     else if (e.key === "Enter" && G.card && G.card.kind === "E") $("eOk") && $("eOk").click();
     else if (/^[123]$/.test(e.key) && G.card && G.card.kind === "A" && !G.card.revealed) { G.card.ans[G.turn] = +e.key - 1; reveal(); }
+    else if (/^[123]$/.test(e.key) && G.card && G.card.kind === "S" && !G.card.done) { const st = G.card.steps[G.card.step]; if (st && st.type === "c") dlgAnswer(+e.key - 1); }
     else if (e.key.toLowerCase() === "f") $("bFull").click();
   });
 
@@ -3014,15 +3149,20 @@ function Host() {
     if (!m.t || m.t < 1 || m.t > 4) return;
     const first = !G.lastSeen[m.t]; G.lastSeen[m.t] = Date.now();
     if (m.type === "hello" || first) { renderJoin(); renderBar(); pub(); }
+    if (m.type === "dlg") onDlg(m);
     if (m.type === "answer" && G.card && G.card.kind === "A" && m.cid === G.card.cid && !G.card.revealed && G.card.ans[m.t] == null && m.t <= G.teams.length) {
       G.card.ans[m.t] = m.idx; renderAnsw(); pub();
       const on = onlineTeams(); if (G.card.ans[G.turn] != null && on.every((n) => G.card.ans[n] != null)) setTimeout(reveal, 600);
     }
   }
+  function onDlg(m) {
+    if (m.type === "dlg" && G.card && G.card.kind === "S" && m.cid === G.card.cid && m.t === G.turn && m.step === G.card.step) dlgAnswer(m.val);
+  }
   function pub() {
     if (!G.net) return;
     const c = G.card;
-    const card = c ? { cid: c.cid, kind: c.kind, place: PLACES[c.place][1], p: c.p, o: c.o, help: c.help, revealed: !!c.revealed, r: c.revealed ? c.r : null, ans: c.ans, open: c.open } : null;
+    let card = c ? { cid: c.cid, kind: c.kind, place: PLACES[c.place][1], p: c.p, o: c.o, revealed: !!c.revealed, r: c.revealed ? c.r : null, ans: c.ans, open: c.open } : null;
+    if (c && c.kind === "S") { const st = c.steps[c.step]; Object.assign(card, { who: c.who, log: c.log, step: c.step, n: c.steps.length, miss: c.miss, done: c.done, typing: c.typing, wrongAt: c.wrongAt, cur: st && !c.done ? (st.type === "c" ? { type: "c", opts: st.opts } : { type: "b", words: st.words }) : null }); }
     G.net.send({ type: "state", s: { room: G.room, phase: G.phase, turn: G.turn, teams: G.teams.map((t) => ({ n: t.n, stars: t.stars, pos: t.pos, done: t.done })), lap: N * G.laps, card, finished: G.finished } }, true);
   }
 
@@ -3055,11 +3195,11 @@ function Phone() {
   const save = () => { try { sessionStorage.setItem("sr.ans", JSON.stringify({ room, a: myAns })); } catch (e) {} };
   main.innerHTML = `<div class="ph-big">Hallo Tisch ${t}! 👋</div><div class="ph-sub">Warte auf das Spiel am Beamer …</div>`;
 
-  let lastKey = "";
+  let lastKey = "", lastWrong = 0, build = { key: "", picked: [] };
   function render(force) {
     if (!S) return;
     const c0 = S.card, me0 = (S.teams || []).find((x) => x.n === t);
-    const key = JSON.stringify([S.phase, S.turn, S.teams.length, me0 && me0.stars, c0 && c0.cid, c0 && c0.revealed, c0 && c0.open, c0 && myAns[c0.cid]]);
+    const key = JSON.stringify([S.phase, S.turn, S.teams.length, me0 && me0.stars, c0 && c0.cid, c0 && c0.revealed, c0 && c0.open, c0 && myAns[c0.cid], c0 && c0.step, c0 && c0.miss, c0 && c0.done, c0 && c0.typing, c0 && (c0.log || []).length]);
     if (!force && key === lastKey) return; lastKey = key;
     const me = (S.teams || []).find((x) => x.n === t);
     const stars = me ? `★ ${me.stars}` : "";
@@ -3079,9 +3219,29 @@ function Phone() {
       main.querySelectorAll(".ph-opt").forEach((x) => (x.onclick = () => { if (myAns[c.cid] != null) return; myAns[c.cid] = +x.dataset.k; save(); net.send({ type: "answer", t, cid: c.cid, idx: +x.dataset.k }); render(true); }));
       return;
     }
-    if (c && c.kind === "S" && mine) {
-      main.innerHTML = `<span class="badge" style="background:var(--S)">Sprechen · ${esc(c.place)}</span><div class="ph-card">${esc(c.p)}</div>
-        <div class="ph-sub" style="text-align:left">Diese Sätze helfen euch:</div>${c.help.map((h) => `<div class="ph-help">${esc(h)}</div>`).join("")}`;
+    if (c && c.kind === "S") {
+      const chat = `<div class="ph-chat">${(c.log || []).slice(mine ? -3 : -4).map((m) => m.w === "o" ? `<div class="bub o"><small>${esc(c.who)}</small>${esc(m.t)}</div>` : `<div class="bub me" style="background:${TCOL[S.turn]}"><small>Tisch ${S.turn}</small>${esc(m.t)}</div>`).join("")}${c.typing ? `<div class="typing"><i></i><i></i><i></i></div>` : ""}</div>`;
+      const headS = `<span class="badge" style="background:var(--S)">Dialog · ${esc(c.place)} · ${Math.min(c.step + 1, c.n)}/${c.n}</span>`;
+      if (!mine) { main.innerHTML = headS + `<div class="ph-sub" style="text-align:left"><span style="color:${TCOL[S.turn]}">Tisch ${S.turn}</span> spielt einen Dialog. Lest mit!</div>` + chat; return; }
+      if (c.done) { main.innerHTML = headS + chat + `<div class="ph-big" style="color:var(--S)">Super! 🎤 Jetzt laut vorlesen.</div><div class="ph-sub">Eine Person ist ${esc(c.who)}, eine Person seid ihr.</div>`; return; }
+      if (!c.cur) { main.innerHTML = headS + chat; return; }
+      if (c.wrongAt && c.wrongAt !== lastWrong) { lastWrong = c.wrongAt; if (navigator.vibrate) navigator.vibrate([80, 60, 80]); setTimeout(() => main.classList.remove("shakeit2"), 600); main.classList.add("shakeit2"); }
+      if (c.cur.type === "c") {
+        main.innerHTML = headS + chat + `<div class="ph-sub" style="text-align:left">Was antwortet ihr? Tippt!</div>` + c.cur.opts.map((o, k) => `<button class="ph-opt" data-k="${k}"><b>${"ABC"[k]}</b>${esc(o)}</button>`).join("");
+        main.querySelectorAll(".ph-opt").forEach((x) => (x.onclick = () => net.send({ type: "dlg", t, cid: c.cid, step: c.step, val: +x.dataset.k })));
+      } else {
+        const key = c.cid + ":" + c.step; if (build.key !== key) build = { key, picked: [] };
+        const draw = () => {
+          main.innerHTML = headS + chat + `<div class="ph-sub" style="text-align:left">Baut den Satz! Tippt die Wörter in der richtigen Reihenfolge.</div>
+            <div class="ph-line">${build.picked.map((k, j) => `<button class="ph-w" data-j="${j}">${esc(c.cur.words[k])}</button>`).join("")}</div>
+            <div class="ph-pool">${c.cur.words.map((w, k) => `<button class="ph-w ${build.picked.includes(k) ? "used" : ""}" data-k="${k}">${esc(w)}</button>`).join("")}</div>
+            <button class="btn" id="phSend" ${build.picked.length === c.cur.words.length ? "" : "disabled style=\"opacity:.4\""}>Senden ✓</button>`;
+          main.querySelectorAll(".ph-pool .ph-w").forEach((x) => (x.onclick = () => { const k = +x.dataset.k; if (!build.picked.includes(k)) { build.picked.push(k); draw(); } }));
+          main.querySelectorAll(".ph-line .ph-w").forEach((x) => (x.onclick = () => { build.picked.splice(+x.dataset.j, 1); draw(); }));
+          const sb = $("phSend"); if (sb) sb.onclick = () => { if (build.picked.length !== c.cur.words.length) return; net.send({ type: "dlg", t, cid: c.cid, step: c.step, val: build.picked.map((k) => c.cur.words[k]).join(" ") }); build.picked = []; };
+        };
+        draw();
+      }
       return;
     }
     if (c && c.kind === "E" && mine) {
