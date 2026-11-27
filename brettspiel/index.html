@@ -83,6 +83,18 @@ button{font:inherit;cursor:pointer;border:0}
 .evback{position:absolute;inset:0;border-radius:18px;background:linear-gradient(135deg,#F4A64A,#E8862A);display:flex;align-items:center;justify-content:center;backface-visibility:hidden;transform:rotateY(180deg)}
 .evback svg{width:30%;height:30%}
 .evfront{backface-visibility:hidden}
+.wheelbox{display:flex;align-items:center;justify-content:center;gap:clamp(14px,3vw,48px)}
+.wheel{position:relative;width:clamp(170px,min(30vw,34vh),460px);aspect-ratio:1;flex:none;margin-top:2%}
+.wheel svg.wh{width:100%;height:100%;filter:drop-shadow(0 10px 18px rgba(0,0,0,.18))}
+.wheel .ptr{position:absolute;left:50%;top:-6%;width:13%;transform:translateX(-50%);z-index:2;filter:drop-shadow(0 3px 3px rgba(0,0,0,.25))}
+.wheel .hub{position:absolute;inset:40%;border-radius:50%;background:#fff;border:5px solid var(--E);display:flex;align-items:center;justify-content:center;font-size:clamp(20px,3vw,40px);z-index:2}
+.wside{max-width:42%;text-align:left}
+.wside .qtext{margin-top:0;font-size:clamp(18px,min(2.3vw,3.9vh),40px)}
+.wside .hint{font-size:clamp(13px,min(1.2vw,2.2vh),20px)}
+.glow{animation:glow 1s ease-in-out 3}
+@keyframes glow{50%{filter:drop-shadow(0 0 22px #F4C542) brightness(1.15)}}
+.bigfx{position:fixed;left:50%;top:44%;transform:translate(-50%,-50%);font-weight:900;font-size:clamp(50px,9vw,150px);color:#fff;-webkit-text-stroke:4px rgba(0,0,0,.25);text-shadow:0 8px 24px rgba(0,0,0,.3);z-index:60;pointer-events:none;animation:bigfx 1.6s cubic-bezier(.2,1.4,.4,1) forwards;white-space:nowrap}
+@keyframes bigfx{0%{transform:translate(-50%,-50%) scale(.2);opacity:0}25%{transform:translate(-50%,-50%) scale(1.1);opacity:1}70%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-90%) scale(.9);opacity:0}}
 .result{font-weight:900;font-size:clamp(26px,3vw,48px)}
 .shakeit{animation:shk .5s}
 @keyframes shk{0%,100%{transform:translateX(0)}20%{transform:translateX(-14px)}40%{transform:translateX(12px)}60%{transform:translateX(-8px)}80%{transform:translateX(5px)}}
@@ -200,6 +212,7 @@ button{font:inherit;cursor:pointer;border:0}
   <p class="hint" style="margin-top:4px">Ein Handy pro Tisch: QR-Code scannen. Ohne Handys geht es auch – dann klickst du die Antworten am Beamer.</p>
   <div class="qrs" id="qrs"></div>
   <div class="url" id="jUrl"></div>
+  <div class="url" id="jSrv"></div>
   <div class="row" style="margin-top:18px;justify-content:flex-start"><button class="btn" id="jGo">Los geht's!</button></div>
 </div></div>
 
@@ -2739,6 +2752,239 @@ const QUIZ = [
     Q("Welcher Satz spricht über die Zukunft?", ["Ich werde den Führerschein machen.", "Ich machte den Führerschein.", "Ich habe den Führerschein gemacht."])
   ]}
 ];
+
+// ===== Weitere Dialoge: pro Ort und Niveau 3 Varianten, damit sich nichts wiederholt =====
+const DIALOG_MORE = {
+  baeckerei: {
+    A1: [
+      { who: "Verkäufer", steps: [
+        { o: "Hallo! Was bekommen Sie?", c: ["Ein Brot, bitte.", "Ich bin ein Brot.", "Ein Brot ist Hallo."] },
+        { o: "Groß oder klein?", c: ["Klein, bitte.", "Ich heiße klein.", "Ja, ich bin groß."] },
+        { o: "Möchten Sie auch Kuchen?", b: ["Ja,", "ein", "Stück", "Apfelkuchen,", "bitte."] },
+        { o: "Das macht 4,50 Euro.", c: ["Hier sind 5 Euro.", "Ich habe 4,50 Jahre.", "Ich komme um 4,50 Uhr."] } ] },
+      { who: "Verkäuferin", steps: [
+        { o: "Guten Tag! Bitte schön?", c: ["Ich möchte vier Brötchen.", "Ich möchte vier Brötchen sein.", "Ich vier Brötchen."] },
+        { o: "Mit Körnern oder ohne?", c: ["Ohne Körner, bitte.", "Ich bin ohne.", "Körner heiße ich."] },
+        { o: "Noch etwas?", b: ["Haben", "Sie", "auch", "Croissants?"] },
+        { o: "Ja. Wie viele?", c: ["Zwei, bitte. Danke!", "Zwei Uhr, bitte.", "Ich bin zwei."] } ] }
+    ],
+    A2: [
+      { who: "Verkäufer", steps: [
+        { o: "Guten Morgen! Was darf es sein?", c: ["Ich hätte gern einen Geburtstagskuchen.", "Ich hätte gern einen Geburtstagskuchen bestellt werden.", "Ich hätte gern einem Geburtstagskuchen."] },
+        { o: "Für wann brauchen Sie den Kuchen?", c: ["Für Samstag, wenn das möglich ist.", "Für Samstag, wenn das ist möglich.", "Am Samstag, ob das möglich ist."] },
+        { o: "Kein Problem. Mit Schokolade?", b: ["Lieber", "mit", "Erdbeeren,", "das", "mag", "meine", "Tochter."] },
+        { o: "Das kostet 28 Euro. Sie können morgen bezahlen.", c: ["Gut, dann komme ich morgen vorbei.", "Gut, dann komme ich morgen vorbeigekommen.", "Gut, dann ich komme morgen vorbei."] } ] },
+      { who: "Verkäuferin", steps: [
+        { o: "Hallo! Sie sehen suchend aus.", c: ["Ja, welches Brot können Sie empfehlen?", "Ja, welches Brot können Sie empfohlen?", "Ja, welcher Brot können Sie empfehlen?"] },
+        { o: "Das Dinkelbrot ist heute ganz frisch.", c: ["Ist es schon geschnitten?", "Ist es schon geschneidet?", "Hat es schon geschnitten?"] },
+        { o: "Nein, aber ich kann es schneiden.", b: ["Das", "wäre", "sehr", "nett,", "danke."] },
+        { o: "Bitte. Brauchen Sie eine Tüte?", c: ["Nein danke, ich habe eine Tasche dabei.", "Nein danke, ich habe eine Tasche dabeigehabt.", "Nein danke, ich bin eine Tasche dabei."] } ] }
+    ]
+  },
+  arzt: {
+    A1: [
+      { who: "Ärztin", steps: [
+        { o: "Guten Tag. Was fehlt Ihnen?", c: ["Ich habe Halsschmerzen.", "Ich bin Halsschmerzen.", "Mein Hals ist 20 Jahre."] },
+        { o: "Seit wann?", c: ["Seit zwei Tagen.", "Um zwei Uhr.", "Ich bin zwei."] },
+        { o: "Haben Sie auch Fieber?", b: ["Ja,", "ich", "habe", "38", "Grad."] },
+        { o: "Bleiben Sie drei Tage im Bett und trinken Sie viel Tee.", c: ["Danke, Frau Doktor.", "Danke, ich bin Tee.", "Bitte, ich trinke Bett."] } ] },
+      { who: "Arzthelferin", steps: [
+        { o: "Praxis Dr. Krause, guten Tag!", c: ["Guten Tag, ich brauche einen Termin.", "Guten Tag, ich bin ein Termin.", "Guten Tag, ich habe Termin krank."] },
+        { o: "Was haben Sie?", c: ["Mein Rücken tut weh.", "Mein Rücken ist laut.", "Ich bin Rücken."] },
+        { o: "Können Sie morgen um 9 Uhr kommen?", b: ["Ja,", "das", "passt", "gut."] },
+        { o: "Bringen Sie bitte die Versichertenkarte mit.", c: ["Okay. Auf Wiederhören!", "Okay. Gute Nacht, Karte!", "Ich bin die Karte."] } ] }
+    ],
+    A2: [
+      { who: "Arzt", steps: [
+        { o: "Was kann ich für Sie tun?", c: ["Ich habe mir beim Sport den Fuß verletzt.", "Ich habe mich beim Sport den Fuß verletzt.", "Ich bin mir beim Sport den Fuß verletzt."] },
+        { o: "Wann ist das passiert?", c: ["Gestern Abend beim Fußballspielen.", "Gestern Abend beim Fußball gespielt.", "Morgen Abend beim Fußballspielen."] },
+        { o: "Der Fuß ist nicht gebrochen. Sie brauchen Ruhe.", b: ["Muss", "ich", "morgen", "zur", "Arbeit", "gehen?"] },
+        { o: "Nein, ich schreibe Sie eine Woche krank.", c: ["Dann rufe ich gleich meinen Chef an.", "Dann rufe ich gleich meinen Chef.", "Dann anrufe ich gleich meinen Chef."] } ] },
+      { who: "Ärztin", steps: [
+        { o: "Wie geht es Ihnen heute?", c: ["Leider nicht besser, ich schlafe sehr schlecht.", "Leider nicht gut, ich schlafe sehr schlechter.", "Leider nicht besser, ich schlafe sehr schlechten."] },
+        { o: "Nehmen Sie die Tabletten regelmäßig?", c: ["Ja, jeden Abend nach dem Essen.", "Ja, jeden Abend nach das Essen.", "Ja, jede Abend nach dem Essen."] },
+        { o: "Dann probieren wir ein anderes Medikament.", b: ["Hat", "es", "auch", "Nebenwirkungen?"] },
+        { o: "Manchmal wird man müde.", c: ["Darf ich dann noch Auto fahren?", "Darf ich dann noch Auto gefahren?", "Darf dann ich noch Auto fahren?"] } ] }
+    ]
+  },
+  bahnhof: {
+    A1: [
+      { who: "Mitarbeiter", steps: [
+        { o: "Guten Tag! Wohin möchten Sie fahren?", c: ["Nach Leipzig, bitte.", "Ich bin Leipzig.", "Ich heiße Leipzig."] },
+        { o: "Heute?", c: ["Ja, heute Nachmittag.", "Ja, ich bin heute.", "Nein, ich bin ein Zug."] },
+        { o: "Einfach oder hin und zurück?", b: ["Hin", "und", "zurück,", "bitte."] },
+        { o: "Das kostet 24 Euro. Gleis 3.", c: ["Danke! Tschüss!", "Ich bin Gleis 3.", "Ich habe 24 Jahre."] } ] },
+      { who: "Frau", steps: [
+        { o: "Entschuldigung, sprechen Sie Deutsch?", c: ["Ja, ein bisschen.", "Ja, ich bin Deutsch.", "Nein, ich heiße Bahnhof."] },
+        { o: "Wann fährt der Zug nach Halle?", c: ["Um 10:15 Uhr.", "Am Gleis Uhr.", "Ich fahre gern."] },
+        { o: "Und von welchem Gleis?", b: ["Von", "Gleis", "vier,", "glaube", "ich."] },
+        { o: "Vielen Dank!", c: ["Bitte! Gute Reise!", "Danke, ich bin Gleis.", "Guten Morgen, Zug!"] } ] }
+    ],
+    A2: [
+      { who: "Mitarbeiterin", steps: [
+        { o: "Ihr Zug hat leider 40 Minuten Verspätung.", c: ["Dann verpasse ich meinen Anschlusszug in Erfurt.", "Dann verpasse ich meinem Anschlusszug in Erfurt.", "Dann verpasst ich meinen Anschlusszug in Erfurt."] },
+        { o: "Sie können den nächsten Zug nehmen.", c: ["Gilt mein Ticket auch für diesen Zug?", "Gilt meinen Ticket auch für diesen Zug?", "Gilt mein Ticket auch für dieser Zug?"] },
+        { o: "Ja, das Ticket gilt.", b: ["Wann", "komme", "ich", "dann", "in", "Weimar", "an?"] },
+        { o: "Um 14:20 Uhr.", c: ["Gut, dann schreibe ich meiner Freundin.", "Gut, dann schreibe ich meine Freundin.", "Gut, dann ich schreibe meiner Freundin."] } ] },
+      { who: "Mitarbeiter", steps: [
+        { o: "Was kann ich für Sie tun?", c: ["Ich habe meinen Rucksack im Zug vergessen.", "Ich habe meinen Rucksack im Zug vergesst.", "Ich bin meinen Rucksack im Zug vergessen."] },
+        { o: "Welcher Zug war das?", c: ["Der Regionalexpress aus Magdeburg um 8 Uhr.", "Die Regionalexpress aus Magdeburg um 8 Uhr.", "Der Regionalexpress von Magdeburg an 8 Uhr."] },
+        { o: "Wie sieht der Rucksack aus?", b: ["Er", "ist", "schwarz", "und", "hat", "einen", "roten", "Streifen."] },
+        { o: "Ich rufe das Fundbüro an.", c: ["Vielen Dank, das ist sehr freundlich.", "Vielen Dank, das ist sehr freundlicher.", "Vielen Dank, das sind sehr freundlich."] } ] }
+    ]
+  },
+  cafe: {
+    A1: [
+      { who: "Kellnerin", steps: [
+        { o: "Hallo! Was möchtest du trinken?", c: ["Einen Tee, bitte.", "Ich bin ein Tee.", "Ein Tee heißt ich."] },
+        { o: "Mit Zucker?", c: ["Nein, ohne Zucker.", "Nein, ich bin Zucker.", "Ja, ich komme aus Zucker."] },
+        { o: "Und zu essen?", b: ["Ein", "Stück", "Schokoladenkuchen,", "bitte."] },
+        { o: "Gern. Das macht 5,80 Euro.", c: ["Hier, bitte. Stimmt so.", "Ich bin 5,80.", "Danke, ich esse Euro."] } ] },
+      { who: "Kellner", steps: [
+        { o: "Ist der Platz frei?", c: ["Ja, bitte setzen Sie sich.", "Ja, ich bin Platz.", "Nein, ich trinke Platz."] },
+        { o: "Was empfehlen Sie hier?", c: ["Der Kaffee ist sehr gut.", "Der Kaffee ist sehr müde.", "Ich bin sehr Kaffee."] },
+        { o: "Danke! Und Sie? Wohnen Sie hier?", b: ["Ja,", "ich", "wohne", "in", "der", "Nähe."] },
+        { o: "Schön! Dann sehen wir uns bestimmt wieder.", c: ["Ja, bis bald!", "Ja, ich bin bald.", "Nein, ich heiße bald."] } ] }
+    ],
+    A2: [
+      { who: "Kellner", steps: [
+        { o: "Haben Sie reserviert?", c: ["Ja, auf den Namen Popescu, für vier Personen.", "Ja, auf dem Namen Popescu, für vier Personen.", "Ja, für den Namen Popescu, an vier Personen."] },
+        { o: "Möchten Sie drinnen oder draußen sitzen?", c: ["Lieber draußen, weil die Sonne scheint.", "Lieber draußen, weil die Sonne scheint es.", "Lieber draußen, weil scheint die Sonne."] },
+        { o: "Gern. Hier ist die Karte.", b: ["Haben", "Sie", "auch", "Kuchen", "ohne", "Milch?"] },
+        { o: "Ja, den veganen Apfelkuchen.", c: ["Den nehme ich, und dazu einen Kaffee.", "Den nehme ich, und dazu einem Kaffee.", "Der nehme ich, und dazu einen Kaffee."] } ] },
+      { who: "Kellnerin", steps: [
+        { o: "Hat es Ihnen geschmeckt?", c: ["Ja, sehr. Wir möchten bitte zahlen.", "Ja, sehr. Wir möchten bitte gezahlt.", "Ja, sehr. Wir möchten bitte zu zahlen."] },
+        { o: "Zusammen oder getrennt?", c: ["Getrennt, bitte. Ich zahle den Tee.", "Getrennt, bitte. Ich zahle der Tee.", "Getrennt, bitte. Ich zahlt den Tee."] },
+        { o: "Das macht 3,40 Euro.", b: ["Kann", "ich", "mit", "dem", "Handy", "bezahlen?"] },
+        { o: "Natürlich, halten Sie es einfach hier dran.", c: ["Super, das geht ja schnell.", "Super, das gehen ja schnell.", "Super, das geht ja schneller."] } ] }
+    ]
+  },
+  friseur: {
+    A1: [
+      { who: "Friseurin", steps: [
+        { o: "Hallo! Was machen wir heute?", c: ["Bitte Haare schneiden.", "Bitte Haare essen.", "Ich bin Haare."] },
+        { o: "Kurz oder lang?", c: ["Nicht so kurz, bitte.", "Ich bin kurz.", "Lang ist mein Name."] },
+        { o: "Waschen auch?", b: ["Ja,", "bitte", "auch", "waschen."] },
+        { o: "Fertig! Gefällt es dir?", c: ["Ja, super! Danke!", "Ja, ich bin super Haare.", "Nein, ich komme aus Haare."] } ] },
+      { who: "Friseur", steps: [
+        { o: "Guten Tag! Haben Sie einen Termin?", c: ["Nein. Haben Sie Zeit?", "Nein, ich bin Termin.", "Ja, ich habe Zeit Termin sein."] },
+        { o: "In 20 Minuten. Okay?", c: ["Ja, ich warte.", "Ja, ich bin 20.", "Nein, ich esse."] },
+        { o: "Was kostet ein Herrenschnitt?", b: ["Der", "Herrenschnitt", "kostet", "18", "Euro."] },
+        { o: "Möchten Sie einen Kaffee?", c: ["Ja, gern, danke!", "Ja, ich bin Kaffee.", "Nein, ich bin Friseur."] } ] }
+    ],
+    A2: [
+      { who: "Friseurin", steps: [
+        { o: "Wie hätten Sie es gern?", c: ["Etwas kürzer, aber die Länge soll bleiben.", "Etwas kurzer, aber die Länge soll bleiben.", "Etwas kürzer, aber die Länge soll geblieben."] },
+        { o: "Möchten Sie auch eine neue Farbe?", c: ["Vielleicht ein bisschen heller als jetzt.", "Vielleicht ein bisschen hell als jetzt.", "Vielleicht ein bisschen heller wie jetzt."] },
+        { o: "Dann zeige ich Ihnen ein paar Fotos.", b: ["Die", "Farbe", "auf", "dem", "zweiten", "Foto", "gefällt", "mir."] },
+        { o: "Das dauert dann etwa zwei Stunden.", c: ["Das ist okay, ich habe heute frei.", "Das ist okay, ich habe heute freie.", "Das ist okay, ich bin heute frei gehabt."] } ] },
+      { who: "Friseur", steps: [
+        { o: "Na, sind Sie zufrieden?", c: ["Hm, hinten ist es mir ein bisschen zu kurz.", "Hm, hinten ist es mich ein bisschen zu kurz.", "Hm, hinten ist es mir ein bisschen zu kürzer."] },
+        { o: "Oh, das tut mir leid.", c: ["Kein Problem, die Haare wachsen ja wieder.", "Kein Problem, die Haare wachsen ja wiedergewachsen.", "Kein Problem, die Haare wächst ja wieder."] },
+        { o: "Heute bezahlen Sie nur die Hälfte.", b: ["Das", "ist", "sehr", "nett", "von", "Ihnen."] },
+        { o: "Möchten Sie gleich einen neuen Termin?", c: ["Ja, in sechs Wochen, wenn es geht.", "Ja, vor sechs Wochen, wenn es geht.", "Ja, in sechs Wochen, wenn geht es."] } ] }
+    ]
+  },
+  kino: {
+    A1: [
+      { who: "Kassiererin", steps: [
+        { o: "Hallo! Welcher Film?", c: ["Der Film um 20 Uhr, bitte.", "Ich bin der Film.", "Der Film isst um 20 Uhr."] },
+        { o: "Wie viele Karten?", c: ["Drei Karten, bitte.", "Drei Uhr, bitte.", "Ich bin drei."] },
+        { o: "Wo möchtet ihr sitzen?", b: ["Bitte", "in", "der", "Mitte."] },
+        { o: "Das macht 27 Euro.", c: ["Hier, bitte. Danke!", "Ich habe 27 Jahre Kino.", "Gute Nacht, Euro!"] } ] },
+      { who: "Verkäufer", steps: [
+        { o: "Was möchtest du?", c: ["Popcorn, bitte.", "Ich bin Popcorn.", "Popcorn ist mein Bruder."] },
+        { o: "Süß oder salzig?", c: ["Süß, bitte.", "Ich heiße süß.", "Salzig bin ich."] },
+        { o: "Und etwas zu trinken?", b: ["Eine", "Cola,", "bitte."] },
+        { o: "Groß oder klein?", c: ["Klein. Was kostet das?", "Klein ist mein Film.", "Ich bin groß Cola."] } ] }
+    ],
+    A2: [
+      { who: "Freundin", steps: [
+        { o: "Hast du Lust, heute Abend ins Kino zu gehen?", c: ["Gern! Welcher Film läuft denn?", "Gern! Welcher Film läuft denn es?", "Gern! Welchen Film läuft denn?"] },
+        { o: "Eine Komödie aus Frankreich.", c: ["Super, ich habe schon viel darüber gehört.", "Super, ich habe schon viel darüber gehörte.", "Super, ich bin schon viel darüber gehört."] },
+        { o: "Er beginnt um halb neun.", b: ["Sollen", "wir", "vorher", "noch", "etwas", "essen?"] },
+        { o: "Gute Idee! Wir treffen uns um sieben am Markt.", c: ["Okay, ich freue mich schon.", "Okay, ich freue schon.", "Okay, ich freue mich schon darauf auf."] } ] },
+      { who: "Mitarbeiter", steps: [
+        { o: "Entschuldigung, Sie sitzen auf meinem Platz.", c: ["Oh, wirklich? Ich habe Reihe 5, Platz 12.", "Oh, wirklich? Ich habe Reihe 5, Platz 12 gehabt werden.", "Oh, wirklich? Ich bin Reihe 5, Platz 12."] },
+        { o: "Das hier ist Reihe 6.", c: ["Das tut mir leid, ich habe mich geirrt.", "Das tut mir leid, ich habe mich geirrten.", "Das tut mich leid, ich habe mich geirrt."] },
+        { o: "Kein Problem, das passiert oft.", b: ["Der", "Film", "fängt", "gleich", "an."] },
+        { o: "Viel Spaß!", c: ["Danke, Ihnen auch!", "Danke, Sie auch!", "Danke, dir auch Sie!"] } ] }
+    ]
+  },
+  kleidung: {
+    A1: [
+      { who: "Verkäuferin", steps: [
+        { o: "Kann ich helfen?", c: ["Ja, ich suche eine Mütze.", "Ja, ich bin eine Mütze.", "Nein, ich heiße Mütze."] },
+        { o: "Welche Farbe?", c: ["Schwarz, bitte.", "Ich bin schwarz Jahre.", "Am Montag, bitte."] },
+        { o: "Hier, bitte.", b: ["Was", "kostet", "die", "Mütze?"] },
+        { o: "12 Euro.", c: ["Gut, ich nehme sie.", "Gut, ich bin sie.", "Gut, ich esse sie."] } ] },
+      { who: "Verkäufer", steps: [
+        { o: "Hallo! Suchst du etwas?", c: ["Ja, warme Schuhe.", "Ja, ich bin Schuhe.", "Ja, Schuhe heißen ich."] },
+        { o: "Welche Größe?", c: ["Größe 42.", "42 Jahre.", "Um 42 Uhr."] },
+        { o: "Hier. Probier mal!", b: ["Die", "Schuhe", "sind", "zu", "klein."] },
+        { o: "Hier ist Größe 43.", c: ["Die passen! Danke!", "Die essen! Danke!", "Ich passe Schuhe."] } ] }
+    ],
+    A2: [
+      { who: "Verkäuferin", steps: [
+        { o: "Guten Tag! Kann ich Ihnen helfen?", c: ["Ja, ich möchte diese Hose umtauschen.", "Ja, ich möchte diese Hose umgetauscht.", "Ja, ich möchte diese Hose umzutauschen."] },
+        { o: "Was ist das Problem?", c: ["Sie ist mir leider zu eng.", "Sie ist mich leider zu eng.", "Sie ist mir leider zu enger."] },
+        { o: "Haben Sie den Kassenbon dabei?", b: ["Ja,", "hier", "ist", "der", "Bon", "von", "letzter", "Woche."] },
+        { o: "Möchten Sie das Geld zurück oder eine andere Hose?", c: ["Ich probiere lieber eine Nummer größer.", "Ich probiere lieber eine Nummer groß.", "Ich probiere lieber einer Nummer größer."] } ] },
+      { who: "Verkäufer", steps: [
+        { o: "Die Jacke steht Ihnen sehr gut!", c: ["Finden Sie? Ich bin mir nicht sicher.", "Finden Sie? Ich bin mich nicht sicher.", "Finden Sie? Ich habe mir nicht sicher."] },
+        { o: "Sie ist warm und wasserdicht.", c: ["Gibt es die Jacke auch in Dunkelblau?", "Gibt es die Jacke auch im Dunkelblau?", "Gibt die Jacke auch in Dunkelblau?"] },
+        { o: "Ja, ich hole sie Ihnen.", b: ["Die", "dunkelblaue", "gefällt", "mir", "besser."] },
+        { o: "Sie ist heute um 20 Prozent reduziert.", c: ["Dann kaufe ich sie sofort.", "Dann kaufe ich sie sofortig.", "Dann ich kaufe sie sofort."] } ] }
+    ]
+  },
+  handy: {
+    A1: [
+      { who: "Mitarbeiter", steps: [
+        { o: "Hallo! Was suchst du?", c: ["Ich brauche ein Ladekabel.", "Ich bin ein Ladekabel.", "Ich heiße Kabel."] },
+        { o: "Für welches Handy?", c: ["Für dieses Handy hier.", "Für meine Oma Kabel.", "Ich bin Handy."] },
+        { o: "Hier, bitte.", b: ["Wie", "viel", "kostet", "das", "Kabel?"] },
+        { o: "9,99 Euro.", c: ["Okay, ich nehme es.", "Okay, ich bin es.", "Okay, ich trinke es."] } ] },
+      { who: "Mitarbeiterin", steps: [
+        { o: "Guten Tag! Was kann ich tun?", c: ["Ich möchte eine SIM-Karte.", "Ich bin eine SIM-Karte.", "Ich esse eine SIM-Karte."] },
+        { o: "Haben Sie Ihren Ausweis dabei?", c: ["Ja, hier ist mein Ausweis.", "Ja, ich bin Ausweis.", "Nein, ich heiße Ausweis."] },
+        { o: "Danke. Wie viel Internet brauchen Sie?", b: ["Ich", "brauche", "10", "Gigabyte."] },
+        { o: "Das kostet 10 Euro im Monat.", c: ["Gut, das ist billig.", "Gut, ich bin billig.", "Gut, der Monat ist müde."] } ] }
+    ],
+    A2: [
+      { who: "Mitarbeiterin", steps: [
+        { o: "Was ist denn mit Ihrem Handy passiert?", c: ["Es ist mir gestern ins Wasser gefallen.", "Es ist mich gestern ins Wasser gefallen.", "Es hat mir gestern ins Wasser gefallen."] },
+        { o: "Geht es noch an?", c: ["Nein, der Bildschirm bleibt schwarz.", "Nein, der Bildschirm bleibt schwarzen.", "Nein, die Bildschirm bleibt schwarz."] },
+        { o: "Wir können es zur Reparatur schicken.", b: ["Sind", "meine", "Fotos", "dann", "noch", "da?"] },
+        { o: "Das kann ich leider nicht versprechen.", c: ["Hoffentlich habe ich eine Sicherung gemacht.", "Hoffentlich habe ich eine Sicherung gemachen.", "Hoffentlich bin ich eine Sicherung gemacht."] } ] },
+      { who: "Mitarbeiter", steps: [
+        { o: "Guten Tag! Haben Sie eine Frage?", c: ["Ja, meine Rechnung ist diesen Monat viel zu hoch.", "Ja, meine Rechnung ist diesen Monat viel zu höher.", "Ja, mein Rechnung ist diesen Monat viel zu hoch."] },
+        { o: "Darf ich mal sehen? Sie waren im Ausland.", c: ["Stimmt, ich war in den Ferien in der Türkei.", "Stimmt, ich war in den Ferien in Türkei.", "Stimmt, ich bin in den Ferien in der Türkei gewesen worden."] },
+        { o: "Dort ist Internet sehr teuer.", b: ["Das", "habe", "ich", "leider", "nicht", "gewusst."] },
+        { o: "Nächstes Mal buchen Sie besser ein Auslandspaket.", c: ["Danke für den Tipp, das mache ich.", "Danke für dem Tipp, das mache ich.", "Danke für den Tipp, das ich mache."] } ] }
+    ]
+  }
+};
+
+// ===== Glücksrad-Ereignisse =====
+// [Geschichte. Wirkung., art, wert]  art: move | skip | again | others | stars | swap | steal | warp
+const EVENTS2 = [
+  ["Du hast den Bus verpasst. 2 Felder zurück.", "move", -2],
+  ["Du hilfst einer Frau mit dem Kinderwagen. 2 Felder vor.", "move", 2],
+  ["Dein Handy ist leer. Du setzt eine Runde aus.", "skip", 0],
+  ["Du findest 10 Euro auf der Straße. Würfle noch einmal!", "again", 0],
+  ["Du bist pünktlich in der Schule. 3 Felder vor.", "move", 3],
+  ["Du hast deinen Schlüssel vergessen. 3 Felder zurück.", "move", -3],
+  ["Du bringst Kuchen für alle mit. Alle anderen Tische: 1 Feld zurück!", "others", -1],
+  ["Du hast verschlafen. Du setzt eine Runde aus.", "skip", 0],
+  ["Deine Lehrerin lobt dich. Du bekommst 2 Sterne!", "stars", 2],
+  ["Du hast den Test bestanden. 3 Sterne!", "stars", 3],
+  ["Du triffst einen Freund im Bus. Tauscht die Plätze mit dem Tisch auf Platz 1!", "swap", 0],
+  ["Du gewinnst beim Quiz im Radio. Jeder andere Tisch gibt dir 1 Stern!", "steal", 1],
+  ["Ein Taxi wartet auf dich. Fahr direkt zum nächsten Sprechen-Feld!", "warp", "S"],
+  ["Du nimmst die falsche Straßenbahn. 4 Felder zurück.", "move", -4],
+  ["Ein Fahrrad steht für dich bereit. 4 Felder vor!", "move", 4],
+  ["Du hast Geburtstag! Alle singen für dich. 2 Sterne!", "stars", 2]
+];
 </script>
 <script>// ===== Flache Illustrationen (64×64) =====
 const S = (b) => `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">${b}</svg>`;
@@ -2779,9 +3025,9 @@ const TYPE_ICON = {
 <script>
 "use strict";
 const ONLINE_URL = "https://8bibabub8.github.io/DaF_BbS/brettspiel/";
-const BROKERS = ["wss://broker.emqx.io:8084/mqtt", "wss://broker.hivemq.com:8884/mqtt", "wss://test.mosquitto.org:8081/mqtt"];
+const BROKERS = ["wss://broker.emqx.io:8084/mqtt", "wss://broker.hivemq.com:8884/mqtt", "wss://test.mosquitto.org:8081/mqtt", "wss://mqtt.eclipseprojects.io:443/mqtt"];
 const TCOL = ["", "#2F6FD6", "#E07A1F", "#8A4FD1", "#14998A"];
-const KIND = { A: ["Aufgabe", "var(--A)"], S: ["Sprechen", "var(--S)"], E: ["Ereignis", "var(--E)"], Z: ["Start", "var(--Z)"] };
+const KIND = { A: ["Aufgabe", "var(--A)"], S: ["Sprechen", "var(--S)"], E: ["Glücksrad", "var(--E)"], Z: ["Start", "var(--Z)"] };
 const $ = (id) => document.getElementById(id);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -2799,8 +3045,10 @@ class Net {
     try { this.bc = new BroadcastChannel(this.base); this.bc.onmessage = (e) => this._in(e.data); } catch (e) { this.bc = null; }
     this.clients = {}; this.broker = null; this.seen = new Set();
     if (typeof mqtt === "undefined") { this.onStatus("off", "Nur lokal (keine Internet-Bibliothek)"); return; }
-    if (role === "host") { BROKERS.forEach((_, i) => this._connect(i, false)); setTimeout(() => this._status(), 9000); }
-    else this._connect(brokerIdx == null ? 0 : brokerIdx, true, 0);
+    // Beamer und Handys verbinden sich parallel mit allen Servern: Ist ein Server im Schul-WLAN
+    // oder im Mobilnetz gesperrt, läuft die Verbindung über die anderen weiter.
+    BROKERS.forEach((_, i) => this._connect(i));
+    setTimeout(() => { this.tried = true; this._status(); }, 9000);
     this._status();
   }
   _status() {
@@ -2808,18 +3056,14 @@ class Net {
     if (on.length) this.onStatus("on", "Online (Server " + on.join(", ") + ")");
     else this.onStatus(this.tried ? "err" : "wait", this.tried ? (this.role === "host" ? "Keine Verbindung – ohne Handys spielen" : "Keine Verbindung") : "Verbinde …");
   }
-  _connect(i, tryNext, tries) {
-    if (tries >= BROKERS.length) { this.tried = true; this._status(); return; }
-    let ok = false;
-    const c = mqtt.connect(BROKERS[i], { clientId: "sr_" + this.id + "_" + i, keepalive: 30, reconnectPeriod: 4000, connectTimeout: 7000, clean: true });
-    const to = setTimeout(() => { if (ok) return; this.tried = true; if (tryNext) { try { c.end(true); } catch (e) {} this._connect((i + 1) % BROKERS.length, true, tries + 1); } else this._status(); }, 8000);
-    c.on("connect", () => {
-      ok = true; clearTimeout(to); this.clients[i] = c; if (this.broker == null) this.broker = i;
-      c.subscribe(this.base + (this.role === "host" ? "/p" : "/h")); this._status();
-    });
-    c.on("offline", () => this._status());
+  _connect(i) {
+    const c = mqtt.connect(BROKERS[i], { clientId: "sr_" + this.id + "_" + i, keepalive: 30, reconnectPeriod: 5000, connectTimeout: 8000, clean: true });
+    this.clients[i] = c;
+    c.on("connect", () => { if (this.broker == null) this.broker = i; c.subscribe(this.base + (this.role === "host" ? "/p" : "/h")); this._status(); });
+    c.on("offline", () => this._status()); c.on("close", () => this._status()); c.on("error", () => {});
     c.on("message", (t, m) => { try { this._in(JSON.parse(m.toString())); } catch (e) {} });
   }
+  servers() { return BROKERS.map((_, i) => !!(this.clients[i] && this.clients[i].connected)); }
   _in(msg) {
     if (!msg || msg.from === this.id) return; if (msg.to !== (this.role === "host" ? "h" : "p")) return;
     if (msg.mid) { if (this.seen.has(msg.mid)) return; this.seen.add(msg.mid); if (this.seen.size > 500) this.seen = new Set(); }
@@ -2855,6 +3099,7 @@ function Host() {
     turn: 1, phase: "setup", card: null, cid: 0, deck: [], evDeck: [], busy: false, lastSeen: {}, finished: []
   };
   window.G = G; // für Tests
+  window.__open = (i) => openField(G.teams[G.turn - 1], i);
   const SET = (() => { try { return JSON.parse(localStorage.getItem("stadtrallye.set") || "{}"); } catch (e) { return {}; } })();
   Object.assign(G, { nTeams: SET.nTeams || 4, lvl: SET.lvl || "A1", quizIds: SET.quizIds || ["stadt"], laps: SET.laps || 1 });
   const saveSet = () => { try { localStorage.setItem("stadtrallye.set", JSON.stringify({ nTeams: G.nTeams, lvl: G.lvl, quizIds: G.quizIds, laps: G.laps })); } catch (e) {} };
@@ -2894,7 +3139,10 @@ function Host() {
 
   function newGame() {
     if (!G.room) {
-      const A = "ABCDEFGHJKLMNPQRSTUVWXYZ"; G.room = Array.from({ length: 4 }, () => A[Math.floor(Math.random() * A.length)]).join("");
+      const A = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+      try { const r = JSON.parse(localStorage.getItem("stadtrallye.room") || "null"); if (r && Date.now() - r.ts < 12 * 3600e3 && /^[A-Z]{4}$/.test(r.room)) G.room = r.room; } catch (e) {}
+      if (!G.room) G.room = Array.from({ length: 4 }, () => A[Math.floor(Math.random() * A.length)]).join("");
+      try { localStorage.setItem("stadtrallye.room", JSON.stringify({ room: G.room, ts: Date.now() })); } catch (e) {}
       G.net = new Net(G.room, "host", onMsg, (st, txt) => { const n = $("net"); n.className = "net " + st; n.querySelector("span").textContent = txt; renderJoin(); });
       $("roomlbl").textContent = "Raum " + G.room;
     }
@@ -2905,7 +3153,7 @@ function Host() {
 
   // ---- QR-Codes ----
   const baseUrl = () => (location.protocol.startsWith("http") ? location.origin + location.pathname : ONLINE_URL);
-  const joinUrl = (t) => `${baseUrl()}?room=${G.room}&t=${t}&b=${G.net && G.net.broker != null ? G.net.broker : 0}`;
+  const joinUrl = (t) => `${baseUrl()}?room=${G.room}&t=${t}`;
   function qrSvg(text) { const q = qrcode(0, "M"); q.addData(text); q.make(); return q.createSvgTag({ cellSize: 6, margin: 2, scalable: true }); }
   function renderJoin() {
     if ($("join").classList.contains("hide") || !G.room) return;
@@ -2913,6 +3161,7 @@ function Host() {
     $("qrs").innerHTML = G.teams.map((t) => { const ok = now - (G.lastSeen[t.n] || 0) < 9000;
       return `<div class="qr ${ok ? "ok" : ""}" style="border-color:${ok ? "" : TCOL[t.n]}"><div class="lbl" style="color:${TCOL[t.n]}">Tisch ${t.n}</div><div class="qimg">${qrSvg(joinUrl(t.n))}</div><div class="stt">${ok ? "✓ verbunden" : "wartet …"}</div></div>`; }).join("");
     $("jUrl").textContent = "Ohne Kamera: " + baseUrl() + "?join öffnen und Raum " + G.room + " eingeben.";
+    const sv = G.net ? G.net.servers() : []; $("jSrv").innerHTML = "Server: " + sv.map((x, i) => `<b style="color:${x ? "#2E9E64" : "#D64545"}">${i + 1} ${x ? "✓" : "✗"}</b>`).join(" · ") + (sv.some((x) => x) ? "" : " – keine Internet-Verbindung. Ohne Handys weiterspielen oder anderes WLAN probieren.");
   }
   function openJoin() { $("join").classList.remove("hide"); renderJoin(); }
   $("jGo").onclick = () => { $("join").classList.add("hide"); };
@@ -3012,7 +3261,67 @@ function Host() {
   }
   const evSplit = (s) => { const k = s.indexOf(". "); return k < 0 ? [s, ""] : [s.slice(0, k + 1), s.slice(k + 2)]; };
   const evStory = (s) => evSplit(s)[0], evAct = (s) => evSplit(s)[1];
-  function nextEv() { if (!G.evDeck.length) G.evDeck = shuffle(EVENTS); return G.evDeck.pop(); }
+  function nextEv() { if (!G.evDeck.length) G.evDeck = shuffle(typeof EVENTS2 !== "undefined" ? EVENTS2 : EVENTS); return G.evDeck.pop(); }
+  // Pro Ort mehrere Dialoge: Erst wenn alle Varianten dran waren, kommt eine Wiederholung.
+  function nextDialog(pl) {
+    const lv = G.lvl === "A2" ? "A2" : "A1";
+    const pool = [DIALOG[pl][lv]].concat((typeof DIALOG_MORE !== "undefined" && DIALOG_MORE[pl] && DIALOG_MORE[pl][lv]) || []);
+    G.dlg = G.dlg || {}; const k = pl + lv;
+    if (!G.dlg[k] || !G.dlg[k].length) G.dlg[k] = shuffle(pool.map((_, j) => j));
+    return pool[G.dlg[k].pop()];
+  }
+  // ---- Glücksrad ----
+  const EVLBL = (e) => {
+    const [, a, v] = e;
+    if (a === "move") return v > 0 ? ["▶", "+" + v, "#2E9E64"] : ["◀", "−" + -v, "#D64545"];
+    return { skip: ["⏸", "Pause", "#D64545"], again: ["🎲", "Nochmal", "#2F6FD6"], others: ["👥", "Alle −1", "#8A4FD1"], stars: ["★", "+" + v, "#E3A812"],
+      swap: ["⇄", "Tausch", "#8A4FD1"], steal: ["🧲", "★ Klau", "#E3A812"], warp: ["🚕", "Taxi", "#14998A"] }[a];
+  };
+  function wheelSvg(segs) {
+    const n = segs.length, R = 100, out = [];
+    segs.forEach((e, k) => {
+      const a0 = (k / n) * 2 * Math.PI - Math.PI / 2, a1 = ((k + 1) / n) * 2 * Math.PI - Math.PI / 2, [ic, lb, col] = EVLBL(e);
+      const p = (a) => [R + R * Math.cos(a), R + R * Math.sin(a)];
+      const [x0, y0] = p(a0), [x1, y1] = p(a1), am = (a0 + a1) / 2, deg = (am * 180) / Math.PI + 90;
+      out.push(`<path d="M${R},${R} L${x0},${y0} A${R},${R} 0 0 1 ${x1},${y1} Z" fill="${col}" opacity="${k % 2 ? .82 : 1}" stroke="#fff" stroke-width="2"/>`);
+      const tx = R + 64 * Math.cos(am), ty = R + 64 * Math.sin(am);
+      out.push(`<g transform="translate(${tx},${ty}) rotate(${deg})"><text text-anchor="middle" y="-5" font-size="17" fill="#fff">${ic}</text><text text-anchor="middle" y="13" font-size="12.5" font-weight="900" fill="#fff" font-family="Nunito,sans-serif">${esc(lb)}</text></g>`);
+    });
+    return `<svg class="wh" id="whl" viewBox="0 0 200 200"><circle cx="100" cy="100" r="99" fill="#fff"/>${out.join("")}<circle cx="100" cy="100" r="98" fill="none" stroke="#fff" stroke-width="4"/></svg>`;
+  }
+  let actx = null;
+  function tick(f = 900, d = .03, vol = .08) {
+    try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); const o = actx.createOscillator(), g = actx.createGain();
+      o.frequency.value = f; o.type = "triangle"; g.gain.value = vol; o.connect(g); g.connect(actx.destination); o.start(); g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime + d); o.stop(actx.currentTime + d + .02); } catch (e) {}
+  }
+  function fanfare(good) { (good ? [523, 659, 784, 1047] : [392, 330, 262]).forEach((f, k) => setTimeout(() => tick(f, .22, .12), k * 140)); }
+  function bigFx(txt, col) { const d = document.createElement("div"); d.className = "bigfx"; d.textContent = txt; d.style.color = col || "#fff"; document.body.appendChild(d); setTimeout(() => d.remove(), 1700); }
+  async function spinWheel() {
+    const c = G.card; if (!c || c.kind !== "E" || c.sp !== "ready") return;
+    c.sp = "spin"; pub(); const b = $("wSpin"); if (b) b.disabled = true;
+    const n = c.segs.length, seg = 360 / n, el = $("whl");
+    const end = 360 * 6 + (360 - (c.target * seg + seg / 2)) + (Math.random() - .5) * seg * .6, dur = 4600, t0 = performance.now();
+    let last = -1;
+    await new Promise((res) => {
+      (function f(t) {
+        const x = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - x, 4), ang = end * e;
+        if (el) el.style.transform = `rotate(${ang}deg)`;
+        const idx = Math.floor((ang + seg / 2) / seg); if (idx !== last) { last = idx; tick(1100, .025); }
+        if (x < 1) requestAnimationFrame(f); else res();
+      })(t0);
+    });
+    if (el) el.classList.add("glow");
+    const good = !["skip"].includes(c.act) && !(c.act === "move" && c.val < 0);
+    fanfare(good); await sleep(900);
+    c.sp = "done"; c.open = true; showEvCard(); pub();
+  }
+  function showEvCard() {
+    const c = G.card, t = cur(), [ic, lb, col] = EVLBL([c.p, c.act, c.val]);
+    $("wSide").innerHTML = `<div class="k" style="color:${col};font-weight:900;font-size:clamp(24px,min(3.4vw,6vh),60px)">${ic} ${esc(lb)}</div>
+      <div class="qtext pop">${esc(evStory(c.p))}</div><div class="result pop" style="color:${col};font-size:clamp(17px,min(2vw,3.4vh),34px);margin-bottom:8px">${esc(evAct(c.p))}</div>
+      <div class="hint" style="margin-bottom:12px">Tisch ${t.n} liest die Karte laut vor.</div><div class="row" style="justify-content:flex-start"><button class="btn" id="eOk">OK</button></div>`;
+    $("eOk").onclick = () => doEvent(t);
+  }
   function head(ty, i) { return `<div class="cardhead"><div class="pic">${ICONS[PLACES[i][0]]}</div><div style="text-align:left"><div class="k" style="color:${KIND[ty][1]}">${KIND[ty][0]}</div><div class="pl">${esc(PLACES[i][1])}</div></div></div>`; }
   let tmr = null;
   function openField(t, i) {
@@ -3030,7 +3339,7 @@ function Host() {
       clearTimeout(tmr); tmr = setTimeout(() => reveal(), dur * 1000);
       renderAnsw(); pub();
     } else if (ty === "S") {
-      const D = DIALOG[PLACES[i][0]][G.lvl === "A2" ? "A2" : "A1"];
+      const D = nextDialog(PLACES[i][0]);
       const steps = D.steps.map((st) => {
         if (st.c) { const ord = shuffle([0, 1, 2]); return { o: st.o, type: "c", opts: ord.map((k) => st.c[k]), r: ord.indexOf(0), ans: st.c[0] }; }
         let w = shuffle(st.b); for (let k = 0; k < 5 && w.join(" ") === st.b.join(" "); k++) w = shuffle(st.b);
@@ -3038,16 +3347,21 @@ function Host() {
       });
       G.card = { cid: G.cid, kind: "S", place: i, who: D.who, steps, step: 0, log: [], miss: 0, done: false, typing: true, wrongAt: 0 };
       G.phase = "card"; renderDialog(); pub();
-      setTimeout(() => { if (G.card && G.card.cid === G.cid) { G.card.log.push({ w: "o", t: steps[0].o }); G.card.typing = false; renderDialog(); pub(); } }, 900);
+      setTimeout(() => { if (G.card && G.card.cid === G.cid && G.card.log) { G.card.log.push({ w: "o", t: steps[0].o }); G.card.typing = false; renderDialog(); pub(); } }, 900);
     } else if (ty === "E") {
-      const ev = nextEv(); G.card = { cid: G.cid, kind: "E", place: i, p: ev[0], act: ev[1], val: ev[2], open: false };
+      const ev = nextEv();
+      const others = shuffle((typeof EVENTS2 !== "undefined" ? EVENTS2 : EVENTS).filter((e) => EVLBL(e)[1] !== EVLBL(ev)[1]));
+      const segs = []; const seenL = new Set([EVLBL(ev)[1]]);
+      for (const e of others) { if (segs.length >= 7) break; if (!seenL.has(EVLBL(e)[1])) { seenL.add(EVLBL(e)[1]); segs.push(e); } }
+      while (segs.length < 7) segs.push(others[segs.length % others.length]);
+      const target = Math.floor(Math.random() * 8); segs.splice(target, 0, ev);
+      G.card = { cid: G.cid, kind: "E", place: i, p: ev[0], act: ev[1], val: ev[2], open: false, sp: "ready", segs, target };
       G.phase = "card";
-      center.innerHTML = `<div class="pane"><div class="card flip" id="evc" style="position:relative;min-height:46%">
-        <div class="evfront">${head("E", i)}<div class="qtext">${esc(evStory(ev[0]))}</div><div class="result" style="color:var(--E);font-size:clamp(20px,min(2.4vw,4vh),40px);margin-bottom:10px">${esc(evAct(ev[0]))}</div><div class="hint" style="margin-bottom:12px">Tisch ${t.n} liest die Karte laut vor.</div><div class="row"><button class="btn" id="eOk">OK</button></div></div>
-        <div class="evback">${TYPE_ICON.E}</div></div></div>`;
+      center.innerHTML = `<div class="pane"><div class="card pop" id="evc">${head("E", i)}
+        <div class="wheelbox"><div class="wheel"><svg class="ptr" viewBox="0 0 40 50"><path d="M20 48 L2 6 Q20 -4 38 6 Z" fill="#2B2D42" stroke="#fff" stroke-width="3"/></svg>${wheelSvg(segs)}<div class="hub">🎡</div></div>
+        <div class="wside" id="wSide"><div class="qtext">Glücksrad!</div><div class="hint" style="margin-bottom:14px">Tisch ${t.n} dreht – hier oder am Handy.</div><button class="btn" id="wSpin">🎡 Drehen!</button></div></div></div></div>`;
+      $("wSpin").onclick = () => spinWheel();
       pub();
-      setTimeout(() => { const c = $("evc"); if (c) c.classList.remove("flip"); G.card.open = true; pub(); }, 700);
-      $("eOk").onclick = () => doEvent(t);
     } else { showTurn(); }
   }
   function renderDialog() {
@@ -3105,12 +3419,34 @@ function Host() {
     G.busy = false; nextTurn();
   }
   async function doEvent(t) {
-    if (G.busy) return; G.busy = true; const c = G.card; let again = false;
-    if (c.act === "move") { await hop(t, c.val); if (t.done) { G.busy = false; return finish(t); } }
-    else if (c.act === "skip") t.skip = 1;
-    else if (c.act === "again") again = true;
-    else if (c.act === "others") { for (const x of G.teams) if (x !== t && !x.done && x.pos > 0) await hop(x, c.val); }
-    G.busy = false;
+    if (G.busy) return; G.busy = true; const c = G.card; let again = false, chain = -1;
+    const [, lb, col] = EVLBL([c.p, c.act, c.val]);
+    if (c.act === "move") { bigFx(lb, col); await hop(t, c.val); if (t.done) { G.busy = false; return finish(t); } }
+    else if (c.act === "skip") { bigFx("⏸", col); t.skip = 1; }
+    else if (c.act === "again") { bigFx("🎲 🎲", col); again = true; }
+    else if (c.act === "others") { bigFx("👥 −1", col); for (const x of G.teams) if (x !== t && !x.done && x.pos > 0) await hop(x, c.val); }
+    else if (c.act === "stars") { bigFx("★ +" + c.val, "#F4C542"); confetti(120); t.stars += c.val; floatAt(t, "+" + c.val + " ★"); renderBar(); }
+    else if (c.act === "steal") {
+      bigFx("🧲 ★", "#F4C542"); let got = 0;
+      for (const x of G.teams) if (x !== t && x.stars > 0) { x.stars--; got++; floatAt(x, "−1 ★"); }
+      t.stars += got; await sleep(500); floatAt(t, "+" + got + " ★"); renderBar();
+    } else if (c.act === "swap") {
+      const lead = G.teams.filter((x) => x !== t && !x.done).sort((a, b) => b.pos - a.pos)[0];
+      if (!lead || lead.pos <= t.pos) { bigFx("★ +2", "#F4C542"); t.stars += 2; floatAt(t, "Ihr führt schon! +2 ★"); renderBar(); }
+      else {
+        bigFx("⇄", col); await sleep(500);
+        const ea = pawnEls[t.n], eb = pawnEls[lead.n], ra = ea.style.transform, rb = eb.style.transform;
+        const a1 = ea.animate([{ transform: ra }, { transform: rb }], { duration: 900, easing: "ease-in-out" }), a2 = eb.animate([{ transform: rb }, { transform: ra }], { duration: 900, easing: "ease-in-out" });
+        [t.pos, lead.pos] = [lead.pos, t.pos]; ea.style.transform = rb; eb.style.transform = ra;
+        await Promise.all([a1.finished.catch(() => {}), a2.finished.catch(() => {})]); placePawns(); renderBar();
+      }
+    } else if (c.act === "warp") {
+      let d = 1; while (d < N && PLACES[(t.pos + d) % N][2] !== c.val) d++;
+      bigFx("🚕 +" + d, col); await hop(t, d); if (t.done) { G.busy = false; return finish(t); }
+      chain = t.pos % N;
+    }
+    G.busy = false; pub();
+    if (chain >= 0) { highlight(chain); await sleep(500); return openField(t, chain); }
     if (again) showTurn("Noch einmal würfeln!"); else nextTurn();
   }
   function nextTurn() {
@@ -3138,7 +3474,7 @@ function Host() {
     if (!$("setup").classList.contains("hide")) return;
     if (e.key === " " && G.phase === "turn") { e.preventDefault(); doRoll(); }
     else if (e.key === "Enter" && G.card && G.card.kind === "A") { if (!G.card.revealed) reveal(); else $("bNext") && $("bNext").click(); }
-    else if (e.key === "Enter" && G.card && G.card.kind === "E") $("eOk") && $("eOk").click();
+    else if (e.key === "Enter" && G.card && G.card.kind === "E") { if (G.card.sp === "ready") spinWheel(); else $("eOk") && $("eOk").click(); }
     else if (/^[123]$/.test(e.key) && G.card && G.card.kind === "A" && !G.card.revealed) { G.card.ans[G.turn] = +e.key - 1; reveal(); }
     else if (/^[123]$/.test(e.key) && G.card && G.card.kind === "S" && !G.card.done) { const st = G.card.steps[G.card.step]; if (st && st.type === "c") dlgAnswer(+e.key - 1); }
     else if (e.key.toLowerCase() === "f") $("bFull").click();
@@ -3150,6 +3486,7 @@ function Host() {
     const first = !G.lastSeen[m.t]; G.lastSeen[m.t] = Date.now();
     if (m.type === "hello" || first) { renderJoin(); renderBar(); pub(); }
     if (m.type === "dlg") onDlg(m);
+    if (m.type === "spin" && G.card && G.card.kind === "E" && m.cid === G.card.cid && m.t === G.turn) spinWheel();
     if (m.type === "answer" && G.card && G.card.kind === "A" && m.cid === G.card.cid && !G.card.revealed && G.card.ans[m.t] == null && m.t <= G.teams.length) {
       G.card.ans[m.t] = m.idx; renderAnsw(); pub();
       const on = onlineTeams(); if (G.card.ans[G.turn] != null && on.every((n) => G.card.ans[n] != null)) setTimeout(reveal, 600);
@@ -3161,7 +3498,7 @@ function Host() {
   function pub() {
     if (!G.net) return;
     const c = G.card;
-    let card = c ? { cid: c.cid, kind: c.kind, place: PLACES[c.place][1], p: c.p, o: c.o, revealed: !!c.revealed, r: c.revealed ? c.r : null, ans: c.ans, open: c.open } : null;
+    let card = c ? { cid: c.cid, kind: c.kind, place: PLACES[c.place][1], p: c.p, o: c.o, revealed: !!c.revealed, r: c.revealed ? c.r : null, ans: c.ans, open: c.open, sp: c.sp } : null;
     if (c && c.kind === "S") { const st = c.steps[c.step]; Object.assign(card, { who: c.who, log: c.log, step: c.step, n: c.steps.length, miss: c.miss, done: c.done, typing: c.typing, wrongAt: c.wrongAt, cur: st && !c.done ? (st.type === "c" ? { type: "c", opts: st.opts } : { type: "b", words: st.words }) : null }); }
     G.net.send({ type: "state", s: { room: G.room, phase: G.phase, turn: G.turn, teams: G.teams.map((t) => ({ n: t.n, stars: t.stars, pos: t.pos, done: t.done })), lap: N * G.laps, card, finished: G.finished } }, true);
   }
@@ -3176,7 +3513,7 @@ function Host() {
 // =====================================================================
 function Phone() {
   $("phone").classList.remove("hide");
-  const room = (params.get("room") || "").toUpperCase(), t = +params.get("t"), b = params.get("b") != null ? +params.get("b") : null;
+  const room = (params.get("room") || "").toUpperCase(), t = +params.get("t"), b = null;
   const top = $("phTop"), main = $("phMain");
   if (!room || !(t >= 1 && t <= 4)) {
     top.style.background = "var(--acc)"; top.textContent = "Stadt-Rallye";
@@ -3194,12 +3531,24 @@ function Phone() {
   try { const s = JSON.parse(sessionStorage.getItem("sr.ans") || "{}"); if (s.room === room) myAns = s.a || {}; } catch (e) {}
   const save = () => { try { sessionStorage.setItem("sr.ans", JSON.stringify({ room, a: myAns })); } catch (e) {} };
   main.innerHTML = `<div class="ph-big">Hallo Tisch ${t}! 👋</div><div class="ph-sub">Warte auf das Spiel am Beamer …</div>`;
+  setTimeout(() => {
+    if (S) return;
+    const sv = net.servers ? net.servers() : [];
+    const anyOn = sv.some((x) => x);
+    main.innerHTML = `<div class="ph-big">${anyOn ? "Beamer nicht gefunden 🤔" : "Keine Internet-Verbindung 📵"}</div>
+      <div class="ph-sub" style="text-align:left">${anyOn
+        ? `Raum <b>${esc(room)}</b> antwortet nicht.<br>• Ist das Spiel am Beamer gestartet?<br>• Den QR-Code <b>neu scannen</b> (alte Links aus einem früheren Spiel gehen nicht).`
+        : `Das Handy erreicht die Spiel-Server nicht.<br>• WLAN aus- und mobile Daten einschalten (oder umgekehrt).<br>• Dann „Neu verbinden“ tippen.`}</div>
+      <div class="ph-sub">Server: ${sv.map((x, i) => (i + 1) + (x ? " ✓" : " ✗")).join(" · ")}</div>
+      <button class="ph-opt" id="phRe" style="justify-content:center">🔄 Neu verbinden</button>`;
+    $("phRe").onclick = () => location.reload();
+  }, 12000);
 
   let lastKey = "", lastWrong = 0, build = { key: "", picked: [] };
   function render(force) {
     if (!S) return;
     const c0 = S.card, me0 = (S.teams || []).find((x) => x.n === t);
-    const key = JSON.stringify([S.phase, S.turn, S.teams.length, me0 && me0.stars, c0 && c0.cid, c0 && c0.revealed, c0 && c0.open, c0 && myAns[c0.cid], c0 && c0.step, c0 && c0.miss, c0 && c0.done, c0 && c0.typing, c0 && (c0.log || []).length]);
+    const key = JSON.stringify([S.phase, S.turn, S.teams.length, me0 && me0.stars, c0 && c0.cid, c0 && c0.revealed, c0 && c0.open, c0 && c0.sp, c0 && myAns[c0.cid], c0 && c0.step, c0 && c0.miss, c0 && c0.done, c0 && c0.typing, c0 && (c0.log || []).length]);
     if (!force && key === lastKey) return; lastKey = key;
     const me = (S.teams || []).find((x) => x.n === t);
     const stars = me ? `★ ${me.stars}` : "";
@@ -3245,11 +3594,16 @@ function Phone() {
       return;
     }
     if (c && c.kind === "E" && mine) {
-      main.innerHTML = `<span class="badge" style="background:var(--E)">Ereignis · ${esc(c.place)}</span><div class="ph-card">${c.open ? esc(c.p) : "…"}</div><div class="ph-sub">Lest die Karte laut vor!</div>`;
+      if (c.sp === "ready") {
+        main.innerHTML = `<span class="badge" style="background:var(--E)">Glücksrad · ${esc(c.place)}</span><button class="ph-opt" id="phSpin" style="justify-content:center;font-size:30px;padding:28px;background:var(--E);color:#fff;border-color:var(--E)">🎡 Drehen!</button><div class="ph-sub">Tippt – dann schaut zum Beamer!</div>`;
+        $("phSpin").onclick = () => { net.send({ type: "spin", t, cid: c.cid }); if (navigator.vibrate) navigator.vibrate(200); $("phSpin").disabled = true; $("phSpin").textContent = "🎡 …"; };
+        return;
+      }
+      main.innerHTML = `<span class="badge" style="background:var(--E)">Glücksrad · ${esc(c.place)}</span><div class="ph-card">${c.open ? esc(c.p) : "Das Rad dreht sich … 🎡"}</div><div class="ph-sub">${c.open ? "Lest die Karte laut vor!" : "Schaut zum Beamer!"}</div>`;
       return;
     }
     if (mine && S.phase === "turn") { main.innerHTML = `<div class="ph-big">🎲 Ihr seid dran!</div><div class="ph-sub">Schaut zum Beamer – gleich wird gewürfelt.</div><div class="ph-sub">${stars}</div>`; return; }
-    const who = c && c.kind === "S" ? "spielt eine Szene" : c && c.kind === "E" ? "hat eine Ereigniskarte" : "ist dran";
+    const who = c && c.kind === "S" ? "spielt eine Szene" : c && c.kind === "E" ? "dreht am Glücksrad 🎡" : "ist dran";
     main.innerHTML = `<div class="ph-big"><span style="color:${TCOL[S.turn]}">Tisch ${S.turn}</span> ${who}.</div><div class="ph-sub">Hört gut zu! · Ihr habt ${stars}</div>`;
   }
 }

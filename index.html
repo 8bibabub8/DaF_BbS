@@ -53,6 +53,45 @@ h1.big{font-weight:900;font-size:clamp(28px,6vw,44px);color:var(--acc);line-heig
 .tile svg{width:40px;height:40px}
 .sec{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);font-weight:800;margin:18px 0 8px}
 .badge{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:900;color:#fff;vertical-align:middle;margin-left:6px}
+/* Navigation */
+a{color:inherit;text-decoration:none}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;background:rgba(245,243,238,.94);backdrop-filter:blur(8px);margin:-16px -16px 10px;padding:10px 16px;border-bottom:1px solid var(--line)}
+.top .brand{font-weight:900;font-size:19px;color:var(--acc)}
+.top .sp{flex:1}
+.mbtn{width:42px;height:42px;border-radius:12px;background:#fff;border:2px solid var(--line);font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;flex:none}
+.chead{display:flex;align-items:center;gap:12px;margin:4px 0 10px}
+.chead .ic{width:48px;height:48px;flex:none}.chead .cti{flex:1;min-width:0}
+.chead .t{font-weight:900;font-size:21px;line-height:1.15}.chead .s{color:var(--mut);font-weight:700;font-size:14px}
+.arrow{width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:var(--acc);flex:none}
+.arrow.off{opacity:.25;pointer-events:none}
+.tabs{position:sticky;top:62px;z-index:15;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:#EAE6DC;border-radius:16px;padding:5px;margin-bottom:14px}
+.tab{border-radius:12px;padding:8px 4px 7px;text-align:center;font-weight:900;font-size:16px;color:var(--mut);display:flex;flex-direction:column;align-items:center;line-height:1.15}
+.tab small{font-size:11px;font-weight:700;opacity:.8;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tab i{font-style:normal;font-size:11px;font-weight:800;background:rgba(0,0,0,.07);border-radius:999px;padding:0 7px;margin-top:3px}
+.tab.on{background:#fff;color:var(--kc);box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:8px;-webkit-overflow-scrolling:touch}
+.chip{flex:none;border:2px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font-weight:800;font-size:14px;white-space:nowrap}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.card.chap{flex-direction:column;align-items:stretch;gap:10px;padding:14px}
+.chm{display:flex;gap:14px;align-items:center}
+.qk{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.qk a{display:flex;align-items:center;justify-content:center;gap:6px;background:#F7F5F0;border:2px solid var(--line);border-radius:12px;padding:7px 4px;font-weight:800;font-size:14px}
+.qk a svg{width:20px;height:20px;flex:none}
+.vtools{display:flex;gap:8px;align-items:flex-start}.vtools .search{flex:1}
+a.btn{text-align:center}
+.card.lang.sel{border-color:var(--acc);background:var(--soft)}
+#menu{position:fixed;inset:0;z-index:50;background:rgba(20,30,25,0);transition:background .25s}
+#menu.open{background:rgba(20,30,25,.4)}
+.mpanel{position:absolute;left:0;top:0;bottom:0;width:min(86vw,360px);background:var(--bg);overflow-y:auto;padding:12px 12px 40px;transform:translateX(-100%);transition:transform .25s ease-out;box-shadow:4px 0 20px rgba(0,0,0,.15)}
+#menu.open .mpanel{transform:none}
+.mhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}.mhead b{font-size:20px;color:var(--ink)}
+.msec{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);font-weight:800;margin:16px 4px 6px}
+.mrow{display:flex;align-items:center;gap:10px;padding:9px 8px;border-radius:12px;font-weight:800;font-size:16px}
+.mrow.home{background:#fff;border:2px solid var(--line)}
+.mchap{border-radius:14px;margin-bottom:2px}.mchap.on{background:#fff;border:2px solid var(--line)}
+.mi{width:30px;height:30px;flex:none}.mt{flex:1}.mc{font-size:12px;color:var(--mut)}
+.msub{display:flex;gap:6px;padding:0 8px 8px 48px}
+.msub a{font-size:12.5px;font-weight:800;color:var(--acc);background:var(--soft);border-radius:999px;padding:3px 9px}
 /* Grammatik */
 .rule{background:#fff;border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:10px}
 .rule .de{font-weight:800;font-size:18px;line-height:1.4}
@@ -143,6 +182,7 @@ kbd{border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;paddi
 </head>
 <body>
 <div class="wrap" id="app"></div>
+<div id="menu" class="hide"></div>
 <div id="beamer" class="hide">
   <div class="btop">
     <span class="brand">Deutsch an der BbS</span>
@@ -3456,6 +3496,253 @@ CHAPTERS.push({
     { type: "vocab", title: "Wörter-Quiz" }
   ]
 });
+// ===== Ergänzungen aus dem Abgleich mit den Unterrichtsmaterialien (Kurs 2 + 3) =====
+const ADD = {};
+ADD.tag = [
+  ["die Woche, die Wochen", "неделя|тиждень|săptămână|седмица|hét|hafta|أسبوع|semana|week|semaine", "Die Woche hat sieben Tage."],
+  ["der Tag, die Tage", "день|день|zi|ден|nap|gün|يوم|dia|day|jour", "Heute ist ein schöner Tag."],
+  ["das Formular", "анкета, бланк|анкета, бланк|formular|формуляр|űrlap|form|استمارة|formulário|form|formulaire", "Füllen Sie bitte das Formular aus."],
+  ["die Straße", "улица|вулиця|stradă|улица|utca|sokak, cadde|شارع|rua|street|rue", "Ich wohne in der Jakobsstraße."],
+  ["die Hausnummer", "номер дома|номер будинку|număr de casă|номер на къща|házszám|kapı numarası|رقم المنزل|número da casa|house number|numéro de maison", "Die Hausnummer ist 5."],
+  ["der Geburtsort", "место рождения|місце народження|locul nașterii|място на раждане|születési hely|doğum yeri|مكان الميلاد|local de nascimento|place of birth|lieu de naissance", "Mein Geburtsort ist Aleppo."],
+  ["die Staatsangehörigkeit", "гражданство|громадянство|cetățenie|гражданство|állampolgárság|vatandaşlık|الجنسية|nacionalidade|nationality|nationalité", "Staatsangehörigkeit: ukrainisch."],
+  ["die Anmeldung", "регистрация, ресепшн|реєстрація, рецепція|înscriere, recepție|регистрация, рецепция|bejelentkezés, recepció|kayıt, resepsiyon|التسجيل، الاستقبال|inscrição, recepção|registration, reception|inscription, accueil", "Bitte melden Sie sich an der Anmeldung."],
+  ["die Zahl, die Zahlen", "число, цифра|число, цифра|număr, cifră|число, цифра|szám|sayı|رقم، عدد|número|number|nombre", "Schreib die Zahlen bitte auf."],
+  ["frühstücken", "завтракать|снідати|a lua micul dejun|закусвам|reggelizik|kahvaltı yapmak|يتناول الفطور|tomar café da manhã|to have breakfast|prendre le petit-déjeuner", "Amir frühstückt um sieben Uhr."],
+  ["einkaufen (kauft ein)", "делать покупки|робити покупки|a face cumpărături|пазарувам|bevásárol|alışveriş yapmak|يتسوّق|fazer compras|to go shopping|faire les courses", "Am Donnerstag kauft Amir ein."],
+  ["besuchen", "посещать, навещать|відвідувати|a vizita|посещавам|meglátogat|ziyaret etmek|يزور|visitar|to visit|rendre visite", "Am Sonntag besucht er Freunde."],
+  ["telefonieren", "разговаривать по телефону|розмовляти по телефону|a vorbi la telefon|говоря по телефона|telefonál|telefonla konuşmak|يتحدث بالهاتف|telefonar|to phone|téléphoner", "Amir telefoniert mit der Praxis."],
+  ["Auf Wiederhören!", "До свидания! (по телефону)|До побачення! (телефоном)|La revedere! (la telefon)|Довиждане! (по телефона)|Viszonthallásra!|Hoşça kalın! (telefonda)|مع السلامة! (على الهاتف)|Até logo! (ao telefone)|Goodbye! (on the phone)|Au revoir ! (au téléphone)", "Danke, auf Wiederhören!"]
+];
+ADD.praktikum = [
+  ["das Büro, die Büros", "офис|офіс|birou|офис|iroda|ofis|مكتب|escritório|office|bureau", "Frau Wolf sitzt im Büro."],
+  ["das Lager", "склад|склад|depozit|склад|raktár|depo|مستودع|depósito|storeroom|entrepôt", "Das Holz liegt im Lager."],
+  ["die Umkleide", "раздевалка|роздягальня|vestiar|съблекалня|öltöző|soyunma odası|غرفة تبديل الملابس|vestiário|changing room|vestiaire", "Die Arbeitskleidung ist in der Umkleide."],
+  ["das Holz", "дерево (материал)|деревина|lemn|дърво (материал)|fa (anyag)|tahta|خشب|madeira|wood|bois", "In der Tischlerei arbeiten wir mit Holz."],
+  ["die Leiter", "лестница (стремянка)|драбина|scară|стълба|létra|merdiven|سلّم|escada|ladder|échelle", "Holen Sie bitte die Leiter!"],
+  ["der Besen", "метла|мітла|mătură|метла|seprű|süpürge|مكنسة|vassoura|broom|balai", "Nehmen Sie den Besen und räumen Sie auf!"],
+  ["der Eimer", "ведро|відро|găleată|кофа|vödör|kova|دلو|balde|bucket|seau", "Der Eimer ist voll Wasser."],
+  ["die Maschine", "станок, машина|верстат, машина|mașină|машина|gép|makine|آلة|máquina|machine|machine", "Die Maschine ist laut."],
+  ["der Schraubendreher", "отвёртка|викрутка|șurubelniță|отвертка|csavarhúzó|tornavida|مفك براغي|chave de fenda|screwdriver|tournevis", "Geben Sie mir bitte den Schraubendreher!"],
+  ["der Schraubenschlüssel", "гаечный ключ|гайковий ключ|cheie fixă|гаечен ключ|csavarkulcs|anahtar (alet)|مفتاح ربط|chave inglesa|spanner|clé plate", "Wo ist der Schraubenschlüssel?"],
+  ["die Arbeitshose", "рабочие брюки|робочі штани|pantaloni de lucru|работен панталон|munkanadrág|iş pantolonu|بنطال العمل|calça de trabalho|work trousers|pantalon de travail", "Die Arbeitshose ist blau."],
+  ["die Warnweste", "сигнальный жилет|сигнальний жилет|vestă reflectorizantă|светлоотразителна жилетка|láthatósági mellény|reflektörlü yelek|سترة عاكسة|colete refletivo|high-visibility vest|gilet de sécurité", "Im Lager tragen wir eine Warnweste."],
+  ["der Gehörschutz", "наушники для защиты слуха|захисні навушники|protecție auditivă|антифони|fülvédő|kulaklık (koruyucu)|واقي السمع|protetor auricular|ear protection|protection auditive", "An der Maschine trägt man Gehörschutz."],
+  ["der Ausbilder / die Ausbilderin", "мастер-наставник|наставник|instructor (formator)|инструктор|szakoktató|eğitmen usta|المدرّب|instrutor|trainer|formateur", "Herr Krause ist der Ausbilder."],
+  ["der / die Azubi", "ученик (на производстве)|учень (на виробництві)|ucenic|чирак, стажант|tanonc|çırak|متدرّب|aprendiz|apprentice|apprenti", "Lena ist Azubi in der Tischlerei."],
+  ["holen", "приносить, сходить за|приносити, сходити по|a aduce, a lua|донасям|hoz (elhoz)|getirmek|يجلب|buscar|to fetch|aller chercher", "Holen Sie bitte das Holz!"],
+  ["bringen", "приносить|приносити|a aduce|нося, донасям|visz, hoz|getirmek, götürmek|يُحضِر|trazer, levar|to bring|apporter", "Bringen Sie die Kiste ins Lager!"],
+  ["tragen", "носить|носити|a purta|нося (дреха)|visel, hord|giymek, taşımak|يرتدي، يحمل|usar, carregar|to wear, carry|porter", "Tragen Sie bitte Handschuhe!"],
+  ["die Arbeitszeit", "рабочее время|робочий час|program de lucru|работно време|munkaidő|çalışma saati|ساعات العمل|horário de trabalho|working hours|horaires de travail", "Die Arbeitszeit ist von 7 bis 15 Uhr."],
+  ["die Frühstückspause", "перерыв на завтрак|перерва на сніданок|pauza de mic dejun|почивка за закуска|reggeli szünet|kahvaltı molası|استراحة الفطور|pausa do lanche|breakfast break|pause petit-déjeuner", "Um 9 Uhr ist Frühstückspause."],
+  ["anrufen (ruft an)", "звонить|телефонувати|a suna|обаждам се|felhív|aramak (telefonla)|يتصل|ligar|to call|appeler", "Amir ruft Frau Wolf an."],
+  ["Gute Besserung!", "Выздоравливай!|Одужуй!|Însănătoșire grabnică!|Оздравявай!|Jobbulást!|Geçmiş olsun!|أتمنى لك الشفاء!|Melhoras!|Get well soon!|Bon rétablissement !", "Gute Besserung, Amir!"]
+];
+ADD.arzt = [
+  ["der Arzt / die Ärztin", "врач|лікар / лікарка|medic|лекар / лекарка|orvos|doktor|طبيب / طبيبة|médico / médica|doctor|médecin", "Die Ärztin heißt Frau Schulz."],
+  ["der Körper", "тело|тіло|corp|тяло|test|vücut|جسم|corpo|body|corps", "Das ist der Körper."],
+  ["wehtun (es tut weh)", "болеть|боліти|a durea|боли|fáj|ağrımak|يؤلم|doer|to hurt|faire mal", "Mein Bauch tut weh."],
+  ["die Schmerzen (Pl.)", "боль|біль|dureri|болки|fájdalom|ağrılar|آلام|dores|pain|douleurs", "Ich habe Schmerzen."],
+  ["die Kopfschmerzen (Pl.)", "головная боль|головний біль|dureri de cap|главоболие|fejfájás|baş ağrısı|صداع|dor de cabeça|headache|mal de tête", "Ich habe Kopfschmerzen."],
+  ["die Bauchschmerzen (Pl.)", "боль в животе|біль у животі|dureri de burtă|болки в корема|hasfájás|karın ağrısı|ألم في البطن|dor de barriga|stomach ache|mal au ventre", "Amir hat Bauchschmerzen."],
+  ["die Versichertenkarte", "карта медицинского страхования|картка медичного страхування|card de asigurat|здравноосигурителна карта|egészségbiztosítási kártya|sigorta kartı|بطاقة التأمين الصحي|cartão do plano de saúde|health insurance card|carte d'assuré", "Haben Sie Ihre Versichertenkarte?"],
+  ["das Wartezimmer", "приёмная (комната ожидания)|приймальня|sală de așteptare|чакалня|váróterem|bekleme odası|غرفة الانتظار|sala de espera|waiting room|salle d'attente", "Bitte warten Sie im Wartezimmer."],
+  ["die Anmeldung (in der Praxis)", "регистратура|реєстратура|recepție|регистратура|recepció|kayıt masası|الاستقبال|recepção|reception|accueil", "Gehen Sie zuerst zur Anmeldung."],
+  ["morgens – mittags – abends", "утром – днём – вечером|вранці – вдень – увечері|dimineața – la prânz – seara|сутрин – на обяд – вечер|reggel – délben – este|sabah – öğlen – akşam|صباحاً – ظهراً – مساءً|de manhã – ao meio-dia – à noite|in the morning – at noon – in the evening|le matin – à midi – le soir", "Nehmen Sie die Tablette morgens und abends."],
+  ["der Tee", "чай|чай|ceai|чай|tea|çay|شاي|chá|tea|thé", "Trinken Sie viel Tee!"],
+  ["krank – gesund", "больной – здоровый|хворий – здоровий|bolnav – sănătos|болен – здрав|beteg – egészséges|hasta – sağlıklı|مريض – سليم|doente – saudável|ill – healthy|malade – en bonne santé", "Amir ist krank. Am Montag ist er wieder gesund."]
+];
+ADD.kleidung = [
+  ["die Kleidung", "одежда|одяг|îmbrăcăminte|облекло|ruházat|giysi|ملابس|roupa|clothes|vêtements", "Im Winter braucht man warme Kleidung."],
+  ["die Winterjacke", "зимняя куртка|зимова куртка|geacă de iarnă|зимно яке|télikabát|kışlık mont|سترة شتوية|casaco de inverno|winter jacket|veste d'hiver", "Amir braucht eine Winterjacke."],
+  ["die Socken (Pl.)", "носки|шкарпетки|șosete|чорапи|zokni|çorap|جوارب|meias|socks|chaussettes", "Die Socken sind warm."],
+  ["das Grad", "градус|градус|grad|градус|fok|derece|درجة|grau|degree|degré", "Es ist 3 Grad."],
+  ["das Geschäft", "магазин|магазин|magazin|магазин|üzlet|mağaza|متجر|loja|shop|magasin", "Das Geschäft ist am Markt."],
+  ["der Verkäufer / die Verkäuferin", "продавец / продавщица|продавець / продавчиня|vânzător / vânzătoare|продавач / продавачка|eladó|satıcı|بائع / بائعة|vendedor / vendedora|shop assistant|vendeur / vendeuse", "Die Verkäuferin hilft Amir."],
+  ["der Kunde / die Kundin", "покупатель|покупець|client / clientă|клиент / клиентка|vásárló|müşteri|زبون / زبونة|cliente|customer|client / cliente", "Der Kunde sucht eine Jacke."],
+  ["der Preis", "цена|ціна|preț|цена|ár|fiyat|سعر|preço|price|prix", "Der Preis ist gut."],
+  ["kosten", "стоить|коштувати|a costa|струва|kerül (pénzbe)|… tutmak, fiyatı olmak|يكلّف|custar|to cost|coûter", "Was kostet die Jacke?"],
+  ["der Euro", "евро|євро|euro|евро|euró|avro|يورو|euro|euro|euro", "Die Mütze kostet 12 Euro."],
+  ["die Kasse", "касса|каса|casă (de marcat)|каса|pénztár|kasa|الصندوق|caixa|till, checkout|caisse", "Bezahlen Sie bitte an der Kasse."],
+  ["bezahlen", "платить|платити|a plăti|плащам|fizet|ödemek|يدفع|pagar|to pay|payer", "Ich bezahle mit Karte."],
+  ["anprobieren", "примерять|приміряти|a proba|пробвам|felpróbál|denemek (giysi)|يجرّب (ملابس)|experimentar|to try on|essayer", "Kann ich die Jacke anprobieren?"],
+  ["passen (es passt)", "подходить по размеру|пасувати|a se potrivi|става (по размер)|jó (méretben)|uymak|يناسب|servir|to fit|aller (taille)", "Die Hose passt gut."],
+  ["brauchen", "нуждаться|потребувати|a avea nevoie|трябва ми|szüksége van|ihtiyacı olmak|يحتاج|precisar|to need|avoir besoin de", "Amir braucht warme Schuhe."],
+  ["rot – blau – grün – gelb", "красный – синий – зелёный – жёлтый|червоний – синій – зелений – жовтий|roșu – albastru – verde – galben|червен – син – зелен – жълт|piros – kék – zöld – sárga|kırmızı – mavi – yeşil – sarı|أحمر – أزرق – أخضر – أصفر|vermelho – azul – verde – amarelo|red – blue – green – yellow|rouge – bleu – vert – jaune", "Der Schal ist rot, die Mütze ist blau."],
+  ["schwarz – weiß – grau – braun", "чёрный – белый – серый – коричневый|чорний – білий – сірий – коричневий|negru – alb – gri – maro|черен – бял – сив – кафяв|fekete – fehér – szürke – barna|siyah – beyaz – gri – kahverengi|أسود – أبيض – رمادي – بني|preto – branco – cinza – marrom|black – white – grey – brown|noir – blanc – gris – marron", "Die Schuhe sind schwarz."],
+  ["billig – teuer", "дешёвый – дорогой|дешевий – дорогий|ieftin – scump|евтин – скъп|olcsó – drága|ucuz – pahalı|رخيص – غالٍ|barato – caro|cheap – expensive|bon marché – cher", "Die Jacke ist teuer, die Mütze ist billig."],
+  ["kurz – lang", "короткий – длинный|короткий – довгий|scurt – lung|къс – дълъг|rövid – hosszú|kısa – uzun|قصير – طويل|curto – comprido|short – long|court – long", "Im Sommer trage ich eine kurze Hose."]
+];
+ADD.wohnung = [
+  ["die Möbel (Pl.)", "мебель|меблі|mobilă|мебели|bútor|mobilya|أثاث|móveis|furniture|meubles", "Daria braucht neue Möbel."],
+  ["das Kissen", "подушка|подушка|pernă|възглавница|párna|yastık|وسادة|almofada|cushion|coussin", "Auf dem Sofa liegt ein Kissen."],
+  ["der Topf, die Töpfe", "кастрюля|каструля|oală|тенджера|fazék, lábas|tencere|قِدر|panela|pot|casserole", "Ich brauche einen Topf."],
+  ["der Fernseher", "телевизор|телевізор|televizor|телевизор|tévé|televizyon|تلفاز|televisão|TV set|télévision", "Der Fernseher steht im Wohnzimmer."],
+  ["das Fenster", "окно|вікно|fereastră|прозорец|ablak|pencere|نافذة|janela|window|fenêtre", "Das Fenster ist groß."],
+  ["der Mülleimer", "мусорное ведро|відро для сміття|coș de gunoi|кофа за боклук|szemetes|çöp kovası|سلة المهملات|lixeira|bin|poubelle", "Der Mülleimer steht in der Küche."],
+  ["der Flohmarkt", "блошиный рынок|блошиний ринок|talcioc|битпазар|bolhapiac|bit pazarı|سوق السلع المستعملة|feira de usados|flea market|marché aux puces", "Am Samstag gehen wir auf den Flohmarkt."],
+  ["der Keller", "подвал|підвал|pivniță|мазе|pince|bodrum|قبو|porão|cellar|cave", "Das Fahrrad steht im Keller."],
+  ["der Stock (im ersten Stock)", "этаж|поверх|etaj|етаж|emelet|kat|طابق|andar|floor (storey)|étage", "Daria wohnt im ersten Stock."],
+  ["die Miete", "квартплата|орендна плата|chirie|наем|lakbér|kira|إيجار|aluguel|rent|loyer", "Die Miete ist 380 Euro."],
+  ["die Heizung", "отопление|опалення|încălzire|отопление|fűtés|kalorifer|تدفئة|aquecimento|heating|chauffage", "Die Heizung ist kaputt."],
+  ["es gibt", "есть, имеется|є, існує|există, este|има|van (létezik)|var|يوجد|há|there is / are|il y a", "In der Küche gibt es einen Herd."],
+  ["finden (Wie findest du …?)", "находить (Как тебе …?)|вважати (Як тобі …?)|a găsi (Cum ți se pare …?)|намирам (Как ти се струва …?)|talál (Milyennek találod …?)|bulmak (… nasıl buluyorsun?)|يجد (ما رأيك في …؟)|achar (O que você acha de …?)|to find (What do you think of …?)|trouver (Comment tu trouves … ?)", "Wie findest du das Sofa? – Ich finde es schön."],
+  ["schön – hässlich", "красивый – уродливый|гарний – потворний|frumos – urât|красив – грозен|szép – csúnya|güzel – çirkin|جميل – قبيح|bonito – feio|nice – ugly|beau – laid", "Der Teppich ist hässlich."],
+  ["bequem – praktisch", "удобный – практичный|зручний – практичний|comod – practic|удобен – практичен|kényelmes – praktikus|rahat – pratik|مريح – عملي|confortável – prático|comfortable – practical|confortable – pratique", "Das Sofa ist bequem."],
+  ["links – rechts – neben", "слева – справа – рядом|ліворуч – праворуч – поруч|stânga – dreapta – lângă|вляво – вдясно – до|balra – jobbra – mellett|sol – sağ – yanında|يسار – يمين – بجانب|esquerda – direita – ao lado|left – right – next to|à gauche – à droite – à côté de", "Das Bett steht links, der Schrank rechts."],
+  ["stehen – liegen – hängen", "стоять – лежать – висеть|стояти – лежати – висіти|a sta în picioare – a sta întins – a atârna|стоя – лежа – вися|áll – fekszik – lóg|durmak – yatmak – asılı olmak|يقف – يستلقي – يتدلّى|estar em pé – estar deitado – estar pendurado|stand – lie – hang|être debout – être posé à plat – être accroché", "Der Teppich liegt, die Lampe hängt, der Tisch steht."]
+];
+ADD.party = [
+  ["kommen", "приходить|приходити|a veni|идвам|jön|gelmek|يأتي|vir|to come|venir", "Kannst du am Samstag kommen?"],
+  ["klingeln", "звонить (в дверь)|дзвонити (у двері)|a suna (la ușă)|звъня (на вратата)|csenget|zili çalmak|يرنّ الجرس|tocar a campainha|to ring (the bell)|sonner", "Um halb elf klingelt Herr Krüger."],
+  ["die Einweihungsparty", "новоселье|новосілля|petrecere de casă nouă|парти за новото жилище|házavató buli|ev hayırlısı partisi|حفلة السكن الجديد|festa de inauguração|house-warming party|crémaillère", "Daria macht eine Einweihungsparty."],
+  ["die Musik", "музыка|музика|muzică|музика|zene|müzik|موسيقى|música|music|musique", "Die Musik ist zu laut."],
+  ["die Gitarre", "гитара|гітара|chitară|китара|gitár|gitar|غيتار|violão|guitar|guitare", "Andrei spielt Gitarre."],
+  ["die Pizza, die Pizzas", "пицца|піца|pizza|пица|pizza|pizza|بيتزا|pizza|pizza|pizza", "Ich bringe eine Pizza mit."],
+  ["die Cola", "кола|кола|cola|кола|kóla|kola|كولا|refrigerante de cola|cola|coca", "Wir trinken Cola."],
+  ["das Eis", "мороженое|морозиво|înghețată|сладолед|fagylalt|dondurma|آيس كريم|sorvete|ice cream|glace", "Zum Nachtisch gibt es Eis."],
+  ["das Stück (ein Stück Kuchen)", "кусок|шматок|bucată|парче|darab, szelet|parça, dilim|قطعة|pedaço|piece|morceau", "Frau Klein nimmt ein Stück Kuchen."],
+  ["die Katze", "кошка|кішка|pisică|котка|macska|kedi|قطة|gato|cat|chat", "Minka ist die Katze von Daria."],
+  ["der Müll", "мусор|сміття|gunoi|боклук|szemét|çöp|قمامة|lixo|rubbish|déchets", "Jonas bringt den Müll raus."],
+  ["rausbringen (den Müll)", "выносить (мусор)|виносити (сміття)|a duce afară (gunoiul)|изнасям (боклука)|kiviszi (a szemetet)|(çöpü) dışarı çıkarmak|يُخرج (القمامة)|levar para fora (o lixo)|to take out (the rubbish)|sortir (les poubelles)", "Wer bringt den Müll raus?"],
+  ["das Treppenhaus", "подъезд, лестничная клетка|під'їзд, сходова клітка|casa scării|стълбище|lépcsőház|merdiven boşluğu|درج المبنى|escadaria|stairwell|cage d'escalier", "Im Treppenhaus darf man nicht rauchen."],
+  ["das Schild, die Schilder", "табличка, знак|табличка, знак|semn, indicator|табела, знак|tábla|tabela|لافتة|placa|sign|panneau", "Das Schild sagt: Rauchen verboten."],
+  ["erlaubt – verboten", "разрешено – запрещено|дозволено – заборонено|permis – interzis|разрешено – забранено|szabad – tilos|izinli – yasak|مسموح – ممنوع|permitido – proibido|allowed – forbidden|autorisé – interdit", "Rauchen ist hier verboten."],
+  ["grillen", "жарить на гриле|смажити на грилі|a face grătar|пека на скара|grillezik|mangal yapmak|يشوي|fazer churrasco|to barbecue|faire un barbecue", "Auf dem Balkon grillen wir."],
+  ["aufstehen", "вставать|вставати|a se trezi, a se ridica|ставам|felkel|kalkmak|ينهض|levantar-se|to get up|se lever", "Herr Krüger muss um 5 Uhr aufstehen."],
+  ["später", "позже|пізніше|mai târziu|по-късно|később|sonra, daha geç|لاحقاً|mais tarde|later|plus tard", "Ich komme später."],
+  ["leider", "к сожалению|на жаль|din păcate|за съжаление|sajnos|maalesef|للأسف|infelizmente|unfortunately|malheureusement", "Ich kann leider nicht kommen."],
+  ["Bescheid sagen", "сообщить|повідомити|a anunța|казвам, съобщавам|szól (értesít)|haber vermek|يُبلغ|avisar|to let someone know|prévenir", "Sag bitte bis Freitag Bescheid!"],
+  ["der Geburtstag", "день рождения|день народження|zi de naștere|рожден ден|születésnap|doğum günü|عيد الميلاد|aniversário|birthday|anniversaire", "Am Samstag hat Elena Geburtstag."]
+];
+ADD.wochenende = [
+  ["machen – hat gemacht", "делать|робити|a face|правя|csinál|yapmak|يفعل|fazer|to do, make|faire", "Was hast du am Wochenende gemacht?"],
+  ["feiern – hat gefeiert", "праздновать|святкувати|a sărbători|празнувам|ünnepel|kutlamak|يحتفل|festejar|to celebrate|faire la fête", "Wir haben bis 22 Uhr gefeiert."],
+  ["klingeln – hat geklingelt", "звонить (в дверь)|дзвонити (у двері)|a suna (la ușă)|звъня|csenget|zili çalmak|يرنّ الجرس|tocar a campainha|to ring|sonner", "Um halb elf hat Herr Krüger geklingelt."],
+  ["warten – hat gewartet", "ждать|чекати|a aștepta|чакам|vár|beklemek|ينتظر|esperar|to wait|attendre", "Ich habe lange auf den Bus gewartet."],
+  ["fragen – hat gefragt", "спрашивать|питати|a întreba|питам|kérdez|sormak|يسأل|perguntar|to ask|demander", "Die Chefin hat gefragt: Was hast du gemacht?"],
+  ["sagen – hat gesagt", "говорить, сказать|казати, сказати|a spune|казвам|mond|söylemek|يقول|dizer|to say|dire", "Daria hat „Danke!“ gesagt."],
+  ["der Film, die Filme", "фильм|фільм|film|филм|film|film|فيلم|filme|film|film", "Ich habe einen Film gesehen."],
+  ["das Buch, die Bücher", "книга|книга|carte|книга|könyv|kitap|كتاب|livro|book|livre", "Sie hat ein Buch gelesen."],
+  ["der Nachmittag", "вторая половина дня|друга половина дня|după-amiază|следобед|délután|öğleden sonra|بعد الظهر|tarde|afternoon|après-midi", "Am Nachmittag hat sie die Küche geputzt."],
+  ["der Supermarkt", "супермаркет|супермаркет|supermarket|супермаркет|szupermarket|süpermarket|سوبرماركت|supermercado|supermarket|supermarché", "Ich habe im Supermarkt Brot gekauft."],
+  ["das Brot", "хлеб|хліб|pâine|хляб|kenyér|ekmek|خبز|pão|bread|pain", "Wir haben Brot gekauft."],
+  ["am Samstag / am Sonntag", "в субботу / в воскресенье|у суботу / у неділю|sâmbătă / duminică|в събота / в неделя|szombaton / vasárnap|cumartesi / pazar günü|يوم السبت / يوم الأحد|no sábado / no domingo|on Saturday / on Sunday|samedi / dimanche", "Am Samstag haben wir getanzt."],
+  ["die Frage – die Antwort", "вопрос – ответ|питання – відповідь|întrebare – răspuns|въпрос – отговор|kérdés – válasz|soru – cevap|سؤال – جواب|pergunta – resposta|question – answer|question – réponse", "Hast du eine Frage?"]
+];
+ADD.freizeit = [
+  ["die Verabredung", "договорённость о встрече|домовленість про зустріч|întâlnire (stabilită)|среща (уговорена)|találkozó, randevú|buluşma|موعد (لقاء)|encontro marcado|appointment, date|rendez-vous", "Ich habe heute eine Verabredung."],
+  ["sich verabreden", "договариваться о встрече|домовлятися про зустріч|a-și da întâlnire|уговарям среща|megbeszél egy találkozót|buluşmak için sözleşmek|يتفق على موعد|marcar um encontro|to arrange to meet|se donner rendez-vous", "Wir verabreden uns für Samstag."],
+  ["Wollen wir …?", "Давай …?|Давай …?|Vrem să …?|Да …?|…-junk?|… yapalım mı?|هل نـ…؟|Vamos …?|Shall we …?|On … ?", "Wollen wir ins Kino gehen?"],
+  ["Gute Idee!", "Хорошая идея!|Гарна ідея!|Idee bună!|Добра идея!|Jó ötlet!|İyi fikir!|فكرة جيدة!|Boa ideia!|Good idea!|Bonne idée !", "Kino? Gute Idee!"],
+  ["Ich habe keine Zeit.", "У меня нет времени.|У мене немає часу.|Nu am timp.|Нямам време.|Nincs időm.|Vaktim yok.|ليس لدي وقت.|Não tenho tempo.|I have no time.|Je n'ai pas le temps.", "Leider habe ich keine Zeit."],
+  ["lesen", "читать|читати|a citi|чета|olvas|okumak|يقرأ|ler|to read|lire", "Ich lese gern."],
+  ["kochen", "готовить|готувати|a găti|готвя|főz|yemek yapmak|يطبخ|cozinhar|to cook|cuisiner", "Ich koche nicht gern."],
+  ["tanzen", "танцевать|танцювати|a dansa|танцувам|táncol|dans etmek|يرقص|dançar|to dance|danser", "Daria tanzt am liebsten."]
+];
+// ===== Ergänzungen Kurs 1 =====
+ADD.vergleiche = [
+  ["der Ausflug, die Ausflüge", "экскурсия, поездка|екскурсія, поїздка|excursie|екскурзия|kirándulás|gezi|رحلة قصيرة|passeio, excursão|trip, outing|excursion", "Wir machen einen Ausflug zum Brocken."],
+  ["das Ausflugsziel", "цель поездки|мета поїздки|destinație de excursie|туристическа цел|kirándulóhely|gezi yeri|وجهة الرحلة|destino de passeio|destination for a trip|but d'excursion", "Der Zoo ist ein beliebtes Ausflugsziel."],
+  ["der Zug, die Züge", "поезд|потяг|tren|влак|vonat|tren|قطار|trem|train|train", "Der Zug ist schneller als der Bus."],
+  ["der Bus, die Busse", "автобус|автобус|autobuz|автобус|busz|otobüs|حافلة|ônibus|bus|bus", "Der Bus ist billiger."],
+  ["der Berg, die Berge", "гора|гора|munte|планина|hegy|dağ|جبل|montanha|mountain|montagne", "Die Zugspitze ist der höchste Berg Deutschlands."],
+  ["die Burg, die Burgen", "крепость|фортеця|cetate|крепост|vár|kale|قلعة|castelo (fortaleza)|castle (fortress)|château fort", "Die Rudelsburg ist eine alte Burg."],
+  ["das Schloss, die Schlösser", "дворец, замок|палац, замок|castel|дворец, замък|kastély|saray|قصر|palácio|palace, castle|château", "Neuschwanstein ist ein bekanntes Schloss."],
+  ["das Museum, die Museen", "музей|музей|muzeu|музей|múzeum|müze|متحف|museu|museum|musée", "Das Museum ist interessanter als der Zoo."],
+  ["der Zoo", "зоопарк|зоопарк|grădină zoologică|зоологическа градина|állatkert|hayvanat bahçesi|حديقة الحيوان|zoológico|zoo|zoo", "Im Zoo gibt es Elefanten."],
+  ["die Kirche / der Dom", "церковь / собор|церква / собор|biserică / catedrală|църква / катедрала|templom / dóm|kilise / katedral|كنيسة / كاتدرائية|igreja / catedral|church / cathedral|église / cathédrale", "Der Naumburger Dom ist sehr alt."],
+  ["warm – wärmer – am wärmsten", "тёплый – теплее – самый тёплый|теплий – тепліший – найтепліший|cald – mai cald – cel mai cald|топъл – по-топъл – най-топъл|meleg – melegebb – legmelegebb|sıcak – daha sıcak – en sıcak|دافئ – أدفأ – الأدفأ|quente – mais quente – o mais quente|warm – warmer – warmest|chaud – plus chaud – le plus chaud", "Im Juli ist es am wärmsten."],
+  ["kalt – kälter – am kältesten", "холодный – холоднее – самый холодный|холодний – холодніший – найхолодніший|rece – mai rece – cel mai rece|студен – по-студен – най-студен|hideg – hidegebb – leghidegebb|soğuk – daha soğuk – en soğuk|بارد – أبرد – الأبرد|frio – mais frio – o mais frio|cold – colder – coldest|froid – plus froid – le plus froid", "Im Januar ist es kälter als im März."],
+  ["lang – länger – am längsten", "длинный – длиннее – самый длинный|довгий – довший – найдовший|lung – mai lung – cel mai lung|дълъг – по-дълъг – най-дълъг|hosszú – hosszabb – leghosszabb|uzun – daha uzun – en uzun|طويل – أطول – الأطول|longo – mais longo – o mais longo|long – longer – longest|long – plus long – le plus long", "Mit dem Bus ist die Fahrt länger."],
+  ["weit – nah", "далеко – близко|далеко – близько|departe – aproape|далеч – близо|messze – közel|uzak – yakın|بعيد – قريب|longe – perto|far – near|loin – près", "Der Zoo ist näher als der Brocken."],
+  ["schön – schöner – am schönsten", "красивый – красивее – самый красивый|гарний – гарніший – найгарніший|frumos – mai frumos – cel mai frumos|красив – по-красив – най-красив|szép – szebb – legszebb|güzel – daha güzel – en güzel|جميل – أجمل – الأجمل|bonito – mais bonito – o mais bonito|beautiful – more beautiful – most beautiful|beau – plus beau – le plus beau", "Das Schloss finde ich am schönsten."],
+  ["genauso … wie", "точно такой же …, как|так само …, як|exact la fel de … ca|точно толкова …, колкото|ugyanolyan …, mint|tıpkı … kadar|تماماً مثل|tão … quanto|just as … as|tout aussi … que", "Der Zug ist genauso teuer wie der Bus."],
+  ["das Gegenteil", "противоположность|протилежність|opusul|противоположност|ellentét|zıt anlam|العكس|o contrário|opposite|contraire", "Das Gegenteil von schnell ist langsam."]
+];
+ADD.genitiv = [
+  ["die Tasche", "сумка|сумка|geantă|чанта|táska|çanta|حقيبة|bolsa|bag|sac", "Das ist die Tasche meiner Mutter."],
+  ["die Firma, die Firmen", "фирма|фірма|firmă|фирма|cég|firma|شركة|empresa|company|entreprise", "Der Chef der Firma heißt Thomas."],
+  ["der Besitzer / die Besitzerin", "владелец / владелица|власник / власниця|proprietar / proprietară|собственик|tulajdonos|sahip|المالك / المالكة|dono / dona|owner|propriétaire", "Wer ist der Besitzer des Handys?"],
+  ["der Stift, die Stifte", "ручка, карандаш|ручка, олівець|pix, creion|химикалка, молив|toll|kalem|قلم|caneta, lápis|pen|stylo", "Der Stift des Schülers liegt auf dem Tisch."],
+  ["die Tür, die Türen", "дверь|двері|ușă|врата|ajtó|kapı|باب|porta|door|porte", "Die Tür des Büros ist zu."],
+  ["das Fundbüro", "бюро находок|бюро знахідок|birou de obiecte pierdute|бюро за изгубени вещи|talált tárgyak irodája|kayıp eşya bürosu|مكتب المفقودات|achados e perdidos|lost property office|bureau des objets trouvés", "Die Jacke ist im Fundbüro."],
+  ["der Garten, die Gärten", "сад|сад|grădină|градина|kert|bahçe|حديقة|jardim|garden|jardin", "Der Garten meiner Großeltern ist groß."],
+  ["das Kind, die Kinder", "ребёнок|дитина|copil|дете|gyerek|çocuk|طفل|criança|child|enfant", "Das Zimmer des Kindes ist bunt."],
+  ["das Haus, die Häuser", "дом|будинок|casă|къща|ház|ev|بيت|casa|house|maison", "Die Farbe des Hauses ist weiß."],
+  ["die Familie", "семья|сім'я|familie|семейство|család|aile|عائلة|família|family|famille", "Das Auto der Familie ist alt."]
+];
+ADD.frueher = [
+  ["das Kind, die Kinder", "ребёнок|дитина|copil|дете|gyerek|çocuk|طفل|criança|child|enfant", "Als Kind wohnte ich in Moldau."],
+  ["anders", "по-другому|інакше|altfel|различно, другояче|másképp|farklı|مختلف|diferente|different|différent", "Früher war alles anders."],
+  ["draußen", "на улице|надворі|afară|навън|kint|dışarıda|في الخارج|lá fora|outside|dehors", "Wir spielten jeden Tag draußen."],
+  ["allein", "один, одна|сам, сама|singur|сам|egyedül|yalnız|وحيداً|sozinho|alone|seul", "Ich durfte nicht allein ausgehen."],
+  ["jeden Tag", "каждый день|щодня|în fiecare zi|всеки ден|minden nap|her gün|كل يوم|todos os dias|every day|tous les jours", "Jeden Tag musste ich früh aufstehen."],
+  ["meistens", "обычно, чаще всего|здебільшого|de obicei|обикновено|többnyire|çoğunlukla|غالباً|geralmente|mostly|la plupart du temps", "Meistens spielten wir Fußball."],
+  ["das Geld", "деньги|гроші|bani|пари|pénz|para|مال|dinheiro|money|argent", "Wir hatten wenig Geld."],
+  ["sparen", "копить, экономить|заощаджувати|a economisi|спестявам|spórol|biriktirmek|يدّخر|economizar|to save (money)|économiser", "Er sparte für ein Moped."],
+  ["erzählen", "рассказывать|розповідати|a povesti|разказвам|mesél|anlatmak|يحكي|contar|to tell|raconter", "Herr Weber erzählt von seiner Jugend."],
+  ["die Zeitung", "газета|газета|ziar|вестник|újság|gazete|جريدة|jornal|newspaper|journal", "Früher las man die Nachrichten in der Zeitung."],
+  ["der Wunschberuf", "профессия мечты|омріяна професія|meseria visată|мечтана професия|álomszakma|hayalimdeki meslek|المهنة المرغوبة|profissão dos sonhos|dream job|métier de rêve", "Als Kind war mein Wunschberuf Pilot."],
+  ["werden wollen (wollte … werden)", "хотеть стать|хотіти стати|a vrea să devină|искам да стана|… akar lenni|… olmak istemek|يريد أن يصبح|querer ser|to want to become|vouloir devenir", "Als Kind wollte ich Polizist werden."]
+];
+ADD.november = [
+  ["die Menschen (Pl.)", "люди|люди|oameni|хора|emberek|insanlar|الناس|pessoas|people|gens", "Tausende Menschen gingen zur Grenze."],
+  ["der Staat, die Staaten", "государство|держава|stat|държава|állam|devlet|دولة|Estado|state|État", "Es gab zwei deutsche Staaten."],
+  ["die BRD", "ФРГ|ФРН|RFG|ФРГ|NSZK|Batı Almanya (BRD)|ألمانيا الغربية|RFA|FRG (West Germany)|RFA", "West-Berlin gehörte zur BRD."],
+  ["frei", "свободный|вільний|liber|свободен|szabad|özgür|حرّ|livre|free|libre", "Jetzt waren die Menschen frei."],
+  ["sofort", "сразу, немедленно|негайно|imediat|веднага|azonnal|hemen|فوراً|imediatamente|immediately|immédiatement", "Die Grenze ist ab sofort offen."],
+  ["das Fernsehen", "телевидение|телебачення|televiziune|телевизия|televízió|televizyon|التلفزيون|televisão|television|télévision", "Die Nachricht kam im Fernsehen."],
+  ["der Herbst", "осень|осінь|toamnă|есен|ősz|sonbahar|الخريف|outono|autumn|automne", "Im Herbst 1989 fiel die Mauer."],
+  ["kommen – kam", "приходить – пришёл|приходити – прийшов|a veni – venea|идвам – дойде|jön – jött|gelmek – geldi|يأتي – أتى|vir – veio|to come – came|venir – vint", "Die Nachricht kam am Abend."],
+  ["fahren – fuhr", "ехать – ехал|їхати – їхав|a merge (cu vehicul) – mergea|карам, пътувам – пътуваше|megy (járművel) – ment|gitmek (araçla) – gitti|يسافر – سافر|ir (de veículo) – foi|to drive, go – drove, went|aller (en véhicule) – alla", "Viele fuhren nach West-Berlin."],
+  ["sprechen – sprach", "говорить – говорил|говорити – говорив|a vorbi – vorbea|говоря – говореше|beszél – beszélt|konuşmak – konuştu|يتكلّم – تكلّم|falar – falou|to speak – spoke|parler – parla", "Schabowski sprach im Fernsehen."],
+  ["nehmen – nahm", "брать – брал|брати – брав|a lua – lua|вземам – взе|vesz – vett|almak – aldı|يأخذ – أخذ|pegar – pegou|to take – took|prendre – prit", "Er nahm seine Jacke und ging los."],
+  ["liegen – lag", "лежать – лежал|лежати – лежав|a se afla – se afla|лежа, намирам се – се намираше|fekszik – feküdt|bulunmak – bulunuyordu|يقع – وقع|ficar – ficava|to lie – lay|se trouver – se trouvait", "Berlin lag mitten in der DDR."],
+  ["rufen – rief", "кричать, звать – кричал|кликати – кликав|a striga – striga|викам – викаше|kiált – kiáltott|bağırmak – bağırdı|ينادي – نادى|gritar – gritou|to call, shout – called|crier – cria", "Die Menschen riefen: Tor auf!"],
+  ["geben – gab (es gab)", "давать – давал (было)|давати – давав (було)|a da – dădea (exista)|давам – даде (имаше)|ad – adott (volt)|vermek – verdi (vardı)|يعطي – أعطى (كان هناك)|dar – deu (havia)|to give – gave (there was)|donner – donna (il y avait)", "Damals gab es keine Handys."]
+];
+ADD.leben = [
+  ["der Beruf, die Berufe", "профессия|професія|meserie|професия|szakma|meslek|مهنة|profissão|job, profession|métier", "Was ist dein Beruf?"],
+  ["die Oma / der Opa", "бабушка / дедушка|бабуся / дідусь|bunica / bunicul|баба / дядо|nagymama / nagypapa|büyükanne / büyükbaba|الجدة / الجد|avó / avô|grandma / grandpa|mamie / papi", "Ich wohnte bei meiner Oma."],
+  ["die Ferien (Pl.)", "каникулы|канікули|vacanță|ваканция|szünidő|tatil|العطلة|férias|holidays|vacances", "In den Ferien besuchte ich meine Oma."],
+  ["ankommen (kam an)", "прибывать|прибувати|a sosi|пристигам|megérkezik|varmak|يصل|chegar|to arrive|arriver", "Als wir in Deutschland ankamen, war es Winter."],
+  ["verstehen (verstand)", "понимать|розуміти|a înțelege|разбирам|ért|anlamak|يفهم|entender|to understand|comprendre", "Am Anfang verstand ich nichts."],
+  ["helfen (half)", "помогать|допомагати|a ajuta|помагам|segít|yardım etmek|يساعد|ajudar|to help|aider", "Meine Lehrerin half mir sehr."],
+  ["wechseln (zu)", "переходить (в)|переходити (до)|a se transfera (la)|преминавам (в)|átigazol (hová)|transfer olmak|ينتقل إلى|transferir-se (para)|to move (to a club)|être transféré (à)", "2003 wechselte er zu Manchester United."],
+  ["sterben (starb)", "умирать|помирати|a muri|умирам|meghal|ölmek|يموت|morrer|to die|mourir", "Einstein starb 1955."],
+  ["die Sprachklasse", "языковой класс|мовний клас|clasă de limbă|езиков клас|nyelvi osztály|dil sınıfı|صف اللغة|turma de língua|language class|classe de langue", "Mit 16 kam ich in die Sprachklasse."],
+  ["die Grundkenntnisse (Pl.)", "базовые знания|базові знання|cunoștințe de bază|основни познания|alapismeretek|temel bilgiler|معارف أساسية|conhecimentos básicos|basic knowledge|connaissances de base", "Englisch: Grundkenntnisse."],
+  ["das Projekt", "проект|проєкт|proiect|проект|projekt|proje|مشروع|projeto|project|projet", "Wir machen ein Projekt über eine Biografie."],
+  ["das Plakat", "плакат|плакат|afiș|плакат|plakát|afiş|ملصق|cartaz|poster|affiche", "Das Plakat hängt im Raum."],
+  ["die Präsentation / der Vortrag", "презентация / доклад|презентація / доповідь|prezentare|презентация / доклад|bemutató / előadás|sunum|عرض تقديمي / محاضرة|apresentação|presentation / talk|présentation / exposé", "Die Präsentation dauert zwei Minuten."],
+  ["die Stichwörter (Pl.)", "ключевые слова|ключові слова|cuvinte-cheie|ключови думи|kulcsszavak|anahtar kelimeler|كلمات مفتاحية|palavras-chave|key words|mots-clés", "Schreib nur Stichwörter auf die Karte."]
+];
+ADD.zukunft = [
+  ["nächstes Jahr", "в следующем году|наступного року|anul viitor|догодина|jövőre|gelecek yıl|العام القادم|no ano que vem|next year|l'année prochaine", "Nächstes Jahr mache ich den Führerschein."],
+  ["die Arbeit", "работа|робота|muncă, loc de muncă|работа|munka|iş|عمل|trabalho|work, job|travail", "Ich hoffe, dass ich Arbeit finde."],
+  ["die Idee, die Ideen", "идея|ідея|idee|идея|ötlet|fikir|فكرة|ideia|idea|idée", "Das ist eine gute Idee."],
+  ["verrückt", "сумасшедший|божевільний|nebun, trăsnit|луд|őrült|çılgın|مجنون|maluco|crazy|fou", "Meine Mutter findet die Idee verrückt."],
+  ["wichtig", "важный|важливий|important|важен|fontos|önemli|مهم|importante|important|important", "Die Prüfung ist sehr wichtig."],
+  ["gewinnen (im Lotto)", "выигрывать (в лотерею)|вигравати (у лотерею)|a câștiga (la loto)|печеля (от лотарията)|nyer (a lottón)|kazanmak (lotoda)|يربح (اليانصيب)|ganhar (na loteria)|to win (the lottery)|gagner (au loto)", "Wenn ich im Lotto gewinne, reise ich um die Welt."],
+  ["die Überraschung", "сюрприз|сюрприз|surpriză|изненада|meglepetés|sürpriz|مفاجأة|surpresa|surprise|surprise", "Auf der Karte steht eine Überraschung."],
+  ["der Ort, die Orte", "место|місце|loc|място|hely|yer|مكان|lugar|place|lieu", "An welchem Ort wirst du leben?"],
+  ["das Hotel, die Hotels", "гостиница|готель|hotel|хотел|szálloda|otel|فندق|hotel|hotel|hôtel", "Viktor arbeitet in einem Hotel."],
+  ["die E-Mail", "электронное письмо|електронний лист|e-mail|имейл|e-mail|e-posta|بريد إلكتروني|e-mail|e-mail|e-mail", "Schreib eine E-Mail an Max."],
+  ["Liebe Grüße / Viele Grüße", "С любовью / С наилучшими пожеланиями|З любов'ю / Найкращі побажання|Cu drag / Multe salutări|Поздрави|Szeretettel / Üdvözlettel|Sevgiler / Selamlar|مع خالص التحيات|Beijos / Abraços|Love / Best wishes|Bises / Amitiés", "Viele Grüße, dein Viktor"],
+  ["der Sommer", "лето|літо|vară|лято|nyár|yaz|الصيف|verão|summer|été", "Im Sommer 2028 macht er die Prüfung."]
+];
+
+// ---- einhängen ----
+(() => {
+  const p = CHAPTERS.find((c) => c.id === "praktikum");
+  if (p) p.vocab = p.vocab.filter((v) => !/^der Schraubenzieher/.test(v[0]));
+  for (const [id, list] of Object.entries(ADD)) {
+    const c = CHAPTERS.find((x) => x.id === id); if (!c) continue;
+    const have = new Set(c.vocab.map((v) => v[0].toLowerCase()));
+    list.forEach((v) => { if (!have.has(v[0].toLowerCase())) c.vocab.push(v); });
+  }
+})();
 </script>
 <script>
 "use strict";
@@ -3508,92 +3795,125 @@ const ICON = {
 // =====================================================================
 const S = { lang: store.get("lang", null), kurs: store.get("kurs", null), showTr: store.get("showTr", true) };
 const app = $("#app");
-const langBtn = () => `<button class="pillbtn" data-go="lang">${S.lang ? LANGS[LI(S.lang)].label : "🌐"}</button>`;
-function bindGo() {
-  app.querySelectorAll("[data-go]").forEach((b) => (b.onclick = () => { const g = b.dataset.go; if (g === "lang") viewLang(true); else if (g === "kurs") viewKurs(true); else if (g === "home") viewChapters(); }));
+
+// ================= Navigation =================
+// Jede Seite hat eine Adresse (#/c/kapitel/g|v|e/…). So funktioniert auch die Zurück-Taste am Handy.
+const nav = (h) => { if (location.hash === h) route(); else location.hash = h; };
+addEventListener("hashchange", () => route());
+function route() {
+  closeMenu();
+  const p = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
+  if (!S.lang || p[0] === "lang") return viewLang();
+  if (!S.kurs || p[0] === "kurs") return viewKurs();
+  if (p[0] === "c") {
+    const c = CHAPTERS.find((x) => x.id === p[1] && x.kurse.includes(S.kurs));
+    if (c) {
+      const sec = p[2] || "g";
+      if (sec === "v") return viewVocab(c);
+      if (sec === "e") return p[3] != null ? startEx(c, +p[3], () => nav(`#/c/${c.id}/${p[4] === "v" ? "v" : "e"}`)) : viewExList(c);
+      return viewGrammar(c, p[3] != null ? +p[3] : null);
+    }
+  }
+  viewChapters();
 }
+const gramOf = (c) => c.grammar.map((g, i) => [g, i]).filter(([g]) => !g.only || g.only === S.kurs);
+const exOf = (c) => c.ex.map((e, i) => [e, i]).filter(([e]) => !e.only || e.only === S.kurs);
+
+// Kopfzeile für alle Schüler-Seiten: Menü · Kurs · Sprache, darunter bei Kapiteln die Reiter
+function shell(inner, c, sec) {
+  const k = kursOf(S.kurs), list = chapsFor(S.kurs), ix = c ? list.indexOf(c) : -1;
+  const tab = (id, label, ui, n) => `<a class="tab ${sec === id ? "on" : ""}" href="#/c/${c.id}/${id}"><span>${label}</span><small ${isRtl(S.lang) ? 'dir="rtl"' : ""}>${esc(trOf(ui, S.lang))}</small><i>${n}</i></a>`;
+  const [d, n] = c ? chapDone(c) : [0, 0];
+  app.innerHTML = `<header class="top">
+      <button class="mbtn" id="mOpen" aria-label="Menü">☰</button>
+      <a class="brand" href="#/">Deutsch <span style="color:${k.col}">· ${esc(k.name)}</span></a>
+      <span class="sp"></span><a class="pillbtn" href="#/lang">${esc(LANGS[LI(S.lang)].label)}</a>
+    </header>
+    ${c ? `<div class="chead"><span class="ic">${ICON[c.icon] || ""}</span><div class="cti"><div class="t">${esc(c.title)}</div><div class="s">${esc(c.sub)}</div></div>
+      <a class="arrow ${ix > 0 ? "" : "off"}" ${ix > 0 ? `href="#/c/${list[ix - 1].id}/${sec}"` : ""} aria-label="voriges Kapitel">‹</a><a class="arrow ${ix < list.length - 1 ? "" : "off"}" ${ix < list.length - 1 ? `href="#/c/${list[ix + 1].id}/${sec}"` : ""} aria-label="nächstes Kapitel">›</a></div>
+      <nav class="tabs" style="--kc:${k.col}">${tab("g", "Grammatik", UI.grammar, gramOf(c).length)}${tab("v", "Wörter", UI.vocab, c.vocab.length)}${tab("e", "Übungen", UI.exercises, d + "/" + n)}</nav>` : ""}
+    <main class="pg">${inner}</main>`;
+  $("#mOpen").onclick = openMenu;
+  scrollTo(0, 0);
+}
+
+// Seitenmenü: alle Kapitel mit direktem Sprung in Grammatik, Wörter, Übungen
+function openMenu() {
+  const k = kursOf(S.kurs), cur = (location.hash.split("/")[2] || "");
+  const m = $("#menu");
+  m.innerHTML = `<div class="mpanel"><div class="mhead"><b>Menü</b><button class="mbtn" id="mClose" aria-label="schließen">✕</button></div>
+    <a class="mrow home" href="#/">🏠 Alle Kapitel</a>
+    <div class="msec">${esc(k.name)} · Niveau ${esc(k.lvl)}</div>
+    ${chapsFor(S.kurs).map((c) => { const [d, n] = chapDone(c); return `<div class="mchap ${c.id === cur ? "on" : ""}">
+      <a class="mrow" href="#/c/${c.id}/g"><span class="mi">${ICON[c.icon] || ""}</span><span class="mt">${esc(c.title)}</span><span class="mc">${d}/${n}</span></a>
+      <div class="msub"><a href="#/c/${c.id}/g">Grammatik</a><a href="#/c/${c.id}/v">Wörter</a><a href="#/c/${c.id}/e">Übungen</a></div></div>`; }).join("")}
+    <div class="msec">Einstellungen</div>
+    <a class="mrow" href="#/kurs">🎓 Kurs wechseln</a><a class="mrow" href="#/lang">🌐 Sprache: ${esc(LANGS[LI(S.lang)].label)}</a>
+    <div class="msec">Für die Lehrkraft</div>
+    <a class="mrow" href="?m=beamer&k=${k.id}">📽️ Beamer-Modus</a><a class="mrow" href="${ONLINE_URL}start/">🧩 Alle Apps</a></div>`;
+  m.classList.remove("hide"); requestAnimationFrame(() => m.classList.add("open"));
+  $("#mClose").onclick = closeMenu; m.onclick = (e) => { if (e.target === m) closeMenu(); };
+  m.querySelectorAll("a[href^='#']").forEach((a) => a.addEventListener("click", () => { if (a.getAttribute("href") === location.hash) { closeMenu(); } }));
+  const on = m.querySelector(".mchap.on"); if (on) { const pn = m.querySelector(".mpanel"); pn.scrollTop = Math.max(0, on.offsetTop - pn.clientHeight / 2); }
+}
+function closeMenu() { const m = $("#menu"); if (!m) return; m.classList.remove("open"); m.classList.add("hide"); }
+addEventListener("keydown", (e) => { if (e.key === "Escape") closeMenu(); });
+
 const scoreKey = (c, i) => `score.${c}.${i}`;
 
-function viewLang(fromMenu) {
+function viewLang() {
   app.innerHTML = `<h1 class="big">Deutsch an der BbS</h1><p class="lead">Wähle deine Sprache · ${LANGS.map((l, i) => i < 3 ? esc(trOf(UI.pickLang, l.code)) : "").filter(Boolean).join(" · ")}</p>
-    <div class="grid g2">${LANGS.map((l) => `<button class="card lang" data-l="${l.code}"><b>${esc(l.de)}</b><span ${l.rtl ? 'dir="rtl"' : ""}>${esc(l.native)}</span></button>`).join("")}</div>`;
-  app.querySelectorAll("[data-l]").forEach((b) => (b.onclick = () => { S.lang = b.dataset.l; store.set("lang", S.lang); if (fromMenu && S.kurs) viewChapters(); else if (!S.kurs) viewKurs(); else afterSetup(); }));
+    <div class="grid g2">${LANGS.map((l) => `<button class="card lang ${l.code === S.lang ? "sel" : ""}" data-l="${l.code}"><b>${esc(l.de)}</b><span ${l.rtl ? 'dir="rtl"' : ""}>${esc(l.native)}</span></button>`).join("")}</div>`;
+  app.querySelectorAll("[data-l]").forEach((b) => (b.onclick = () => { S.lang = b.dataset.l; store.set("lang", S.lang); nav(S.kurs ? backTo() : "#/kurs"); }));
   scrollTo(0, 0);
 }
 function viewKurs() {
-  app.innerHTML = `<div class="bar"><div><div class="t">Wähle deinen Kurs</div>${trSpan(trOf(UI.pickKurs, S.lang), S.lang, "s")}</div><span class="sp"></span>${langBtn()}</div>
-    <div class="grid">${KURSE.map((k) => `<button class="card kurs" data-k="${k.id}"><span class="kb" style="background:${k.col}">${k.id.slice(1)}</span><div><div class="ct">${esc(k.name)}</div><div class="cs">Niveau ${esc(k.lvl)}</div></div></button>`).join("")}</div>`;
-  app.querySelectorAll("[data-k]").forEach((b) => (b.onclick = () => { S.kurs = b.dataset.k; store.set("kurs", S.kurs); afterSetup(); }));
-  bindGo(); scrollTo(0, 0);
+  app.innerHTML = `<div class="bar"><div><div class="t">Wähle deinen Kurs</div>${trSpan(trOf(UI.pickKurs, S.lang), S.lang, "s")}</div><span class="sp"></span><a class="pillbtn" href="#/lang">${esc(LANGS[LI(S.lang)].label)}</a></div>
+    <div class="grid">${KURSE.map((k) => `<button class="card kurs" data-k="${k.id}" style="${k.id === S.kurs ? `border-color:${k.col}` : ""}"><span class="kb" style="background:${k.col}">${k.id.slice(1)}</span><div><div class="ct">${esc(k.name)}</div><div class="cs">Niveau ${esc(k.lvl)}</div></div></button>`).join("")}</div>`;
+  app.querySelectorAll("[data-k]").forEach((b) => (b.onclick = () => { S.kurs = b.dataset.k; store.set("kurs", S.kurs); nav("#/"); }));
+  scrollTo(0, 0);
 }
-function chapDone(c) { const n = c.ex.filter((e) => !e.only || e.only === S.kurs).length; let d = 0; c.ex.forEach((e, i) => { if ((!e.only || e.only === S.kurs) && store.get(scoreKey(c.id, i), 0) >= 0.8) d++; }); return [d, n]; }
+// Nach Sprachwahl dorthin zurück, wo man vorher war
+let lastPage = "#/";
+const backTo = () => lastPage || "#/";
+addEventListener("hashchange", (e) => { const o = (e.oldURL.split("#")[1] || "/"); if (!/^\/?(lang|kurs)/.test(o)) lastPage = "#" + o; });
+
+function chapDone(c) { const n = exOf(c).length; let d = 0; exOf(c).forEach(([, i]) => { if (store.get(scoreKey(c.id, i), 0) >= 0.8) d++; }); return [d, n]; }
 function viewChapters() {
   const k = kursOf(S.kurs), list = chapsFor(k.id);
-  app.innerHTML = `<div class="bar"><div><div class="t">Deutsch · ${esc(k.name)}</div><div class="s">Niveau ${esc(k.lvl)} · Wähle ein Kapitel</div></div><span class="sp"></span><button class="pillbtn" data-go="kurs" style="border-color:${k.col};color:${k.col}">${esc(k.name)}</button>${langBtn()}</div>
-    <div class="grid">${list.map((c) => { const [d, n] = chapDone(c); return `<button class="card" data-c="${c.id}"><span class="ic">${ICON[c.icon] || ""}</span><div><div class="ct">${esc(c.title)}</div><div class="cs">${esc(c.sub)}</div></div><span class="cm">${d}/${n} ✓</span></button>`; }).join("")}</div>
-    <p class="foot">Für die Lehrkraft: <a href="?m=beamer&k=${k.id}">Beamer-Modus</a> · <a href="${ONLINE_URL}start/">Alle Apps</a></p>`;
-  app.querySelectorAll("[data-c]").forEach((b) => (b.onclick = () => viewChapter(b.dataset.c)));
-  bindGo(); scrollTo(0, 0);
-}
-function viewChapter(id) {
-  const c = CHAPTERS.find((x) => x.id === id); if (!c) return viewChapters();
-  const [d, n] = chapDone(c);
-  app.innerHTML = `<button class="back" data-go="home">← Kapitel</button>
-    <div class="bar"><span class="ic" style="width:52px;height:52px">${ICON[c.icon] || ""}</span><div><div class="t">${esc(c.title)}</div><div class="s">${esc(c.sub)}</div></div><span class="sp"></span>${langBtn()}</div>
-    <div class="tiles">
-      <button class="tile" style="--c:#1F6B4A" id="tG">${ICON.grammar}<span class="tt">Grammatik</span>${trSpan(trOf(UI.grammar, S.lang), S.lang, "tr")}<span class="tm">${c.grammar.filter((g) => !g.only || g.only === S.kurs).length} Themen</span></button>
-      <button class="tile" style="--c:#E07A1F" id="tV">${ICON.vocab}<span class="tt">Wörter</span>${trSpan(trOf(UI.vocab, S.lang), S.lang, "tr")}<span class="tm">${c.vocab.length} Wörter</span></button>
-      <button class="tile" style="--c:#2F6FD6" id="tE">${ICON.ex}<span class="tt">Übungen</span>${trSpan(trOf(UI.exercises, S.lang), S.lang, "tr")}<span class="tm">${d}/${n} geschafft</span></button>
-    </div>`;
-  $("#tG").onclick = () => viewGrammarList(c); $("#tV").onclick = () => viewVocab(c); $("#tE").onclick = () => viewExList(c);
-  bindGo(); scrollTo(0, 0);
-}
-function viewGrammarList(c) {
-  const gs = c.grammar.map((g, i) => [g, i]).filter(([g]) => !g.only || g.only === S.kurs);
-  if (gs.length === 1) return viewGrammar(c, gs[0][1]);
-  app.innerHTML = `<button class="back" id="bk">← ${esc(c.title)}</button><div class="bar"><div><div class="t">Grammatik</div><div class="s">${esc(c.title)}</div></div><span class="sp"></span>${langBtn()}</div>
-    <div class="grid">${gs.map(([g, i]) => `<button class="card" data-i="${i}"><span class="ic" style="width:44px;height:44px">${ICON.grammar}</span><div><div class="ct">${esc(g.title)}${g.only ? `<span class="badge" style="background:${kursOf(g.only).col}">${esc(kursOf(g.only).name)}</span>` : ""}</div><div class="cs">${g.rules.length} Regeln${g.table ? " · Tabelle" : ""}</div></div></button>`).join("")}</div>`;
-  $("#bk").onclick = () => viewChapter(c.id); app.querySelectorAll("[data-i]").forEach((b) => (b.onclick = () => viewGrammar(c, +b.dataset.i)));
-  bindGo(); scrollTo(0, 0);
+  shell(`<div class="lead" style="margin:4px 0 12px">Niveau ${esc(k.lvl)} · ${list.length} Kapitel</div>
+    <div class="grid">${list.map((c) => { const [d, n] = chapDone(c); return `<div class="card chap">
+      <a class="chm" href="#/c/${c.id}/g"><span class="ic">${ICON[c.icon] || ""}</span><div><div class="ct">${esc(c.title)}</div><div class="cs">${esc(c.sub)}</div></div><span class="cm">${d}/${n} ✓</span></a>
+      <div class="qk"><a href="#/c/${c.id}/g">${ICON.grammar}Grammatik</a><a href="#/c/${c.id}/v">${ICON.vocab}Wörter</a><a href="#/c/${c.id}/e">${ICON.ex}Übungen</a></div></div>`; }).join("")}</div>`);
 }
 function tableHTML(t) {
   return `<div class="tscroll"><table class="gt"><tr>${t.head.map((h) => `<th>${esc(h)}</th>`).join("")}</tr>${t.rows.map((r) => `<tr>${r.map((x) => `<td>${md(x)}</td>`).join("")}</tr>`).join("")}</table></div>`;
 }
 function viewGrammar(c, i) {
-  const g = c.grammar[i];
-  app.innerHTML = `<button class="back" id="bk">← Grammatik</button><div class="bar"><div><div class="t">${esc(g.title)}</div><div class="s">${esc(c.title)}</div></div><span class="sp"></span>${langBtn()}</div>
-    <button class="trbtn" id="trT">${S.showTr ? "✓ " : ""}${esc(trOf(UI.showTr, S.lang))}</button>
+  const gs = gramOf(c); if (i == null || !gs.some(([, j]) => j === i)) i = gs[0][1];
+  const g = c.grammar[i], pos = gs.findIndex(([, j]) => j === i), nx = gs[pos + 1];
+  shell(`${gs.length > 1 ? `<div class="chips">${gs.map(([x, j]) => `<a class="chip ${j === i ? "on" : ""}" href="#/c/${c.id}/g/${j}">${esc(x.title)}${x.only ? ` <span class="badge" style="background:${kursOf(x.only).col}">${esc(kursOf(x.only).name)}</span>` : ""}</a>`).join("")}</div>` : ""}
+    <div class="bar"><div class="t">${esc(g.title)}</div><span class="sp"></span><button class="trbtn" id="trT" style="margin:0">${S.showTr ? "✓ " : ""}${esc(trOf(UI.showTr, S.lang))}</button></div>
     ${g.rules.map((r) => `<div class="rule"><div class="de">${md(r[0])}</div>${S.showTr ? trSpan(trOf(r[1], S.lang), S.lang, "tr") : ""}</div>`).join("")}
     ${g.table ? tableHTML(g.table) : ""}
     <div class="sec">Beispiele</div><div class="exs">${g.ex.map((e) => `<div>${md(e)}</div>`).join("")}</div>
-    <div style="margin-top:20px"><button class="btn" id="toEx">Jetzt üben →</button></div>`;
-  $("#bk").onclick = () => { const gs = c.grammar.filter((x) => !x.only || x.only === S.kurs); gs.length === 1 ? viewChapter(c.id) : viewGrammarList(c); };
+    <div class="grid g2" style="margin-top:20px">${nx ? `<a class="btn ghost" href="#/c/${c.id}/g/${nx[1]}">${esc(nx[0].title)} →</a>` : `<a class="btn ghost" href="#/c/${c.id}/v">Wörter →</a>`}<a class="btn" href="#/c/${c.id}/e">Jetzt üben →</a></div>`, c, "g");
   $("#trT").onclick = () => { S.showTr = !S.showTr; store.set("showTr", S.showTr); viewGrammar(c, i); };
-  $("#toEx").onclick = () => viewExList(c);
-  bindGo(); scrollTo(0, 0);
 }
 function viewVocab(c) {
-  app.innerHTML = `<button class="back" id="bk">← ${esc(c.title)}</button><div class="bar"><div><div class="t">Wörter</div><div class="s">${esc(c.title)} · ${c.vocab.length} Wörter</div></div><span class="sp"></span>${langBtn()}</div>
-    <button class="btn" id="vq" style="margin-bottom:12px">Wörter üben →</button>
-    <input class="search" id="vs" placeholder="Wort suchen …" autocomplete="off"><div id="vl"></div>`;
+  const vi = c.ex.findIndex((e) => e.type === "vocab");
+  shell(`<div class="vtools"><input class="search" id="vs" placeholder="Wort suchen …" autocomplete="off">${vi >= 0 ? `<a class="btn" style="width:auto;white-space:nowrap;padding:12px 18px" href="#/c/${c.id}/e/${vi}/v">Üben →</a>` : ""}</div><div id="vl"></div>`, c, "v");
   const draw = (q) => {
     q = (q || "").toLowerCase();
     $("#vl").innerHTML = c.vocab.filter((v) => !q || (v[0] + " " + trOf(v[1], S.lang)).toLowerCase().includes(q))
-      .map((v) => `<div class="vrow"><div class="vw">${wordHTML(v[0])}</div>${trSpan(trOf(v[1], S.lang), S.lang, "vt")}<div class="vs">${esc(v[2])}</div></div>`).join("");
+      .map((v) => `<div class="vrow"><div class="vw">${wordHTML(v[0])}</div>${trSpan(trOf(v[1], S.lang), S.lang, "vt")}<div class="vs">${esc(v[2])}</div></div>`).join("") || `<p class="lead">Kein Wort gefunden.</p>`;
   };
   draw(); $("#vs").oninput = (e) => draw(e.target.value);
-  $("#bk").onclick = () => viewChapter(c.id);
-  $("#vq").onclick = () => { const i = c.ex.findIndex((e) => e.type === "vocab"); startEx(c, i, () => viewVocab(c)); };
-  bindGo(); scrollTo(0, 0);
 }
 function viewExList(c) {
-  app.innerHTML = `<button class="back" id="bk">← ${esc(c.title)}</button><div class="bar"><div><div class="t">Übungen</div><div class="s">${esc(c.title)}</div></div><span class="sp"></span>${langBtn()}</div>
-    <div class="grid">${c.ex.map((e, i) => [e, i]).filter(([e]) => !e.only || e.only === S.kurs).map(([e, i]) => { const sc = store.get(scoreKey(c.id, i), null);
+  shell(`<div class="grid">${exOf(c).map(([e, i]) => { const sc = store.get(scoreKey(c.id, i), null);
       const st = sc == null ? "" : sc >= 0.999 ? "★★★" : sc >= 0.8 ? "★★☆" : sc >= 0.5 ? "★☆☆" : "☆☆☆";
-      return `<button class="card" data-i="${i}"><span class="ic" style="width:44px;height:44px">${ICON[e.type === "vocab" ? "vocab" : "ex"]}</span><div><div class="ct">${esc(e.title)}${e.only ? `<span class="badge" style="background:${kursOf(e.only).col}">${esc(kursOf(e.only).name)}</span>` : ""}</div><div class="cs">${esc(hintDe(e.type === "vocab" ? "vocab" : e.type))}</div></div><span class="cm" style="color:#E0B21C;font-size:18px">${st}</span></button>`; }).join("")}</div>`;
-  $("#bk").onclick = () => viewChapter(c.id);
-  app.querySelectorAll("[data-i]").forEach((b) => (b.onclick = () => startEx(c, +b.dataset.i, () => viewExList(c))));
-  bindGo(); scrollTo(0, 0);
+      return `<a class="card" href="#/c/${c.id}/e/${i}"><span class="ic" style="width:44px;height:44px">${ICON[e.type === "vocab" ? "vocab" : "ex"]}</span><div><div class="ct">${esc(e.title)}${e.only ? `<span class="badge" style="background:${kursOf(e.only).col}">${esc(kursOf(e.only).name)}</span>` : ""}</div><div class="cs">${esc(hintDe(e.type === "vocab" ? "vocab" : e.type))}</div></div><span class="cm" style="color:#E0B21C;font-size:18px">${st}</span></a>`; }).join("")}</div>`, c, "e");
 }
 
 // ---- Übungs-Spieler ----
@@ -3612,7 +3932,7 @@ function startEx(c, i, onBack) {
   let k = 0, right = 0, tried = false;
   const next = () => { k++; tried = false; if (k >= items.length) done(); else draw(); };
   function frame(inner) {
-    app.innerHTML = `<button class="back" id="bk">← Übungen</button><div class="bar"><div><div class="t">${esc(e.title)}</div><div class="s">${k + 1} / ${items.length}</div></div><span class="sp"></span></div>
+    app.innerHTML = `<button class="back" id="bk">✕ ${esc(c.title)}</button><div class="bar"><div><div class="t">${esc(e.title)}</div><div class="s">${k + 1} / ${items.length}</div></div><span class="sp"></span></div>
       <div class="prog"><div style="width:${(k / items.length) * 100}%"></div></div>
       <div class="qhint">${esc(hintDe(hk))}</div>${trSpan(hintTr(hk, S.lang), S.lang, "qhtr")}${inner}`;
     $("#bk").onclick = onBack;
@@ -3671,8 +3991,10 @@ function startEx(c, i, onBack) {
       <p class="lead">${sc >= 0.999 ? "Perfekt! 🎉" : sc >= 0.8 ? "Sehr gut!" : sc >= 0.5 ? "Gut – übe noch einmal!" : "Lies die Grammatik und versuch es noch einmal."}</p>
       <div class="grid g2"><button class="btn ghost" id="ag">Noch einmal</button><button class="btn" id="bk2">Fertig</button></div></div>`;
     $("#ag").onclick = () => startEx(c, i, onBack); $("#bk2").onclick = onBack;
+    const nxt = exOf(c).find(([, j]) => j > i);
+    if (nxt) { const b2 = document.createElement("a"); b2.className = "btn ghost"; b2.style.marginTop = "12px"; b2.href = `#/c/${c.id}/e/${nxt[1]}`; b2.textContent = "Nächste Übung: " + nxt[0].title + " →"; app.querySelector(".result").appendChild(b2); }
   }
-  draw();
+  draw(); scrollTo(0, 0);
 }
 
 // =====================================================================
@@ -3747,16 +4069,12 @@ function Beamer() {
 }
 
 // ================= Start =================
-let pendingChap = params.get("c");
-function afterSetup() {
-  const c = pendingChap && CHAPTERS.find((x) => x.id === pendingChap && x.kurse.includes(S.kurs)); pendingChap = null;
-  if (c) viewChapter(c.id); else viewChapters();
-}
 if (params.get("m") === "beamer") Beamer();
 else {
-  const k = params.get("k");
+  const k = params.get("k"), c0 = params.get("c");
   if (k && KURSE.find((x) => x.id === k)) { S.kurs = k; store.set("kurs", k); }
-  if (!S.lang) viewLang(false); else if (!S.kurs) viewKurs(); else afterSetup();
+  if (c0 && !location.hash && CHAPTERS.some((x) => x.id === c0)) history.replaceState(null, "", "#/c/" + c0 + "/g");
+  route();
 }
 </script>
 </body>
