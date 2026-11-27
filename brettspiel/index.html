@@ -3025,7 +3025,13 @@ const TYPE_ICON = {
 <script>
 "use strict";
 const ONLINE_URL = "https://8bibabub8.github.io/DaF_BbS/brettspiel/";
-const BROKERS = ["wss://broker.emqx.io:8084/mqtt", "wss://broker.hivemq.com:8884/mqtt", "wss://test.mosquitto.org:8081/mqtt", "wss://mqtt.eclipseprojects.io:443/mqtt"];
+// Server 1 läuft über Port 443 – den lassen auch strenge Schulnetze durch.
+const BROKERS = [
+  { url: "wss://public.cloud.shiftr.io", username: "public", password: "public" },
+  { url: "wss://broker.emqx.io:8084/mqtt" },
+  { url: "wss://broker.hivemq.com:8884/mqtt" },
+  { url: "wss://test.mosquitto.org:8081/mqtt" }
+];
 const TCOL = ["", "#2F6FD6", "#E07A1F", "#8A4FD1", "#14998A"];
 const KIND = { A: ["Aufgabe", "var(--A)"], S: ["Sprechen", "var(--S)"], E: ["Glücksrad", "var(--E)"], Z: ["Start", "var(--Z)"] };
 const $ = (id) => document.getElementById(id);
@@ -3057,7 +3063,7 @@ class Net {
     else this.onStatus(this.tried ? "err" : "wait", this.tried ? (this.role === "host" ? "Keine Verbindung – ohne Handys spielen" : "Keine Verbindung") : "Verbinde …");
   }
   _connect(i) {
-    const c = mqtt.connect(BROKERS[i], { clientId: "sr_" + this.id + "_" + i, keepalive: 30, reconnectPeriod: 5000, connectTimeout: 8000, clean: true });
+    const B = BROKERS[i], c = mqtt.connect(B.url, Object.assign({ clientId: "sr_" + this.id + "_" + i, keepalive: 30, reconnectPeriod: 5000, connectTimeout: 8000, clean: true }, B.username ? { username: B.username, password: B.password } : {}));
     this.clients[i] = c;
     c.on("connect", () => { if (this.broker == null) this.broker = i; c.subscribe(this.base + (this.role === "host" ? "/p" : "/h")); this._status(); });
     c.on("offline", () => this._status()); c.on("close", () => this._status()); c.on("error", () => {});
