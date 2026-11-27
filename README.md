@@ -8,14 +8,14 @@ Interaktive Apps für den Deutschunterricht (DaF/DaZ) an der BbS – für den Be
 |---|---|---|---|
 | **Beamer-Spiele** | Aufdecken, Quizbrett, Quiz-Blitz, Satz-Puzzle u. v. m. – mit Stunden-Paketen pro Kurs | 1 · 2 · 3 | [öffnen](https://8bibabub8.github.io/DaF_BbS/spiele/) |
 | **Stadt-Rallye** | Brettspiel am Beamer, jeder Tisch spielt mit einem Handy (Aufgaben, Dialoge, Ereignisse) | 1 · 2 · 3 | [öffnen](https://8bibabub8.github.io/DaF_BbS/brettspiel/) |
-| **Begrüßen und verabschieden** | Kapitel 1 mit Übersetzungen, Beamer- und Handy-Modus | 2 · 3 | [öffnen](https://8bibabub8.github.io/DaF_BbS/) |
+| **Lern-App: Kapitel** | Grammatik, Wörter und Übungen zu unseren Themen, Übersetzung in 10 Sprachen, Beamer-Modus mit QR-Code | 1 · 2 · 3 | [öffnen](https://8bibabub8.github.io/DaF_BbS/) · [Beamer](https://8bibabub8.github.io/DaF_BbS/?m=beamer) |
 | **Praktikum-Memory** | Bild-Wort-Paare zum Thema Praktikum | 3 | [öffnen](https://8bibabub8.github.io/DaF_BbS/memory/) |
 | **Messe-Hilfe Naumburg** | Begleit-App für den Messebesuch | 2 · 3 | [öffnen](https://8bibabub8.github.io/DaF_BbS/messe/) |
 
 ## Ordner
 
 ```
-/            Begrüßen und verabschieden (Kapitel 1)
+/            Lern-App: Kapitel (Kurs 1–3)
 start/       Startseite mit allen Apps
 spiele/      Beamer-Spiele
 brettspiel/  Stadt-Rallye
