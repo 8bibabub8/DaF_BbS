@@ -61,7 +61,9 @@ h1.big{font-weight:900;font-size:clamp(28px,6vw,44px);color:var(--acc);line-heig
 table.gt{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:2px solid var(--line);border-radius:16px;overflow:hidden;margin:4px 0 12px;font-size:16px}
 .gt th{background:var(--peach);font-weight:900;text-align:left;padding:9px 10px;font-size:14px}
 .gt td{padding:9px 10px;border-top:1px solid var(--line);font-weight:700}
-.gt td:first-child{color:var(--mut);font-weight:800}
+.gt td:first-child{color:var(--mut);font-weight:800;white-space:nowrap}
+.tscroll{overflow-x:auto;margin:4px 0 12px;-webkit-overflow-scrolling:touch}.tscroll table.gt{margin:0}
+@media (max-width:520px){.gt th,.gt td{padding:8px 7px;font-size:15px}}
 .exs{display:flex;flex-direction:column;gap:8px}
 .exs div{background:#fff;border-left:5px solid var(--acc);border-radius:10px;padding:10px 14px;font-weight:700;font-size:17px}
 b{font-weight:900;color:var(--acc)}
@@ -2493,6 +2495,284 @@ const HINT = {
 };
 
 const CHAPTERS = [];
+// ===================== KURS 2 + 3 (A1) · ältere Kapitel =====================
+
+CHAPTERS.push({
+  id: "tag", kurse: ["K2", "K3"], icon: "tag",
+  title: "Amirs Woche", sub: "Formular, Zahlen · Wochentage · Uhrzeit · am / um",
+  grammar: [
+    { title: "Die Uhrzeit",
+      rules: [
+        ["Offiziell (Bahn, Arzt, Arbeit): 14:30 = vierzehn Uhr dreißig.",
+         "Официально (поезд, врач, работа): 14:30 = vierzehn Uhr dreißig.|Офіційно (потяг, лікар, робота): 14:30 = vierzehn Uhr dreißig.|Oficial (tren, medic, serviciu): 14:30 = vierzehn Uhr dreißig.|Официално (влак, лекар, работа): 14:30 = vierzehn Uhr dreißig.|Hivatalosan (vonat, orvos, munka): 14:30 = vierzehn Uhr dreißig.|Resmî (tren, doktor, iş): 14:30 = vierzehn Uhr dreißig.|رسمياً (القطار، الطبيب، العمل): 14:30 = vierzehn Uhr dreißig.|Oficial (trem, médico, trabalho): 14:30 = vierzehn Uhr dreißig.|Official (train, doctor, work): 14:30 = vierzehn Uhr dreißig.|Officiel (train, médecin, travail) : 14:30 = vierzehn Uhr dreißig."],
+        ["Im Alltag: halb drei = 2:30 (eine halbe Stunde vor drei). Viertel nach / Viertel vor.",
+         "В разговоре: halb drei = 2:30 (полчаса до трёх). Viertel nach = четверть после, Viertel vor = без четверти.|У розмові: halb drei = 2:30 (пів години до третьої). Viertel nach = чверть після, Viertel vor = за чверть.|În viața de zi cu zi: halb drei = 2:30 (jumătate de oră înainte de trei). Viertel nach = și un sfert, Viertel vor = fără un sfert.|В ежедневието: halb drei = 2:30 (половин час преди три). Viertel nach = и четвърт, Viertel vor = без четвърт.|A hétköznapokban: halb drei = 2:30 (fél három). Viertel nach = negyed … után, Viertel vor = háromnegyed.|Günlük hayatta: halb drei = 2:30 (üçe yarım saat var). Viertel nach = çeyrek geçiyor, Viertel vor = çeyrek var.|في الحياة اليومية: halb drei = 2:30 (نصف ساعة قبل الثالثة). Viertel nach = وربع، Viertel vor = إلا ربع.|No dia a dia: halb drei = 2:30 (meia hora antes das três). Viertel nach = e quinze, Viertel vor = quinze para.|In everyday speech: halb drei = 2:30 (half an hour before three). Viertel nach = quarter past, Viertel vor = quarter to.|Au quotidien : halb drei = 2 h 30 (une demi-heure avant trois heures). Viertel nach = et quart, Viertel vor = moins le quart."]
+      ],
+      table: { head: ["Uhr", "offiziell", "im Alltag"], rows: [["7:00", "sieben Uhr", "sieben"], ["7:15", "sieben Uhr fünfzehn", "**Viertel nach** sieben"], ["7:30", "sieben Uhr dreißig", "**halb** acht"], ["7:45", "sieben Uhr fünfundvierzig", "**Viertel vor** acht"], ["19:00", "neunzehn Uhr", "sieben (am Abend)"]] },
+      ex: ["Der Kurs beginnt um **acht Uhr**.", "Es ist **halb zehn**.", "Der Zug fährt um **vierzehn Uhr dreißig**."] },
+    { title: "am oder um?",
+      rules: [
+        ["Tag: am Montag, am Wochenende. Uhrzeit: um 8 Uhr. Beides: am Montag um 8 Uhr.",
+         "День: am Montag, am Wochenende. Время: um 8 Uhr. Вместе: am Montag um 8 Uhr.|День: am Montag, am Wochenende. Час: um 8 Uhr. Разом: am Montag um 8 Uhr.|Zi: am Montag, am Wochenende. Oră: um 8 Uhr. Împreună: am Montag um 8 Uhr.|Ден: am Montag, am Wochenende. Час: um 8 Uhr. Заедно: am Montag um 8 Uhr.|Nap: am Montag, am Wochenende. Óra: um 8 Uhr. Együtt: am Montag um 8 Uhr.|Gün: am Montag, am Wochenende. Saat: um 8 Uhr. İkisi birlikte: am Montag um 8 Uhr.|اليوم: am Montag، am Wochenende. الساعة: um 8 Uhr. معاً: am Montag um 8 Uhr.|Dia: am Montag, am Wochenende. Hora: um 8 Uhr. Juntos: am Montag um 8 Uhr.|Day: am Montag, am Wochenende. Time: um 8 Uhr. Both: am Montag um 8 Uhr.|Jour : am Montag, am Wochenende. Heure : um 8 Uhr. Les deux : am Montag um 8 Uhr."],
+        ["Wie lange? von 8 bis 16 Uhr.",
+         "Как долго? von 8 bis 16 Uhr (с 8 до 16 часов).|Як довго? von 8 bis 16 Uhr (з 8 до 16 години).|Cât timp? von 8 bis 16 Uhr (de la 8 la 16).|Колко дълго? von 8 bis 16 Uhr (от 8 до 16 ч.).|Meddig? von 8 bis 16 Uhr (8-tól 16 óráig).|Ne kadar? von 8 bis 16 Uhr (8'den 16'ya kadar).|كم من الوقت؟ von 8 bis 16 Uhr (من 8 إلى 16).|Quanto tempo? von 8 bis 16 Uhr (das 8 às 16 horas).|How long? von 8 bis 16 Uhr (from 8 to 4 pm).|Combien de temps ? von 8 bis 16 Uhr (de 8 h à 16 h)."]
+      ],
+      table: { head: ["Frage", "Antwort"], rows: [["Wann? (Tag)", "**am** Dienstag"], ["Wann? (Uhrzeit)", "**um** halb neun"], ["Wie lange?", "**von** 9 **bis** 12 Uhr"]] },
+      ex: ["Ich habe **am** Freitag **um** 10 Uhr einen Termin.", "Das Fitnessstudio ist **von** 6 **bis** 22 Uhr offen.", "**Am** Wochenende schlafe ich lange."] },
+    { title: "Das Formular",
+      rules: [
+        ["In Formularen steht: Vorname, Familienname, Geburtsdatum, Straße, PLZ, Wohnort, Telefon, Unterschrift.",
+         "В анкетах: имя, фамилия, дата рождения, улица, индекс, место жительства, телефон, подпись.|В анкетах: ім'я, прізвище, дата народження, вулиця, індекс, місце проживання, телефон, підпис.|În formulare: prenume, nume de familie, data nașterii, strada, cod poștal, localitatea, telefon, semnătura.|Във формулярите: име, фамилия, дата на раждане, улица, пощенски код, местожителство, телефон, подпис.|Az űrlapokon: keresztnév, vezetéknév, születési dátum, utca, irányítószám, lakóhely, telefon, aláírás.|Formlarda: ad, soyadı, doğum tarihi, sokak, posta kodu, ikamet yeri, telefon, imza.|في الاستمارات: الاسم الأول، اسم العائلة، تاريخ الميلاد، الشارع، الرمز البريدي، مكان السكن، الهاتف، التوقيع.|Nos formulários: nome, sobrenome, data de nascimento, rua, CEP, cidade, telefone, assinatura.|Forms ask for: first name, surname, date of birth, street, postcode, town, phone, signature.|Dans les formulaires : prénom, nom, date de naissance, rue, code postal, ville, téléphone, signature."]
+      ],
+      table: { head: ["Formular", "Beispiel"], rows: [["Vorname", "Amir"], ["Familienname", "Haddad"], ["Geburtsdatum", "14.05.2007"], ["Straße / Hausnummer", "Jakobsstraße 5"], ["PLZ / Wohnort", "06618 Naumburg"], ["Telefon", "0152 67 12 09"]] },
+      ex: ["Wie ist Ihr **Familienname**? – Haddad.", "Wie ist Ihre **Telefonnummer**? – Null eins fünf zwei …", "Unterschreiben Sie bitte **hier**."] }
+  ],
+  vocab: [
+    ["der Montag", "понедельник|понеділок|luni|понеделник|hétfő|pazartesi|الاثنين|segunda-feira|Monday|lundi", "Am Montag habe ich Deutsch."],
+    ["der Dienstag", "вторник|вівторок|marți|вторник|kedd|salı|الثلاثاء|terça-feira|Tuesday|mardi", "Am Dienstag gehe ich zum Arzt."],
+    ["der Mittwoch", "среда|середа|miercuri|сряда|szerda|çarşamba|الأربعاء|quarta-feira|Wednesday|mercredi", "Am Mittwoch habe ich frei."],
+    ["der Donnerstag", "четверг|четвер|joi|четвъртък|csütörtök|perşembe|الخميس|quinta-feira|Thursday|jeudi", "Am Donnerstag kaufe ich ein."],
+    ["der Freitag", "пятница|п'ятниця|vineri|петък|péntek|cuma|الجمعة|sexta-feira|Friday|vendredi", "Am Freitag gehe ich ins Fitnessstudio."],
+    ["der Samstag", "суббота|субота|sâmbătă|събота|szombat|cumartesi|السبت|sábado|Saturday|samedi", "Am Samstag schlafe ich lange."],
+    ["der Sonntag", "воскресенье|неділя|duminică|неделя|vasárnap|pazar|الأحد|domingo|Sunday|dimanche", "Am Sonntag ist das Geschäft zu."],
+    ["die Uhr, die Uhren", "часы|годинник|ceas|часовник|óra|saat|ساعة|relógio|clock, watch|horloge, montre", "Wie viel Uhr ist es?"],
+    ["halb", "половина|пів|jumătate|половин|fél|buçuk|نصف|meia|half|demi", "Es ist halb acht."],
+    ["das Viertel", "четверть|чверть|sfert|четвърт|negyed|çeyrek|ربع|quarto|quarter|quart", "Es ist Viertel nach neun."],
+    ["der Termin, die Termine", "запись, встреча|запис, зустріч|programare|час (уговорен)|időpont|randevu|موعد|consulta, compromisso|appointment|rendez-vous", "Ich möchte einen Termin."],
+    ["der Vorname", "имя|ім'я|prenume|име|keresztnév|ad|الاسم الأول|nome|first name|prénom", "Mein Vorname ist Amir."],
+    ["der Familienname", "фамилия|прізвище|nume de familie|фамилия|vezetéknév|soyadı|اسم العائلة|sobrenome|surname|nom de famille", "Der Familienname ist Haddad."],
+    ["das Geburtsdatum", "дата рождения|дата народження|data nașterii|дата на раждане|születési dátum|doğum tarihi|تاريخ الميلاد|data de nascimento|date of birth|date de naissance", "Das Geburtsdatum ist der 14. Mai 2007."],
+    ["der Wohnort", "место жительства|місце проживання|localitatea de domiciliu|местожителство|lakóhely|ikamet yeri|مكان السكن|cidade onde mora|place of residence|lieu de résidence", "Mein Wohnort ist Naumburg."],
+    ["die Postleitzahl (PLZ)", "почтовый индекс|поштовий індекс|cod poștal|пощенски код|irányítószám|posta kodu|الرمز البريدي|CEP|postcode|code postal", "Die Postleitzahl ist 06618."],
+    ["die Telefonnummer", "номер телефона|номер телефону|număr de telefon|телефонен номер|telefonszám|telefon numarası|رقم الهاتف|número de telefone|phone number|numéro de téléphone", "Wie ist deine Telefonnummer?"],
+    ["die Unterschrift", "подпись|підпис|semnătură|подпис|aláírás|imza|توقيع|assinatura|signature|signature", "Hier fehlt die Unterschrift."],
+    ["buchstabieren", "произносить по буквам|вимовляти по буквах|a spune pe litere|спелувам, казвам по букви|betűz|hecelemek|يتهجّى|soletrar|to spell|épeler", "Können Sie das bitte buchstabieren?"]
+  ],
+  ex: [
+    { type: "choice", title: "Wie spät ist es?",
+      items: [["14:30 – offiziell?", ["vierzehn Uhr dreißig", "vier Uhr dreißig", "vierzehn Uhr dreizehn"]], ["7:30 – im Alltag?", ["halb acht", "halb sieben", "Viertel nach sieben"]],
+        ["9:15 – im Alltag?", ["Viertel nach neun", "Viertel vor neun", "halb zehn"]], ["10:45 – im Alltag?", ["Viertel vor elf", "Viertel nach zehn", "halb elf"]],
+        ["18:00 – offiziell?", ["achtzehn Uhr", "acht Uhr", "sechzehn Uhr"]], ["Es ist halb vier. Das ist …", ["3:30", "4:30", "3:15"]]] },
+    { type: "choice", title: "am, um oder von … bis?",
+      items: [["Der Kurs ist ___ Montag.", ["am", "um", "von"]], ["Der Bus kommt ___ 7:15 Uhr.", ["um", "am", "im"]],
+        ["Ich arbeite ___ 8 bis 16 Uhr.", ["von", "am", "um"]], ["___ Wochenende besuche ich meine Familie.", ["Am", "Um", "Im"]],
+        ["Ich habe ___ Dienstag ___ 10 Uhr einen Termin.", ["am … um", "um … am", "am … am"]], ["Die Party beginnt ___ halb acht.", ["um", "am", "bis"]]] },
+    { type: "choice", title: "Wochentage",
+      items: [["Nach Montag kommt …", ["Dienstag", "Mittwoch", "Sonntag"]], ["Vor Freitag kommt …", ["Donnerstag", "Samstag", "Mittwoch"]],
+        ["Samstag und Sonntag sind das …", ["Wochenende", "Wochentag", "Wochenmorgen"]], ["Wie viele Tage hat eine Woche?", ["sieben", "fünf", "zehn"]],
+        ["Heute ist Mittwoch. Morgen ist …", ["Donnerstag", "Dienstag", "Freitag"]]] },
+    { type: "sort", title: "Was passt ins Formular?", buckets: ["Vorname", "Wohnort", "Telefon"],
+      items: [["Olena", 0], ["Naumburg", 1], ["0152 67 12 09", 2], ["Amir", 0], ["Halle", 1], ["0176 23 45 81", 2], ["Daria", 0], ["Weißenfels", 1]] },
+    { type: "order", title: "Sätze bauen",
+      items: ["Ich habe am Freitag einen Termin.", "Der Kurs beginnt um acht Uhr.", "Wie ist Ihr Familienname?", "Am Wochenende schlafe ich lange.", "Ich arbeite von neun bis fünf."] },
+    { type: "vocab", title: "Wörter-Quiz" }
+  ]
+});
+
+CHAPTERS.push({
+  id: "praktikum", kurse: ["K2", "K3"], icon: "praktikum",
+  title: "Amir im Praktikum", sub: "Betrieb, Werkzeug, Arbeitskleidung · Anweisungen mit Sie · krank melden",
+  grammar: [
+    { title: "du oder Sie?",
+      rules: [
+        ["Sie (formell): mit Chef, Kunden, fremden Personen. du (informell): mit Freunden, Familie, oft mit Kollegen.",
+         "Sie (вежливо): с начальником, клиентами, незнакомыми. du (на ты): с друзьями, семьёй, часто с коллегами.|Sie (ввічливо): з начальником, клієнтами, незнайомими. du (на ти): з друзями, родиною, часто з колегами.|Sie (formal): cu șeful, clienții, persoane străine. du (informal): cu prietenii, familia, des cu colegii.|Sie (учтиво): с шефа, клиентите, непознати. du (на ти): с приятели, семейството, често с колегите.|Sie (magázódás): főnökkel, ügyfelekkel, idegenekkel. du (tegeződés): barátokkal, családdal, gyakran kollégákkal.|Sie (resmî): şef, müşteriler, yabancılarla. du (samimi): arkadaşlar, aile, çoğu zaman iş arkadaşlarıyla.|Sie (رسمي): مع المدير والزبائن والغرباء. du (غير رسمي): مع الأصدقاء والعائلة، وغالباً مع الزملاء.|Sie (formal): com chefe, clientes, desconhecidos. du (informal): com amigos, família, muitas vezes com colegas.|Sie (formal): with the boss, customers, strangers. du (informal): with friends, family, often colleagues.|Sie (formel) : avec le chef, les clients, les inconnus. du (informel) : avec les amis, la famille, souvent les collègues."]
+      ],
+      table: { head: ["", "Sie", "du"], rows: [["Wie heißen …?", "Wie heißen **Sie**?", "Wie heißt **du**?"], ["Woher …?", "Woher kommen **Sie**?", "Woher kommst **du**?"], ["Gruß", "Guten Tag! / Auf Wiedersehen!", "Hallo! / Tschüss!"]] },
+      ex: ["Guten Morgen, Frau Wolf! Wie geht es **Ihnen**?", "Hallo Jonas, wie geht es **dir**?"] },
+    { title: "Anweisungen: Nehmen Sie bitte …!",
+      rules: [
+        ["Anweisung mit Sie: Das Verb steht vorne, dann Sie. Mit bitte ist es höflich.",
+         "Указание с Sie: глагол стоит впереди, затем Sie. С bitte – вежливо.|Вказівка з Sie: дієслово стоїть попереду, потім Sie. З bitte – ввічливо.|Instrucțiune cu Sie: verbul stă la început, apoi Sie. Cu bitte este politicos.|Указание със Sie: глаголът е отпред, после Sie. С bitte е учтиво.|Utasítás Sie-vel: elöl az ige, utána a Sie. A bitte-vel udvarias.|Sie ile talimat: fiil başta, sonra Sie. bitte ile kibar olur.|التعليمات مع Sie: الفعل في البداية ثم Sie. مع bitte تكون مهذبة.|Instrução com Sie: o verbo vem primeiro, depois Sie. Com bitte é educado.|Instructions with Sie: the verb comes first, then Sie. bitte makes it polite.|Consigne avec Sie : le verbe en premier, puis Sie. Avec bitte, c'est poli."]
+      ],
+      table: { head: ["Verb", "Anweisung"], rows: [["nehmen", "**Nehmen Sie** bitte den Hammer!"], ["tragen", "**Tragen Sie** bitte Handschuhe!"], ["kommen", "**Kommen Sie** bitte um 7 Uhr!"], ["aufräumen", "**Räumen Sie** bitte die Werkstatt **auf**!"], ["anrufen", "**Rufen Sie** bitte **an**, wenn Sie krank sind!"]] },
+      ex: ["**Tragen Sie** bitte die Schutzbrille!", "**Geben Sie** mir bitte die Zange!", "**Seien Sie** bitte pünktlich!"] },
+    { title: "Krank? So meldest du dich krank",
+      rules: [
+        ["Ruf vor der Arbeit im Betrieb an. Sag: Ich bin krank. Ich komme heute nicht. Bring dann eine Krankmeldung vom Arzt.",
+         "Позвони на работу до начала смены. Скажи: Ich bin krank. Ich komme heute nicht. Потом принеси больничный от врача.|Подзвони на роботу до початку зміни. Скажи: Ich bin krank. Ich komme heute nicht. Потім принеси лікарняний від лікаря.|Sună la firmă înainte de program. Spune: Ich bin krank. Ich komme heute nicht. Apoi adu o adeverință medicală.|Обади се в предприятието преди работа. Кажи: Ich bin krank. Ich komme heute nicht. После донеси болничен от лекаря.|Munka előtt hívd fel a céget. Mondd: Ich bin krank. Ich komme heute nicht. Utána vigyél orvosi igazolást.|İşten önce işyerini ara. De ki: Ich bin krank. Ich komme heute nicht. Sonra doktordan rapor getir.|اتصل بالشركة قبل بداية العمل. قل: Ich bin krank. Ich komme heute nicht. ثم أحضر إجازة مرضية من الطبيب.|Ligue para a empresa antes do trabalho. Diga: Ich bin krank. Ich komme heute nicht. Depois leve um atestado médico.|Call the company before work. Say: Ich bin krank. Ich komme heute nicht. Then bring a sick note from the doctor.|Appelle l'entreprise avant le travail. Dis : Ich bin krank. Ich komme heute nicht. Puis apporte un arrêt maladie du médecin."]
+      ],
+      ex: ["Guten Morgen, Frau Wolf. Hier ist Amir Haddad.", "Ich bin **krank**. Ich habe **Fieber**.", "Ich komme heute **nicht**. Ich habe um 10 Uhr einen Termin beim Arzt."] }
+  ],
+  vocab: [
+    ["das Praktikum", "практика|практика|stagiu de practică|стаж|szakmai gyakorlat|staj|تدريب عملي|estágio|internship|stage", "Amir macht ein Praktikum."],
+    ["der Betrieb, die Betriebe", "предприятие|підприємство|firmă, întreprindere|предприятие|üzem, cég|işletme|شركة، منشأة|empresa|company, workplace|entreprise", "Der Betrieb ist in Naumburg."],
+    ["die Tischlerei", "столярная мастерская|столярна майстерня|tâmplărie|дърводелска работилница|asztalosműhely|marangoz atölyesi|ورشة نجارة|marcenaria|joinery|menuiserie", "Frau Wolf hat eine Tischlerei."],
+    ["die Chefin / der Chef", "начальница / начальник|начальниця / начальник|șefa / șeful|шефката / шефът|főnök|patron, şef|المديرة / المدير|chefe|boss|cheffe / chef", "Die Chefin heißt Frau Wolf."],
+    ["der Kollege / die Kollegin", "коллега|колега|coleg / colegă|колега|kolléga|iş arkadaşı|زميل / زميلة|colega|colleague|collègue", "Herr Krause ist ein Kollege."],
+    ["die Werkstatt", "мастерская|майстерня|atelier|работилница|műhely|atölye|ورشة|oficina|workshop|atelier", "Wir arbeiten in der Werkstatt."],
+    ["das Werkzeug", "инструмент|інструмент|unealtă|инструмент|szerszám|alet|أداة|ferramenta|tool|outil", "Das Werkzeug liegt auf dem Tisch."],
+    ["der Hammer", "молоток|молоток|ciocan|чук|kalapács|çekiç|مطرقة|martelo|hammer|marteau", "Nehmen Sie bitte den Hammer!"],
+    ["die Säge", "пила|пилка|ferăstrău|трион|fűrész|testere|منشار|serra|saw|scie", "Die Säge ist scharf."],
+    ["die Zange", "клещи, плоскогубцы|кліщі, плоскогубці|clește|клещи|fogó|pense|كمّاشة|alicate|pliers|pince", "Geben Sie mir bitte die Zange!"],
+    ["der Schraubenzieher", "отвёртка|викрутка|șurubelniță|отвертка|csavarhúzó|tornavida|مفك براغي|chave de fenda|screwdriver|tournevis", "Wo ist der Schraubenzieher?"],
+    ["die Bohrmaschine", "дрель|дриль|mașină de găurit|бормашина|fúrógép|matkap|مثقاب|furadeira|drill|perceuse", "Die Bohrmaschine ist laut."],
+    ["die Arbeitskleidung", "рабочая одежда|робочий одяг|îmbrăcăminte de lucru|работно облекло|munkaruha|iş kıyafeti|ملابس العمل|roupa de trabalho|work clothes|vêtements de travail", "Im Betrieb trägt man Arbeitskleidung."],
+    ["die Handschuhe (Pl.)", "перчатки|рукавички|mănuși|ръкавици|kesztyű|eldiven|قفازات|luvas|gloves|gants", "Tragen Sie bitte Handschuhe!"],
+    ["die Schutzbrille", "защитные очки|захисні окуляри|ochelari de protecție|предпазни очила|védőszemüveg|koruyucu gözlük|نظارة واقية|óculos de proteção|safety goggles|lunettes de protection", "Mit der Säge braucht man eine Schutzbrille."],
+    ["die Sicherheitsschuhe (Pl.)", "защитная обувь|захисне взуття|încălțăminte de protecție|предпазни обувки|védőcipő|iş güvenliği ayakkabısı|أحذية السلامة|sapatos de segurança|safety shoes|chaussures de sécurité", "Die Sicherheitsschuhe sind schwer."],
+    ["die Pause", "перерыв|перерва|pauză|почивка|szünet|mola|استراحة|intervalo|break|pause", "Um 12 Uhr haben wir Pause."],
+    ["pünktlich", "пунктуальный, вовремя|пунктуальний, вчасно|punctual|точен, навреме|pontos|dakik|في الموعد|pontual|on time|ponctuel", "Bitte seien Sie pünktlich!"],
+    ["die Krankmeldung", "больничный|лікарняний|adeverință medicală|болничен лист|táppénzes papír|hastalık raporu|إجازة مرضية|atestado médico|sick note|arrêt maladie", "Ich bringe morgen die Krankmeldung."],
+    ["der Feierabend", "конец рабочего дня|кінець робочого дня|sfârșitul programului|край на работния ден|munkaidő vége|mesai bitimi|نهاية الدوام|fim do expediente|end of the working day|fin de journée", "Um 16 Uhr ist Feierabend."]
+  ],
+  ex: [
+    { type: "choice", title: "Anweisungen",
+      items: [["___ Sie bitte Handschuhe!", ["Tragen", "Tragt", "Trägst"]], ["___ Sie mir bitte den Hammer!", ["Geben", "Gib", "Gebt"]],
+        ["Räumen Sie bitte die Werkstatt ___!", ["auf", "an", "mit"]], ["Kommen ___ bitte um 7 Uhr!", ["Sie", "du", "ihr"]],
+        ["Was ist höflich?", ["Nehmen Sie bitte die Säge!", "Nimm Säge!", "Sie nehmen Säge."]], ["___ Sie bitte an, wenn Sie krank sind!", ["Rufen", "Ruft", "Ruf"]]] },
+    { type: "choice", title: "du oder Sie?",
+      items: [["Die Chefin, Frau Wolf: „Wie geht es ___?“", ["Ihnen", "dir", "du"]], ["Dein Freund Jonas: „Woher kommst ___?“", ["du", "Sie", "Ihnen"]],
+        ["Ein Kunde kommt. Du sagst: …", ["Guten Tag! Kann ich Ihnen helfen?", "Hallo! Was willst du?", "Tschüss!"]], ["Feierabend. Du sagst zur Chefin: …", ["Auf Wiedersehen!", "Hallo, Chefin!", "Gute Nacht!"]],
+        ["Herr Krause, ___ Sie mir helfen?", ["können", "kannst", "kann"]]] },
+    { type: "sort", title: "Werkzeug oder Arbeitskleidung?", buckets: ["Werkzeug", "Arbeitskleidung"],
+      items: [["der Hammer", 0], ["die Handschuhe", 1], ["die Säge", 0], ["die Schutzbrille", 1], ["die Zange", 0], ["die Sicherheitsschuhe", 1], ["die Bohrmaschine", 0], ["die Arbeitshose", 1]] },
+    { type: "choice", title: "Krank melden",
+      items: [["Du bist krank. Was machst du zuerst?", ["Ich rufe im Betrieb an.", "Ich gehe ins Kino.", "Ich schreibe nichts."]], ["„Ich bin krank. Ich komme heute ___.“", ["nicht", "kein", "nein"]],
+        ["Was bringst du vom Arzt mit?", ["die Krankmeldung", "die Rechnung", "die Einladung"]], ["„Ich habe um 10 Uhr einen ___ beim Arzt.“", ["Termin", "Tag", "Name"]],
+        ["Wann rufst du an?", ["vor der Arbeit", "nach dem Feierabend", "am Wochenende"]]] },
+    { type: "order", title: "Sätze bauen",
+      items: ["Tragen Sie bitte die Schutzbrille!", "Ich bin heute krank.", "Um zwölf Uhr haben wir Pause.", "Geben Sie mir bitte den Hammer!", "Der Betrieb ist in Naumburg."] },
+    { type: "vocab", title: "Wörter-Quiz" }
+  ]
+});
+
+CHAPTERS.push({
+  id: "arzt", kurse: ["K2", "K3"], icon: "arzt",
+  title: "Beim Arzt", sub: "Der Körper · Das tut weh · mein / meine",
+  grammar: [
+    { title: "Was tut weh?",
+      rules: [
+        ["Ein Körperteil: … tut weh. Zwei oder mehr: … tun weh.",
+         "Одна часть тела: … tut weh (болит). Две или больше: … tun weh (болят).|Одна частина тіла: … tut weh (болить). Дві чи більше: … tun weh (болять).|O parte a corpului: … tut weh (doare). Două sau mai multe: … tun weh (dor).|Една част от тялото: … tut weh (боли). Две или повече: … tun weh (болят).|Egy testrész: … tut weh (fáj). Kettő vagy több: … tun weh (fájnak).|Bir vücut bölümü: … tut weh (ağrıyor). İki veya daha fazlası: … tun weh.|عضو واحد: … tut weh (يؤلم). اثنان أو أكثر: … tun weh (تؤلم).|Uma parte do corpo: … tut weh (dói). Duas ou mais: … tun weh (doem).|One body part: … tut weh (hurts). Two or more: … tun weh (hurt).|Une partie du corps : … tut weh (fait mal). Deux ou plus : … tun weh (font mal)."],
+        ["Oft sagt man auch: Ich habe Kopfschmerzen / Bauchschmerzen / Halsschmerzen.",
+         "Часто говорят: Ich habe Kopfschmerzen (голова болит) / Bauchschmerzen (живот) / Halsschmerzen (горло).|Часто кажуть: Ich habe Kopfschmerzen (болить голова) / Bauchschmerzen (живіт) / Halsschmerzen (горло).|Des se spune: Ich habe Kopfschmerzen (mă doare capul) / Bauchschmerzen (burta) / Halsschmerzen (gâtul).|Често се казва: Ich habe Kopfschmerzen (боли ме глава) / Bauchschmerzen (корем) / Halsschmerzen (гърло).|Gyakran mondjuk: Ich habe Kopfschmerzen (fejfájás) / Bauchschmerzen (hasfájás) / Halsschmerzen (torokfájás).|Sık sık şöyle denir: Ich habe Kopfschmerzen (baş ağrısı) / Bauchschmerzen (karın ağrısı) / Halsschmerzen (boğaz ağrısı).|يُقال غالباً: Ich habe Kopfschmerzen (صداع) / Bauchschmerzen (ألم في البطن) / Halsschmerzen (ألم في الحلق).|Também se diz: Ich habe Kopfschmerzen (dor de cabeça) / Bauchschmerzen (dor de barriga) / Halsschmerzen (dor de garganta).|People also say: Ich habe Kopfschmerzen (headache) / Bauchschmerzen (stomach ache) / Halsschmerzen (sore throat).|On dit aussi : Ich habe Kopfschmerzen (mal de tête) / Bauchschmerzen (mal au ventre) / Halsschmerzen (mal à la gorge)."]
+      ],
+      table: { head: ["eins", "zwei oder mehr"], rows: [["Mein Kopf **tut** weh.", "Meine Füße **tun** weh."], ["Mein Bauch **tut** weh.", "Meine Augen **tun** weh."], ["Meine Hand **tut** weh.", "Meine Ohren **tun** weh."]] },
+      ex: ["Mein Rücken **tut** weh.", "Meine Beine **tun** weh.", "Ich habe **Halsschmerzen** und **Fieber**."] },
+    { title: "mein oder meine?",
+      rules: [
+        ["der und das → mein. die und Plural → meine.",
+         "der и das → mein. die и множественное число → meine.|der і das → mein. die і множина → meine.|der și das → mein. die și plural → meine.|der и das → mein. die и множествено число → meine.|der és das → mein. die és többes szám → meine.|der ve das → mein. die ve çoğul → meine.|der و das ← mein. die والجمع ← meine.|der e das → mein. die e plural → meine.|der and das → mein. die and plural → meine.|der et das → mein. die et pluriel → meine."]
+      ],
+      table: { head: ["Artikel", "mein / meine", "dein / deine"], rows: [["der Kopf", "**mein** Kopf", "**dein** Kopf"], ["das Bein", "**mein** Bein", "**dein** Bein"], ["die Hand", "**meine** Hand", "**deine** Hand"], ["die Augen (Pl.)", "**meine** Augen", "**deine** Augen"]] },
+      ex: ["**Mein** Arm tut weh.", "**Meine** Nase ist rot.", "Was tut weh? **Dein** Fuß?"] },
+    { title: "Was sagt die Ärztin?",
+      rules: [
+        ["Die Ärztin gibt Tipps mit Sie: Trinken Sie viel Tee! Bleiben Sie im Bett!",
+         "Врач даёт советы на Sie: Trinken Sie viel Tee! (Пейте много чая!) Bleiben Sie im Bett! (Оставайтесь в постели!)|Лікарка дає поради на Sie: Trinken Sie viel Tee! (Пийте багато чаю!) Bleiben Sie im Bett! (Залишайтеся в ліжку!)|Medicul dă sfaturi cu Sie: Trinken Sie viel Tee! (Beți mult ceai!) Bleiben Sie im Bett! (Stați în pat!)|Лекарката дава съвети със Sie: Trinken Sie viel Tee! (Пийте много чай!) Bleiben Sie im Bett! (Останете в леглото!)|Az orvos tanácsokat ad Sie-vel: Trinken Sie viel Tee! (Igyon sok teát!) Bleiben Sie im Bett! (Maradjon ágyban!)|Doktor Sie ile tavsiye verir: Trinken Sie viel Tee! (Bol çay için!) Bleiben Sie im Bett! (Yatakta kalın!)|تعطي الطبيبة نصائح بـ Sie: Trinken Sie viel Tee! (اشرب الكثير من الشاي!) Bleiben Sie im Bett! (ابقَ في السرير!)|A médica dá conselhos com Sie: Trinken Sie viel Tee! (Beba muito chá!) Bleiben Sie im Bett! (Fique na cama!)|The doctor gives advice with Sie: Trinken Sie viel Tee! (Drink lots of tea!) Bleiben Sie im Bett! (Stay in bed!)|La médecin donne des conseils avec Sie : Trinken Sie viel Tee! (Buvez beaucoup de thé !) Bleiben Sie im Bett! (Restez au lit !)"]
+      ],
+      ex: ["**Nehmen Sie** die Tabletten dreimal am Tag!", "**Trinken Sie** viel Wasser!", "**Kommen Sie** am Freitag wieder!"] }
+  ],
+  vocab: [
+    ["der Kopf", "голова|голова|cap|глава|fej|baş|رأس|cabeça|head|tête", "Mein Kopf tut weh."],
+    ["der Hals", "шея, горло|шия, горло|gât|врат, гърло|nyak, torok|boğaz|رقبة، حلق|pescoço, garganta|neck, throat|cou, gorge", "Mein Hals tut weh."],
+    ["der Bauch", "живот|живіт|burtă|корем|has|karın|بطن|barriga|stomach, belly|ventre", "Ich habe Bauchschmerzen."],
+    ["der Rücken", "спина|спина|spate|гръб|hát|sırt|ظهر|costas|back|dos", "Mein Rücken tut weh."],
+    ["der Arm, die Arme", "рука (от плеча)|рука|braț|ръка|kar|kol|ذراع|braço|arm|bras", "Mein Arm ist kaputt."],
+    ["die Hand, die Hände", "кисть руки|кисть руки|mână|длан, ръка|kéz|el|يد|mão|hand|main", "Meine Hand tut weh."],
+    ["das Bein, die Beine", "нога|нога|picior|крак|láb|bacak|ساق|perna|leg|jambe", "Meine Beine tun weh."],
+    ["der Fuß, die Füße", "ступня|стопа|laba piciorului|стъпало|lábfej|ayak|قدم|pé|foot|pied", "Mein Fuß tut weh."],
+    ["das Auge, die Augen", "глаз|око|ochi|око|szem|göz|عين|olho|eye|œil", "Meine Augen sind müde."],
+    ["das Ohr, die Ohren", "ухо|вухо|ureche|ухо|fül|kulak|أذن|orelha|ear|oreille", "Mein Ohr tut weh."],
+    ["die Nase", "нос|ніс|nas|нос|orr|burun|أنف|nariz|nose|nez", "Meine Nase ist rot."],
+    ["der Mund", "рот|рот|gură|уста|száj|ağız|فم|boca|mouth|bouche", "Mach bitte den Mund auf!"],
+    ["der Zahn, die Zähne", "зуб|зуб|dinte|зъб|fog|diş|سن|dente|tooth|dent", "Ich habe Zahnschmerzen."],
+    ["das Fieber", "температура, жар|температура, жар|febră|температура|láz|ateş|حمى|febre|fever|fièvre", "Ich habe Fieber."],
+    ["der Husten", "кашель|кашель|tuse|кашлица|köhögés|öksürük|سعال|tosse|cough|toux", "Ich habe Husten."],
+    ["die Erkältung", "простуда|застуда|răceală|настинка|megfázás|soğuk algınlığı|زكام|resfriado|cold|rhume", "Ich habe eine Erkältung."],
+    ["die Arztpraxis", "врачебный кабинет|лікарський кабінет|cabinet medical|лекарски кабинет|orvosi rendelő|muayenehane|عيادة|consultório|doctor's surgery|cabinet médical", "Die Arztpraxis ist am Markt."],
+    ["das Rezept", "рецепт|рецепт|rețetă|рецепта|recept|reçete|وصفة طبية|receita|prescription|ordonnance", "Hier ist das Rezept."],
+    ["die Tablette, die Tabletten", "таблетка|таблетка|pastilă|таблетка|tabletta|tablet, hap|حبة دواء|comprimido|tablet|comprimé", "Nehmen Sie eine Tablette."],
+    ["die Apotheke", "аптека|аптека|farmacie|аптека|gyógyszertár|eczane|صيدلية|farmácia|pharmacy|pharmacie", "Mit dem Rezept gehe ich zur Apotheke."]
+  ],
+  ex: [
+    { type: "choice", title: "tut weh oder tun weh?",
+      items: [["Mein Kopf ___ weh.", ["tut", "tun", "tust"]], ["Meine Füße ___ weh.", ["tun", "tut", "tust"]], ["Mein Rücken ___ weh.", ["tut", "tun", "tue"]],
+        ["Meine Augen ___ weh.", ["tun", "tut", "tust"]], ["Meine Hand ___ weh.", ["tut", "tun", "tust"]], ["Meine Ohren ___ weh.", ["tun", "tut", "tue"]]] },
+    { type: "choice", title: "mein oder meine?",
+      items: [["___ Bauch tut weh.", ["Mein", "Meine", "Meinen"]], ["___ Hand ist kalt.", ["Meine", "Mein", "Meinen"]], ["___ Bein ist gebrochen.", ["Mein", "Meine", "Meiner"]],
+        ["___ Zähne tun weh.", ["Meine", "Mein", "Meinen"]], ["___ Nase läuft.", ["Meine", "Mein", "Meinen"]], ["___ Kopf ist heiß.", ["Mein", "Meine", "Meinen"]]] },
+    { type: "sort", title: "der, die oder das?", buckets: ["der", "die", "das"],
+      items: [["Kopf", 0], ["Hand", 1], ["Bein", 2], ["Bauch", 0], ["Nase", 1], ["Auge", 2], ["Fuß", 0], ["Ohr", 2], ["Tablette", 1], ["Rücken", 0]] },
+    { type: "choice", title: "In der Arztpraxis",
+      items: [["Die Ärztin fragt: „Was fehlt Ihnen?“", ["Ich habe Halsschmerzen.", "Ich heiße Amir.", "Ich komme aus Syrien."]],
+        ["„Seit wann haben Sie Fieber?“", ["Seit zwei Tagen.", "Um zwei Uhr.", "In der Apotheke."]],
+        ["Die Ärztin sagt: „Bleiben Sie drei Tage …“", ["im Bett", "im Kino", "im Bus"]],
+        ["Mit dem Rezept gehst du …", ["zur Apotheke", "zum Friseur", "zur Post"]],
+        ["Was brauchst du für den Betrieb?", ["eine Krankmeldung", "eine Einladung", "ein Rezept für Kuchen"]]] },
+    { type: "order", title: "Sätze bauen",
+      items: ["Mein Kopf tut weh.", "Ich habe seit gestern Fieber.", "Meine Füße tun weh.", "Trinken Sie bitte viel Tee!", "Ich brauche einen Termin."] },
+    { type: "vocab", title: "Wörter-Quiz" }
+  ]
+});
+
+CHAPTERS.push({
+  id: "kleidung", kurse: ["K2", "K3"], icon: "kleidung",
+  title: "Kleidung und Wetter", sub: "Wetter · Kleidung · Ich ziehe den Pullover an",
+  grammar: [
+    { title: "Das Wetter",
+      rules: [
+        ["Beim Wetter sagen wir es: Es regnet. Es schneit. Es ist kalt.",
+         "О погоде говорим с es: Es regnet (идёт дождь). Es schneit (идёт снег). Es ist kalt (холодно).|Про погоду кажемо з es: Es regnet (іде дощ). Es schneit (іде сніг). Es ist kalt (холодно).|Despre vreme spunem cu es: Es regnet (plouă). Es schneit (ninge). Es ist kalt (e frig).|За времето казваме с es: Es regnet (вали дъжд). Es schneit (вали сняг). Es ist kalt (студено е).|Az időjárásnál es-t használunk: Es regnet (esik az eső). Es schneit (esik a hó). Es ist kalt (hideg van).|Hava için es kullanırız: Es regnet (yağmur yağıyor). Es schneit (kar yağıyor). Es ist kalt (hava soğuk).|في الطقس نستخدم es: Es regnet (تمطر). Es schneit (تثلج). Es ist kalt (الجو بارد).|Para o tempo usamos es: Es regnet (chove). Es schneit (neva). Es ist kalt (está frio).|For the weather we use es: Es regnet (it's raining). Es schneit (it's snowing). Es ist kalt (it's cold).|Pour la météo, on utilise es : Es regnet (il pleut). Es schneit (il neige). Es ist kalt (il fait froid)."]
+      ],
+      table: { head: ["", "Satz"], rows: [["Regen", "Es **regnet**."], ["Schnee", "Es **schneit**."], ["Sonne", "Die Sonne **scheint**."], ["Wind", "Es ist **windig**."], ["Wolken", "Es ist **bewölkt**."], ["Temperatur", "Es ist 3 **Grad**. Es ist **kalt** / **warm** / **heiß**."]] },
+      ex: ["Heute **regnet es**. Ich nehme den Regenschirm.", "Morgen **scheint die Sonne**.", "Es ist **minus 2 Grad**."] },
+    { title: "Ich ziehe den Pullover an",
+      rules: [
+        ["anziehen ist trennbar: Ich ziehe … an. Nach anziehen kommt der Akkusativ: den Pullover, die Jacke, das T-Shirt, die Schuhe.",
+         "anziehen – отделяемый глагол: Ich ziehe … an. После anziehen – винительный падеж: den Pullover, die Jacke, das T-Shirt, die Schuhe.|anziehen – відокремлюване дієслово: Ich ziehe … an. Після anziehen – знахідний відмінок: den Pullover, die Jacke, das T-Shirt, die Schuhe.|anziehen este separabil: Ich ziehe … an. După anziehen urmează acuzativul: den Pullover, die Jacke, das T-Shirt, die Schuhe.|anziehen е разделим глагол: Ich ziehe … an. След anziehen идва винителен падеж: den Pullover, die Jacke, das T-Shirt, die Schuhe.|Az anziehen elváló igekötős: Ich ziehe … an. Utána tárgyeset jön: den Pullover, die Jacke, das T-Shirt, die Schuhe.|anziehen ayrılabilen bir fiildir: Ich ziehe … an. Ardından Akkusativ gelir: den Pullover, die Jacke, das T-Shirt, die Schuhe.|anziehen فعل قابل للفصل: Ich ziehe … an. بعده حالة المفعول به: den Pullover، die Jacke، das T-Shirt، die Schuhe.|anziehen é separável: Ich ziehe … an. Depois vem o acusativo: den Pullover, die Jacke, das T-Shirt, die Schuhe.|anziehen is separable: Ich ziehe … an. It takes the accusative: den Pullover, die Jacke, das T-Shirt, die Schuhe.|anziehen est séparable : Ich ziehe … an. Il est suivi de l'accusatif : den Pullover, die Jacke, das T-Shirt, die Schuhe."]
+      ],
+      table: { head: ["Nominativ", "Akkusativ", "Satz"], rows: [["der Pullover", "**den** Pullover", "Ich ziehe **den** Pullover an."], ["die Jacke", "**die** Jacke", "Ich ziehe **die** Jacke an."], ["das T-Shirt", "**das** T-Shirt", "Ich ziehe **das** T-Shirt an."], ["die Schuhe (Pl.)", "**die** Schuhe", "Ich ziehe **die** Schuhe an."]] },
+      ex: ["Es ist kalt. Ich **ziehe** den Mantel **an**.", "Amir **zieht** die Winterjacke **an**.", "Zieh **den** Schal **an**!"] },
+    { title: "Farben und Größen",
+      rules: [
+        ["Die Farbe steht nach sein: Die Jacke ist blau. Passt es nicht? Die Hose ist zu groß / zu klein.",
+         "Цвет стоит после sein: Die Jacke ist blau (куртка синяя). Не подходит? Die Hose ist zu groß / zu klein (слишком велики / малы).|Колір стоїть після sein: Die Jacke ist blau (куртка синя). Не підходить? Die Hose ist zu groß / zu klein (завеликі / замалі).|Culoarea stă după sein: Die Jacke ist blau (geaca e albastră). Nu se potrivește? Die Hose ist zu groß / zu klein (prea mari / prea mici).|Цветът стои след sein: Die Jacke ist blau (якето е синьо). Не става? Die Hose ist zu groß / zu klein (твърде голям / малък).|A szín a sein után áll: Die Jacke ist blau (a kabát kék). Nem jó? Die Hose ist zu groß / zu klein (túl nagy / túl kicsi).|Renk sein'dan sonra gelir: Die Jacke ist blau (ceket mavi). Olmuyor mu? Die Hose ist zu groß / zu klein (çok büyük / çok küçük).|يأتي اللون بعد sein: Die Jacke ist blau (السترة زرقاء). لا يناسب؟ Die Hose ist zu groß / zu klein (كبير جداً / صغير جداً).|A cor vem depois de sein: Die Jacke ist blau (o casaco é azul). Não serve? Die Hose ist zu groß / zu klein (grande / pequena demais).|The colour comes after sein: Die Jacke ist blau (the jacket is blue). Doesn't fit? Die Hose ist zu groß / zu klein (too big / too small).|La couleur vient après sein : Die Jacke ist blau (la veste est bleue). Ça ne va pas ? Die Hose ist zu groß / zu klein (trop grand / trop petit)."]
+      ],
+      table: { head: ["Farbe", "Beispiel"], rows: [["rot · blau · grün", "Der Schal ist **rot**."], ["gelb · schwarz · weiß", "Die Schuhe sind **schwarz**."], ["grau · braun", "Der Mantel ist **grau**."]] },
+      ex: ["Die Jacke ist **zu klein**. Haben Sie Größe L?", "Welche Farbe hat die Mütze? – Sie ist **grün**."] }
+  ],
+  vocab: [
+    ["das Wetter", "погода|погода|vreme|време|időjárás|hava|طقس|tempo (clima)|weather|temps (météo)", "Wie ist das Wetter heute?"],
+    ["Es regnet.", "Идёт дождь.|Іде дощ.|Plouă.|Вали дъжд.|Esik az eső.|Yağmur yağıyor.|إنها تمطر.|Está chovendo.|It's raining.|Il pleut.", "Es regnet. Ich nehme den Schirm."],
+    ["Es schneit.", "Идёт снег.|Іде сніг.|Ninge.|Вали сняг.|Esik a hó.|Kar yağıyor.|إنها تثلج.|Está nevando.|It's snowing.|Il neige.", "Im Januar schneit es oft."],
+    ["Die Sonne scheint.", "Светит солнце.|Світить сонце.|Soarele strălucește.|Слънцето грее.|Süt a nap.|Güneş parlıyor.|الشمس مشرقة.|O sol está brilhando.|The sun is shining.|Le soleil brille.", "Heute scheint die Sonne."],
+    ["kalt – warm – heiß", "холодно – тепло – жарко|холодно – тепло – спекотно|frig – cald – foarte cald|студено – топло – горещо|hideg – meleg – forró|soğuk – ılık – sıcak|بارد – دافئ – حار|frio – quente – muito quente|cold – warm – hot|froid – chaud – très chaud", "Im Winter ist es kalt."],
+    ["windig", "ветрено|вітряно|vânt (e vânt)|ветровито|szeles|rüzgârlı|عاصف|ventoso|windy|venteux", "Am Meer ist es windig."],
+    ["der Regenschirm", "зонт|парасолька|umbrelă|чадър|esernyő|şemsiye|مظلة|guarda-chuva|umbrella|parapluie", "Ich brauche einen Regenschirm."],
+    ["die Jacke, die Jacken", "куртка|куртка|geacă|яке|kabát, dzseki|ceket|سترة|casaco|jacket|veste", "Amir braucht eine Winterjacke."],
+    ["der Mantel", "пальто|пальто|palton|палто|kabát|palto|معطف|casaco longo|coat|manteau", "Der Mantel ist warm."],
+    ["der Pullover", "свитер|светр|pulover|пуловер|pulóver|kazak|كنزة|suéter|jumper|pull", "Ich ziehe den Pullover an."],
+    ["die Hose, die Hosen", "брюки|штани|pantaloni|панталон|nadrág|pantolon|بنطال|calça|trousers|pantalon", "Die Hose ist zu lang."],
+    ["das T-Shirt", "футболка|футболка|tricou|тениска|póló|tişört|قميص قصير|camiseta|T-shirt|t-shirt", "Im Sommer trage ich ein T-Shirt."],
+    ["das Hemd", "рубашка|сорочка|cămașă|риза|ing|gömlek|قميص|camisa|shirt|chemise", "Das Hemd ist weiß."],
+    ["die Schuhe (Pl.)", "обувь|взуття|pantofi|обувки|cipő|ayakkabılar|أحذية|sapatos|shoes|chaussures", "Die Schuhe sind neu."],
+    ["die Mütze", "шапка|шапка|căciulă|шапка|sapka|bere|قبعة صوفية|gorro|hat (woolly)|bonnet", "Zieh die Mütze an!"],
+    ["der Schal", "шарф|шарф|fular|шал|sál|atkı|وشاح|cachecol|scarf|écharpe", "Der Schal ist rot."],
+    ["die Größe", "размер|розмір|mărime|размер|méret|beden|مقاس|tamanho|size|taille", "Welche Größe haben Sie?"],
+    ["anziehen", "надевать|одягати|a se îmbrăca, a pune|обличам|felvesz (ruhát)|giymek|يرتدي|vestir|to put on|mettre (un vêtement)", "Ich ziehe die Jacke an."],
+    ["zu groß – zu klein", "слишком большой – слишком маленький|завеликий – замалий|prea mare – prea mic|твърде голям – твърде малък|túl nagy – túl kicsi|çok büyük – çok küçük|كبير جداً – صغير جداً|grande demais – pequeno demais|too big – too small|trop grand – trop petit", "Die Schuhe sind zu klein."]
+  ],
+  ex: [
+    { type: "choice", title: "Wie ist das Wetter?",
+      items: [["Wasser fällt vom Himmel. Es …", ["regnet", "schneit", "scheint"]], ["Alles ist weiß. Es …", ["schneit", "regnet", "ist heiß"]],
+        ["Es ist 35 Grad. Es ist …", ["heiß", "kalt", "windig"]], ["Es ist minus 5 Grad. Es ist …", ["kalt", "warm", "heiß"]],
+        ["Die ___ scheint.", ["Sonne", "Wolke", "Regen"]], ["Es regnet. Was brauchst du?", ["einen Regenschirm", "ein T-Shirt", "eine Sonnenbrille"]]] },
+    { type: "choice", title: "den, die oder das?",
+      items: [["Ich ziehe ___ Pullover an.", ["den", "der", "das"]], ["Amir zieht ___ Jacke an.", ["die", "den", "der"]], ["Zieh ___ T-Shirt an!", ["das", "den", "der"]],
+        ["Ich ziehe ___ Schal an.", ["den", "der", "das"]], ["Elena zieht ___ Schuhe an.", ["die", "den", "das"]], ["Ich nehme ___ Mantel.", ["den", "der", "die"]]] },
+    { type: "sort", title: "Kalt oder warm: Was ziehst du an?", buckets: ["Es ist kalt.", "Es ist heiß."],
+      items: [["die Winterjacke", 0], ["das T-Shirt", 1], ["die Mütze", 0], ["die kurze Hose", 1], ["der Schal", 0], ["die Sandalen", 1], ["die Handschuhe", 0], ["die Sonnenbrille", 1]] },
+    { type: "choice", title: "Im Geschäft",
+      items: [["Die Jacke ist ___. Haben Sie Größe L?", ["zu klein", "zu teuer", "zu blau"]], ["„Welche Größe haben Sie?“", ["M.", "Blau.", "40 Euro."]],
+        ["„Welche Farbe hat der Schal?“", ["Er ist rot.", "Er ist kalt.", "Er ist Größe M."]], ["„Was kostet die Mütze?“", ["15 Euro.", "Sie ist warm.", "Im Winter."]],
+        ["„Kann ich die Jacke ___?“", ["anprobieren", "anziehe", "angezogen"]]] },
+    { type: "order", title: "Sätze bauen",
+      items: ["Es regnet und es ist kalt.", "Ich ziehe den Pullover an.", "Die Jacke ist zu klein.", "Heute scheint die Sonne.", "Amir braucht eine Winterjacke."] },
+    { type: "vocab", title: "Wörter-Quiz" }
+  ]
+});
 // ===================== KURS 2 + 3 (A1) =====================
 
 CHAPTERS.push({
@@ -2795,6 +3075,243 @@ CHAPTERS.push({
     { type: "vocab", title: "Wörter-Quiz" }
   ]
 });
+// ===================== KURS 1 · ältere Kapitel =====================
+
+CHAPTERS.push({
+  id: "vergleiche", kurse: ["K1"], icon: "vergleiche",
+  title: "Vergleiche", sub: "Komparativ · als / wie · Superlativ",
+  grammar: [
+    { title: "Komparativ: größer, schneller",
+      rules: [
+        ["Komparativ = Adjektiv + -er. Kurze Wörter bekommen oft einen Umlaut: alt → älter, groß → größer.",
+         "Сравнительная степень = прилагательное + -er. Короткие слова часто получают умлаут: alt → älter, groß → größer.|Вищий ступінь = прикметник + -er. Короткі слова часто отримують умлаут: alt → älter, groß → größer.|Comparativul = adjectiv + -er. Cuvintele scurte primesc des umlaut: alt → älter, groß → größer.|Сравнителна степен = прилагателно + -er. Кратките думи често получават умлаут: alt → älter, groß → größer.|Középfok = melléknév + -er. A rövid szavak gyakran umlautot kapnak: alt → älter, groß → größer.|Karşılaştırma = sıfat + -er. Kısa kelimeler çoğu zaman umlaut alır: alt → älter, groß → größer.|صيغة المقارنة = الصفة + -er. الكلمات القصيرة تأخذ غالباً Umlaut: alt ← älter، groß ← größer.|Comparativo = adjetivo + -er. Palavras curtas muitas vezes ganham trema: alt → älter, groß → größer.|Comparative = adjective + -er. Short words often get an umlaut: alt → älter, groß → größer.|Comparatif = adjectif + -er. Les mots courts prennent souvent un umlaut : alt → älter, groß → größer."],
+        ["Ungleich: größer als. Gleich: so groß wie.",
+         "Неравенство: größer als (больше, чем). Равенство: so groß wie (такой же большой, как).|Нерівність: größer als (більший, ніж). Рівність: so groß wie (такий самий великий, як).|Diferit: größer als (mai mare decât). La fel: so groß wie (la fel de mare ca).|Различно: größer als (по-голям от). Еднакво: so groß wie (толкова голям, колкото).|Különböző: größer als (nagyobb, mint). Egyforma: so groß wie (olyan nagy, mint).|Farklı: größer als (-den daha büyük). Aynı: so groß wie (… kadar büyük).|غير متساوٍ: größer als (أكبر من). متساوٍ: so groß wie (بنفس حجم).|Diferente: größer als (maior do que). Igual: so groß wie (tão grande quanto).|Unequal: größer als (bigger than). Equal: so groß wie (as big as).|Différent : größer als (plus grand que). Égal : so groß wie (aussi grand que)."]
+      ],
+      table: { head: ["Adjektiv", "Komparativ", "Superlativ"], rows: [["schnell", "schnell**er**", "am schnell**sten**"], ["alt", "**ä**lt**er**", "am **ä**lt**esten**"], ["groß", "gr**ö**ß**er**", "am gr**ö**ß**ten**"], ["gut", "**besser**", "am **besten**"], ["viel", "**mehr**", "am **meisten**"], ["gern", "**lieber**", "am **liebsten**"]] },
+      ex: ["Berlin ist **größer als** Naumburg.", "Mein Bruder ist **so alt wie** ich – wir sind Zwillinge.", "Der Zug ist **schneller als** der Bus."] },
+    { title: "Superlativ: am besten",
+      rules: [
+        ["Superlativ = am + Adjektiv + -sten. Nach s, ß, z, t oft -esten: am ältesten.",
+         "Превосходная степень = am + прилагательное + -sten. После s, ß, z, t часто -esten: am ältesten.|Найвищий ступінь = am + прикметник + -sten. Після s, ß, z, t часто -esten: am ältesten.|Superlativul = am + adjectiv + -sten. După s, ß, z, t des -esten: am ältesten.|Превъзходна степен = am + прилагателно + -sten. След s, ß, z, t често -esten: am ältesten.|Felsőfok = am + melléknév + -sten. s, ß, z, t után gyakran -esten: am ältesten.|Üstünlük = am + sıfat + -sten. s, ß, z, t'den sonra çoğu zaman -esten: am ältesten.|صيغة التفضيل = am + الصفة + -sten. بعد s و ß و z و t غالباً -esten: am ältesten.|Superlativo = am + adjetivo + -sten. Depois de s, ß, z, t muitas vezes -esten: am ältesten.|Superlative = am + adjective + -sten. After s, ß, z, t often -esten: am ältesten.|Superlatif = am + adjectif + -sten. Après s, ß, z, t souvent -esten : am ältesten."]
+      ],
+      ex: ["Der Zug ist schnell, das Auto ist schneller, das Flugzeug ist **am schnellsten**.", "Wer ist in deiner Familie **am ältesten**?", "Pizza esse ich gern, aber Döner esse ich **am liebsten**."] }
+  ],
+  vocab: [
+    ["groß – größer – am größten", "большой – больше – самый большой|великий – більший – найбільший|mare – mai mare – cel mai mare|голям – по-голям – най-голям|nagy – nagyobb – legnagyobb|büyük – daha büyük – en büyük|كبير – أكبر – الأكبر|grande – maior – o maior|big – bigger – biggest|grand – plus grand – le plus grand", "Berlin ist am größten."],
+    ["klein – kleiner – am kleinsten", "маленький – меньше – самый маленький|маленький – менший – найменший|mic – mai mic – cel mai mic|малък – по-малък – най-малък|kicsi – kisebb – legkisebb|küçük – daha küçük – en küçük|صغير – أصغر – الأصغر|pequeno – menor – o menor|small – smaller – smallest|petit – plus petit – le plus petit", "Mein Zimmer ist kleiner als deins."],
+    ["alt – älter – am ältesten", "старый – старше – самый старший|старий – старший – найстарший|vechi/bătrân – mai bătrân – cel mai bătrân|стар – по-стар – най-стар|régi/idős – idősebb – legidősebb|yaşlı – daha yaşlı – en yaşlı|كبير السن – أكبر سناً – الأكبر سناً|velho – mais velho – o mais velho|old – older – oldest|vieux – plus vieux – le plus vieux", "Meine Oma ist am ältesten."],
+    ["jung – jünger – am jüngsten", "молодой – моложе – самый младший|молодий – молодший – наймолодший|tânăr – mai tânăr – cel mai tânăr|млад – по-млад – най-млад|fiatal – fiatalabb – legfiatalabb|genç – daha genç – en genç|شاب – أصغر سناً – الأصغر سناً|jovem – mais jovem – o mais jovem|young – younger – youngest|jeune – plus jeune – le plus jeune", "Ich bin jünger als mein Bruder."],
+    ["teuer – teurer – am teuersten", "дорогой – дороже – самый дорогой|дорогий – дорожчий – найдорожчий|scump – mai scump – cel mai scump|скъп – по-скъп – най-скъп|drága – drágább – legdrágább|pahalı – daha pahalı – en pahalı|غالٍ – أغلى – الأغلى|caro – mais caro – o mais caro|expensive – more expensive – most expensive|cher – plus cher – le plus cher", "Das Handy ist teurer als der Laptop."],
+    ["billig – billiger – am billigsten", "дешёвый – дешевле – самый дешёвый|дешевий – дешевший – найдешевший|ieftin – mai ieftin – cel mai ieftin|евтин – по-евтин – най-евтин|olcsó – olcsóbb – legolcsóbb|ucuz – daha ucuz – en ucuz|رخيص – أرخص – الأرخص|barato – mais barato – o mais barato|cheap – cheaper – cheapest|bon marché – moins cher – le moins cher", "Der Bus ist am billigsten."],
+    ["schnell – schneller – am schnellsten", "быстрый – быстрее – самый быстрый|швидкий – швидший – найшвидший|rapid – mai rapid – cel mai rapid|бърз – по-бърз – най-бърз|gyors – gyorsabb – leggyorsabb|hızlı – daha hızlı – en hızlı|سريع – أسرع – الأسرع|rápido – mais rápido – o mais rápido|fast – faster – fastest|rapide – plus rapide – le plus rapide", "Das Flugzeug ist am schnellsten."],
+    ["langsam – langsamer – am langsamsten", "медленный – медленнее – самый медленный|повільний – повільніший – найповільніший|încet – mai încet – cel mai încet|бавен – по-бавен – най-бавен|lassú – lassabb – leglassabb|yavaş – daha yavaş – en yavaş|بطيء – أبطأ – الأبطأ|lento – mais lento – o mais lento|slow – slower – slowest|lent – plus lent – le plus lent", "Das Fahrrad ist langsamer als das Auto."],
+    ["gut – besser – am besten", "хороший – лучше – лучше всего|добрий – кращий – найкращий|bun – mai bun – cel mai bun|добър – по-добър – най-добър|jó – jobb – legjobb|iyi – daha iyi – en iyi|جيد – أفضل – الأفضل|bom – melhor – o melhor|good – better – best|bon – meilleur – le meilleur", "Elena spricht am besten Deutsch."],
+    ["viel – mehr – am meisten", "много – больше – больше всего|багато – більше – найбільше|mult – mai mult – cel mai mult|много – повече – най-много|sok – több – legtöbb|çok – daha çok – en çok|كثير – أكثر – الأكثر|muito – mais – o máximo|much – more – most|beaucoup – plus – le plus", "Wer arbeitet am meisten?"],
+    ["gern – lieber – am liebsten", "охотно – охотнее – больше всего люблю|охоче – охочіше – найбільше люблю|cu plăcere – mai degrabă – cel mai mult|с удоволствие – по-скоро – най-много|szívesen – inkább – legszívesebben|severek – tercihen – en çok|بسرور – أفضّل – أكثر شيء|com prazer – prefiro – mais gosto|gladly – rather – most of all|volontiers – plutôt – le plus", "Am liebsten esse ich Pizza."],
+    ["hoch – höher – am höchsten", "высокий – выше – самый высокий|високий – вищий – найвищий|înalt – mai înalt – cel mai înalt|висок – по-висок – най-висок|magas – magasabb – legmagasabb|yüksek – daha yüksek – en yüksek|عالٍ – أعلى – الأعلى|alto – mais alto – o mais alto|high – higher – highest|haut – plus haut – le plus haut", "Der Dom ist am höchsten."],
+    ["als", "чем|ніж|decât|от, отколкото|mint|-den/-dan (daha)|من (في المقارنة)|do que|than|que", "Berlin ist größer als Halle."],
+    ["so … wie", "такой же …, как|такий самий …, як|la fel de … ca|толкова …, колкото|olyan …, mint|… kadar|بنفس … مثل|tão … quanto|as … as|aussi … que", "Ich bin so groß wie mein Vater."],
+    ["der Unterschied", "разница|різниця|diferență|разлика|különbség|fark|الفرق|diferença|difference|différence", "Was ist der Unterschied?"]
+  ],
+  ex: [
+    { type: "choice", title: "Der Komparativ",
+      items: [["alt → …", ["älter", "alter", "mehr alt"]], ["gut → …", ["besser", "guter", "güter"]], ["groß → …", ["größer", "großer", "größter"]],
+        ["viel → …", ["mehr", "vieler", "meister"]], ["teuer → …", ["teurer", "teuerer", "mehr teuer"]], ["gern → …", ["lieber", "gerner", "lieberer"]]] },
+    { type: "choice", title: "als oder wie?",
+      items: [["Berlin ist größer ___ Naumburg.", ["als", "wie", "wann"]], ["Ich bin so alt ___ du.", ["wie", "als", "dann"]],
+        ["Der Bus ist langsamer ___ der Zug.", ["als", "wie", "so"]], ["Elena spricht so gut Deutsch ___ Viktor.", ["wie", "als", "dass"]],
+        ["Heute ist es kälter ___ gestern.", ["als", "wie", "wenn"]], ["Mein Handy ist nicht so teuer ___ dein Handy.", ["wie", "als", "denn"]]] },
+    { type: "choice", title: "Der Superlativ",
+      items: [["Das Flugzeug ist am ___.", ["schnellsten", "schneller", "schnellste"]], ["Wer ist in der Klasse am ___?", ["jüngsten", "jüngeren", "jungsten"]],
+        ["Döner esse ich am ___.", ["liebsten", "gernsten", "besten gern"]], ["Wer kocht am ___? – Meine Mutter!", ["besten", "gutesten", "bessersten"]],
+        ["Der Dom ist am ___.", ["höchsten", "hochsten", "höhersten"]], ["Mit dem Fahrrad fährst du am ___.", ["billigsten", "billiger", "billigste"]]] },
+    { type: "order", title: "Sätze bauen",
+      items: ["Der Zug ist schneller als der Bus.", "Ich bin so alt wie mein Freund.", "Am liebsten spiele ich Fußball.", "Berlin ist am größten.", "Heute ist es wärmer als gestern."] },
+    { type: "vocab", title: "Wörter-Quiz" }
+  ]
+});
+
+CHAPTERS.push({
+  id: "genitiv", kurse: ["K1"], icon: "genitiv",
+  title: "Der Genitiv", sub: "des / der · Viktors Auto · die Hauptstadt Deutschlands",
+  grammar: [
+    { title: "Wessen? des, der",
+      rules: [
+        ["Der Genitiv zeigt, wem etwas gehört oder wozu etwas gehört. Frage: Wessen?",
+         "Родительный падеж (Genitiv) показывает, кому что принадлежит или к чему относится. Вопрос: Wessen? (Чей?)|Родовий відмінок (Genitiv) показує, кому щось належить або до чого щось відноситься. Питання: Wessen? (Чий?)|Genitivul arată cui îi aparține ceva sau din ce face parte. Întrebare: Wessen? (Al cui?)|Родителният падеж (Genitiv) показва на кого принадлежи нещо. Въпрос: Wessen? (Чий?)|A birtokos eset (Genitiv) megmutatja, kié valami vagy mihez tartozik. Kérdés: Wessen? (Kié?)|Genitiv bir şeyin kime ait olduğunu gösterir. Soru: Wessen? (Kimin?)|المضاف إليه (Genitiv) يبيّن لمن يعود الشيء. السؤال: Wessen? (لمن؟)|O genitivo mostra a quem algo pertence. Pergunta: Wessen? (De quem?)|The genitive shows who something belongs to. Question: Wessen? (Whose?)|Le génitif montre à qui appartient quelque chose. Question : Wessen? (À qui ?)"],
+        ["Maskulin und neutral: des + Nomen + -s / -es. Feminin und Plural: der.",
+         "Мужской и средний род: des + существительное + -s / -es. Женский род и множественное число: der.|Чоловічий і середній рід: des + іменник + -s / -es. Жіночий рід і множина: der.|Masculin și neutru: des + substantiv + -s / -es. Feminin și plural: der.|Мъжки и среден род: des + съществително + -s / -es. Женски род и множествено число: der.|Hím- és semlegesnem: des + főnév + -s / -es. Nőnem és többes szám: der.|Eril ve nötr: des + isim + -s / -es. Dişil ve çoğul: der.|المذكر والمحايد: des + الاسم + -s / -es. المؤنث والجمع: der.|Masculino e neutro: des + substantivo + -s / -es. Feminino e plural: der.|Masculine and neuter: des + noun + -s / -es. Feminine and plural: der.|Masculin et neutre : des + nom + -s / -es. Féminin et pluriel : der."]
+      ],
+      table: { head: ["", "Nominativ", "Genitiv"], rows: [["maskulin", "der Vater", "das Auto **des** Vater**s**"], ["neutral", "das Kind", "das Zimmer **des** Kind**es**"], ["feminin", "die Mutter", "die Tasche **der** Mutter"], ["Plural", "die Eltern", "das Haus **der** Eltern"]] },
+      ex: ["Das ist das Auto **des Chefs**.", "Die Farbe **der Jacke** ist blau.", "Die Wohnung **der Eltern** ist groß."] },
+    { title: "Viktors Auto · von + Dativ",
+      rules: [
+        ["Bei Namen: Name + s, ohne Apostroph: Viktors Auto, Marias Handy.",
+         "С именами: имя + s, без апострофа: Viktors Auto, Marias Handy.|З іменами: ім'я + s, без апострофа: Viktors Auto, Marias Handy.|La nume: nume + s, fără apostrof: Viktors Auto, Marias Handy.|При имена: име + s, без апостроф: Viktors Auto, Marias Handy.|Neveknél: név + s, aposztróf nélkül: Viktors Auto, Marias Handy.|İsimlerde: isim + s, kesme işareti olmadan: Viktors Auto, Marias Handy.|مع الأسماء: الاسم + s بدون فاصلة علوية: Viktors Auto، Marias Handy.|Com nomes: nome + s, sem apóstrofo: Viktors Auto, Marias Handy.|With names: name + s, no apostrophe: Viktors Auto, Marias Handy.|Avec les prénoms : prénom + s, sans apostrophe : Viktors Auto, Marias Handy."],
+        ["Im Gespräch sagt man oft von + Dativ: das Auto von meinem Vater.",
+         "В разговоре часто говорят von + дательный падеж: das Auto von meinem Vater.|У розмові часто кажуть von + давальний відмінок: das Auto von meinem Vater.|În vorbire se spune des von + dativ: das Auto von meinem Vater.|В разговорната реч често се казва von + дателен падеж: das Auto von meinem Vater.|Beszédben gyakran von + részes eset: das Auto von meinem Vater.|Konuşmada sık sık von + Dativ denir: das Auto von meinem Vater.|في الكلام يُقال غالباً von + حالة الجر: das Auto von meinem Vater.|Na fala usa-se muitas vezes von + dativo: das Auto von meinem Vater.|In speech people often say von + dative: das Auto von meinem Vater.|À l'oral, on dit souvent von + datif : das Auto von meinem Vater."]
+      ],
+      table: { head: ["Genitiv (Text)", "von + Dativ (Gespräch)"], rows: [["**Viktors** Lebenslauf", "der Lebenslauf **von** Viktor"], ["das Auto **meines** Vaters", "das Auto **von meinem** Vater"], ["die Hauptstadt **Deutschlands**", "die Hauptstadt **von** Deutschland"]] },
+      ex: ["**Elenas** Bruder wohnt in Halle.", "Berlin ist die Hauptstadt **Deutschlands**.", "Das ist das Handy **von meiner** Schwester."] }
+  ],
+  vocab: [
+    ["der Vater, die Väter", "отец|батько|tată|баща|apa|baba|أب|pai|father|père", "Das Auto des Vaters ist alt."],
+    ["die Mutter, die Mütter", "мать|мати|mamă|майка|anya|anne|أم|mãe|mother|mère", "Die Tasche der Mutter ist rot."],
+    ["die Eltern (Pl.)", "родители|батьки|părinți|родители|szülők|anne baba|الوالدان|pais|parents|parents", "Das Haus der Eltern ist groß."],
+    ["der Bruder, die Brüder", "брат|брат|frate|брат|fiútestvér|erkek kardeş|أخ|irmão|brother|frère", "Das Zimmer meines Bruders ist klein."],
+    ["die Schwester", "сестра|сестра|soră|сестра|lánytestvér|kız kardeş|أخت|irmã|sister|sœur", "Das Handy meiner Schwester ist neu."],
+    ["die Großeltern (Pl.)", "бабушка и дедушка|дідусь і бабуся|bunici|баба и дядо|nagyszülők|büyükanne ve büyükbaba|الأجداد|avós|grandparents|grands-parents", "Der Garten der Großeltern ist schön."],
+    ["der Onkel / die Tante", "дядя / тётя|дядько / тітка|unchi / mătușă|чичо / леля|nagybácsi / nagynéni|amca, dayı / teyze, hala|العم أو الخال / العمة أو الخالة|tio / tia|uncle / aunt|oncle / tante", "Das ist das Haus meines Onkels."],
+    ["der Cousin / die Cousine", "двоюродный брат / сестра|двоюрідний брат / сестра|văr / verișoară|братовчед / братовчедка|unokatestvér|kuzen|ابن العم / ابنة العم|primo / prima|cousin|cousin / cousine", "Der Name meiner Cousine ist Ana."],
+    ["die Hauptstadt", "столица|столиця|capitală|столица|főváros|başkent|العاصمة|capital|capital|capitale", "Berlin ist die Hauptstadt Deutschlands."],
+    ["das Land, die Länder", "страна|країна|țară|страна|ország|ülke|بلد|país|country|pays", "Die Flagge des Landes ist rot und weiß."],
+    ["die Farbe", "цвет|колір|culoare|цвят|szín|renk|لون|cor|colour|couleur", "Die Farbe des Autos ist grau."],
+    ["der Name", "имя, название|ім'я, назва|nume|име|név|isim|اسم|nome|name|nom", "Der Name der Straße ist lang."],
+    ["die Adresse", "адрес|адреса|adresă|адрес|cím|adres|عنوان|endereço|address|adresse", "Die Adresse des Betriebs steht im Brief."],
+    ["gehören", "принадлежать|належати|a aparține|принадлежа|tartozik (vkié)|ait olmak|يخصّ|pertencer|to belong|appartenir", "Wem gehört das Auto?"],
+    ["Wessen?", "Чей?|Чий?|Al cui?|Чий?|Kié?|Kimin?|لمن؟|De quem?|Whose?|À qui ?", "Wessen Jacke ist das?"]
+  ],
+  ex: [
+    { type: "choice", title: "des oder der?",
+      items: [["das Auto ___ Vaters", ["des", "der", "dem"]], ["die Tasche ___ Mutter", ["der", "des", "die"]], ["das Zimmer ___ Kindes", ["des", "der", "den"]],
+        ["das Haus ___ Großeltern", ["der", "des", "den"]], ["der Name ___ Straße", ["der", "des", "die"]], ["die Farbe ___ Autos", ["des", "der", "das"]]] },
+    { type: "choice", title: "Die richtige Endung",
+      items: [["das Fahrrad meines Bruder___", ["-s", "–", "-n"]], ["die Adresse meiner Schwester___", ["–", "-s", "-n"]],
+        ["Viktor___ Lebenslauf", ["-s", "-'s", "–"]], ["die Hauptstadt Deutschland___", ["-s", "–", "-es"]],
+        ["das Ende des Film___", ["-s", "–", "-n"]], ["der Chef des Betrieb___", ["-s", "–", "-n"]]] },
+    { type: "choice", title: "Genitiv oder von + Dativ?",
+      items: [["das Handy von meiner Schwester = …", ["das Handy meiner Schwester", "das Handy meines Schwester", "das Handy meine Schwester"]],
+        ["das Auto von Viktor = …", ["Viktors Auto", "Viktor's Auto", "das Auto Viktor"]],
+        ["die Wohnung von den Eltern = …", ["die Wohnung der Eltern", "die Wohnung des Eltern", "die Wohnung den Eltern"]],
+        ["der Garten von meinem Onkel = …", ["der Garten meines Onkels", "der Garten meinem Onkel", "der Garten meiner Onkel"]]] },
+    { type: "order", title: "Sätze bauen",
+      items: ["Das ist das Auto meines Vaters.", "Berlin ist die Hauptstadt Deutschlands.", "Viktors Bruder wohnt in Halle.", "Die Farbe der Jacke ist blau."] },
+    { type: "vocab", title: "Wörter-Quiz" }
+  ]
+});
+
+CHAPTERS.push({
+  id: "frueher", kurse: ["K1"], icon: "frueher",
+  title: "Früher und heute", sub: "Präteritum: war, hatte, konnte · regelmäßig -te",
+  grammar: [
+    { title: "war, hatte und Modalverben",
+      rules: [
+        ["sein, haben und die Modalverben benutzt man fast immer im Präteritum – auch im Gespräch.",
+         "sein, haben и модальные глаголы почти всегда употребляют в Präteritum – и в разговоре тоже.|sein, haben і модальні дієслова майже завжди вживають у Präteritum – і в розмові теж.|sein, haben și verbele modale se folosesc aproape mereu la Präteritum – și în vorbire.|sein, haben и модалните глаголи почти винаги се използват в Präteritum – и в разговор.|A sein, haben és a módbeli segédigék szinte mindig Präteritumban állnak – beszédben is.|sein, haben ve modal fiiller neredeyse her zaman Präteritum'da kullanılır – konuşmada da.|تُستخدم sein و haben والأفعال المساعدة دائماً تقريباً في Präteritum – حتى في الكلام.|sein, haben e os verbos modais quase sempre se usam no Präteritum – também na fala.|sein, haben and the modal verbs are almost always used in the Präteritum – even in speech.|sein, haben et les verbes modaux s'utilisent presque toujours au Präteritum – même à l'oral."],
+        ["Modalverben im Präteritum haben keinen Umlaut: können → konnte, müssen → musste.",
+         "У модальных глаголов в Präteritum нет умлаута: können → konnte, müssen → musste.|У модальних дієслів у Präteritum немає умлаута: können → konnte, müssen → musste.|Verbele modale la Präteritum nu au umlaut: können → konnte, müssen → musste.|Модалните глаголи в Präteritum нямат умлаут: können → konnte, müssen → musste.|A módbeli segédigéknek Präteritumban nincs umlautja: können → konnte, müssen → musste.|Modal fiillerin Präteritum hâlinde umlaut yoktur: können → konnte, müssen → musste.|الأفعال المساعدة في Präteritum بدون Umlaut: können ← konnte، müssen ← musste.|Os verbos modais no Präteritum não têm trema: können → konnte, müssen → musste.|Modal verbs in the Präteritum have no umlaut: können → konnte, müssen → musste.|Les verbes modaux au Präteritum n'ont pas d'umlaut : können → konnte, müssen → musste."]
+      ],
+      table: { head: ["", "sein", "haben", "können", "müssen", "wollen"], rows: [["ich", "war", "hatte", "konnte", "musste", "wollte"], ["du", "warst", "hattest", "konntest", "musstest", "wolltest"], ["er / sie", "war", "hatte", "konnte", "musste", "wollte"], ["wir", "waren", "hatten", "konnten", "mussten", "wollten"], ["ihr", "wart", "hattet", "konntet", "musstet", "wolltet"], ["sie / Sie", "waren", "hatten", "konnten", "mussten", "wollten"]] },
+      ex: ["Früher **war** das Leben anders.", "Herr Weber **hatte** kein Handy.", "Er **musste** viel warten. Er **konnte** nicht ins Ausland reisen."] },
+    { title: "Regelmäßige Verben: -te",
+      rules: [
+        ["Regelmäßig: Verbstamm + -te. Bei -t oder -d am Ende: -ete (arbeitete).",
+         "Правильные глаголы: основа + -te. Если основа на -t или -d: -ete (arbeitete).|Правильні дієслова: основа + -te. Якщо основа на -t або -d: -ete (arbeitete).|Regulat: rădăcina + -te. Dacă se termină în -t sau -d: -ete (arbeitete).|Правилни глаголи: основа + -te. При -t или -d накрая: -ete (arbeitete).|Szabályos igék: igető + -te. Ha -t vagy -d a vége: -ete (arbeitete).|Düzenli fiiller: kök + -te. Sonu -t veya -d ise: -ete (arbeitete).|الأفعال القياسية: الجذر + -te. إذا انتهى بـ -t أو -d: -ete (arbeitete).|Regulares: radical + -te. Se termina em -t ou -d: -ete (arbeitete).|Regular verbs: stem + -te. If the stem ends in -t or -d: -ete (arbeitete).|Verbes réguliers : radical + -te. Si le radical finit par -t ou -d : -ete (arbeitete)."]
+      ],
+      table: { head: ["Infinitiv", "ich / er / sie", "wir / sie"], rows: [["wohnen", "wohn**te**", "wohn**ten**"], ["spielen", "spiel**te**", "spiel**ten**"], ["arbeiten", "arbeit**ete**", "arbeit**eten**"], ["kaufen", "kauf**te**", "kauf**ten**"], ["telefonieren", "telefonier**te**", "telefonier**ten**"]] },
+      ex: ["Als Kind **wohnte** ich in einem Dorf.", "Meine Mutter **arbeitete** in einer Fabrik.", "Wir **spielten** jeden Tag draußen."] },
+    { title: "früher – heute",
+      rules: [
+        ["Für Vergleiche: Früher + Präteritum, heute + Präsens.",
+         "Для сравнения: Früher (раньше) + Präteritum, heute (сегодня) + Präsens.|Для порівняння: Früher (раніше) + Präteritum, heute (сьогодні) + Präsens.|Pentru comparații: Früher (înainte) + Präteritum, heute (azi) + Präsens.|За сравнения: Früher (преди) + Präteritum, heute (днес) + Präsens.|Összehasonlításhoz: Früher (régen) + Präteritum, heute (ma) + Präsens.|Karşılaştırma için: Früher (eskiden) + Präteritum, heute (bugün) + Präsens.|للمقارنة: Früher (في الماضي) + Präteritum، heute (اليوم) + Präsens.|Para comparar: Früher (antes) + Präteritum, heute (hoje) + Präsens.|To compare: Früher (in the past) + Präteritum, heute (today) + Präsens.|Pour comparer : Früher (avant) + Präteritum, heute (aujourd'hui) + Präsens."]
+      ],
+      ex: ["**Früher hatte** man ein Telefon zu Hause. **Heute hat** jeder ein Handy.", "**Früher schrieb** man Briefe. **Heute schreiben** wir Nachrichten.", "**Früher war** ich schüchtern. **Heute bin** ich mutiger."] }
+  ],
+  vocab: [
+    ["früher", "раньше|раніше|înainte, odinioară|преди, някога|régen|eskiden|في الماضي|antigamente|in the past, before|autrefois", "Früher war alles anders."],
+    ["heute", "сегодня, сейчас|сьогодні, зараз|azi, astăzi|днес|ma, manapság|bugün, günümüzde|اليوم|hoje|today, nowadays|aujourd'hui", "Heute hat jeder ein Handy."],
+    ["die Jugend", "юность|юність|tinerețe|младост|ifjúság|gençlik|الشباب|juventude|youth|jeunesse", "In seiner Jugend lebte er in der DDR."],
+    ["die DDR", "ГДР|НДР|RDG|ГДР|NDK|Doğu Almanya (DDR)|ألمانيا الشرقية|RDA|GDR (East Germany)|RDA", "Herr Weber wuchs in der DDR auf."],
+    ["das Dorf, die Dörfer", "деревня|село|sat|село|falu|köy|قرية|aldeia|village|village", "Als Kind wohnte ich in einem Dorf."],
+    ["der Brief, die Briefe", "письмо|лист|scrisoare|писмо|levél|mektup|رسالة|carta|letter|lettre", "Früher schrieb man Briefe."],
+    ["das Telefon", "телефон|телефон|telefon|телефон|telefon|telefon|هاتف|telefone|telephone|téléphone", "Wir hatten ein Telefon im Flur."],
+    ["der Fernseher", "телевизор|телевізор|televizor|телевизор|tévé|televizyon|تلفاز|televisão|TV set|télévision", "Der Fernseher hatte nur zwei Programme."],
+    ["warten", "ждать|чекати|a aștepta|чакам|vár|beklemek|ينتظر|esperar|to wait|attendre", "Man musste lange auf ein Auto warten."],
+    ["reisen", "путешествовать|подорожувати|a călători|пътувам|utazik|seyahat etmek|يسافر|viajar|to travel|voyager", "Er konnte nicht in den Westen reisen."],
+    ["wohnen (wohnte)", "жить (проживать)|жити (мешкати)|a locui|живея (обитавам)|lakik|oturmak, yaşamak|يسكن|morar|to live (somewhere)|habiter", "Wir wohnten in Chișinău."],
+    ["sich verändern", "меняться|змінюватися|a se schimba|променям се|megváltozik|değişmek|يتغيّر|mudar|to change|changer", "Die Stadt hat sich sehr verändert."],
+    ["schüchtern", "застенчивый|сором'язливий|timid|срамежлив|félénk|utangaç|خجول|tímido|shy|timide", "Als Kind war ich schüchtern."],
+    ["die Kindheit", "детство|дитинство|copilărie|детство|gyermekkor|çocukluk|الطفولة|infância|childhood|enfance", "Meine Kindheit war schön."],
+    ["damals", "тогда|тоді|atunci|тогава|akkoriban|o zamanlar|في ذلك الوقت|naquela época|back then|à l'époque", "Damals gab es kein Internet."],
+    ["es gab", "был, были (имелся)|був, були (існував)|era, existau|имаше|volt (létezett)|vardı|كان يوجد|havia|there was / were|il y avait", "Damals gab es nur wenige Autos."]
+  ],
+  ex: [
+    { type: "choice", title: "war oder hatte?",
+      items: [["Früher ___ ich kein Handy.", ["hatte", "war", "habe"]], ["Als Kind ___ ich oft krank.", ["war", "hatte", "bin"]], ["Wir ___ einen Hund.", ["hatten", "waren", "hattet"]],
+        ["___ du gestern im Kurs?", ["Warst", "Hattest", "Wart"]], ["Meine Großeltern ___ einen Garten.", ["hatten", "waren", "hattet"]], ["Das Wetter ___ schlecht.", ["war", "hatte", "waren"]]] },
+    { type: "choice", title: "Modalverben im Präteritum",
+      items: [["Herr Weber ___ nicht in den Westen reisen.", ["konnte", "könnte", "kann"]], ["Ich ___ jeden Tag um 6 Uhr aufstehen.", ["musste", "müsste", "muss"]],
+        ["Als Kind ___ ich Fußballspieler werden.", ["wollte", "wolle", "willte"]], ["Wir ___ lange warten.", ["mussten", "musstet", "müssen"]],
+        ["___ du früher schon schwimmen?", ["Konntest", "Konnte", "Kannst"]], ["Meine Schwester ___ nicht allein ausgehen.", ["durfte", "dürfte", "darfte"]]] },
+    { type: "choice", title: "Regelmäßig: -te",
+      items: [["Als Kind ___ ich in einem Dorf.", ["wohnte", "wohnete", "wohne"]], ["Meine Mutter ___ in einer Fabrik.", ["arbeitete", "arbeitte", "arbeitet"]],
+        ["Wir ___ jeden Tag draußen.", ["spielten", "spieltet", "spielte"]], ["Er ___ seine Oma jeden Sonntag.", ["besuchte", "besuchete", "besucht"]],
+        ["Früher ___ wir mit dem Telefon im Flur.", ["telefonierten", "telefonieren", "telefonierteten"]]] },
+    { type: "sort", title: "Früher oder heute?", buckets: ["früher", "heute"],
+      items: [["Wir hatten ein Telefon im Flur.", 0], ["Ich schreibe eine Nachricht.", 1], ["Man musste lange warten.", 0], ["Jeder hat ein Handy.", 1], ["Es gab nur zwei Programme.", 0], ["Wir sehen Filme im Internet.", 1]] },
+    { type: "order", title: "Sätze bauen",
+      items: ["Früher hatte ich kein Handy.", "Als Kind wohnte ich in einem Dorf.", "Er konnte nicht in den Westen reisen.", "Damals gab es kein Internet."] },
+    { type: "vocab", title: "Wörter-Quiz" }
+  ]
+});
+
+CHAPTERS.push({
+  id: "november", kurse: ["K1"], icon: "november",
+  title: "Der 9. November 1989", sub: "unregelmäßige Verben im Präteritum · Datum",
+  grammar: [
+    { title: "Unregelmäßige Verben",
+      rules: [
+        ["Viele wichtige Verben ändern im Präteritum den Vokal und haben kein -te: gehen → ging, kommen → kam.",
+         "Многие важные глаголы в Präteritum меняют гласную и не имеют -te: gehen → ging, kommen → kam.|Багато важливих дієслів у Präteritum змінюють голосну й не мають -te: gehen → ging, kommen → kam.|Multe verbe importante își schimbă vocala la Präteritum și nu au -te: gehen → ging, kommen → kam.|Много важни глаголи в Präteritum сменят гласната и нямат -te: gehen → ging, kommen → kam.|Sok fontos ige Präteritumban magánhangzót vált, és nincs -te: gehen → ging, kommen → kam.|Birçok önemli fiil Präteritum'da ünlüsünü değiştirir ve -te almaz: gehen → ging, kommen → kam.|كثير من الأفعال المهمة تغيّر حرف العلة في Präteritum ولا تأخذ -te: gehen ← ging، kommen ← kam.|Muitos verbos importantes mudam a vogal no Präteritum e não têm -te: gehen → ging, kommen → kam.|Many important verbs change their vowel in the Präteritum and have no -te: gehen → ging, kommen → kam.|Beaucoup de verbes importants changent de voyelle au Präteritum et n'ont pas de -te : gehen → ging, kommen → kam."],
+        ["ich und er/sie/es haben keine Endung: ich ging, er ging. wir gingen.",
+         "У ich и er/sie/es нет окончания: ich ging, er ging. wir gingen.|У ich та er/sie/es немає закінчення: ich ging, er ging. wir gingen.|ich și er/sie/es nu au terminație: ich ging, er ging. wir gingen.|ich и er/sie/es нямат окончание: ich ging, er ging. wir gingen.|Az ich és er/sie/es alaknak nincs végződése: ich ging, er ging. wir gingen.|ich ve er/sie/es için ek yoktur: ich ging, er ging. wir gingen.|ich و er/sie/es بدون نهاية: ich ging، er ging. wir gingen.|ich e er/sie/es não têm terminação: ich ging, er ging. wir gingen.|ich and er/sie/es have no ending: ich ging, er ging. wir gingen.|ich et er/sie/es n'ont pas de terminaison : ich ging, er ging. wir gingen."]
+      ],
+      table: { head: ["Infinitiv", "er / sie", "Infinitiv", "er / sie"], rows: [["gehen", "ging", "sehen", "sah"], ["kommen", "kam", "stehen", "stand"], ["fahren", "fuhr", "sprechen", "sprach"], ["fallen", "fiel", "finden", "fand"], ["geben (es gibt)", "gab", "bleiben", "blieb"], ["schreiben", "schrieb", "rufen", "rief"]] },
+      ex: ["Die Mauer **fiel** am 9. November 1989.", "Tausende Menschen **gingen** zur Grenze.", "Viele **fuhren** in der Nacht nach West-Berlin."] },
+    { title: "Das Datum",
+      rules: [
+        ["Datum: am + Ordinalzahl + -en: am neunten November. Jahre: neunzehnhundertneunundachtzig.",
+         "Дата: am + порядковое числительное + -en: am neunten November. Годы: neunzehnhundertneunundachtzig (1989).|Дата: am + порядковий числівник + -en: am neunten November. Роки: neunzehnhundertneunundachtzig (1989).|Data: am + numeral ordinal + -en: am neunten November. Anii: neunzehnhundertneunundachtzig (1989).|Дата: am + редно числително + -en: am neunten November. Години: neunzehnhundertneunundachtzig (1989).|Dátum: am + sorszámnév + -en: am neunten November. Évszám: neunzehnhundertneunundachtzig (1989).|Tarih: am + sıra sayısı + -en: am neunten November. Yıllar: neunzehnhundertneunundachtzig (1989).|التاريخ: am + العدد الترتيبي + -en: am neunten November. السنوات: neunzehnhundertneunundachtzig (1989).|Data: am + ordinal + -en: am neunten November. Anos: neunzehnhundertneunundachtzig (1989).|Date: am + ordinal number + -en: am neunten November. Years: neunzehnhundertneunundachtzig (1989).|Date : am + nombre ordinal + -en : am neunten November. Années : neunzehnhundertneunundachtzig (1989)."]
+      ],
+      table: { head: ["Zahl", "Datum"], rows: [["1.", "am **ersten**"], ["3.", "am **dritten**"], ["7.", "am **siebten**"], ["9.", "am **neunten**"], ["20.", "am **zwanzigsten**"], ["1989", "**neunzehnhundertneunundachtzig**"]] },
+      ex: ["Die Mauer fiel **am neunten November neunzehnhundertneunundachtzig**.", "Die Wiedervereinigung war **am dritten Oktober 1990**.", "Ich bin **am zwanzigsten Mai** geboren."] }
+  ],
+  vocab: [
+    ["die Mauer", "стена|стіна|zid|стена|fal|duvar|جدار|muro|wall|mur", "Die Mauer teilte Berlin."],
+    ["die Grenze, die Grenzen", "граница|кордон|graniță|граница|határ|sınır|حدود|fronteira|border|frontière", "Die Grenze war plötzlich offen."],
+    ["der Mauerfall", "падение Стены|падіння Стіни|căderea Zidului|падането на Стената|a fal leomlása|Duvar'ın yıkılışı|سقوط الجدار|queda do Muro|fall of the Wall|chute du Mur", "Der Mauerfall war 1989."],
+    ["fallen (fiel)", "падать|падати|a cădea|падам|esik, leomlik|düşmek, yıkılmak|يسقط|cair|to fall|tomber", "Die Mauer fiel in der Nacht."],
+    ["öffnen", "открывать|відкривати|a deschide|отварям|kinyit|açmak|يفتح|abrir|to open|ouvrir", "Die Grenze wurde geöffnet."],
+    ["der Osten / der Westen", "восток / запад|схід / захід|est / vest|изток / запад|kelet / nyugat|doğu / batı|الشرق / الغرب|leste / oeste|east / west|est / ouest", "Er wohnte im Osten von Berlin."],
+    ["geteilt", "разделённый|розділений|divizat|разделен|megosztott|bölünmüş|مقسّم|dividido|divided|divisé", "Deutschland war geteilt."],
+    ["die Freiheit", "свобода|свобода|libertate|свобода|szabadság|özgürlük|الحرية|liberdade|freedom|liberté", "Die Menschen wollten Freiheit."],
+    ["die Nachricht, die Nachrichten", "новость, сообщение|новина, повідомлення|știre, mesaj|новина, съобщение|hír, üzenet|haber, mesaj|خبر، رسالة|notícia, mensagem|news, message|nouvelle, message", "Die Nachricht kam am Abend im Fernsehen."],
+    ["feiern", "праздновать|святкувати|a sărbători|празнувам|ünnepel|kutlamak|يحتفل|festejar|to celebrate|fêter", "Die Menschen feierten auf der Mauer."],
+    ["die Wiedervereinigung", "воссоединение|возз'єднання|reunificare|обединение|újraegyesítés|yeniden birleşme|إعادة التوحيد|reunificação|reunification|réunification", "Die Wiedervereinigung war am 3. Oktober 1990."],
+    ["der Feiertag", "праздник (выходной)|свято (вихідний)|sărbătoare legală|празник|ünnepnap|resmî tatil|عطلة رسمية|feriado|public holiday|jour férié", "Der 3. Oktober ist ein Feiertag."],
+    ["plötzlich", "вдруг|раптом|deodată|изведнъж|hirtelen|aniden|فجأة|de repente|suddenly|soudain", "Plötzlich war die Grenze offen."],
+    ["gehen – ging", "идти – шёл|іти – йшов|a merge – mergea|вървя – вървеше|megy – ment|gitmek – gitti|يذهب – ذهب|ir – foi|to go – went|aller – alla", "Viele gingen zur Grenze."],
+    ["sehen – sah", "видеть – видел|бачити – бачив|a vedea – vedea|виждам – видя|lát – látott|görmek – gördü|يرى – رأى|ver – viu|to see – saw|voir – vit", "Er sah die Bilder im Fernsehen."],
+    ["stehen – stand", "стоять – стоял|стояти – стояв|a sta – stătea|стоя – стоеше|áll – állt|durmak – durdu|يقف – وقف|estar de pé – estava|to stand – stood|être debout – était", "Die Menschen standen auf der Mauer."]
+  ],
+  ex: [
+    { type: "choice", title: "Präteritum: unregelmäßig",
+      items: [["Die Mauer ___ am 9. November 1989.", ["fiel", "fallte", "fällte"]], ["Tausende Menschen ___ zur Grenze.", ["gingen", "gehten", "gangen"]],
+        ["Er ___ die Bilder im Fernsehen.", ["sah", "seh", "sehte"]], ["Viele ___ mit dem Auto nach West-Berlin.", ["fuhren", "fahrten", "führen"]],
+        ["Die Menschen ___ auf der Mauer.", ["standen", "stehten", "stunden"]], ["Damals ___ es zwei deutsche Staaten.", ["gab", "gebte", "gibt"]],
+        ["Meine Oma ___ mir die Geschichte.", ["erzählte", "erzahl", "erzählt"]], ["Wir ___ die ganze Nacht wach.", ["blieben", "bleibten", "bliebten"]]] },
+    { type: "sort", title: "-te oder Vokalwechsel?", buckets: ["regelmäßig (-te)", "unregelmäßig"],
+      items: [["wohnte", 0], ["ging", 1], ["arbeitete", 0], ["kam", 1], ["feierte", 0], ["sah", 1], ["öffnete", 0], ["fiel", 1], ["spielte", 0], ["stand", 1]] },
+    { type: "choice", title: "Das Datum",
+      items: [["9. November = am …", ["neunten November", "neun November", "neunte November"]], ["3. Oktober = am …", ["dritten Oktober", "dreiten Oktober", "drei Oktober"]],
+        ["1989 = …", ["neunzehnhundertneunundachtzig", "eintausendneunhundertachtundneunzig", "neunzehnachtzigneun"]], ["1. Mai = am …", ["ersten Mai", "einsten Mai", "einen Mai"]],
+        ["Wann fiel die Mauer?", ["Am 9. November 1989.", "Im 9. November 1989.", "Um 9. November 1989."]]] },
+    { type: "order", title: "Sätze bauen",
+      items: ["Die Mauer fiel am neunten November.", "Viele Menschen gingen zur Grenze.", "Plötzlich war die Grenze offen.", "Die Menschen feierten auf der Mauer."] },
+    { type: "vocab", title: "Wörter-Quiz" }
+  ]
+});
 // ===================== KURS 1 (A2 → B1) =====================
 
 CHAPTERS.push({
@@ -2973,6 +3490,14 @@ const ICON = {
   freizeit: `<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="24" fill="#fff" stroke="${DK}" stroke-width="3"/><path d="M32 20l10 7-4 12H26l-4-12z" fill="${DK}"/><path d="M32 8v12M42 27l12-4M38 39l7 10M26 39l-7 10M22 27l-12-4" stroke="${DK}" stroke-width="3"/></svg>`,
   leben: `<svg viewBox="0 0 64 64"><path d="M6 46h52" stroke="${DK}" stroke-width="4" stroke-linecap="round"/><circle cx="14" cy="46" r="6" fill="#2F6FD6"/><circle cx="32" cy="46" r="6" fill="#E07A1F"/><circle cx="50" cy="46" r="6" fill="#2E9E64"/><circle cx="32" cy="18" r="8" fill="#F2C29B"/><path d="M18 36c2-8 8-10 14-10s12 2 14 10z" fill="#2F6FD6"/></svg>`,
   zukunft: `<svg viewBox="0 0 64 64"><path d="M32 4c10 8 14 20 12 34H20C18 24 22 12 32 4z" fill="#E9E4DA" stroke="${DK}" stroke-width="3"/><circle cx="32" cy="22" r="6" fill="#2F6FD6"/><path d="M20 38l-8 10 10-2M44 38l8 10-10-2" fill="#D64545"/><path d="M28 42l4 14 4-14" fill="#F4C542"/></svg>`,
+  tag: `<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="#fff" stroke="${DK}" stroke-width="3"/><path d="M32 14v18l12 8" stroke="#2F6FD6" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="32" cy="32" r="3" fill="${DK}"/></svg>`,
+  praktikum: `<svg viewBox="0 0 64 64"><rect x="26" y="26" width="10" height="34" rx="3" transform="rotate(-35 31 43)" fill="#A9744F"/><rect x="18" y="8" width="30" height="14" rx="4" transform="rotate(-35 33 15)" fill="#7A8794"/><path d="M40 46l14-14 4 4-14 14z" fill="#F4C542"/></svg>`,
+  arzt: `<svg viewBox="0 0 64 64"><rect x="8" y="18" width="48" height="38" rx="8" fill="#D64545"/><path d="M24 18v-6h16v6" fill="none" stroke="${DK}" stroke-width="4"/><path d="M32 26v22M21 37h22" stroke="#fff" stroke-width="7" stroke-linecap="round"/></svg>`,
+  kleidung: `<svg viewBox="0 0 64 64"><path d="M22 8l-14 9 6 11 6-3v31h24V25l6 3 6-11-14-9c-2 5-6 7-10 7s-8-2-10-7z" fill="#2F6FD6"/><path d="M32 15v41" stroke="#1E4F9C" stroke-width="2"/><circle cx="35" cy="26" r="1.8" fill="#fff"/><circle cx="35" cy="36" r="1.8" fill="#fff"/><circle cx="35" cy="46" r="1.8" fill="#fff"/></svg>`,
+  vergleiche: `<svg viewBox="0 0 64 64"><rect x="8" y="36" width="12" height="20" rx="3" fill="#F4C542"/><rect x="26" y="24" width="12" height="32" rx="3" fill="#E07A1F"/><rect x="44" y="10" width="12" height="46" rx="3" fill="#D64545"/><path d="M4 58h56" stroke="${DK}" stroke-width="3"/></svg>`,
+  genitiv: `<svg viewBox="0 0 64 64"><circle cx="24" cy="38" r="14" fill="none" stroke="${DK}" stroke-width="5"/><path d="M34 28l20-20M46 16l6 6M40 22l5 5" stroke="${DK}" stroke-width="5" stroke-linecap="round"/><circle cx="24" cy="38" r="5" fill="#F4C542"/></svg>`,
+  frueher: `<svg viewBox="0 0 64 64"><rect x="12" y="14" width="40" height="34" rx="6" fill="#A9744F"/><rect x="18" y="20" width="22" height="22" rx="4" fill="#D8C3A5"/><circle cx="46" cy="26" r="2.5" fill="${DK}"/><circle cx="46" cy="34" r="2.5" fill="${DK}"/><path d="M20 48l-4 8M44 48l4 8M24 6l8 8 8-8" stroke="${DK}" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+  november: `<svg viewBox="0 0 64 64"><rect x="4" y="22" width="16" height="30" fill="#9AA5B1"/><rect x="44" y="22" width="16" height="30" fill="#9AA5B1"/><path d="M22 30l6 22h8l6-22" fill="#C9D1D9"/><path d="M4 30h16M44 30h16M4 40h16M44 40h16" stroke="#7A8794" stroke-width="2"/><circle cx="32" cy="14" r="6" fill="#F4C542"/></svg>`,
   grammar: `<svg viewBox="0 0 64 64"><rect x="10" y="8" width="44" height="48" rx="6" fill="#fff" stroke="${DK}" stroke-width="3"/><path d="M18 20h28M18 30h20M18 40h24" stroke="#1F6B4A" stroke-width="4" stroke-linecap="round"/></svg>`,
   vocab: `<svg viewBox="0 0 64 64"><rect x="6" y="14" width="34" height="40" rx="6" fill="#fff" stroke="${DK}" stroke-width="3"/><rect x="24" y="8" width="34" height="40" rx="6" fill="#FDEEDC" stroke="${DK}" stroke-width="3"/><text x="41" y="34" text-anchor="middle" font-family="Nunito,Arial" font-weight="900" font-size="16" fill="#D64545">die</text></svg>`,
   ex: `<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="24" fill="#fff" stroke="${DK}" stroke-width="3"/><path d="M20 33l8 8 16-18" stroke="#2E9E64" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`
@@ -3032,7 +3557,7 @@ function viewGrammarList(c) {
   bindGo(); scrollTo(0, 0);
 }
 function tableHTML(t) {
-  return `<table class="gt"><tr>${t.head.map((h) => `<th>${esc(h)}</th>`).join("")}</tr>${t.rows.map((r) => `<tr>${r.map((x) => `<td>${md(x)}</td>`).join("")}</tr>`).join("")}</table>`;
+  return `<div class="tscroll"><table class="gt"><tr>${t.head.map((h) => `<th>${esc(h)}</th>`).join("")}</tr>${t.rows.map((r) => `<tr>${r.map((x) => `<td>${md(x)}</td>`).join("")}</tr>`).join("")}</table></div>`;
 }
 function viewGrammar(c, i) {
   const g = c.grammar[i];
